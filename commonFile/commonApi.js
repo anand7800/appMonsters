@@ -9,9 +9,10 @@ const topOffersL6 = require('../Models/userModel/topOffers')
 const subCategoryModelL2 = require('../Models/userModel/subCategoryModel')
 const reviewAndRatingL5 = require('../Models/userModel/reviewAndRating')
 var brandListModel = require('../Models/userModel/brandListing')
+const userModel=require('../Models/userModel/userPanelModel')
 
 var async = require('async')
-
+var mongoose = require('mongoose')
 
 
 //!deleteCart
@@ -70,31 +71,31 @@ deleteCart = (userId, productId) => {
     },
 
 
-    //!reviewAndRating
-    reviewAndRating = (_id, cb) => {
-        brandDescriptionL4.findOne({ "brandDesc._id": _id }, { "brandDesc.$": 1 }, (err, result) => {
-            // log(result.brandDesc[0]._id)
-            productId = result.brandDesc[0]._id
-            reviewAndRatingL5.aggregate([
-                {
-                    $project: {
-                        reviewAndRating: {
-                            $filter: {
-                                input: "$reviewAndRating",
-                                as: "item",
-                                cond: { $eq: ["$$item.productId", productId.toString()] }
-                            }
-                        }
-                    }
-                }
-            ]).exec((err, result) => {
-                if (err) cb(null)
-                else cb(null, result)
-            })
-        })
-    },
+    // //!reviewAndRating
+    // reviewAndRating = (_id, cb) => {
+    //     brandDescriptionL4.findOne({ "brandDesc._id": _id }, { "brandDesc.$": 1 }, (err, result) => {
+    //         // log(result.brandDesc[0]._id)
+    //         productId = result.brandDesc[0]._id
+    //         reviewAndRatingL5.aggregate([
+    //             {
+    //                 $project: {
+    //                     reviewAndRating: {
+    //                         $filter: {
+    //                             input: "$reviewAndRating",
+    //                             as: "item",
+    //                             cond: { $eq: ["$$item.productId", productId.toString()] }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         ]).exec((err, result) => {
+    //             // console.log("result",result)
+    //             if (err) cb(null)
+    //             else cb(null, result)
+    //         })
+    //     })
+    // },
     //!orderPlace populate
-
     populateAddress = (data, cb) => {
         placeOrderModel.findById(data, { userId: 1 }).populate({ 'path': 'userId', 'select': 'address' }).exec((err, result) => {
             // console.log("%%%%%%%%%%%%%%%%%%%%",err,result.userId.address)
@@ -183,7 +184,7 @@ deleteCart = (userId, productId) => {
     },
     //!top Picks in brands
     topBrands = (cb) => {
-        brandListModel.find({}).exec((err, result) => {
+        brandListModel.find({ status: "ACTIVE" }).exec((err, result) => {
             // log(result)
             cb(null, result)
         })
@@ -325,7 +326,7 @@ placeOrder = (userId, data, addressId, orderPayment, orderId, callback) => {
                     $push: {
                         orderPlacedDescription: {
                             productId: data.productId,
-                            varianceId:data.varianceId,
+                            varianceId: data.varianceId,
                             orderPayment: orderPayment ? orderPayment : "COD",
                             orderStatus: "PLACED",
                             productQuantity: data.productQuantity ? data.productQuantity : 1,
@@ -356,7 +357,7 @@ placeOrder = (userId, data, addressId, orderPayment, orderId, callback) => {
                 userId: userId,
                 orderPlacedDescription: {
                     productId: data.productId,
-                    varianceId:data.varianceId,
+                    varianceId: data.varianceId,
                     orderPayment: orderPayment ? orderPayment : "COD",
                     orderStatus: "PLACED",
                     productQuantity: data.productQuantity ? data.productQuantity : 1,
@@ -402,7 +403,7 @@ placeOrder = (userId, data, addressId, orderPayment, orderId, callback) => {
 //         }
 //     })
 // },
-
+//! productCategory
 productCategory = (callback) => {
     categoryBrandModelL3.find({}).lean().select({}).exec((err, result) => {
         console.log("*&^%$#@#$%^Y&U*(*&^%$%^&*", err, result)
@@ -414,23 +415,73 @@ productCategory = (callback) => {
         }
     })
 }
-module.exports = {
-    deleteCart,
-    findProduct,
-    findBrand,
-    reviewAndRating,
-    populateAddress,
-    deleteWist,
-    insertProductToExpiredModel,
-    mobile,
-    topBrands,
-    category,
-    trending,
-    offers,
-    promotedDeals,
-    findBrandListBysubcatory,
-    getSimilarProductlist,
-    placeOrder,
-    productCategory
 
+//!change status for place order 
+
+
+changeFeedBackStatus = (orderId, productId) => {
+    var order = orderId.replace("ORD", "")
+    let query = { $and: [{ 'orderPlacedDescription.orderId': order }, { 'orderPlacedDescription.productId': productId }] }
+    var update = { $set: { 'orderPlacedDescription.$.feedbackAdded': true } }
+    placeOrderModel.findOneAndUpdate(query, update, { new: true }).lean().exec((err, succ) => {
+        if (err) throw err
+        else return succ
+    })
 }
+
+//!reviewAndRating
+reviewAndRating = (_id, cb) => {
+    // brandDescriptionL4.findOne({ "brandDesc._id": _id }, { "brandDesc.$": 1 }, (err, result) => {
+    //     // log(result.brandDesc[0]._id)
+        // productId = result.brandDesc[0]._id
+        reviewAndRatingL5.aggregate([
+            {
+                $project: {
+                    reviewAndRating: {
+                        $filter: {
+                            input: "$reviewAndRating",
+                            as: "item",
+                            cond: { $eq: ["$$item.productId", _id.toString()] }
+                        }
+                    }
+                }
+            }
+        ])/* reviewAndRatingL5.find({ reviewAndRating: { $elemMatch: { productId: _id } } }).populate({path:'reviewAndRating.userId',select:'firstName lastName image'}) */.exec((err, result) => {
+        // console.log("result", JSON.stringify(result))
+        if (err || result.length<0) cb(null)
+        else cb(null, result)
+    })
+    // })
+},
+//!getReview user
+
+getUsername=async(user,cb)=>{
+    userModel.findOne({_id:user},{firstName:1,lastName:1,image:1}).exec((err,result)=>{
+    // console.log("%#$%#$%#$%#$%#$%$%%#%#%#$%#$",result)
+    
+    if (err) cb(null)
+    else cb(null, result)
+   })
+    
+}
+    module.exports = {
+        deleteCart,
+        findProduct,
+        findBrand,
+        reviewAndRating,
+        populateAddress,
+        deleteWist,
+        insertProductToExpiredModel,
+        mobile,
+        topBrands,
+        category,
+        trending,
+        offers,
+        promotedDeals,
+        findBrandListBysubcatory,
+        getSimilarProductlist,
+        placeOrder,
+        productCategory,
+        changeFeedBackStatus,
+        getUsername
+    }

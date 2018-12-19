@@ -12,6 +12,12 @@ var brandListing = mongoose.Schema({
     icon:{
         type:String,
         default:""
+    },
+    status:{
+        type:String,
+        enum: ["ACTIVE", "INACTIVE"],
+        default:"ACTIVE",
+        upperCase:true
     }
 })
 module.exports = mongoose.model('brandListing', brandListing, 'brandListing')

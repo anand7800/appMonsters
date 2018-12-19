@@ -59,7 +59,7 @@ vendorRouter.post('/productDetail',(req,res)=>{
 }) */
 //!addReviewAndRating
 vendorRouter.post('/addReviewAndRating', (req, res) => {
-    vendorPanelHandler.addReviewAndRating(req.body, (data) => {
+    vendorPanelHandler.addReviewAndRating(req.headers,req.body, (data) => {
         res.send(data)
     })
 })
@@ -241,8 +241,27 @@ vendorRouter.post('/getVariance', (req, res) => {
 })
 
 //!clickFilter
-vendorRouter.post('/clickFilter', (req, res) => {
-    vendorPanelHandler.clickFilter(req.body, (data) => {
+vendorRouter.post('/applyFilter', (req, res) => {
+    vendorPanelHandler.applyFilter(req.body, (data) => {
+        res.send(data)
+    })
+})
+
+//!getBrand
+vendorRouter.post('/getBrand', (req, res) => {
+    vendorPanelHandler.getBrand(req.body, (data) => {
+        res.send(data)
+    })
+})
+//!deleteBrand
+vendorRouter.post('/deleteBrand', (req, res) => {
+    vendorPanelHandler.deleteBrand(req.body, (data) => {
+        res.send(data)
+    })
+})
+//!updateBrand
+vendorRouter.post('/updateBrand', (req, res) => {
+    vendorPanelHandler.updateBrand(req.body, (data) => {
         res.send(data)
     })
 })

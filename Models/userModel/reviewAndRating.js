@@ -19,7 +19,23 @@ var reviewAndRating = mongoose.Schema({
         },
         review: {
             type: String
+        },
+        status: {
+            type: String,
+            enum: ['ACTIVE', 'INACTIVE'],
+            default: 'ACTIVE'
+        },
+        createAt: {
+            type: Date,
+            default: Date.now()
         }
-    }]
-})
+    }],
+    status: {
+        type: String,
+        enum: ['ACTIVE', 'INACTIVE'],
+        default: 'ACTIVE'
+    }
+}, {
+        timestamps: true
+    })
 module.exports = mongoose.model('reviewAndRating', reviewAndRating, 'reviewAndRating')

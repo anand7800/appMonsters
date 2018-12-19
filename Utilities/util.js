@@ -331,14 +331,21 @@ let statusMessage = {
         ar: "غير معثور عليه"
     },
     ADD_PHYSICALSTORE: {
-
         en: "Physical store added successfully",
         ar: "تمت إضافة المتجر الفعلي بنجاح"
     },
     FILTER_LIST:{
         en: "Filter List",
         ar:"قائمة تصفية"
-    }
+    },
+    NOW_PRODUCT_AVAILABLE:{
+        en: "No Product Available for this filter",
+        ar:"لا يوجد منتج متاح لهذا المرشح"
+    },
+    Review_saved_successfully: {
+      "en": "Review saved successfully",
+      "ar": "تم حفظ التقييم بنجاح"
+    },
 };
 
 let mailModule = nodemailer.createTransport(config.OTP_EMAIL_CONFIG);

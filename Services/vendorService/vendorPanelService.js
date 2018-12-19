@@ -334,7 +334,59 @@ addBrandDescription = (data, callback) => {
                     callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
                 }
                 else if (!result) {
-                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
+                    // callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
+
+                    var addProduct = new brandDescriptionL4({
+                        categoryModel: data.categoryId,
+                        subCategory: data.subCategoryId,
+                        productCategoryId: data.productCategoryId,
+                        brandDesc: {
+                            brandId: data.brandId,
+                            sellerId: data.sellerId,
+                            productName: data.productName,
+                            price: data.price,
+                            summary: data.summary,
+                            color: data.color,
+                            description: data.description,
+                            image: response.uploadImage,
+                            specifications: data.specifications,
+                            tag: data.tag
+                        }
+                    })
+                    addProduct.save((err, createNew) => {
+                        if (err) {
+                            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+                        }
+                        else {
+                            function search(nameKey, myArray) {
+                                for (var i = 0; i < myArray.length; i++) {
+                                    if (myArray[i].productName === nameKey) {
+                                        return myArray[i];
+                                    }
+                                }
+                            }
+                            var findIndex = search(data.productName, createNew.brandDesc)
+                            varianceModel.create({
+                                productId: findIndex._id,
+                                sellerId: data.sellerId,
+                                variants: data.variants,
+                                sellingPrice: data.sellingPrice,
+                                inventorySKU: data.inventorySKU,
+                                costItem: data.costItem,
+                                quantity: data.quantity,
+                                weight: data.weight,
+                                productType: data.productType
+                            }, (err, succ) => {
+
+                                console.log('variance of-->>', err, succ._id)
+                                brandDescriptionL4.findOneAndUpdate({ 'brandDesc._id': succ.productId }, { '$set': { 'brandDesc.$.varianceId': succ._id } }, (err, updateProduct) => {
+                                    console.log(err, updateProduct)
+                                })
+                                // console.log('------------>>>', JSON.stringify(findIndex))
+                                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.categoriesList_found[data.lang], "result": createNew })
+                            })
+                        }
+                    })
                 }
                 else {
                     function search(nameKey, myArray) {
@@ -358,7 +410,6 @@ addBrandDescription = (data, callback) => {
                     }, (err, succ) => {
 
                         console.log('variance of-->>', err, succ._id)
-
                         brandDescriptionL4.findOneAndUpdate({ 'brandDesc._id': succ.productId }, { '$set': { 'brandDesc.$.varianceId': succ._id } }, (err, updateProduct) => {
                             console.log(err, updateProduct)
                         })
@@ -680,54 +731,66 @@ let homeScreenApi = (query, callback) => {
 //     })
 // }
 //!addReviewAndRating
-addReviewAndRating = (data, callback) => {
+addReviewAndRating = (header, data, callback) => {
     log('addReviewAndRating', data)
-    if (!data) {
+    var userId;
+    if (!data.productId) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
     }
     else {
+        commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
+            if (err) throw err
+            else {
+                userId = userId1
+            }
+        })
         update = {
             $push: {
                 reviewAndRating: {
                     productId: data.productId,
                     rating: data.rating,
                     review: data.review,
-                    userId: data.userId
+                    userId: userId
                 }
             }
         }
-        reviewAndRatingL5.find({ userId: data.userId }).exec((err, result) => {
-            console.log("adjdadjaskld", err, result)
+        reviewAndRatingL5.find({ userId: userId }).exec((err, result) => {
+            // console.log("adjdadjaskld", err, result)
             if (err) throw err
             else if (result.length > 0) {
-                reviewAndRatingL5.findOneAndUpdate({ userId: data.userId }, update, { new: true }, (err, result) => {
-                    log(err, result)
+
+                reviewAndRatingL5.findOneAndUpdate({ userId: userId }, update, { new: true }, (err, result) => {
+                    // log(err, result)
                     if (err) throw err
-                    else callback(result)
+                    else {
+                        commonAPI.changeFeedBackStatus(data.orderId, data.productId)
+                        callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.Review_saved_successfully[data.lang], 'result': result })
+                    }
                 })
             }
             else {
+                commonAPI.changeFeedBackStatus(data.orderId, data.productId)
                 let query = {
-                    userId: data.userId,
+                    userId: userId,
                     reviewAndRating: {
                         productId: data.productId,
                         rating: data.rating,
                         review: data.review,
-                        userId: data.userId
+                        userId: userId
                     }
                 }
+
                 reviewAndRatingL5.create(query, (err, succ) => {
-                    callback(succ)
+                    callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.Review_saved_successfully[data.lang], 'result': succ })
                 })
             }
         })
-
     }
 }
 //!ADD-TO-CART
 addToCart = (data, headers, callback) => {
-    log("addToCart")
+    log("addToCart", data)
     var userId;
     commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
         if (result) userId = result
@@ -1306,7 +1369,7 @@ orderList = (data, headers, callback) => {
         }
     }
     ], (err, result) => {
-        console.log("_______>>>", result)
+        console.log("_______>>>", JSON.stringify(result))
         length = result
         if (result.length > 0 && result != undefined) {
             log("enter in looop")
@@ -1320,7 +1383,7 @@ orderList = (data, headers, callback) => {
                     result.forEach(element => {
                         async.forEachOf(element.orderPlacedDescription, (element, key, callback) => {
                             varianceModel.findOne({ 'variants._id': mongoose.Types.ObjectId(element.varianceId) }, { 'variants.$': 1 }).exec((err, variance) => {
-                                console.log(variance.variants[0].color)
+                                // console.log(variance.variants[0].color)
                                 // })
 
                                 brandDescriptionL4.find({ "brandDesc._id": element.productId }, { "brandDesc.$": 1, categoryBrand: 1 }).populate({ 'path': 'brandDesc.brandId', 'select': 'brandName' }).exec((err, agreResult) => {
@@ -1329,7 +1392,7 @@ orderList = (data, headers, callback) => {
                                     findAddress1.forEach(address => {
                                         // console.log("populate data ",address)
                                         if (JSON.stringify(element.addressId) == JSON.stringify(address._id)) {
-                                            log("&&&&&&&&&&&&&&&", address.fullName)
+                                            // log("&&&&&&&&&&&&&&&", address.fullName)
                                             //     }
                                             // })
                                             temp = {
@@ -1343,6 +1406,7 @@ orderList = (data, headers, callback) => {
                                                 productQuantity: element.productQuantity,
                                                 image: variance.variants[0].image,
                                                 orderStatus: element.orderStatus,
+                                                feedbackAdded: element.feedbackAdded,
                                                 description: agreResult[0].brandDesc[0].description,
                                                 orderDate: element.createdAt,
                                                 orderPayment: element.orderPayment,
@@ -1360,7 +1424,7 @@ orderList = (data, headers, callback) => {
                                 })
                             })
                         }, (err, result) => {
-                            console.log("ASDFSADFasdf", err, result)
+                            // console.log("ASDFSADFasdf", err, result)
                             res = {}
                             res['productDetail'] = main
                             /* res.bagDetails = {
@@ -1542,12 +1606,98 @@ searchProduct = (data, callback) => {
     console.log('---------------?>>>', data.searchKeyword.trim())
     var temp = []
     var value = new RegExp(data.searchKeyword.trim(), 'i');
-    brandDescriptionL4.aggregate([{
-        $unwind: '$brandDesc'
-    }, {
-        $match: { 'brandDesc.productName': { $regex: value } }
-    }
+
+    async.waterfall([
+
+        //!function 1
+        function (callback) {
+            brandListModel.findOne({ brandName: value }, { _id: 1 }, (err, brandId) => {
+                console.log("$$$$$$$$$$$$$$", err, brandId)
+                if (err)
+                    callback(null)
+                else {
+                    callback(null, brandId)
+                }
+            })
+
+        },
+        function (brandId, callback) {
+            // varianceModel.aggregate([{
+            //     $unwind: '$variants'
+            // }, {
+            //     $match: {
+            //         $or: [
+            //             { 'variants.material': { $regex: value } },
+            //             /*    { 'variants.color': { $regex: value } },
+            //                { 'variants.tag': { $in: [value] } },
+            //                { 'variants.brandId': mongoose.Types.ObjectId(brandId._id) }, */
+
+            //         ]
+            //     }
+            // }
+            // ], (err, res) => {
+            //     console.log(err, JSON.stringify(res))
+            // })
+            callback(null, brandId)
+        },
+        //!function 2
+        function (brandId, callback) {
+
+            console.log(brandId)
+            if (brandId == null) {
+                brandDescriptionL4.aggregate([{
+                    $unwind: '$brandDesc'
+                }, {
+                    $match: {
+                        $or: [
+                            { 'brandDesc.productName': { $regex: value } },
+                            { 'brandDesc.color': { $regex: value } },
+                            { 'brandDesc.tag': { $in: [value] } },
+                            // { 'brandDesc.brandId': mongoose.Types.ObjectId(brandId._id) },
+
+                        ]
+                    }
+                }
+                ], (err, result) => {
+                    if (err) callback(null)
+                    else callback(null, result)
+                })
+            }
+            else{
+                brandDescriptionL4.aggregate([{
+                    $unwind: '$brandDesc'
+                }, {
+                    $match: {
+                        $or: [
+                            { 'brandDesc.productName': { $regex: value } },
+                            { 'brandDesc.color': { $regex: value } },
+                            { 'brandDesc.tag': { $in: [value] } },
+                            { 'brandDesc.brandId': mongoose.Types.ObjectId(brandId._id) },
+
+                        ]
+                    }
+                }
+                ], (err, result) => {
+                    if (err) callback(null)
+                    else callback(null, result)
+                })
+            }
+        }
     ], (err, result) => {
+        // console.log("#################3", JSON.stringify(result))
+        /*  })
+         brandDescriptionL4.aggregate([{
+             $unwind: '$brandDesc'
+         }, {
+             $match: {
+                 $or: [
+                     { 'brandDesc.productName': { $regex: value } },
+                     { 'brandDesc.color': { $regex: value } },
+                     { 'brandDesc.tag': { $in: [value] } },
+                 ]
+             }
+         }
+         ], (err, result) => { */
         async.forEachOf(result, (value, key, cb) => {
             // console.log(value)
             subCategoryModelL2.findOne({ 'subCategories._id': value.subCategory }, { 'subCategories.$': 1 }, (err, categoryResult) => {
@@ -1574,12 +1724,10 @@ searchProduct = (data, callback) => {
                 if (test == undefined) {
                     demo.push(element)
                 }
-
             })
-            res.productData = result,
-                res.subCategory = demo
+            res.productData = result
+            res.subCategory = demo
             callback({ 'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.PRODUCT_FOUND[data.lang], 'result': res })
-
         })
 
     })
@@ -1640,7 +1788,7 @@ businessDetails = (data, headers, callback) => {
         })
     }
 }
-//!asdfasfsa
+//!checkoutOrder
 checkoutOrder = (data, headers, callback) => {
     console.log('api is hitted')
     var userId
@@ -1683,25 +1831,53 @@ addBrand = (data, callback) => {
     let query = {
         brandName: data.brandName
     }
-    brandListModel.find(query).exec((err, find) => {
-        if (err) {
-            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY })
-        }
-        else if (find.length > 0) {
-            callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST })
-        }
-        else {
-            brandListModel.create(query, (err, succ) => {
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": "add data successfully", "result": succ })
+    async.waterfall([
+        (cb) => {
+            commonFunction.uploadImg(data.brandImage, (err, image) => {
+                log(err, image)
+                if (err) cb(null)
+                else if (!image) cb(null)
+                else cb(null, image)
+            })
+        },
+        function (image, cb) {
+            console.log(')----------->>>>)))', image)
+            brandListModel.find(query).exec((err, find) => {
+                console.log(find)
+                if (err || find.length > 0) {
+
+                    cb(null, find)
+                }
+                else {
+                    brandListModel.create({ brandName: data.brandName, icon: image }, (err, succ) => {
+                        cb(null, succ)
+                    })
+                }
             })
         }
+    ], (err, result) => {
+        console.log(err, result)
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": "add data successfully", "result": result })
     })
+    /*  brandListModel.find(query).exec((err, find) => {
+         if (err) {
+             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY })
+         }
+         else if (find.length > 0) {
+             callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST })
+         }
+         else {
+             brandListModel.create(query, (err, succ) => {
+                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": "add data successfully", "result": succ })
+             })
+         }
+     }) */
 
 }
 
 //!get brand list
 getBrandList = (callback) => {
-    brandListModel.find({}).exec((err, succ) => {
+    brandListModel.find({ status: "ACTIVE" }, { status: 0 }).exec((err, succ) => {
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": "brand list", "result": succ })
 
     })
@@ -1842,34 +2018,33 @@ filters = (data, callback) => {
         var Size = {
             "_id": "4",
             "name": "Sizes",
-            "sub_filter": [{
-                "name": "XS",
-                "_id": "1"
-            },
-            {
-                "name": "S",
-                "_id": "2"
-            },
-            {
-                "name": "M",
-                "_id": "3"
-            },
-            {
-                "name": "L",
-                "_id": "4"
-            },
-            {
-                "name": "XL",
-                "_id": "5"
-            },
-            {
-                "name": "XXL",
-                "_id": "6"
-            }]
+            "sub_filter": [
+                {
+                    "name": "XL",
+                    "_id": "1"
+                },
+                {
+                    "name": "S",
+                    "_id": "2"
+                },
+                {
+                    "name": "M",
+                    "_id": "3"
+                },
+                {
+                    "name": "L",
+                    "_id": "4"
+                },
+                {
+                    "name": "XL",
+                    "_id": "5"
+                },
+                {
+                    "name": "XXL",
+                    "_id": "6"
+                }]
 
         }
-        // 5bfbeb833605496d97427ccd
-        // 5bfbeb833605496d97427ccd
         var res = []
 
         // res[0] = Price;
@@ -1907,11 +2082,7 @@ filters = (data, callback) => {
                     'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.FILTER_LIST[data.lang], 'result': res
                 })
             }
-
-
         })
-
-
     })
 }
 //!ambuj add physical store
@@ -1998,7 +2169,7 @@ getProductCategoryName = (data, callback) => {
 //!getProductdetail From variance Selection
 productDetails = (data, callback) => {
     /* console.log("ddddd")
-    res=[]
+    res=[]sea
     brandDescriptionL4.find({ 'brandDesc._id': data.productId },{'brandDesc.$':1}).populate({ path: 'brandDesc.varianceId' }).lean().exec((err, result) => {
         // console.log(typeof result,result)
         async.forEachOf(result[0].brandDesc,(value,key,callback)=>{
@@ -2007,8 +2178,6 @@ productDetails = (data, callback) => {
             callback(null)
         },(err,ans)=>{
         })
-
-
         callback(result[0].brandDesc)
     })
  */
@@ -2025,13 +2194,68 @@ productDetails = (data, callback) => {
         },
 
         reviewAndRating: (cb) => {
-            commonAPI.reviewAndRating(data._id, (err, result) => {
-                // console.log("%5555555555555555", err, result)
-                if (err) {
+            commonAPI.reviewAndRating(data._id, async (err, result) => {
+                // console.log("%5555555555555555", err, (result))
+                if (err && !result.length > 0) {
                     cb(null)
                 }
                 else {
-                    cb(null, result)
+                    // console.log(JSON.stringify(result))
+                    rating = [];
+                    console.log("start")
+                    result.forEach(element => {
+                        console.log("check review and rating", element.reviewAndRating)
+                        if (element.reviewAndRating.length > 0) {
+                            // console.log(element.reviewAndRating)
+                            // element.reviewAndRating.forEach(element => {
+                            //     // console.log("elemet", element)
+                            //     commonAPI.getUsername(element.userId, async (err, userDetail) => {
+                            //         temp = {
+                            //             firstName: userDetail.firstName,
+                            //             lastName: userDetail.lastName,
+                            //             image: userDetail.image,
+                            //             review: element.review,
+                            //             rating: element.rating
+                            //         }
+                            //         await rating.push(temp)
+                            //         // console.log("%%%%%%%%5", rating)
+                            //     })
+                            //     // console.log("finallllyyyyy", rating)
+                            // })
+
+                            async.forEachOf(element.reviewAndRating, async (value, key, back) => {
+                                // console.log(value)
+
+                                await commonAPI.getUsername(value.userId, async (err, userDetail) => {
+
+                                    if (await userDetail) {
+                                        // await console.log(userDetail)
+                                        console.log("middle")
+
+                                        temp = {
+                                            firstName: userDetail.firstName,
+                                            lastName: userDetail.lastName,
+                                            image: userDetail.image,
+                                            review: value.review,
+                                            rating: value.rating
+                                        }
+                                        await rating.push(temp)
+                                    }
+
+                                    back()
+                                })
+                                console.log("ASFDFFFFFF")
+
+                            }, (err, result) => {
+                                console.log(rating)
+                                // cb(null, rating)
+
+                            })
+                        }
+                        // cb(null,rating)
+                    })
+                    console.log("end")
+                    cb(null, rating)
                 }
             })
         },
@@ -2075,6 +2299,7 @@ productDetails = (data, callback) => {
             var ratingAndReview = []
             // console.log(response.findProduct.brandDesc[0].varianceId)
             if (response.findProduct.brandDesc[0].varianceId == null) {
+                console.log("variant not inserted")
                 response.findProduct.brandDesc.forEach(element => {
                     // console.log('element----------->>>',element.varianceId.variants)
                     var b = []
@@ -2110,14 +2335,23 @@ productDetails = (data, callback) => {
                         brand: element.brandId.brandName,
                         productName: element.productName,
                         price: element.price,
-                        // color: element.color,
+                        color: element.color,
                         description: element.description,
-                        // image: element.image,
+                        image: element.image,
                         specifications: element.specifications[0],
-                        variants: {},
-                        colors: [],
-                        material: [],
-                        size: []
+                        /*      variants: {
+                                 // [test.color]: {
+                                 _id: "",
+                                 color: "",
+                                 material: "",
+                                 image: [],
+                                 size: "",
+                                 price: ""
+     
+                             },
+                             colors: [],
+                             material: [],
+                             size: [] */
                     }
                     res.product = data
                     // })
@@ -2132,40 +2366,25 @@ productDetails = (data, callback) => {
                     var size = []
                     // var test2;
                     element.varianceId.variants.forEach(test => {
-
-                        // let a = {
-                        //     colorName: test.color,
-                        //     variance: {
-                        //         _id: test._id,
-                        //         color: test.color,
-                        //         material: test.material,
-                        //         image: test.image,
-                        //     }
-                        // }
                         color.push(test.color)
                         material.push(test.material)
                         size.push(test.size)
-                        // b.push(a)
-                        // let unique = [...new Set(color)];
-                        // console.log('########3',unique)
                         data = {
                             _id: element._id,
                             brand: element.brandId.brandName,
                             productName: element.productName,
                             price: element.price,
-                            // color: element.color,
                             description: element.description,
-                            // image: element.image,
                             specifications: element.specifications[0],
                             variants: {
                                 // colorName: test.color,
                                 // [test.color]: {
                                 _id: test._id,
-                                color: test.color.toUpperCase(),
-                                material: test.material.toUpperCase(),
-                                image: test.image,
-                                size: test.size.toUpperCase(),
-                                price: test.price
+                                color: test.color.toUpperCase() ? test.color : '',
+                                material: test.material.toUpperCase() ? test.material : '',
+                                image: test.image ? test.image : [],
+                                size: test.size.toUpperCase() ? test.size : '',
+                                price: test.price ? test.price : ''
                                 // }
                             },
                             colors: [...new Set(color)].reverse().map(function (x) { return x.toUpperCase() }),
@@ -2176,39 +2395,92 @@ productDetails = (data, callback) => {
                     })
                 })
             }
-            response.reviewAndRating.forEach(element => {
-                async.forEachOf(element.reviewAndRating, (data, key, callback) => {
-                    var userId = data.userId.toString()
-                    userModel.findById({ _id: userId }, { "firstName": 1, "lastName": 1, 'image': 1 }, (err, result) => {
-                        if (result) {
-                            data = {
-                                firstName: result.firstName,
-                                lastName: result.lastName,
-                                image: result.image,
-                                review: data.review,
-                                rating: data.rating
-                            }
-                            ratingAndReview.push(data)
-                            callback(null, result)
-                        }
-                        else callback(null)
-                    })
+            // console.log(JSON.stringify(response.reviewAndRating))
+            if (false) {
+                response.reviewAndRating.forEach(element => {
+                    console.log(element)
+                    if (element.reviewAndRating.length > 0) {
 
-                }, (err, result) => {
-                    sellerInfo = {
-                        _id: "5bd949e76f6cdd0b3b639e9c",
-                        sellerName: "Raghu Thakur",
-                        selllerImage: "http://res.cloudinary.com/sumit9211/image/upload/v1540970222/cy3r1ilg2gsh6hvdkxsa.jpg",
-                        selllerRating: "3"
+                        console.log("333333333", element)
+                        async.forEachOf(element.reviewAndRating, async (value, key, callback) => {
+                            console.log("----------->>")
+                            // setTimeout(4000)
+                            await userModel.findOne({ _id: value.userId }).exec(async (err, userDetail) => {
+                                console.log('userdetail')
+                                if (userDetail) {
+                                    let demo = {
+                                        firstName: userDetail.firstName,
+                                        lastName: userDetail.lastName,
+                                        image: userDetail.image,
+                                        review: value.review,
+                                        rating: value.rating
+                                    }
+                                    await ratingAndReview.push(demo)
+                                }
+                                callback(null, ratingAndReview)
+                            })
+                            // console.log("###33",ratingAndReview)
+                            // callback()
+                        }, async (err, result) => {
+                            console.log(err, result)
+                            console.log("ASDFASDFASDFASDFASDf", ratingAndReview)
+                            // await 
+                            console.log("ratingAndReviewratingAndReview", ratingAndReview)
+                            sellerInfo = {
+                                _id: "5bd949e76f6cdd0b3b639e9c",
+                                sellerName: "Raghu Thakur",
+                                selllerImage: "http://res.cloudinary.com/sumit9211/image/upload/v1540970222/cy3r1ilg2gsh6hvdkxsa.jpg",
+                                selllerRating: "3"
+                            }
+                            res.sellerInfo = sellerInfo
+                            res.reviewAndRating = ratingAndReview
+                            res.similarProduct = response.getSimilarProduct
+                            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
+                        })
                     }
-                    res.sellerInfo = sellerInfo
-                    res.reviewAndRating = ratingAndReview
-                    res.similarProduct = response.getSimilarProduct
-                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
+                    else {
+                        console.log('e443423423423', ratingAndReview)
+                        sellerInfo = {
+                            _id: "5bd949e76f6cdd0b3b639e9c",
+                            sellerName: "Raghu Thakur",
+                            selllerImage: "http://res.cloudinary.com/sumit9211/image/upload/v1540970222/cy3r1ilg2gsh6hvdkxsa.jpg",
+                            selllerRating: "3"
+                        }
+                        res.sellerInfo = sellerInfo
+                        res.reviewAndRating = ratingAndReview
+                        res.similarProduct = response.getSimilarProduct
+                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
+                    }
                 })
-            })
+            }
+            else {
+
+                console.log('e443423423423', response.reviewAndRating)
+                sellerInfo = {
+                    _id: "5bd949e76f6cdd0b3b639e9c",
+                    sellerName: "Raghu Thakur",
+                    selllerImage: "http://res.cloudinary.com/sumit9211/image/upload/v1540970222/cy3r1ilg2gsh6hvdkxsa.jpg",
+                    selllerRating: "3"
+                }
+                res.sellerInfo = sellerInfo
+                res.reviewAndRating = response.reviewAndRating
+                res.similarProduct = response.getSimilarProduct
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
+            }
+            // console.log(ratingAndReview)
+            /*  sellerInfo = {
+                 _id: "5bd949e76f6cdd0b3b639e9c",
+                 sellerName: "Raghu Thakur",
+                 selllerImage: "http://res.cloudinary.com/sumit9211/image/upload/v1540970222/cy3r1ilg2gsh6hvdkxsa.jpg",
+                 selllerRating: "3"
+             }
+             res.sellerInfo = sellerInfo
+             res.reviewAndRating = ratingAndReview
+             res.similarProduct = response.getSimilarProduct
+             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res }); */
         }
         else {
+            console.log("####################################################3")
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY })
         }
     })
@@ -2347,25 +2619,100 @@ getVariance = (data, callback) => {
                 "catgoryId": "Analytics,Animation,Architecture,Cloud Computing",
                     "user_id": "1", "Location": "Fourna,Ghaziabad"
 } */
-clickFilter = (data, callback) => {
+applyFilter = (data, callback) => {
     console.log('call filter api -==>', data)
-    var query = {
+    console.log('call filter api -==>', typeof data.Colors)
+
+    // console.log(JSON.parse(data.Colors))
+    if (data.Colors && data.Sizes && data.Brands && data.Price) {
+        dataManage = {
+            Sizes: JSON.parse(data.Sizes),
+            Colors: JSON.parse(data.Colors),
+            Brands: JSON.parse(data.Brands),
+            Price: JSON.parse(data.Price)
+        }
+    }
+    else if (data.Brands && data.Colors) {
+        dataManage = {
+            // Colors: JSON.parse(data.Colors),
+            Colors: JSON.parse(data.Colors),
+            Brands: JSON.parse(data.Brands)
+        }
+    }
+    else if (data.Brands && data.Sizes) {
+        dataManage = {
+            Sizes: JSON.parse(data.Sizes),
+            // Colors: JSON.parse(data.Colors),
+            Brands: JSON.parse(data.Brands)
+        }
+    }
+    else if (data.Colors && data.Sizes) {
+        dataManage = {
+            Sizes: JSON.parse(data.Sizes),
+            Colors: JSON.parse(data.Colors),
+            // Brands: JSON.parse(data.Brands)
+        }
+    }
+    else if (data.Price && data.Sizes) {
+        dataManage = {
+            Sizes: JSON.parse(data.Sizes),
+            Price: JSON.parse(data.Price),
+            // Brands: JSON.parse(data.Brands)
+        }
+    }
+    else if (data.Price && data.Colors) {
+        dataManage = {
+            Colors: JSON.parse(data.Colors),
+            Price: JSON.parse(data.Price),
+            // Brands: JSON.parse(data.Brands)
+        }
+    }
+    else if (data.Colors && data.Sizes && data.Brands) {
+        dataManage = {
+            Sizes: JSON.parse(data.Sizes),
+            Colors: JSON.parse(data.Colors),
+            Brands: JSON.parse(data.Brands)
+        }
+    }
+    else if (data.Price && data.Sizes && data.Brands) {
+        dataManage = {
+            Sizes: JSON.parse(data.Sizes),
+            Price: JSON.parse(data.Price),
+            Brands: JSON.parse(data.Brands)
+        }
+    }
+    else if (data.Colors && data.Price && data.Brands) {
+        dataManage = {
+            Colors: JSON.parse(data.Colors),
+            Price: JSON.parse(data.Price),
+            Brands: JSON.parse(data.Brands)
+        }
+    }
+    console.log('data parse ', dataManage)
+/*     var query = {
         "variants": {
             "$elemMatch": {
                 // "closed": false,
                 "$or": [
                     {
-                        "color": { $in: data.color },
+                        "color": { $in: dataManage.Colors },
                     }
                 ]
             }
         }
     }
 
-    query1 = [{
+ */    query1 = [{
         $unwind: '$variants'
     }, {
-        $match: { 'variants.color': { $in: data.color } }
+        $match: {
+            $or: [
+                { 'variants.color': { $in: dataManage.Colors ? dataManage.Colors : [] } },
+                { 'variants.size': { $in: dataManage.Sizes ? dataManage.Sizes : [] } },
+                { 'variants.Price': { $in: dataManage.Price ? dataManage.Price : [] } },
+
+            ]
+        }
     }
     ]
     /*  query3 = [{
@@ -2374,23 +2721,26 @@ clickFilter = (data, callback) => {
          $match: { 'brandDesc.brandId': { $in: data.brand } }
      }
      ] */
-
-
     async.series({
         getColor: (cb) => {
             let a = []
+            let B = []
             varianceModel.aggregate(query1).exec((err, succ) => {
                 // console.log(err, succ)
                 succ.forEach(emp => {
+
                     a.push(emp.productId.toString())
+                    B.push(emp.productId)
                 })
+                // console.log('==============>>',B)
+                // console.log('777777777777777', B[0])
                 console.log(typeof a[0], _.uniq(a))
                 cb(null, _.uniq(a))
             })
         },
         getBrand: (cb) => {
             let a = []
-            brandListModel.find({ brandName: { $in: data.brand } }).exec((err, succ) => {
+            brandListModel.find({ brandName: { $in: dataManage.Brands } }).exec((err, succ) => {
                 //  console.log(err,JSON.stringify(succ))
                 succ.forEach(element => {
                     a.push(element._id)
@@ -2410,25 +2760,14 @@ clickFilter = (data, callback) => {
                     })
                     cb(null, b)
                 })
-
             })
         }
 
     }, (err, response) => {
-        // console.log('==>>>',err, response)
 
-        console.log('===>>get color', response.getColor)
-        console.log('===>get brand', response.getBrand)
         let productArray = _.union(response.getColor, response.getBrand)
-        console.log(productArray)
-        // console.log(typeof JSON.parse(productArray[0]))
-        /*
-        5bfbeb833605496d97427ccd 
-        5bfbe3fe4a2aa669690a8288
-        */
-
-
-
+        let objectIdArray = productArray.map(s => mongoose.Types.ObjectId(s));
+        console.log(objectIdArray)
         let query4 = [{
             $unwind: '$brandDesc'
         }, {
@@ -2436,18 +2775,67 @@ clickFilter = (data, callback) => {
                 $and: [
                     {
                         'brandDesc._id': {
-                            $in: [mongoose.Types.ObjectId(productArray)]
+                            $in: objectIdArray
                         }
                     },
-                    { 'subCategory': mongoose.Types.ObjectId('5bfbe3fe4a2aa669690a8288') }
+                    { 'subCategory': mongoose.Types.ObjectId(data.subCategoryId) }
                 ]
             }
         }
         ]
         brandDescriptionL4.aggregate(query4).exec((err, success) => {
-            console.log(err, success)
-            callback(success)
+            // console.log(err, success)
+            res = {}
+            res.productData = success
+            res.subCategory = []
+            console.log(success.length)
+            if (!success.length > 0) {
+                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOW_PRODUCT_AVAILABLE[data.lang] })
+            }
+            else { callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res }) }
         })
+    })
+}
+//!getBrand
+getBrand = (data, callback) => {
+    brandListModel.findOne({ _id: data.brandId }, { __v: 0 }).exec((err, result) => {
+        if (err) {
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+        }
+        else {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
+        }
+    })
+
+}
+//!delete brand
+deleteBrand = (data, callback) => {
+    brandListModel.findOneAndUpdate({ _id: data.brandId }, { $set: { status: "INACTIVE" } }, { __v: 0, new: true }).exec((err, result) => {
+        if (err) {
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+        }
+        else {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
+        }
+    })
+}
+
+//!update brand
+updateBrand = (data, callback) => {
+    update = {
+        $set: {
+            brandName: data.brandName,
+            image: data.brandImage,
+            icon: data.brandIcon
+        }
+    }
+    brandListModel.findByIdAndUpdate({ _id: data.brandId }, update, { __v: 0, new: true }).exec((err, result) => {
+        if (err) {
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+        }
+        else {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
+        }
     })
 }
 module.exports = {
@@ -2491,5 +2879,8 @@ module.exports = {
     getProductList,
     addVariance,
     getVariance,
-    clickFilter
+    applyFilter,
+    getBrand,
+    deleteBrand,
+    updateBrand
 }

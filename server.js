@@ -39,5 +39,5 @@ app.get('*', (req, res) => {
     res.sendFile(__dirname + '/dist/Anzenadmin/index.html')
   }); */
 server.listen(config.NODE_SERVER_PORT.port, function () {
-    console.log('app listening on port:' + config.NODE_SERVER_PORT.port);
+    console.log('app listening on port:' + config.NODE_SERVER_PORT.port+(new Date));
 });

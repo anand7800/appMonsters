@@ -12,7 +12,7 @@ const twilio = require("twilio");
 const orderid = require('order-id')('WAKITECHUGO')
 var algorithm = 'aes-256-ctr',
     password = 'd6F3Efeq';
-
+var FCM = require('fcm-push');
 let transporter;
 cloudinary.config({
     cloud_name: "sumit9211",
@@ -346,7 +346,7 @@ module.exports = {
         console.log("#$4$$$", typeof number)
         let client = new twilio(config_json.twilio.sid, config_json.twilio.auth_token);
         client.messages.create({
-            body: message,
+            body: `Your Verification One time Password is ${message}`,
             to: "+91" + number, // Text this number
             from: config_json.twilio.number // From a valid Twilio number
         })
@@ -364,8 +364,8 @@ module.exports = {
         return val;
     },
 
-    generateOrderId:(length)=> {
-        var random =Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
+    generateOrderId: (length) => {
+        var random = Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
         // random.toUpperCase()
         return random.toUpperCase()
     },
@@ -388,5 +388,71 @@ module.exports = {
     genOrderId: () => {
         console.log("generate order id", orderid.generate())
         return orderid.generate()
-    }
+    },
+
+
+    //!android notification
+    "android_notification": function (deviceToken, msg, chatType, title, sendorId, senderName, type) {
+        // console.log("chatType==>>", deviceToken);
+        console.log("module called")
+        //    var deviceToken ="APA91bFLyrVqNOdk-u8Ci29vpcZaMQap4YrtMX6WMlpWjb8apGQrl8GfpZvKZezsziGY90n5-1jkcjs-yYA_5w5GFGQCLKh2-7SSekrBSqXjiaboeuSDePE";
+        //   var serverKey = "AIzaSyChK0J_JT_UjxVu6YqV7PfAzOLIpiDSsWQ";
+        var serverKey = "AAAAoBcORhQ:APA91bGfm_qj7PaZQfjiqKNJ76A4vFlx4W-rSy6jciyskt80ykuJxZqePZ5s6S1rcMUFHLeGFkqtJqXusZXDtfGv7lO8kHMpNjlWkypJBPqNr0Uozm6Ay5rQTia8pnm37DtUs2LWt4hP"
+        console.log("title====>", title)
+        var fcm = new FCM(serverKey);
+        var message = {
+            to: deviceToken,
+          /*   'data.sound': "default",
+            'data.message': "aasd",
+            "data.title": "title",
+            'data.type': "chatType",
+            'data.senderName': "senderName", */
+            "data": {
+                 "title": 'WAKI', "type": "login" ,"msg":"this is testing "
+                 },
+                 
+        };
+        console.log("android_notification message===>", message);
+        fcm.send(message, function (err, response) {
+            if (err) {
+                console.log("Something has gone wrong!");
+                //res.send({responseCode:500,responseMessage:"success"});
+                console.log("errror" + err);
+            } else {
+                //res.send({responseCode:200,responseMessage:"success"});
+                console.log("Successfully sent with response: " + response);
+            }
+        });
+
+    },
+// !IOS_NOTIFICATION
+    "IOS_NOTIFICATION": function (deviceToken, msg, chatType, title, sendorId, senderName, type) {
+        console.log("chatType==>>", deviceToken);
+        console.log("module called")
+        //    var deviceToken ="APA91bFLyrVqNOdk-u8Ci29vpcZaMQap4YrtMX6WMlpWjb8apGQrl8GfpZvKZezsziGY90n5-1jkcjs-yYA_5w5GFGQCLKh2-7SSekrBSqXjiaboeuSDePE";
+        //   var serverKey = "AIzaSyChK0J_JT_UjxVu6YqV7PfAzOLIpiDSsWQ";
+      var serverKey = "AAAAoBcORhQ:APA91bGfm_qj7PaZQfjiqKNJ76A4vFlx4W-rSy6jciyskt80ykuJxZqePZ5s6S1rcMUFHLeGFkqtJqXusZXDtfGv7lO8kHMpNjlWkypJBPqNr0Uozm6Ay5rQTia8pnm37DtUs2LWt4hP"
+        console.log("title====>", title)
+        var fcm = new FCM(serverKey);
+        var message =
+        {
+            "to": deviceToken,
+            "notification": { "title": title, "body": msg ,badge:"1" },
+            "priority": "high"
+        };
+
+        // };
+        console.log("IOS_NOTIFICATION message===>", message);
+        fcm.send(message, function (err, response) {
+            if (err) {
+                console.log("Something has gone wrong!");
+                //res.send({responseCode:500,responseMessage:"success"});
+                console.log("errror" + err);
+            } else {
+                //res.send({responseCode:200,responseMessage:"success"});
+                console.log("Successfully sent with response: " + response);
+            }
+        });
+
+    },
 }

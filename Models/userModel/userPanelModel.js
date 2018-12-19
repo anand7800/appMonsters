@@ -32,7 +32,7 @@ var login = mongoose.Schema({
         type: Number,
         default: 0
     },
-    countryCode:{
+    countryCode: {
         type: String,
         default: "+91"
     },
@@ -64,7 +64,7 @@ var login = mongoose.Schema({
         lng: String,
         fullName: String,
         contactNumber: String,
-        countryCode:{
+        countryCode: {
             type: String,
             default: "+91"
         },
@@ -88,14 +88,20 @@ var login = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    deviceToken: {
-        device_token: String,
-        device_type: Number
-    },
+
+    deviceToken: String,
+    deviceType: Number,
+    // },
     forgotToken: {
         type: Number,
         default: 0
     },
+    status: {
+        type: String,
+        enum: ['block', 'active', "admin"],
+        default: 'active',
+        upperCase: true
+    }
 }, {
         timestamps: true
     })

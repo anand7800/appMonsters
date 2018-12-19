@@ -1,0 +1,18 @@
+db.Product.aggregate([
+    { $match: { 'owner': { $ne: '<USER_OBJECTID>' } } },
+    {
+        $lookup: {
+            from: 'liked',
+            localField: '_id',
+            foreignField: 'productID',
+            as: 'likes'
+        }
+    },
+    {
+        $match: {
+            'likes.userID': {
+                $nin: [<USER_OBJECTID>]}}},
+    {$limit: 10}
+])
+
+

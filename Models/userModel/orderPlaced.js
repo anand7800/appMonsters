@@ -10,9 +10,9 @@ var orderPlaced = mongoose.Schema({
             type: String,
             default: ""
         },
-        varianceId:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'variance'
+        varianceId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'variance'
         },
         orderId: {
             type: String,
@@ -34,9 +34,9 @@ var orderPlaced = mongoose.Schema({
             type: String,
             default: "17"
         },
-        deliveryCharges:{
-            type:String,
-            default:"50"
+        deliveryCharges: {
+            type: String,
+            default: "50"
         },
         orderPayment: {
             type: String,
@@ -49,6 +49,10 @@ var orderPlaced = mongoose.Schema({
             enum: ["PENDING", "PLACED", "DISPATCH", "REJECTED", "INPROGRESS", "DELIVERED"],
             default: "PENDING",
             upperCase: true
+        },
+        feedbackAdded: {
+            type: Boolean,
+            default: false
         },
         createdAt: {
             type: Date,
