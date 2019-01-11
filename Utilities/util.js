@@ -120,9 +120,9 @@ let statusMessage = {
         en: "Failed to connect to server . Please try again later.",
         ar: "فشل الاتصال بالخادم . الرجاء معاودة المحاولة في وقت لاحق."
     },
-    INCORRECT_PASSWORD: {
-        en: "Please enter correct password.",
-        ar: "يرجى إدخال كلمة المرور الصحيحة."
+    INCORRECT_OLD_PASSWORD: {
+        en: "Old password is Incorrect",
+        ar: "كلمة سر قديمة ليست صحيحة"
     },
     PASSWORD_UPDATED: {
         en: "your password updated successfully.",
@@ -133,7 +133,7 @@ let statusMessage = {
         ar: "فشل الاتصال بالخادم . الرجاء معاودة المحاولة في وقت لاحق."
     },
     PASSWORD_CHANGED: {
-        en: "Your Password has changed successfully.",
+        en: "Your Password has been changed successfully.",
         ar: "تم تغيير كلمة المرور الخاصة بك بنجاح."
     },
     LOGOUT: {
@@ -334,18 +334,114 @@ let statusMessage = {
         en: "Physical store added successfully",
         ar: "تمت إضافة المتجر الفعلي بنجاح"
     },
-    FILTER_LIST:{
+    FILTER_LIST: {
         en: "Filter List",
-        ar:"قائمة تصفية"
+        ar: "قائمة تصفية"
     },
-    NOW_PRODUCT_AVAILABLE:{
+    NOW_PRODUCT_AVAILABLE: {
         en: "No Product Available for this filter",
-        ar:"لا يوجد منتج متاح لهذا المرشح"
+        ar: "لا يوجد منتج متاح لهذا المرشح"
     },
     Review_saved_successfully: {
-      "en": "Review saved successfully",
-      "ar": "تم حفظ التقييم بنجاح"
+        "en": "Review saved successfully",
+        "ar": "تم حفظ التقييم بنجاح"
     },
+    InvalidPhoneNuber: {
+        en: "Invaild phone Number",
+        ar: "فشل الاتصال بالخادم . الرجاء معاودة المحاولة في وقت لاحق."
+    },
+    BAG_PRODUCT_ALREADY_EXIST: {
+        en: "Product is already Exist in your BAG",
+        ar: "المنتج موجود بالفعل في الحزمة الخاصة بك"
+    },
+    USER_LOGIN_SOCIAL: {
+        en: "User login through Social Media Can't Change your password",
+        ar: "تسجيل دخول المستخدم من خلال وسائل التواصل الاجتماعي"
+    },
+    DELETE_VENDOR: {
+        en: "DELETE VENDOR SUCCESSFULLY",
+        ar: ""
+    },
+    TITLE: {
+
+        PLACED: {
+            en: 'Order Placed',
+            ar: ''
+        },
+        DELIVERIED: {
+            en: 'Order deliveried',
+            ar: ''
+        },
+        REJECTED: {
+            en: 'Order Rejected',
+            ar: ''
+        },
+        CANCELLED: {
+            en: 'Order Cancelled',
+            ar: ''
+        },
+        DISPATCH: {
+            en: 'Order Dispatch',
+            ar: ''
+        },
+        INACTIVE: {
+            en: 'INACTIVE',
+            ar: ''
+        }
+    },
+    type: {
+        PLACED: {
+            en: 'PLACED',
+            ar: ''
+        },
+        DELIVERIED: {
+            en: 'DELIVERIED',
+            ar: ''
+        },
+        RREJECTED: {
+            en: 'ORDERREJECTED',
+            ar: ''
+        },
+        CANCELLED: {
+            en: 'CANCELLED',
+            ar: ''
+        },
+        DISPATCH: {
+            en: 'DISPATCH',
+            ar: ''
+        },
+        INACTIVE: {
+            en: 'INACTIVE',
+            ar: ''
+        }
+    },
+    notifyMsg: {
+        
+        PLACED: {
+            en: 'Your Order Placed Successfully',
+            ar: ''
+        },
+        DELIVERIED: {
+            en: 'Your Order DELIVERIED',
+            ar: ''
+        },
+        RREJECTED: {
+            en: 'Your Order ORDER REJECTED',
+            ar: ''
+        },
+        CANCELLED: {
+            en: 'Your Order CANCELLED',
+            ar: ''
+        },
+        DISPATCH: {
+            en: 'Your Order DISPATCH',
+            ar: ''
+        },
+        INACTIVE: {
+            en: 'Your Order INACTIVE',
+            ar: ''
+        }
+    }
 };
 
 let mailModule = nodemailer.createTransport(config.OTP_EMAIL_CONFIG);

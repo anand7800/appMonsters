@@ -1,23 +1,23 @@
-var async = require('async')
-var categoryModelL1 = require('../../Models/userModel/categoryModel')
-var subCategoryModelL2 = require('../../Models/userModel/subCategoryModel')
-var categoryBrandModelL3 = require('../../Models/userModel/productCategory')
-var brandDescriptionL4 = require('../../Models/userModel/brandDescription')
-var topOffersL6 = require('../../Models/userModel/topOffers')
-var reviewAndRatingL5 = require('../../Models/userModel/reviewAndRating')
-var orderModel = require('../../Models/userModel/userOrder')
-var wishListModel = require('../../Models/userModel/userWishListModel')
-var placeOrderModel = require('../../Models/userModel/orderPlaced')
-var userModel = require('../../Models/userModel/userPanelModel')
-var brandListModel = require('../../Models/userModel/brandListing')
-var businessDetails1 = require('../../Models/userModel/businessDetail')
-var physicalStores = require('../../Models/userModel/addPhysicalStore')
-var varianceModel = require('../../Models/userModel/varianceModel')
+const async = require('async')
+const categoryModelL1 = require('../../Models/userModel/categoryModel')
+const subCategoryModelL2 = require('../../Models/userModel/subCategoryModel')
+const categoryBrandModelL3 = require('../../Models/userModel/productCategory')
+const brandDescriptionL4 = require('../../Models/userModel/brandDescription')
+const topOffersL6 = require('../../Models/userModel/topOffers')
+const reviewAndRatingL5 = require('../../Models/userModel/reviewAndRating')
+const orderModel = require('../../Models/userModel/userOrder')
+const wishListModel = require('../../Models/userModel/userWishListModel')
+const placeOrderModel = require('../../Models/userModel/orderPlaced')
+const userModel = require('../../Models/userModel/userPanelModel')
+const brandListModel = require('../../Models/userModel/brandListing')
+const businessDetails1 = require('../../Models/userModel/businessDetail')
+const physicalStores = require('../../Models/userModel/addPhysicalStore')
+const varianceModel = require('../../Models/userModel/varianceModel')
 let util = require('../../Utilities/util')
-var commonFunction = require('../../commonFile/commonFunction')
-var commonAPI = require('../../commonFile/commonApi')
-var mongoose = require('mongoose')
-var waterfall = require('async-waterfall');
+const commonFunction = require('../../commonFile/commonFunction')
+const commonAPI = require('../../commonFile/commonApi')
+const mongoose = require('mongoose')
+const waterfall = require('async-waterfall');
 const _ = require('lodash');
 
 //!addCategory
@@ -295,30 +295,43 @@ addProductCategory = (data, callback) => { //!Tshirt Shirt
     }
 }
 //!brand Description
-addBrandDescription = (data, callback) => {
-    log("api is hitted addBrandDescription")
-    if (!data) {
+addBrandDescription = (data, header, callback) => {
+    // log("api is hitted addBrandDescription",data,header)
+
+    var sellerId;
+    commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
+        if (err) throw err
+        else {
+            sellerId = userId1
+        }
+    })
+    // console.log("###",sellerId)
+    // return
+    if (!data && !header.accesstoken) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
     }
     else {
         async.parallel({
             uploadImage: (cb) => {
+                console.log("################")
+
                 commonFunction.uploadMultipleImages(data.image, (err, image) => {
-                    // log(err, image)
+                    log(err, image)
                     if (err) cb(null)
                     else if (!image) cb(null)
                     else cb(null, image)
                 })
+                console.log("################")
+
             }
         }, (err, response) => {
-            // log(err, response)
             brandDescriptionL4.findOneAndUpdate({ $and: [{ subCategory: data.subCategoryId }, { productCategoryId: data.productCategoryId }] }, {
                 // brandId: data.brandId,
                 $push: {
                     brandDesc: {
                         brandId: data.brandId,
-                        sellerId: data.sellerId,
+                        sellerId: sellerId,
                         productName: data.productName,
                         price: data.price,
                         summary: data.summary,
@@ -342,7 +355,7 @@ addBrandDescription = (data, callback) => {
                         productCategoryId: data.productCategoryId,
                         brandDesc: {
                             brandId: data.brandId,
-                            sellerId: data.sellerId,
+                            sellerId: sellerId,
                             productName: data.productName,
                             price: data.price,
                             summary: data.summary,
@@ -368,7 +381,7 @@ addBrandDescription = (data, callback) => {
                             var findIndex = search(data.productName, createNew.brandDesc)
                             varianceModel.create({
                                 productId: findIndex._id,
-                                sellerId: data.sellerId,
+                                sellerId: sellerId,
                                 variants: data.variants,
                                 sellingPrice: data.sellingPrice,
                                 inventorySKU: data.inventorySKU,
@@ -399,7 +412,7 @@ addBrandDescription = (data, callback) => {
                     var findIndex = search(data.productName, result.brandDesc)
                     varianceModel.create({
                         productId: findIndex._id,
-                        sellerId: data.sellerId,
+                        sellerId: sellerId,
                         variants: data.variants,
                         sellingPrice: data.sellingPrice,
                         inventorySKU: data.inventorySKU,
@@ -531,15 +544,18 @@ let homeScreenApi = (query, callback) => {
         topPromotedDeals = [];
         async.forEachOf(response.topPicksInMobile1, (item, key, callback) => {
             async.forEachOf(item.brandDesc, (item, key, callback) => {
+                console.log("###", item.varianceId.variants[0].price)
                 data = {
                     _id: item._id,
                     type: "topPicks",
                     brand: item.brandId.brandName,
                     productName: item.productName,
-                    price: item.price,
+                    //!change
+                    price: item.varianceId.variants[0].price ? item.varianceId.variants[0].price : 000,
+                    //!end
                     color: item.color,
                     description: item.description,
-                    image: item.image[0],
+                    image: item.varianceId.variants[item.varianceId.variants.length - 1].image[0],
                     specifications: item.specifications,
                     status: item.status
                 }
@@ -581,10 +597,12 @@ let homeScreenApi = (query, callback) => {
                     type: "topPicks",
                     brand: element.brandId.brandName,
                     productName: element.productName,
-                    price: element.price,
+                    //!change 
+                    price: element.varianceId.variants[0].price ? element.varianceId.variants[0].price : 000,
+                    //!end
                     color: element.color,
                     description: element.description,
-                    image: element.image[0],
+                    image: element.varianceId.variants[element.varianceId.variants.length - 1].image[0],
                     specifications: element.specifications,
                     status: element.status
                 }
@@ -809,6 +827,7 @@ addToCart = (data, headers, callback) => {
                             orderDescription: {
                                 productId: data.productId,
                                 varianceId: data.varianceId,
+                                sellerId: data.sellerId,
                                 orderPayment: "PENDING",
                                 orderStatus: "ADDTOCART",
                                 productQuantity: data.productQuantity ? data.productQuantity : 1
@@ -818,7 +837,7 @@ addToCart = (data, headers, callback) => {
                 orderModel.find({ $and: [{ userId: userId }, { 'orderDescription.varianceId': data.varianceId }, { 'orderDescription.productId': data.productId }] }, { 'orderDescription.$': 1 }).exec((err, findOrder) => {
                     if (err) throw err
                     else if (findOrder.length > 0) {
-                        callback({ statusCode: util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.WISHLIST_PRODUCT_ALREADY_EXIST[data.lang] })
+                        callback({ statusCode: util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.BAG_PRODUCT_ALREADY_EXIST[data.lang] })
                         return
                     }
                     else {
@@ -906,7 +925,8 @@ listOfAddCart = (data, headers, callback) => {
                 async.forEachOf(element.orderDescription, (element, key, callback) => {
                     console.log('========>>>>', element)
                     varianceModel.findOne({ 'variants._id': mongoose.Types.ObjectId(element.varianceId) }, { 'variants.$': 1 }).exec((err, variance) => {
-                        console.log(variance.variants[0].color)
+                        // console.log("3",variance.variants)
+                        console.log("element -->>", variance)
                         // })
                         brandDescriptionL4.find({ "brandDesc._id": element.productId }, { "brandDesc.$": 1, categoryBrand: 1 }).populate({ 'path': 'brandDesc.brandId', 'select': 'brandName' }).exec((err, agreResult) => {
                             totalPrice = totalPrice + parseInt(variance.variants[0].price)
@@ -1153,38 +1173,331 @@ uploadImage = (data, callback) => {
 
 //!!#### testing api 
 testingApi = (data, callback) => {
-    subCategoryModelL2.find({ 'subCategories.subCategoryName': "mobile" }, { 'subCategories.$': 1 }).exec((err, result) => {
-        if (err) callback(null)
-        else if (result.length < 0)
-            brandDescriptionL4.find({ subCategory: result[0].subCategories[0]._id }).lean().exec((err, res) => {
-                // console.log("product description",JSON.stringify(res))
-                var temp
-                if (err) callback(null)
-                async.forEachOf(res, function (value, keyIndex, callback) {
-                    categoryBrandModelL3.findOne({ 'categoriesBrand._id': value.categoryBrand }, { "categoriesBrand.$": 1 }).exec((err, result2) => {
+    log('hitted productDetail api ios')
+    if (!data) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        return
+    }
+    async.parallel({
+        findProduct: (cb) => {
+            brandDescriptionL4.findOne({ "brandDesc._id": data._id }, { "brandDesc.$": 1 }).populate({ 'path': 'brandDesc.brandId', 'select': 'brandName' }).populate({ path: 'brandDesc.varianceId' }).exec((err, result) => {
+                cb(null, result)
+            })
+        },
 
-                        if (value.brandDesc.length > 0) {
-                            temp = value
-                            value.brandDesc.brand = result2.categoriesBrand[0].brand;
-                            // log("loop after ", value)
-                            console.log("21121212212")
-                            callback(null, value)
+        reviewAndRating: (cb) => {
+
+
+            commonAPI.reviewAndRating(data._id, async (err, result) => {
+                // console.log("%5555555555555555", err, (result))
+                if (err && !result.length > 0) {
+                    cb(null)
+                }
+                else {
+                    // console.log(JSON.stringify(result))
+                    rating = [];
+                    console.log("start")
+                    result.forEach(element => {
+                        // console.log("check review and rating", element.reviewAndRating)
+                        if (element.reviewAndRating.length > 0) {
+
+                            element.reviewAndRating.map(async element => {
+                                console.log("#", element)
+
+
+                                getUserinfo(element.userId).then(res => {
+                                    // data[index].userCounts = res
+
+                                    console.log("$", res)
+                                })
+                                async function getUserinfo(temp) {
+                                    return new Promise(async (resolve, reject) => {
+                                        console.log("ASDFASDFASDFASDFAS")
+                                        await userModel.findOne({ _id: temp }).exec((err2, data2) => {
+                                            console.log("$z", err2, data2)
+                                            if (err2) {
+                                                reject(err2)
+                                            }
+                                            // console.log(data2)
+                                            resolve(data2)
+                                        })
+                                    })
+                                }
+
+                            })
+
+
                         }
-                        else {
-                            console.log("asdfsadf")
-                            callback(null)
-                        }
+                        // cb(null,rating)
                     })
-                }, (err, finalresult) => {
-                    log("error", err)
-                    console.log("final result", JSON.stringify(temp))
-                    if (err) callback(null)
+                    console.log("end")
+                    // cb(null, rating)
+                }
+            })
+        },
+        getSimilarProduct: (cb) => {
+            commonAPI.getSimilarProductlist(data._id, (err, result) => {
+                // console.log("3333333333333333333", err, result)
+                let test1 = []
+                if (err) cb(null)
+                else {
+                    // console.log(JSON.stringify(result))
+                    result.brandDesc.forEach(element => {
+                        let temp = {
+                            _id: element._id,
+                            description: element.description,
+                            price: element.price,
+                            productName: element.productName,
+                            sellerId: element.sellerId,
+                            brand: element.brandId.brandName,
+                            specifications: element.specifications,
+                            image: element.image,
+                        }
+                        test1.push(temp)
+                    })
+                    // console.log(temp)
+                    cb(null, test1)
+                }
+            })
+        }
+
+    }, (err, response) => {
+        // function search(nameKey, myArray,keyMatch) {
+        //     for (var i = 0; i < myArray.length; i++) {
+        //         if (myArray[i].keyMatch === nameKey) {
+        //             return myArray[i];
+        //         }
+        //     }
+        // }
+        if (response) {
+            // console.log("sadfsadfasfsadfdfasdf", response)
+            res = {}
+            var ratingAndReview = []
+            // console.log(response.findProduct.brandDesc[0].varianceId)
+            if (response.findProduct.brandDesc[0].varianceId == null) {
+                console.log("variant not inserted")
+                response.findProduct.brandDesc.forEach(element => {
+                    // console.log('element----------->>>',element.varianceId.variants)
+                    var b = []
+                    var color = []
+                    var material = []
+                    var size = []
+                    // var test2;
+                    // element.varianceId.variants.forEach(test => {
+                    //     // console.log('123456789023456789',test)
+                    //     // test2=test
+                    //    let a = {
+                    //         colorName: test.color,
+                    //         variance: {
+                    //             _id: test._id,
+                    //             color: test.color,
+                    //             material: test.material,
+                    //             image: test.image,
+                    //         }
+                    //     }
+                    //     color.push(test.color),
+                    //     material.push(test.material)
+                    //     size.push(test.size)
+                    //     b.push(a)
+                    //     // console.log('---color Array------>>', color)
+                    //     // console.log('---materical Array------>>', material)
+                    //     // console.log('---size Array------>>', size)
+                    //     // var uSet = new Set(color);
+                    //     // console.log( uSet )
+                    //     // console.log(Object.keys())
+                    // // })
+                    data = {
+                        _id: element._id,
+                        brand: element.brandId.brandName,
+                        productName: element.productName,
+                        price: element.price,
+                        color: element.color,
+                        description: element.description,
+                        image: element.image,
+                        specifications: element.specifications[0],
+                        /*      variants: {
+                                 // [test.color]: {
+                                 _id: "",
+                                 color: "",
+                                 material: "",
+                                 image: [],
+                                 size: "",
+                                 price: ""
+     
+                             },
+                             colors: [],
+                             material: [],
+                             size: [] */
+                    }
+                    res.product = data
+                    // })
+                })
+            }
+            else {
+                response.findProduct.brandDesc.forEach(element => {
+                    // console.log('element----------->>>',element.varianceId.variants)
+                    var b = []
+                    var color = []
+                    var material = []
+                    var size = []
+                    // var test2;
+                    element.varianceId.variants.forEach(test => {
+                        color.push(test.color)
+                        material.push(test.material)
+                        size.push(test.size)
+                        console.log(test.color.toUpperCase())
+                        data = {
+                            _id: element._id,
+                            brand: element.brandId.brandName,
+                            productName: element.productName,
+                            price: element.price,
+                            description: element.description,
+                            specifications: element.specifications[0],
+                            variants: {
+                                // colorName: test.color,
+                                // [test.color]: {
+                                _id: test._id,
+                                color: test.color.toUpperCase(),
+                                material: test.material.toUpperCase(),
+                                image: test.image ? test.image : [],
+                                size: test.size.toUpperCase(),
+                                price: test.price ? test.price : ''
+                                // }
+                            },
+                            colors: [...new Set(color)].reverse().map(function (x) { return x.toUpperCase() }),
+                            material: [...new Set(material)].reverse().map(function (x) { return x.toUpperCase() }),
+                            size: [...new Set(size)].reverse().map(function (x) { return x.toUpperCase() })
+                        }
+                        res.product = data
+                    })
+                })
+            }
+            // console.log(JSON.stringify(response.reviewAndRating))
+            if (false) {
+                response.reviewAndRating.forEach(element => {
+                    console.log(element)
+                    if (element.reviewAndRating.length > 0) {
+
+                        console.log("333333333", element)
+                        async.forEachOf(element.reviewAndRating, async (value, key, callback) => {
+                            console.log("----------->>")
+                            // setTimeout(4000)
+                            await userModel.findOne({ _id: value.userId }).exec(async (err, userDetail) => {
+                                console.log('userdetail')
+                                if (userDetail) {
+                                    let demo = {
+                                        firstName: userDetail.firstName,
+                                        lastName: userDetail.lastName,
+                                        image: userDetail.image,
+                                        review: value.review,
+                                        rating: value.rating
+                                    }
+                                    await ratingAndReview.push(demo)
+                                }
+                                callback(null, ratingAndReview)
+                            })
+                            // console.log("###33",ratingAndReview)
+                            // callback()
+                        }, async (err, result) => {
+                            console.log(err, result)
+                            console.log("ASDFASDFASDFASDFASDf", ratingAndReview)
+                            // await 
+                            console.log("ratingAndReviewratingAndReview", ratingAndReview)
+                            sellerInfo = {
+                                _id: "5bd949e76f6cdd0b3b639e9c",
+                                sellerName: "Raghu Thakur",
+                                selllerImage: "http://res.cloudinary.com/sumit9211/image/upload/v1540970222/cy3r1ilg2gsh6hvdkxsa.jpg",
+                                selllerRating: "3"
+                            }
+                            res.sellerInfo = sellerInfo
+                            res.reviewAndRating = ratingAndReview
+                            res.similarProduct = response.getSimilarProduct
+                            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
+                        })
+                    }
                     else {
-                        callback(null, finalresult)
+                        console.log('e443423423423', ratingAndReview)
+                        sellerInfo = {
+                            _id: "5bd949e76f6cdd0b3b639e9c",
+                            sellerName: "Raghu Thakur",
+                            selllerImage: "http://res.cloudinary.com/sumit9211/image/upload/v1540970222/cy3r1ilg2gsh6hvdkxsa.jpg",
+                            selllerRating: "3"
+                        }
+                        res.sellerInfo = sellerInfo
+                        res.reviewAndRating = ratingAndReview
+                        res.similarProduct = response.getSimilarProduct
+                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
                     }
                 })
-            })
+            }
+            else {
+
+                console.log('e443423423423', response.reviewAndRating)
+                sellerInfo = {
+                    _id: "5bd949e76f6cdd0b3b639e9c",
+                    sellerName: "Raghu Thakur",
+                    selllerImage: "http://res.cloudinary.com/sumit9211/image/upload/v1540970222/cy3r1ilg2gsh6hvdkxsa.jpg",
+                    selllerRating: "3"
+                }
+                res.sellerInfo = sellerInfo
+                res.reviewAndRating = response.reviewAndRating
+                res.similarProduct = response.getSimilarProduct
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
+            }
+            // console.log(ratingAndReview)
+            /*  sellerInfo = {
+                 _id: "5bd949e76f6cdd0b3b639e9c",
+                 sellerName: "Raghu Thakur",
+                 selllerImage: "http://res.cloudinary.com/sumit9211/image/upload/v1540970222/cy3r1ilg2gsh6hvdkxsa.jpg",
+                 selllerRating: "3"
+             }
+             res.sellerInfo = sellerInfo
+             res.reviewAndRating = ratingAndReview
+             res.similarProduct = response.getSimilarProduct
+             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res }); */
+        }
+        else {
+            console.log("####################################################3")
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY })
+        }
     })
+
+
+
+
+
+    // subCategoryModelL2.find({ 'subCategories.subCategoryName': "mobile" }, { 'subCategories.$': 1 }).exec((err, result) => {
+    //     if (err) callback(null)
+    //     else if (result.length < 0)
+    //         brandDescriptionL4.find({ subCategory: result[0].subCategories[0]._id }).lean().exec((err, res) => {
+    //             // console.log("product description",JSON.stringify(res))
+    //             var temp
+    //             if (err) callback(null)
+    //             async.forEachOf(res, function (value, keyIndex, callback) {
+    //                 categoryBrandModelL3.findOne({ 'categoriesBrand._id': value.categoryBrand }, { "categoriesBrand.$": 1 }).exec((err, result2) => {
+
+    //                     if (value.brandDesc.length > 0) {
+    //                         temp = value
+    //                         value.brandDesc.brand = result2.categoriesBrand[0].brand;
+    //                         // log("loop after ", value)
+    //                         console.log("21121212212")
+    //                         callback(null, value)
+    //                     }
+    //                     else {
+    //                         console.log("asdfsadf")
+    //                         callback(null)
+    //                     }
+    //                 })
+    //             }, (err, finalresult) => {
+    //                 log("error", err)
+    //                 console.log("final result", JSON.stringify(temp))
+    //                 if (err) callback(null)
+    //                 else {
+    //                     callback(null, finalresult)
+    //                 }
+    //             })
+    //         })
+    // })
 }
 //!remove or delete from add to cart
 deleteCart = (data, headers, callback) => {
@@ -1240,22 +1553,63 @@ deleteCart = (data, headers, callback) => {
 
 //!test sms 
 testSms = (data, callback) => {
+    console.log(data.productId)
+    /* data = {
+        productId: "5bfbb0bbfd72a14b693fa9a0",
+        msg: "order placed successfully",
+        title: "order placed",
+        type: "orderPlaced",
 
-    commonFunction.sendSMS("WAKI SENT A OTP", 8439389857, (err, result) => {
+    }
+    commonAPI.notifyPlaceOrder(data, '5bfbb0bbfd72a14b693fa9a0', (err, result) => {
+
+        console.log()
+    }) */
+
+    /* commonFunction.sendSMS("WAKI SENT A OTP", 8439389857, (err, result) => {
         console.log(err, result)
     })
+    commonAPI.getUserDetail("5bfbb0bbfd72a14b693fa9a0", (err, result) => {
+        console.log(err, result)
+    }) */
+    brandDescriptionL4.aggregate([
+
+        {
+            $lookup: {
+                from: "brandListing",
+                localField: "_id",
+                foreignField: "data.productId",
+                as: "userRole"
+            }
+        },
+        {
+            $unwind: "$userRole"
+        }
+        // {
+        //     $project: {
+        //         "_id": 1,
+        //         "categoryModel": 1,
+        //         "brandId": 1,
+        //         "role": "$userRole.brandDesc"
+        //     }
+        // }
+    ], (err, result) => {
+        console.log(err, result)
+        callback(result)
+    })
+
 }
 
 //!placeOrder
 placeOrder = (data, headers, callback) => {
-    log("addToCart", data, headers.accesstoken)
+    log("placeOrder", data, headers.accesstoken)
     var userId;
     var orderId = commonFunction.generateOrderId(6)
     var orderPayment = data.orderPayment.toUpperCase()
     commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
         if (result) userId = result
         else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
+        // returnvarianceId
     })
     if (!data.productId || !userId || !data.varianceId)
         callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
@@ -1274,6 +1628,7 @@ placeOrder = (data, headers, callback) => {
                     update = {
                         $push: {
                             orderPlacedDescription: {
+                                sellerId: data.sellerId,
                                 productId: data.productId,
                                 varianceId: data.varianceId,
                                 orderPayment: orderPayment ? orderPayment : "COD",
@@ -1287,14 +1642,22 @@ placeOrder = (data, headers, callback) => {
                             }
                         }
                     }
+                console.log("req", query)
                 placeOrderModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, orderPlaced) => {
                     log(err, orderPlaced)
                     if (err) {
                         callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                     }
                     else if (orderPlaced) {
-                        let temp = {}
-                        // temp.length = orderPlaced.orderPlacedDescription.length
+                        let notifyData = {
+                            msg: util.statusMessage.ORDER_PLACED[data.lang],
+                            productId: data.productId,
+                            title: util.statusMessage.TITLE.PLACED[data.lang],
+                            type: util.statusMessage.type.PLACED[data.lang],
+                        }
+                        commonAPI.notify(notifyData, userId, (err, result) => {
+                            console.log("1659.....notifyAPI", err, result)
+                        })
                         callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang] })
                     }
                     else {
@@ -1313,7 +1676,7 @@ placeOrder = (data, headers, callback) => {
                         orderStatus: "PLACED",
                         productQuantity: data.productQuantity ? data.productQuantity : 1,
                         orderId: orderId,
-                        addressId: data.addressId ? data.addressId : "null"
+                        addressId: data.addressId ? data.addressId : "null",
                     }
                 }
                 placeOrderModel.create(query, (err, result) => {
@@ -1328,6 +1691,15 @@ placeOrder = (data, headers, callback) => {
                         //! delete in addtocart
                         commonAPI.deleteCart(userId, data.productId)
                         //!
+                        let notifyData = {
+                            msg: util.statusMessage.ORDER_PLACED[data.lang],
+                            productId: data.productId,
+                            title: util.statusMessage.TITLE.PLACED[data.lang],
+                            type: util.statusMessage.type.PLACED[data.lang],
+                        }
+                        commonAPI.notify(notifyData, userId, (err, result) => {
+                            console.log("1666...notifyAPI", err, result)
+                        })
                         callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang] })
                     }
                     else {
@@ -1362,14 +1734,23 @@ orderList = (data, headers, callback) => {
                     input: '$orderPlacedDescription',
                     as: 'service',
                     cond: {
-                        $eq: ['$$service.orderStatus', 'PLACED']
+                        // $eq: ['$$service.orderStatus', 'PLACED'],
+                        // $eq: ['$$service.orderStatus', 'CANCELLED'],
+                        // $eq: ['$$service.orderStatus', ' PLACED'],
+                        // $eq: ['$$service.orderStatus', ' PLACED'],
+
+
+                        // $and: [
+                        //     { $eq: ['$$service.orderStatus', 'CANCELLED'] },
+                        //     { $eq: ['$$service.orderStatus', 'PLACED'] }
+                        // ]
                     }
                 }
             },
         }
     }
     ], (err, result) => {
-        console.log("_______>>>", JSON.stringify(result))
+        console.log("------->>>", JSON.stringify(result))
         length = result
         if (result.length > 0 && result != undefined) {
             log("enter in looop")
@@ -1508,9 +1889,13 @@ OpenSubCategory = (data, callback) => {
     })
 }
 //!product list 
-productList = (data, callback) => {
-    console.log("api is hitted")
+categoryProductList = (data, callback) => {
+    console.log("asdf")
+    console.log("api is hitted", data)
+
+
     var response = []
+    var parkar = Object
     if (data.productListType == 'brand') {
         // console.log('brand commingbrand commingbrand comming', data)
 
@@ -1519,19 +1904,36 @@ productList = (data, callback) => {
             $unwind: '$brandDesc'
         }, {
             $match: { 'brandDesc.brandId': mongoose.Types.ObjectId(data.productCategoryId) },
-
-        }
+        }/* ,
+        {
+            $lookup:'brandListing',
+            localField:'data.productCategoryId',  
+            foreignField:'_id',
+            as:'as'
+        } */
         ],
        /*  brandDescriptionL4.find({
             'brandDesc.brandId': data.productCategoryId
-        }).exec( */(err, productDetail) => {
-                console.log('--------------->>', err, JSON.stringify(productDetail))
+        }).exec( */ (err, productDetail) => {
+                console.log("ERROR", err)
+                console.log("productDetail", productDetail)
+
                 if (err) {
                     throw err
                 }
                 else if (productDetail.length > 0) {
                     productDetail.forEach(element => {
-                        // console.log("asdfasdfasdfasdf", element)
+                        // console.log("asdfasdfasdfasdf" + element.brandDesc._id)
+                        promise = new Promise((resolve, reject) => {
+                            varianceModel.findOne({ productId: element.brandDesc._id }).exec((err2, data2) => {
+                                // console.log("#@#########@#@#@#@#@#@#", err2, data2)
+                                if (err2) { reject(err2) }
+                                // console.log(data2)
+                                resolve(data2)
+                            })
+                        })
+                        // console.log("end")
+                        // console.log("3333333333",parkar)
                         if (element.brandDesc) {
                             // console.log('---------->>', element.brandDesc)
                             let temp = {
@@ -1576,6 +1978,7 @@ productList = (data, callback) => {
                                 brand: element.brandId.brandName,
                                 productName: element.productName,
                                 price: element.price,
+                                status: element.status
                             }
                             response.push(temp)
                         })
@@ -1663,7 +2066,7 @@ searchProduct = (data, callback) => {
                     else callback(null, result)
                 })
             }
-            else{
+            else {
                 brandDescriptionL4.aggregate([{
                     $unwind: '$brandDesc'
                 }, {
@@ -1801,7 +2204,6 @@ checkoutOrder = (data, headers, callback) => {
             orderModel.findOne({ userId: userId }, (err, result) => {
                 async.forEachOf(result.orderDescription, (value, key, callback) => {
                     commonAPI.placeOrder(userId, value, data.addressId, data.orderPayment, orderId, (err, result) => {
-
                         if (err) callback(null)
                         else callback(null, result)
                     })
@@ -1833,12 +2235,17 @@ addBrand = (data, callback) => {
     }
     async.waterfall([
         (cb) => {
-            commonFunction.uploadImg(data.brandImage, (err, image) => {
-                log(err, image)
-                if (err) cb(null)
-                else if (!image) cb(null)
-                else cb(null, image)
-            })
+            if (data.brandImage) {
+                commonFunction.uploadImg(data.brandImage, (err, image) => {
+                    log("######33", err, image)
+                    if (err) cb("null")
+                    else if (!image) cb("null")
+                    else cb(null, image)
+                })
+            } else {
+                console.log("else contio")
+                cb("null")
+            }
         },
         function (image, cb) {
             console.log(')----------->>>>)))', image)
@@ -2369,6 +2776,7 @@ productDetails = (data, callback) => {
                         color.push(test.color)
                         material.push(test.material)
                         size.push(test.size)
+                        console.log(test.color.toUpperCase())
                         data = {
                             _id: element._id,
                             brand: element.brandId.brandName,
@@ -2380,10 +2788,10 @@ productDetails = (data, callback) => {
                                 // colorName: test.color,
                                 // [test.color]: {
                                 _id: test._id,
-                                color: test.color.toUpperCase() ? test.color : '',
-                                material: test.material.toUpperCase() ? test.material : '',
+                                color: test.color.toUpperCase(),
+                                material: test.material.toUpperCase(),
                                 image: test.image ? test.image : [],
-                                size: test.size.toUpperCase() ? test.size : '',
+                                size: test.size.toUpperCase(),
                                 price: test.price ? test.price : ''
                                 // }
                             },
@@ -2621,8 +3029,8 @@ getVariance = (data, callback) => {
 } */
 applyFilter = (data, callback) => {
     console.log('call filter api -==>', data)
-    console.log('call filter api -==>', typeof data.Colors)
-
+    console.log('call filter api -==>', typeof data.Price)
+    var dataManage = {}
     // console.log(JSON.parse(data.Colors))
     if (data.Colors && data.Sizes && data.Brands && data.Price) {
         dataManage = {
@@ -2688,6 +3096,34 @@ applyFilter = (data, callback) => {
             Brands: JSON.parse(data.Brands)
         }
     }
+    else if (data.Colors) {
+        dataManage = {
+            Colors: JSON.parse(data.Colors),
+            // Price: JSON.parse(data.Price),
+            // Brands: JSON.parse(data.Brands)
+        }
+    }
+    else if (data.Price) {
+        dataManage = {
+            // Colors: JSON.parse(data.Colors),
+            Price: JSON.parse(data.Price),
+            // Brands: JSON.parse(data.Brands)
+        }
+    }
+    else if (data.Colors) {
+        dataManage = {
+            Colors: JSON.parse(data.Colors),
+            // Price: JSON.parse(data.Price),
+            // Brands: JSON.parse(data.Brands)
+        }
+    }
+    else if (data.Brands) {
+        dataManage = {
+            // Brands: JSON.parse(data.Colors),
+            // Price: JSON.parse(data.Price),
+            Brands: JSON.parse(data.Brands)
+        }
+    }
     console.log('data parse ', dataManage)
 /*     var query = {
         "variants": {
@@ -2709,7 +3145,7 @@ applyFilter = (data, callback) => {
             $or: [
                 { 'variants.color': { $in: dataManage.Colors ? dataManage.Colors : [] } },
                 { 'variants.size': { $in: dataManage.Sizes ? dataManage.Sizes : [] } },
-                { 'variants.Price': { $in: dataManage.Price ? dataManage.Price : [] } },
+                { 'variants.price': { $lte: data.Price } },
 
             ]
         }
@@ -2838,6 +3274,256 @@ updateBrand = (data, callback) => {
         }
     })
 }
+
+//!vendor list for adminPanel
+getVendorList = (data, callback) => {
+    console.log("getVendorList")
+    let query = {
+        $and: [
+            { status: 'active' },
+            { userType: 'vendor' }
+        ]
+    }
+    userModel.find(query, { firstName: 1, lastName: 1, image: 1, status: 1, email: 1, phone: 1 }).exec((err, result) => {
+        if (err)
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], err: err })
+        else {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
+        }
+    })
+}
+//!vendor orderlist
+vendorOrderList = (header, callback) => {
+    console.log("vendororderList", header)
+
+    // placeOrderModel.find({ orderPlacedDescription: { $elemMatch: { sellerId: mongoose.Types.ObjectId('5bfbb9c3fd72a14b693fa9e7') } } }).exec((err, result) => {
+    //     console.log(err, result)
+    //     callback(result)
+    // })
+    var userId
+    commonFunction.jwtDecode(header.accesstoken, (err, result) => {
+        userId = result
+    })
+    //!
+    placeOrderModel.aggregate([{
+        $unwind: '$orderPlacedDescription'
+    }, {
+        $match: { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) }
+    }
+    ], (err, result) => {
+        // console.log(err, result)
+        var demo = []
+        async.forEachOf(result, (value, key, cb) => {
+            console.log("--->>", value)
+            /*  brandDescriptionL4.aggregate([{
+                 $unwind: '$brandDesc'
+             },
+             {
+                 $match: { 'brandDesc._id': mongoose.Types.ObjectId(value.orderPlacedDescription.productId) }
+             }
+             ], */
+            brandDescriptionL4.find({ 'brandDesc._id': mongoose.Types.ObjectId(value.orderPlacedDescription.productId) }, { 'brandDesc.$': 1 }).populate({ path: 'brandDesc.brandId' }).exec((err, productDetail) => {
+                console.log('############', err, productDetail)
+                userModel.findById({ _id: value.userId }, { firstName: 1, address: 1 }).exec((err, userInfo) => {
+                    temp = {
+                        customerName: userInfo.firstName,
+                        customerAddress: "delhi",
+                        productDetail: productDetail[0].brandDesc[0].productName,
+                        quantity: value.orderPlacedDescription.productQuantity,
+                        productImage: productDetail[0].brandDesc[0].image[0],
+                        status: value.orderPlacedDescription.orderStatus,
+
+                    }
+                    demo.push(temp)
+                    cb()
+                })
+            })
+        }, (err, resposne) => {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY.en, 'result': demo })
+        })
+        // callback(result)
+    })
+}
+
+//!create vendor
+createVendor = (data, callback) => {
+    console.log('create  vendor', data)
+
+    if (!data.image && !data.email) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        return
+    }
+    var password = commonFunction.generatePassword()
+    async.parallel({
+        uploadImage: (cb) => {
+            commonFunction.uploadImg(data.profilePic, (err, image) => {
+                log(err, image)
+                if (err) cb(null)
+                else if (!image) cb(null)
+                else cb(null, image)
+            })
+        },
+        password: (cb) => {
+
+            cb(null, util.encryptData(password))
+        },
+        checkuser: (cb) => {
+            userModel.findOne({ $and: [{ email: data.email }, { status: 'block' }] }).exec((err, result) => {
+                console.log('===>', err, result)
+                if (err)
+                    cb(null)
+                else {
+                    userModel.findOneAndRemove({ email: data.email }).exec((err, result) => {
+                        console.log('@@@@@@@@@@@@@@', err, result)
+                        cb(null,result)
+                    })
+                }
+            })
+        }
+        
+    }, (err, response) => {
+        var user = new userModel({
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            password: response.password,
+            userType: "vendor",
+            phone: data.phone,
+            address: { addresses: data.address },
+            image: response.uploadImage
+        })
+        user.save((err, save) => {
+            console.log(err, save)
+            if (err) {
+                callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
+            }
+
+            else if (save) {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.EMAIL_SENT[data.lang], 'result': save })
+                commonFunction.sendMailTest(data.email, "WAKI CREATE PASSWORD", password, (err, mailsent) => {
+                    console.log(err, mailsent)
+                })
+            }
+        })
+    })
+}
+//!subcategory list 
+getSubCategoryList = (query, callback) => {
+    console.log("get subcategory list ", query)
+    subCategoryModelL2.find({}, { 'subCategories.subCategoryName': 1, 'subCategories.image': 1, categoryModel: 1 }).populate({ path: 'categoryModel' }).exec((err, result) => {
+        // console.log(err, result)
+        demo = []
+        async.forEachOf(result, (value, key, cb) => {
+            // console.log("@@@@@2",value)
+            value.subCategories.forEach(element => {
+                console.log("@@@@@2", element)
+                // })
+                temp = {
+                    categoryName: value.categoryModel.categories.categoryName,
+                    subCategoryName: element.subCategoryName,
+                    image: element.image
+                }
+                demo.push(temp)
+
+            })
+            cb()
+        })
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[query.lang], 'result': demo })
+    })
+}
+
+//!delete vendor
+deleteVendor = (data, callback) => {
+    console.log("incoming data", data)
+    userModel.findOneAndUpdate({ _id: mongoose.Types.ObjectId(data._id) }, { $set: { status: 'block' } }, { new: true }).exec((err, result) => {
+        console.log(err, result)
+        if (err) {
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+
+        }
+        else {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DELETE_VENDOR[data.lang], 'result': result })
+        }
+    })
+}
+//!changeOrderStatus
+changeOrderStatus = (data, callback) => {
+    console.log("change order Status", data)
+    query = {
+        $and: [
+            {
+                'orderPlacedDescription.orderId': data.orderId
+            }
+        ]
+    }
+    update = {
+        $set: {
+            'orderPlacedDescription.$.orderStatus': data.status
+        }
+    }
+    placeOrderModel.findOneAndUpdate(query, update, { new: true }, async (err, result) => {
+        // console.log(err, result)
+        let temp = {
+            info: data.orderId,
+            title: util.statusMessage.TITLE[data.status][data.lang],
+            msg: util.statusMessage.notifyMsg[data.status][data.lang],
+            type: util.statusMessage.type[data.status][data.lang]
+        }
+        // console.log("temp------------------->>>>>>>>>>>>>>", temp, result.userId)
+        commonAPI.notify(temp, result.userId, (err, notify) => {
+            console.log("notify screen  3452", err, notify)
+        })
+        callback(result)
+    })
+}
+
+//!orderDetail
+orderDetail = (data, callback) => {
+    console.log('orderDetail', data)
+    // var orderId=data.orderId.sub
+    let query = {
+        'orderPlacedDescription.orderId': data.orderId.substring(3)
+    }
+    placeOrderModel.find(query, { 'orderPlacedDescription.$': 1 }).exec((err, orderDetail) => {
+
+        // console.log(orderDetail)
+        // console.log(orderDetail[0].orderPlacedDescription[0].productId)
+        brandDescriptionL4.findOne({ 'brandDesc._id': orderDetail[0].orderPlacedDescription[0].productId }, { 'brandDesc.$': 1 }).populate({ path: 'brandDesc.brandId', select: 'brandName' }).populate({ path: 'brandDesc.varianceId' }).exec((err, productDetail) => {
+            // console.log(err, productDetail)
+            // callback(orderDetail)
+            varianceModel.findOne({ 'variants._id': orderDetail[0].orderPlacedDescription[0].varianceId }, { 'variants.$': 1 }).exec((err, varianceDetail) => {
+                console.log("variance detail", err, varianceDetail)
+
+                userModel.findOne({ 'address._id': orderDetail[0].orderPlacedDescription[0].addressId }, { 'address.$': 1 }).exec((err, userAddress) => {
+
+                    console.log(err, userAddress)
+                    let temp = {
+                        brand: productDetail.brandDesc[0].brandId.brandName,
+                        orderId: data.orderId,
+                        transactionId: orderDetail[0].orderPlacedDescription[0].transactionId,
+                        productId: orderDetail[0].orderPlacedDescription[0].productId,
+                        productName: productDetail.brandDesc[0].productName,
+                        color: varianceDetail.variants[0].color,
+                        price: varianceDetail.variants[0].price,
+                        productQuantity: orderDetail[0].orderPlacedDescription[0].productQuantity,
+                        image: varianceDetail.variants[0].image,
+                        orderStatus: orderDetail[0].orderPlacedDescription[0].orderStatus,
+                        feedbackAdded: orderDetail[0].orderPlacedDescription[0].feedbackAdded,
+                        description: productDetail.brandDesc[0].description,
+                        orderDate: orderDetail[0].orderPlacedDescription[0].createdAt,
+                        orderPayment: orderDetail[0].orderPlacedDescription[0].orderPayment,
+                        deliveryAddress: userAddress.address[0],
+                        estimateTax: orderDetail[0].orderPlacedDescription[0].estimateTax,
+                        deliveryCharges: orderDetail[0].orderPlacedDescription[0].deliveryCharges,
+                        totalAmountPaid: (17 + 50 + parseInt(varianceDetail.variants[0].price)).toString(),
+                    }
+
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], 'result': temp })
+                })
+            })
+        })
+    })
+}
 module.exports = {
 
     addCategory,
@@ -2867,7 +3553,7 @@ module.exports = {
     //!myntra
     checkoutOrder,
     OpenSubCategory,
-    productList,
+    categoryProductList,
     searchProduct,
     businessDetails,
     filters,
@@ -2882,5 +3568,12 @@ module.exports = {
     applyFilter,
     getBrand,
     deleteBrand,
-    updateBrand
+    updateBrand,
+    getVendorList,
+    vendorOrderList,
+    createVendor,
+    getSubCategoryList,
+    deleteVendor,
+    changeOrderStatus,
+    orderDetail
 }

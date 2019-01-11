@@ -19,6 +19,7 @@ cloudinary.config({
     api_key: "885582783668825",
     api_secret: "0dT6FoxdcGb7UjTKtUGQbAVdOJI"
 });
+// console.log("asdf")
 let secret = speakEasy.generateSecret({
     length: 20
 });
@@ -283,7 +284,7 @@ module.exports = {
                   <td><p class="body_text"><a href="" class="just_click"> YOUR EMAIL VERIFY LINK :</a> </p></td>
                 </tr>
                 <tr>
-                  <td class="confirm_btn"><a href="http://13.126.131.184:5050/user/verifyForgotLink?email=${text}&forgotToken=${text}" >verify link</a></td>
+                  <td class="confirm_btn"><a href="http://13.126.131.184:5050/resetPassword?email=${email}&forgotToken=${text}" >verify link</a></td>
                 </tr>
                 <tr>
                   <td><p></p></td>
@@ -307,7 +308,7 @@ module.exports = {
             // html: "<p>Your verification code is " + text + "</p>"
         };
         mailer.createTransport({
-            service: 'GMAIL',
+            service: 'gmail',
             auth: {
                 user: config_json.nodemailer.user,
                 pass: config_json.nodemailer.pass
@@ -320,13 +321,13 @@ module.exports = {
 
     //!nodemailer
     sendMailTest: (email, subject, text, callback) => {
-        var html = "`</h3><br><p>Welcome to WAKI System!</p><br><p>Thanks for choosing our system. Please use below details for Verify.</p><br><h3>OPT :" + text + "<br><br>Regards<br>WAKI Team.`"
+        var html = "`<img</h3><br><p>Welcome to WAKI System!</p><br><p>Thanks for choosing our system. Your Vendor panel login credentials are</p><br><h3>Email :" + email + "</h3><h3>Password :"+ text +"</h3><br>Regards<br>WAKI Team.`"
         const mailBody = {
             from: "<do_not_reply@gmail.com>",
             to: email,
             subject: subject,
             // html: html
-            html: "</h3>Your password is " + text + "</h3>"
+            html: html
         };
 
         mailer.createTransport({
@@ -392,7 +393,7 @@ module.exports = {
 
 
     //!android notification
-    "android_notification": function (deviceToken, msg, chatType, title, sendorId, senderName, type) {
+    "android_notification": function (deviceToken, msg, title, sendorId, senderName, type) {
         // console.log("chatType==>>", deviceToken);
         console.log("module called")
         //    var deviceToken ="APA91bFLyrVqNOdk-u8Ci29vpcZaMQap4YrtMX6WMlpWjb8apGQrl8GfpZvKZezsziGY90n5-1jkcjs-yYA_5w5GFGQCLKh2-7SSekrBSqXjiaboeuSDePE";
@@ -402,15 +403,15 @@ module.exports = {
         var fcm = new FCM(serverKey);
         var message = {
             to: deviceToken,
-          /*   'data.sound': "default",
-            'data.message': "aasd",
-            "data.title": "title",
-            'data.type': "chatType",
-            'data.senderName': "senderName", */
+            /*   'data.sound': "default",
+              'data.message': "aasd",
+              "data.title": "title",
+              'data.type': "chatType",
+              'data.senderName': "senderName", */
             "data": {
-                 "title": 'WAKI', "type": "login" ,"msg":"this is testing "
-                 },
-                 
+                "title": title, "type": type, "msg": msg
+            },
+
         };
         console.log("android_notification message===>", message);
         fcm.send(message, function (err, response) {
@@ -425,19 +426,19 @@ module.exports = {
         });
 
     },
-// !IOS_NOTIFICATION
-    "IOS_NOTIFICATION": function (deviceToken, msg, chatType, title, sendorId, senderName, type) {
+    // !IOS_NOTIFICATION
+    "IOS_NOTIFICATION": function (deviceToken, msg, title, sendorId, senderName, type, badge) {
         console.log("chatType==>>", deviceToken);
         console.log("module called")
         //    var deviceToken ="APA91bFLyrVqNOdk-u8Ci29vpcZaMQap4YrtMX6WMlpWjb8apGQrl8GfpZvKZezsziGY90n5-1jkcjs-yYA_5w5GFGQCLKh2-7SSekrBSqXjiaboeuSDePE";
         //   var serverKey = "AIzaSyChK0J_JT_UjxVu6YqV7PfAzOLIpiDSsWQ";
-      var serverKey = "AAAAoBcORhQ:APA91bGfm_qj7PaZQfjiqKNJ76A4vFlx4W-rSy6jciyskt80ykuJxZqePZ5s6S1rcMUFHLeGFkqtJqXusZXDtfGv7lO8kHMpNjlWkypJBPqNr0Uozm6Ay5rQTia8pnm37DtUs2LWt4hP"
+        var serverKey = "AAAAoBcORhQ:APA91bGfm_qj7PaZQfjiqKNJ76A4vFlx4W-rSy6jciyskt80ykuJxZqePZ5s6S1rcMUFHLeGFkqtJqXusZXDtfGv7lO8kHMpNjlWkypJBPqNr0Uozm6Ay5rQTia8pnm37DtUs2LWt4hP"
         console.log("title====>", title)
         var fcm = new FCM(serverKey);
         var message =
         {
             "to": deviceToken,
-            "notification": { "title": title, "body": msg ,badge:"1" },
+            "notification": { "title": title, "body": msg, badge: badge, "type": type },
             "priority": "high"
         };
 
@@ -455,4 +456,14 @@ module.exports = {
         });
 
     },
+
+    generatePassword:  () => {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < 15; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+    }
 }

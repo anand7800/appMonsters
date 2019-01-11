@@ -7,20 +7,21 @@ var notification = mongoose.Schema({
     },
 
     notification: [{
-        
+        info:{
+            type:mongoose.Schema.Types.ObjectId
+        },
         notificationTitle: String,
         notificationMessage: String,
-        notificationType:String,
+        notificationType:{
+            type:String,
+            enum:['PLACED','DELIVERIED','REJECTED','CANCELLED','DISPATCH','INACTIVE'],
+            default:"PLACED"
+        },
         createAt:{
             type:Date,
             default:Date.now()
         }
-    }],
-    createAt: {
-        type: Date,
-        default:Date.now()
-    }
-
+    }]
 }, {
         timestamps: true
     })

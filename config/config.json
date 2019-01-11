@@ -1,7 +1,7 @@
 {
     "nodemailer": {
-        "pass": "Techugo@123",
-        "user": "sumitruhelamobiloitte@gmail.com"
+        "pass": "LUCKY@05",
+        "user": "test.techugo@gmail.com"
     },
     "db": {
         "host": "localhost:27017",

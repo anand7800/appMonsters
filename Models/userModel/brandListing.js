@@ -16,7 +16,7 @@ var brandListing = mongoose.Schema({
     status:{
         type:String,
         enum: ["ACTIVE", "INACTIVE"],
-        default:"ACTIVE",
+        default:"INACTIVE",
         upperCase:true
     }
 })

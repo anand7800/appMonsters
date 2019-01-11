@@ -6,9 +6,13 @@ var orderPlaced = mongoose.Schema({
         ref: 'login'
     },
     orderPlacedDescription: [{
+        sellerId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'login'
+        },
         productId: {
-            type: String,
-            default: ""
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'brandDescription'
         },
         varianceId: {
             type: mongoose.Schema.Types.ObjectId,
@@ -46,7 +50,7 @@ var orderPlaced = mongoose.Schema({
         },
         orderStatus: {
             type: String,
-            enum: ["PENDING", "PLACED", "DISPATCH", "REJECTED", "INPROGRESS", "DELIVERED"],
+            enum: ["PENDING", "PLACED", "DISPATCH", "REJECTED", "INPROGRESS", "DELIVERED","ORDERSHIPPED,CANCELLED"],
             default: "PENDING",
             upperCase: true
         },

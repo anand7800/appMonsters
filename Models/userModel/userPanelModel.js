@@ -10,7 +10,8 @@ var login = mongoose.Schema({
     },
     password: {
         type: String,
-        require: true,
+        require: false,
+        default: null
     },
     firstName: {
         type: String,

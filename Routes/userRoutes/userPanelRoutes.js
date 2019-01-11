@@ -120,11 +120,37 @@ userRouter.post('/updateForgotPassword',  (req, res) => {
 
 //!checkEmail
 userRouter.post('/checkEmail', (req, res) => {
-    userHandler.checkEmail(req.body, (data) => {
+    userHandler.checkEmail(req.body, (data) => {  
+        res.send(data)  
+    })
+})
+//!checkEmail
+userRouter.post('/changePassword', (req, res) => {
+    userHandler.changePassword(req.body,req.headers, (data) => {
+        res.send(data) 
+    })
+})   
+//!editProfile
+userRouter.post('/editProfile', (req, res) => {
+    userHandler.editProfile(req.body,req.headers, (data) => {
+        res.send(data) 
+    })
+})   
+
+userRouter.post('/reset',(req,res)=>{
+    userHandler.reset(req.body,(data)=>{
         res.send(data)
     })
 })
 
+userRouter.post('/verifyLink',(req,res)=>{
+    userHandler.verifyLink(req.body,(data)=>{
+        res.send(data)
+    })
+})
 module.exports = userRouter
+
+
+
 
 

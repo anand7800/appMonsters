@@ -22,7 +22,7 @@ var category = mongoose.Schema({
             type: String,
             enum: ["ACTIVE", "INACTIVE"],
             upperCase: true,
-            default: "INACTIVE"
+            default: "ACTIVE"
         }
     }
 })

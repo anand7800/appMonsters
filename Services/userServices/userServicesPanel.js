@@ -1,9 +1,9 @@
-var async = require('async')
-var userModel = require('../../Models/userModel/userPanelModel')
+const async = require('async')
+const userModel = require('../../Models/userModel/userPanelModel')
 let util = require('../../Utilities/util')
-var commonFunction = require('../../commonFile/commonFunction')
+const commonFunction = require('../../commonFile/commonFunction')
 log = console.log
-
+const mongoose = require('mongoose')
 //!signup 
 signup = (data, callback) => {
     obj = data
@@ -83,7 +83,7 @@ login = (data, callback) => {
     }
     else {
         userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod').exec((err, succ) => {
-            // console.log(err, succ)
+            console.log(err, succ)
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                 return
@@ -110,12 +110,17 @@ login = (data, callback) => {
                         "paymentMethod": succ.paymentMethod,
                         "countryCode": succ.countryCode
                     }
-                    // commonFunction.android_notification("fdUDE4j000M:APA91bEkgqRGHyIqHEYhhpbYA3n2mxYohNh1RIOEUvQRlBFp1SCYUS6cwOTtAdNZ2RbwwgL4CcYyzLDCz0Geh6iVjeOEioKKq0JgRgKJB9GAEilLX5pLAo1NUly8ofZnIVQYMBuIwXcR", "msg", "chatType", "title", "sendorId", "senderName", "type")
-                    commonFunction.IOS_NOTIFICATION("cW0cNDraQGk:APA91bFk6tl2sYGS-AU00aJQj3w6EFhbraVNGb3YYhSoGrWkbMFoYytVbDh-nct7Qjif6gqwJFuZVJzuQEATSFhHeCiPdl6BFE-nI0u21W2BLE18tuLjZWhlXQ0_BEgnz5sY5B6DdTaY", "msg", "chatType", "title", "sendorId", "senderName", "type")
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
+                    // commonFunction.android_notification("fdUDE4j000M:APA91bEkgqRGHyIqHEYhhpbYA3n2mxYohNh1RIOEUvQRlBFp1SCYUS6cwOTtAdNZ2RbwwgL4CcYyzLDCz0Geh6iVjeOEioKKq0JgRgKJB9GAEilLX5pLAo1NUly8ofZnIVQYMBuIwXcR", "msg", "chatType", "title", "sendorId", "senderName", "type")
+                    if (succ.deviceType == 2) {
+                        commonFunction.IOS_NOTIFICATION(succ.deviceToken, "Login Successfully", "Login", "WAKI", "sendorId", "senderName", "Login")
+                    }
+                    else if (succ.deviceType == 1) {
+                        commonFunction.android_notification(succ.deviceToken, "Login Successfully", "Login", "WAKI", "sendorId", "senderName", "Login")
+                    }
                 }
                 else {
-                    callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.INCORRECT_PASSWORD[data.lang] })
+                    callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.INCORRECT_OLD_PASSWORD[data.lang] })
                 }
             }
         })
@@ -322,20 +327,21 @@ getOtp = (data, callback) => {
     else {
         console.log(typeof commonFunction.getOTP())
         var otp = commonFunction.getOTP()
-        commonFunction.sendSMS(otp, data.phone, async (err, sent) => {
-            console.log(err,sent)
-            if (err) {
-                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-            }
-            else {
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.OTP[data.lang], 'result': otp })
-            }
-        })
-        // callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.OTP[data.lang], 'result': otp })
+        // commonFunction.sendSMS(otp, data.phone, async (err, sent) => {
+        //     console.log(err,sent)
+        //     if (err) {
+        //         callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+        //     }
+        //     else {
+        //         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.InvalidPhoneNuber[data.lang], 'result': otp })
+        //     }
+        // })
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.OTP[data.lang], 'result': "123456" })
     }
 }
 //! forgot Password of user
 forgotPassword = (data, callback) => {
+    console.log("---------->>>",data)
     obj = data
     if (!obj) {
         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
@@ -428,7 +434,6 @@ updateForgotPassword = (data, headers, callback) => {
                  return
              } */
             else if (result) {
-
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PASSWORD_UPDATED.en })
                 return
             }
@@ -532,39 +537,39 @@ getPaymentMethodList = (req, callback) => {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[req.query.lang], "error": err })
         }
     })
-},
-    //!resetPassword
-    resetPassword = (query, body, callback) => {
-        log("reset password", query, body)
-        var userId
-        update = {
-            $set: {
-                password: util.encryptData(body.password)
-            }
+}
+//!resetPassword
+resetPassword = (query, body, callback) => {
+    log("reset password", query, body)
+    var userId
+    update = {
+        $set: {
+            password: util.encryptData(body.password)
         }
-        commonFunction.jwtDecode(query.userId, (err, jwtId) => {
-            log("jwt", err, jwtId)
-            if (jwtId) {
-                userId = jwtId
-            }
-            else {
-                throw err
-            }
-        })
-        log("@@@@", userId)
-        userModel.findOneAndUpdate({ email: userId }, update, { new: true }, (err, success) => {
-            console.log("fausjkhdfasdf", err, success)
-            if (err) {
-                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[query.lang], "error": err })
-            }
-            else if (!success) {
-                callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[query.lang] })
-            }
-            else {
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PASSWORD_CHANGED[query.lang], "result": success })
-            }
-        })
     }
+    commonFunction.jwtDecode(query.userId, (err, jwtId) => {
+        log("jwt", err, jwtId)
+        if (jwtId) {
+            userId = jwtId
+        }
+        else {
+            throw err
+        }
+    })
+    log("@@@@", userId)
+    userModel.findOneAndUpdate({ email: userId }, update, { new: true }, (err, success) => {
+        console.log("fausjkhdfasdf", err, success)
+        if (err) {
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[query.lang], "error": err })
+        }
+        else if (!success) {
+            callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[query.lang] })
+        }
+        else {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PASSWORD_CHANGED[query.lang], "result": success })
+        }
+    })
+}
 
 //!email exist 
 checkEmail = (data, callback) => {
@@ -581,8 +586,147 @@ checkEmail = (data, callback) => {
         }
     })
 }
+//!changepassword
+changePassword = (data, headers, callback) => {
+    console.log("change password screen", data, headers)
+    async.waterfall([
+        function (cb) {
+            commonFunction.jwtDecode(headers.accesstoken, (err, jwtId) => {
+                console.log(err, jwtId)
+                if (jwtId) {
+                    cb(null, jwtId)
+                } else {
+                    cb(null, err)
+                }
+            })
+        },
+        function (jwtId, cb) {
+            console.log("################", jwtId)
+            if (jwtId == undefined) {
+                callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+                return
+            }
+            else {
+                userModel.findOne({ _id: mongoose.Types.ObjectId(jwtId) }).exec((err, result) => {
+                    if (err) {
+                        cb(null)
+                    }
+                    else if (result.password) {
+                        cb(null, jwtId, result.password)
+                    }
+                    else {
+                        callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.USER_LOGIN_SOCIAL[data.lang] })
+                        return
+                    }
+                })
+            }
+        },
+        function (jwtId, password, cb) {
+            var oldpassword = util.encryptData(data.oldPassword)
+            if (oldpassword == password) {
+                cb(null, jwtId)
+            }
+            else {
+                callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.INCORRECT_OLD_PASSWORD[data.lang] })
+                return
+            }
+        },
+        function (jwtId, cb) {
+            console.log("########", jwtId, data.newPassword)
+            var newpassword = util.encryptData(data.newPassword)
+            console.log("33333333333333333333")
+            userModel.findOneAndUpdate({ _id: mongoose.Types.ObjectId(jwtId) }, { $set: { password: newpassword } }, { new: true }).exec((err, changePassword) => {
+                // console.log("err,password", err, changePassword)
+                if (err) cb(null)
+                else cb(null, changePassword)
+            })
+        }
+    ], (err, result) => {
+        if (err) {
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+        }
+        else {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PASSWORD_CHANGED[data.lang] })
+        }
+    })
+}
 
+//!edit profile
+editProfile = (data, headers, callback) => {
+    console.log("edit profile", data, headers)
+    if (!data.image && !data.firstName) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        return
+    }
+    async.waterfall([
+        function (cb) {
+            commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+                console.log(err, result)
+                if (err)
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                else cb(null, result)
+            })
+        }
+    ], (err, result) => {
 
+        let query = {
+            _id: result
+        }
+        let update = {
+            $set: {
+                firstName: data.firstName,
+                // lastName: data.lastName,
+                image: data.image
+            }
+        }
+        userModel.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
+            console.log(err, result)
+        })
+    })
+}
+//!reset api new for angular
+
+reset = (data, callback) => {
+    console.log(data)
+    query = {
+        email: data.email
+    }
+    update = {
+        password: util.encryptData(data.newPassword),
+        forgotToken:null
+    }
+    userModel.findOneAndUpdate(query, update, { new: true }, (err, reset) => {
+        // console.log(err,reset)
+        if (err) {
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+        }
+        else {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PASSWORD_CHANGED[data.lang] })
+        }
+    })
+}
+//! api for angular verify token
+
+verifyLink = (data, callback) => {
+    log("######", data)
+    var criteria = {
+        $and: [{
+            email: data.email
+        }, {
+            forgotToken:data.forgotToken
+        }]
+    }
+    userModel.find(criteria, (err, result) => {
+        log(err, "ambuj")
+        log(result, "pppp")
+        if (result.length>0) {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "email": data.email })
+        }
+        else {
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+        }
+    })
+}
 module.exports = {
     signup,
     login,
@@ -597,5 +741,10 @@ module.exports = {
     getPaymentMethodList,
     verifyForgotLink,
     updateForgotPassword,
-    checkEmail
+    checkEmail,
+    changePassword,
+    editProfile,
+    //! this is for angular 
+    reset,
+    verifyLink
 }

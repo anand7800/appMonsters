@@ -47,7 +47,7 @@ var brandDescription = mongoose.Schema({
             type: String,
             enum: ["ACTIVE", "INACTIVE"],
             upperCase: true,
-            default: "ACTIVE"
+            default: "INACTIVE"
         }
     }]
 })

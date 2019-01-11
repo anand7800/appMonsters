@@ -29,7 +29,7 @@ vendorRouter.post('/addProductCategory', (req, res) => {
 })
 //!addBrandDescription
 vendorRouter.post('/addBrandDescription', (req, res) => {
-    vendorPanelHandler.addBrandDescription(req.body, (data) => {
+    vendorPanelHandler.addBrandDescription(req.body,req.headers, (data) => {
         res.send(data)
     })
 })
@@ -100,7 +100,7 @@ vendorRouter.get('/wishList', (req, res) => {
 
 //!testingApi  
 vendorRouter.post('/testingApi', (req, res) => {
-    vendorPanelHandler.testingApi(req, (data) => {
+    vendorPanelHandler.testingApi(req.body, (data) => {
         res.send(data)
     })
 })
@@ -121,7 +121,7 @@ vendorRouter.post('/deleteCart', (req, res) => {
 
 //!testSms  
 vendorRouter.get('/testSms', (req, res) => {
-    vendorPanelHandler.testSms(req.body, req.headers, (data) => {
+    vendorPanelHandler.testSms(req.query, (data) => {
         res.send(data)
     })
 })
@@ -149,7 +149,7 @@ vendorRouter.post('/OpenSubCategory', (req, res) => {
 
 //!productList  
 vendorRouter.post('/categoryProductList', (req, res) => {
-    vendorPanelHandler.productList(req.body, (data) => {
+    vendorPanelHandler.categoryProductList(req.body, (data) => {
         res.send(data)
     })
 })
@@ -262,6 +262,53 @@ vendorRouter.post('/deleteBrand', (req, res) => {
 //!updateBrand
 vendorRouter.post('/updateBrand', (req, res) => {
     vendorPanelHandler.updateBrand(req.body, (data) => {
+        res.send(data)
+    })
+})
+
+//!getVendorList
+vendorRouter.get('/getVendorList', (req, res) => {
+    vendorPanelHandler.getVendorList(req.query,(data) => {
+        res.send(data)
+    })
+})
+
+//!get vendorOrder list
+vendorRouter.post('/vendorOrderList', (req, res) => {
+    vendorPanelHandler.vendorOrderList(req.headers,(data) => {
+        res.send(data)
+    })
+})
+
+//!createVendor
+vendorRouter.post('/createVendor', (req, res) => {
+    vendorPanelHandler.createVendor(req.body,(data) => {
+        res.send(data)
+    })
+})
+
+//!getSubCategoryList
+vendorRouter.get('/getSubCategoryList', (req, res) => {
+    vendorPanelHandler.getSubCategoryList(req.query,(data) => {
+        res.send(data)
+    })
+})
+//!deleteVendor
+vendorRouter.post('/deleteVendor', (req, res) => {
+    vendorPanelHandler.deleteVendor(req.body,(data) => {
+        res.send(data)
+    })
+})
+
+//!changeOrderStatus
+vendorRouter.post('/changeOrderStatus', (req, res) => {
+    vendorPanelHandler.changeOrderStatus(req.body,(data) => {
+        res.send(data)
+    })
+})
+//!orderDetail
+vendorRouter.get('/orderDetail', (req, res) => {
+    vendorPanelHandler.orderDetail(req.query,(data) => {
         res.send(data)
     })
 })
