@@ -102,6 +102,14 @@ var login = mongoose.Schema({
         enum: ['block', 'active', "admin"],
         default: 'active',
         upperCase: true
+    },
+    isBussinessAdded:{
+        type:Boolean,
+        default:false
+    },
+    storeType:{
+        type:String,
+        default:null
     }
 }, {
         timestamps: true

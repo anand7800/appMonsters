@@ -8,8 +8,8 @@ var businessDetail = mongoose.Schema({
         phone: Number,
         email: String,
         sellingProduct: Array,
-        streetAddress: String,
-        cityName: String,
+        streetAddress: Array,
+        cityName: Array,
         isBusinessDetail : {
             type : String,
             default: false

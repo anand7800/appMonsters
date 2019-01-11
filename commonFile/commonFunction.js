@@ -19,7 +19,6 @@ cloudinary.config({
     api_key: "885582783668825",
     api_secret: "0dT6FoxdcGb7UjTKtUGQbAVdOJI"
 });
-// console.log("asdf")
 let secret = speakEasy.generateSecret({
     length: 20
 });
