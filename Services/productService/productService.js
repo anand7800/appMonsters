@@ -1856,37 +1856,77 @@ searchVendorOrder = (data, header, callback) => {
 **************************inActiveProductList*************************
 ***********************************************************************/
 inActiveProductList = (data, callback) => {
-    console.log("get product listddsss")
+    console.log("get product listddsss", data)
 
-    productModel.find({
-        status: "INACTIVE"
+    if(data.status)
+   { productModel.find({
+        status: data.status.toUpperCase()
     }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
-        console.log(err, JSON.stringify(response))
-        // callback(response)
-        var res = []
-        async.forEachOf(response, (value, key, callback) => {
-            let temp = {
-                productId: value._id,
-                productName: value.productName,
-                productStatus: value.status,
-                productPrice: value.price,
-                sellerName: value.sellerId.firstName,
-                image: value.image,
-                price: value.sellingPrice,
-                quantity: value.quantity,
-                variant: value.varianceId.variants ? value.varianceId.variants : null
+        // console.log(err, JSON.stringify(response))
+        if (response.length > 0) {
+            var res = []
+            async.forEachOf(response, (value, key, callback) => {
+                let temp = {
+                    productId: value._id,
+                    productName: value.productName,
+                    productStatus: value.status,
+                    productPrice: value.price,
+                    sellerName: value.sellerId.firstName,
+                    image: value.image,
+                    price: value.sellingPrice,
+                    quantity: value.quantity,
+                    variant: value.varianceId.variants ? value.varianceId.variants : null
+                }
+                res.push(temp)
+
+                callback()
+
+            }, (err, finallyy) => {
+                // console.log(err, finallyy)
+
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
+            })
+        }
+        else {
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+        }
+
+    })}
+    else{
+        productModel.find({
+           
+        }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
+            // console.log(err, JSON.stringify(response))
+            if (response.length > 0) {
+                var res = []
+                async.forEachOf(response, (value, key, callback) => {
+                    let temp = {
+                        productId: value._id,
+                        productName: value.productName,
+                        productStatus: value.status,
+                        productPrice: value.price,
+                        sellerName: value.sellerId.firstName,
+                        image: value.image,
+                        price: value.sellingPrice,
+                        quantity: value.quantity,
+                        variant: value.varianceId.variants ? value.varianceId.variants : null
+                    }
+                    res.push(temp)
+    
+                    callback()
+    
+                }, (err, finallyy) => {
+                    // console.log(err, finallyy)
+    
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
+                })
             }
-            res.push(temp)
-
-            callback()
-
-        }, (err, finallyy) => {
-            // console.log(err, finallyy)
-
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
+            else {
+                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+            }
+    
         })
-
-    })
+    }
 }
 /********************************************************************
 **************************addVendoroffer*************************
