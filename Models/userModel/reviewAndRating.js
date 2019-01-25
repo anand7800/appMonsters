@@ -23,6 +23,7 @@ var reviewAndRating = mongoose.Schema({
         status: {
             type: String,
             enum: ['ACTIVE', 'INACTIVE'],
+            uppercase:true,
             default: 'ACTIVE'
         },
         createAt: {

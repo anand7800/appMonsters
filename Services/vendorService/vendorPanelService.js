@@ -885,16 +885,16 @@ deleteSubCategory = (data, callback) => {
 
 
 changeProductStatus = (data, callback) => {
-    console.log("data is ",data)
+    console.log("data is ", data)
     if (!data.productId || !data.status) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
     else {
-        brandDescriptionL4.findOneAndUpdate({ _id: data.productId }, { $set: { status: data.status.toUpperCase() } }, { new: true }).exec((err,result)=>{
+        brandDescriptionL4.findOneAndUpdate({ _id: data.productId }, { $set: { status: data.status.toUpperCase() } }, { new: true }).exec((err, result) => {
 
-            if(err )
-            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
-            else{
+            if (err)
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
+            else {
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': result })
             }
         })
@@ -903,8 +903,35 @@ changeProductStatus = (data, callback) => {
 
 //change review status
 
-changeReviewStatus=(data,callback)=>{
-    
+changeReviewStatus = (data, callback) => {
+    console.log("incoming data ", data)
+
+
+    if (!data.reviewId) {
+        return
+    }
+    else {
+        let query = {
+            $or: [
+                { 'reviewAndRating._id': data.reviewId }
+
+            ]
+        }
+        let update = {
+            $set: {
+                'reviewAndRating.$.status': data.status.toUpperCase()
+            }
+        }
+        reviewAndRatingL5.update(query, update, { new: true }).exec((err, success) => {
+
+            if (err) throw err
+            else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': success })
+            }
+        })
+        // )
+    }
+
 }
 module.exports = {
 
@@ -931,5 +958,6 @@ module.exports = {
     searchVendorOrder,
     deleteCategory,
     deleteSubCategory,
-    changeProductStatus
+    changeProductStatus,
+    changeReviewStatus
 }

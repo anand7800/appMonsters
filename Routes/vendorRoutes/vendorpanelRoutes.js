@@ -403,4 +403,11 @@ vendorRouter.post('/changeProductStatus', (req, res) => {
         res.send(data)
     })
 })
+
+// changeReviewStatus
+vendorRouter.post('/changeReviewStatus', (req, res) => {
+    vendorPanelHandler.changeReviewStatus(req.body,(data) => {
+        res.send(data)
+    })
+})
 module.exports = vendorRouter
