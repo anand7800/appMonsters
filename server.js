@@ -12,7 +12,7 @@ let app = require('express')(),
     async = require('async'),
     waterfall = require('async-waterfall'),
     request = require('request'),
-    commonfunction = require('../wakiMongoD/commonFile/commonFunction'),
+    commonfunction = require('./commonFile/commonFunction'),
     _ = require('lodash');
 
 let fs = require("fs");
