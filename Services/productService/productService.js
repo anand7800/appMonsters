@@ -1858,43 +1858,9 @@ searchVendorOrder = (data, header, callback) => {
 inActiveProductList = (data, callback) => {
     console.log("get product listddsss", data)
 
-    if(data.status)
-   { productModel.find({
-        status: data.status.toUpperCase()
-    }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
-        // console.log(err, JSON.stringify(response))
-        if (response.length > 0) {
-            var res = []
-            async.forEachOf(response, (value, key, callback) => {
-                let temp = {
-                    productId: value._id,
-                    productName: value.productName,
-                    productStatus: value.status,
-                    productPrice: value.price,
-                    sellerName: value.sellerId.firstName,
-                    image: value.image,
-                    price: value.sellingPrice,
-                    quantity: value.quantity,
-                    variant: value.varianceId.variants ? value.varianceId.variants : null
-                }
-                res.push(temp)
-
-                callback()
-
-            }, (err, finallyy) => {
-                // console.log(err, finallyy)
-
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
-            })
-        }
-        else {
-            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
-        }
-
-    })}
-    else{
+    if (data.status || data.status.length > 2) {
         productModel.find({
-           
+            status: data.status.toUpperCase()
         }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
             // console.log(err, JSON.stringify(response))
             if (response.length > 0) {
@@ -1912,19 +1878,54 @@ inActiveProductList = (data, callback) => {
                         variant: value.varianceId.variants ? value.varianceId.variants : null
                     }
                     res.push(temp)
-    
+
                     callback()
-    
+
                 }, (err, finallyy) => {
                     // console.log(err, finallyy)
-    
+
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
                 })
             }
             else {
                 callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
             }
-    
+
+        })
+    }
+    else {
+        productModel.find({
+
+        }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
+            // console.log(err, JSON.stringify(response))
+            if (response.length > 0) {
+                var res = []
+                async.forEachOf(response, (value, key, callback) => {
+                    let temp = {
+                        productId: value._id,
+                        productName: value.productName,
+                        productStatus: value.status,
+                        productPrice: value.price,
+                        sellerName: value.sellerId.firstName,
+                        image: value.image,
+                        price: value.sellingPrice,
+                        quantity: value.quantity,
+                        variant: value.varianceId.variants ? value.varianceId.variants : null
+                    }
+                    res.push(temp)
+
+                    callback()
+
+                }, (err, finallyy) => {
+                    // console.log(err, finallyy)
+
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
+                })
+            }
+            else {
+                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+            }
+
         })
     }
 }

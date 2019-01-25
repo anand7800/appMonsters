@@ -397,4 +397,10 @@ vendorRouter.post('/deleteSubCategory', (req, res) => {
         res.send(data)
     })
 })
+
+vendorRouter.post('/changeProductStatus', (req, res) => {
+    vendorPanelHandler.changeProductStatus(req.body,(data) => {
+        res.send(data)
+    })
+})
 module.exports = vendorRouter

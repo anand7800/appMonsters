@@ -879,9 +879,32 @@ deleteSubCategory = (data, callback) => {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
         }
 
+
     })
+}
 
 
+changeProductStatus = (data, callback) => {
+    console.log("data is ",data)
+    if (!data.productId || !data.status) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+    else {
+        brandDescriptionL4.findOneAndUpdate({ _id: data.productId }, { $set: { status: data.status.toUpperCase() } }, { new: true }).exec((err,result)=>{
+
+            if(err )
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
+            else{
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': result })
+            }
+        })
+    }
+}
+
+//change review status
+
+changeReviewStatus=(data,callback)=>{
+    
 }
 module.exports = {
 
@@ -907,5 +930,6 @@ module.exports = {
     vendorOrderStatus,
     searchVendorOrder,
     deleteCategory,
-    deleteSubCategory
+    deleteSubCategory,
+    changeProductStatus
 }
