@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-side-bar></app-side-bar>\n<app-header></app-header>\n\n<div id=\"page-content-wrapper\">\n  <div class=\"addproducts\">\n     <h3>Welcome <span>Johnathan Doe</span></h3>\n      <div class=\"addproimgbx\"><img src=\"../../../assets/img/add_products.png\" alt=\"\" /></div>\n      <div class=\"addprobtnrow\"><button type=\"button\" class=\"btn btn-primary addpro\" (click)=addProduct()>ADD PRODUCTS TO GET STARTED</button></div>\n  </div>\n</div>  "
+module.exports = "<app-side-bar></app-side-bar>\n<app-header></app-header>\n\n<div id=\"page-content-wrapper\">\n  <div class=\"addproducts\">\n     <h3>Welcome <span>Johnathan Doe</span></h3>\n      <div class=\"addproimgbx\"><img src=\"../../../assets/images/add_products.png\" alt=\"\" /></div>\n      <div class=\"addprobtnrow\"><button type=\"button\" class=\"btn btn-primary addpro\" (click)=addProduct()>ADD PRODUCTS TO GET STARTED</button></div>\n  </div>\n</div>  "
 
 /***/ }),
 
@@ -110,7 +110,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n  <!--Add Products Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\">\n\n      <div class=\"dashboardConbx\">\n        <!-- <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\" > -->\n        <div class=\"addproductheadingrow\">\n          <h3>Lorem Ipsum Heading</h3>\n          <div class=\"addproheadingbtn\">\n            <button type=\"button\" class=\"btn btn-primary addprobtn cancel\">Cancel</button>\n            <button (click)=\"saveProduct(myGroup.value)\" type=\"button\" class=\"btn btn-primary addprobtn\">Save</button>\n          </div>\n        </div>\n        <div class=\"productsviewrow\">\n          <div class=\"row eqWrap equalHMWrap clearfix\">\n            <!--Text Editor Section Start Here-->\n            <div class=\"col-sm-5 texteditorwrap\">\n              <div class=\"form-group\">\n                <label>Title</label>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Product Name Here\" [formControl]=\"myGroup.controls['title']\"\n                  ngDefaultControl />\n\n              </div>\n              <div class=\"form-group\">\n                <label>Description</label>\n                <div class=\"texteditorbox\"><img class=\"img-responsive\" width=\"606\" height=\"255\" />\n\n                  <ckeditor [(ngModel)]=\"ckeditorContent\" [formControl]=\"myGroup.controls['description']\"\n                    ngDefaultControl>\n                    <ckbutton [name]=\"'saveButton'\" [command]=\"'saveCmd'\" (click)=\"save($event)\" [icon]=\"'save.png'\"\n                      [label]=\"'Save Document'\" [toolbar]=\"'clipboard,1'\">\n                    </ckbutton>\n                  </ckeditor>\n                </div>\n              </div>\n            </div>\n            <!--Text Editor Section End Here-->\n            <!-- </form> -->\n            <!--Image Upload Section Start Here-->\n            <div class=\"col-sm-7 fileuploadbox\">\n              <label>Product Images</label>\n              <!-- <input type=\"file\" (change)='onFileChanged($event)' accept=\"image/jpeg,image/jpg,image/png\"> -->\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" id='fImage' data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image1']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image2']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image3']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image4']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image5']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image6']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image7']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image8']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n            </div>\n            <!--Image Upload Section End Here-->\n          </div>\n        </div>\n\n        <div class=\"row productcategorywrap clearfix\">\n          <div class=\"col-sm-5 padwd10\">\n            <!--Product Category Section Start Here-->\n            <div class=\"productCategorybox\">\n              <div class=\"form-group\">\n                <label>Product Category</label>\n                <select class=\"form-control\" (change)=\"getCatgory($event.target.value)\" [formControl]=\"myGroup.controls['productcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">select category</option>\n                  <option *ngFor=\"let c of category\" [value]=\"c._id\">{{c.categoryName}}</option>\n                </select>\n\n              </div>\n              <div class=\"form-group\">\n                <label>Product Subcategory</label>\n                <select class=\"form-control\" (change)=\"SubCatorydata($event.target.value)\" [formControl]=\"myGroup.controls['productsubcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">select SubCategory</option>\n                  <option *ngFor=\"let c of getSubCatorydata\" [value]=\"c._id\">{{c.subCategoryName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Type</label>\n                <select class=\"form-control\" (change)=\"getProductCategoryId($event.target.value)\" [formControl]=\"myGroup.controls['producttype']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select Type</option>\n                  <option *ngFor=\"let c of productCategoryname\" [value]=\"c._id\">{{c.productcategoryName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Brand</label>\n                <select class=\"form-control\" (change)=\"getBrandId($event.target.value)\" [formControl]=\"myGroup.controls['productbrand']\"\n                  ngDefaultControl>\n                  <option value=\"\">select Brand</option>\n                  <option *ngFor=\"let c of getBrandList\" [value]=\"c._id\">{{c.brandName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group mybrand clearfix\">\n                <!-- <form [formGroup]='formgroup'> -->\n                <input type=\"text\" placeholder=\"My Brand\" [formControl]=\"myGroup.controls['addBrand']\" />\n                <button type=\"submit\" (click)=\"addBrand()\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i></button>\n                <!-- </form> -->\n              </div>\n              <div class=\"form-group clearfix\">\n                <label>Product Tags</label>\n                <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"\n                  [formControl]=\"myGroup.controls['searchtag']\"></tag-input>\n                <!-- <tag-input [ngModel]=\"itemsAsObjects\" ></tag-input> -->\n              </div>\n            </div>\n            <!--Product Category Section End Here-->\n\n            <!--Modify Variants Table Section Start Here-->\n            <!-- <form [formGroup]='dynamicForm'> -->\n            <div class=\"modify_variants\">\n              <h4>Modify Variants</h4>\n              <table class=\"table mytable\">\n                <thead>\n                  <tr>\n                    <th align=\"left\" valign=\"middle\">Variant</th>\n                    <th>Price</th>\n                    <th>SKU</th>\n                    <th>Inventory</th>\n                  </tr>\n                </thead>\n                <tbody>\n\n\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- <tr formArrayName=\"items\" *ngFor=\"let item of dynamicForm.get('items').controls;  let in = index\" >\n                      <td [formGroupName]=\"in\">\n                        <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id={{in}} />\n                          <label for={{in}}>&nbsp;</label>\n                        </span>\n                        <span class=\"sizenm\" >{{dataLoop[in]}}</span> <span class=\"colornm\"></span>\n                      </td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                    </tr> -->\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- {{dataLoop|json}} -->\n                  <tr *ngFor=\"let item of dataLoop;  let in = index\" class=\"pickvalue\">\n                    <td>\n                      <span class=\"checkboxbx\">\n                        <input type=\"checkbox\" id={{in}} value=\"{{item}}\"/>\n                        <label for={{in}}>&nbsp;</label>\n                      </span>\n                      <span class=\"sizenm\">{{item}}</span>&nbsp;\n                      <!-- <span class=\"sizenm\">{{item[0]}}</span>&nbsp;\n                      <span class=\"colornm\">{{item[1]}}</span>&nbsp;\n                      <span class=\"colornm\">{{item[2]}}</span>&nbsp; -->\n                    </td>\n                    <td id=\"variancePrice\"><input class=\"form-control variancePrice\" type=\"text\" placeholder=\"230\"  /></td>\n                    <td><input class=\"form-control varianceSKU\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                    <td><input class=\"form-control varianceInventory\" type=\"text\" placeholder=\"1234\" /></td>\n                  </tr>\n                  <!-- {{dynamicForm.value|json}} -->\n                  <!-- <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test2\" />\n                      <label for=\"test2\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Pink</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr>\n                <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test3\" />\n                      <label for=\"test3\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Blue</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr> -->\n                </tbody>\n              </table>\n            </div>\n            <!-- </form> -->\n            <!--Modify Variants Table Section End Here-->\n          </div>\n          <div class=\"col-sm-7 padwd10\">\n            <div class=\"row clearfix\">\n              <!--Selling Price Section Start Here-->\n              <div class=\"col-sm-6 pdrightwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Selling Price</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"499\" [(ngModel)]=\"SellingPrice\" [formControl]=\"myGroup.controls['sellingprice']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Cost/Item</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"399\" [formControl]=\"myGroup.controls['costprice']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Item Weight</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"0.5\" [formControl]=\"myGroup.controls['itemweight']\" />\n                  </div>\n                </div>\n                <!--Selling Price Section End Here-->\n              </div>\n              <!--Inventory Section Start Here-->\n              <div class=\"col-sm-6 pdleftwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Inventory SKU</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"BUI\" [formControl]=\"myGroup.controls['InventorySKU']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Quantity</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"50\" [formControl]=\"myGroup.controls['quantity']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Product Type</label>\n                    <select class=\"form-control\" [formControl]=\"myGroup.controls['trialPack']\">\n                      <option value=\"Avaiable for try\">Avaiable for try</option>\n                      <option value=\"saab\">Saab</option>\n                      <option value=\"mercedes\">Mercedes</option>\n                      <option value=\"audi\">Audi</option>\n                    </select>\n                  </div>\n                </div>\n              </div>\n              <!--Inventory Section End Here-->\n            </div>\n\n            <!--Variants Section Start Here-->\n            <div class=\"row clearfix\" *ngIf='true'>\n              <div class=\"col-sm-12\">\n                <div class=\"productCategorybox\">\n                  <div class=\"variants\">\n                    <h4>Variants</h4>\n                    <div class=\"sminfo\">Swimming hundreds of feet beneath the ocean’s surface in many parts of the\n                      world\n                      are prolific aey construct one or more spacious houses” that can exceed three feet in length.\n                    </div>\n                    <div class=\"variantsoption\">\n                      <div class=\"row clearfix\">\n                        <div class=\"col-sm-3\">\n                          <label>Option name</label>\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <label>Option Values</label>\n                        </div>\n                        <div class=\"col-sm-3\">\n                          <label>&nbsp;</label>\n                        </div>\n                      </div>\n                      <div class=\"form-group\">\n                        <div class=\"row clearfix\">\n                          <!-- <div class=\"col-sm-3\">\n                          <input class=\"form-control\" type=\"text\" value=\"Color\" (change)='getOptionKey($event.target.value)' />\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"></tag-input>\n                        </div> -->\n                          <!-- <div class=\"col-sm-3\">\n                          <a (click)=\"createComponent()\">Add Option</a>\n                        </div> -->\n\n\n                          <!-- <button type=\"button\" (click)=\"createComponent()\">\n                          I am Parent, Create Child\n                        </button> -->\n\n                          <!-- //!asdfj -->\n                          <div>\n                            <form [formGroup]=\"myForm\" novalidate (ngSubmit)=\"saveVariants(myForm)\" ngDefaultControl>\n                              <div class=\"form-group\">\n                                <!-- <label>Front End</label> -->\n                                <!-- <input type=\"text\" class=\"form-control\" formControlName=\"front\"> -->\n                              </div>\n                              <div formArrayName=\"languages\">\n                                  \n                                <div *ngFor=\"let language of myForm.controls.languages.controls; let i=index\" class=\"panel panel-default\">\n                                   \n                                  <div class=\"panel-heading variantsoption\">\n                                    <span>Variant {{i + 1}}</span>\n                                    <span class=\"glyphicon glyphicon-remove pull-right\" *ngIf=\"myForm.controls.languages.controls.length > 1\"\n                                      (click)=\"removeLanguage(i)\"></span>\n                                  </div>\n                                  <div class=\"panel-body\" [formGroupName]=\"i\">\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Option</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"React\"></div> -->\n                                      <select class=\"form-control dropdown\" formControlName=\"varianceKey\">\n                                        <option value=\"color\" selected>Color</option>\n                                        <option value=\"size\">Size</option>\n                                        <option value=\"material\">Material</option>\n                                      </select>\n                                    </div>\n\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Value</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"Angular\"> -->\n                                      <tag-input (onAdd)=\"myfun($event)\" formControlName=\"varianceValue\" [placeholder]=\"'Enter a Tags'\"\n                                        [onTextChangeDebounce]=\"500\"></tag-input>\n                                    </div>\n\n                                  </div>\n                                </div>\n                              </div>\n                              <div class=\"margin-20\">\n                                <a (click)=\"addLanguage()\" style=\"cursor: default\">Add another variants </a></div>\n                              <div class=\"margin-20\">\n                                <button type=\"submit\" class=\"btn btn-primary pull-right\" [disabled]=\"!myForm.valid\">Submit</button></div>\n                              <div class=\"clearfix\"></div>\n                              <div class=\"margin-20\">\n                                <!-- <div>myForm details:-</div> -->\n                                <!-- <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre> -->\n                                <!-- <pre>form value: <br>{{myForm.value | json}}</pre> -->\n                                <!-- <p> {{dataLoop|json}}</p> -->\n                              </div>\n                            </form>\n                          </div>\n                          <!--//! asdfasdf -->\n                        </div>\n                      </div>\n                      <div>\n                        <ng-template #viewContainerRef></ng-template>\n                      </div>\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <!--Variants Section End Here-->\n\n          </div>\n        </div>\n      </div>\n\n    </form>\n  </div>\n  <!-- </form> -->\n  <!--Add Products Section End Here-->"
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n  <!--Add Products Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\">\n\n      <div class=\"dashboardConbx\">\n        <!-- <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\" > -->\n        <div class=\"addproductheadingrow\">\n          <h3>Add your product</h3>\n          <div class=\"addproheadingbtn\">\n            <button type=\"button\" class=\"btn btn-primary addprobtn cancel\">Cancel</button>\n            <button (click)=\"saveProduct(myGroup.value)\" type=\"button\" class=\"btn btn-primary addprobtn\">Save</button>\n          </div>\n        </div>\n        <!-- <qrcode [qrdata]=\"myAngularxQrCode\" [size]=\"256\" [level]=\"'M'\"></qrcode> -->\n\n        <div class=\"productsviewrow\">\n          <div class=\"row eqWrap equalHMWrap clearfix\">\n            <!--Text Editor Section Start Here-->\n            <div class=\"col-sm-5 texteditorwrap\">\n              <div class=\"form-group\">\n                <label>Title</label>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Product Name Here\" [formControl]=\"myGroup.controls['title']\"\n                  ngDefaultControl />\n\n              </div>\n              <div class=\"form-group\">\n                <label>Description</label>\n                <div class=\"texteditorbox\"><img class=\"img-responsive\" width=\"606\" height=\"255\" />\n\n                  <ckeditor [(ngModel)]=\"ckeditorContent\" [formControl]=\"myGroup.controls['description']\"\n                    ngDefaultControl>\n                    <ckbutton [name]=\"'saveButton'\" [command]=\"'saveCmd'\" (click)=\"save($event)\" [icon]=\"'save.png'\"\n                      [label]=\"'Save Document'\" [toolbar]=\"'clipboard,1'\">\n                    </ckbutton>\n                  </ckeditor>\n                </div>\n              </div>\n            </div>\n            <!--Text Editor Section End Here-->\n            <!-- </form> -->\n            <!--Image Upload Section Start Here-->\n            <div class=\"col-sm-7 fileuploadbox\">\n              <label>Product Images</label>\n              <!-- <input type=\"file\" (change)='onFileChanged($event)' accept=\"image/jpeg,image/jpg,image/png\"> -->\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" id='fImage' data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image1']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image2']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image3']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image4']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image5']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image6']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image7']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image8']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n            </div>\n            <!--Image Upload Section End Here-->\n          </div>\n        </div>\n\n        <div class=\"row productcategorywrap clearfix\">\n          <div class=\"col-sm-5 padwd10\">\n            <!--Product Category Section Start Here-->\n            <div class=\"productCategorybox\">\n              <div class=\"form-group\">\n                <label>Product Category</label>\n                <select class=\"form-control\" (change)=\"getCatgory($event.target.value)\" [formControl]=\"myGroup.controls['productcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select category</option>\n                  <option *ngFor=\"let c of category\" [value]=\"c._id\">{{c.categoryName}}</option>\n                </select>\n\n              </div>\n              <div class=\"form-group\">\n                <label>Product Subcategory</label>\n                <select class=\"form-control\" (change)=\"SubCatorydata($event.target.value)\" [formControl]=\"myGroup.controls['productsubcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select SubCategory</option>\n                  <option *ngFor=\"let c of getSubCatorydata\" [value]=\"c._id\">{{c.subCategoryName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Type</label>\n                <select class=\"form-control\" (change)=\"getProductCategoryId($event.target.value)\" [formControl]=\"myGroup.controls['producttype']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select Type</option>\n                  <option *ngFor=\"let c of productCategoryname\" [value]=\"c._id\">{{c.productcategoryName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Brand</label>\n                <select class=\"form-control\" (change)=\"getBrandId($event.target.value)\" [formControl]=\"myGroup.controls['productbrand']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select Brand</option>\n                  <option *ngFor=\"let c of getBrandList\" [value]=\"c._id\">{{c.brandName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group mybrand clearfix\">\n                <!-- <form [formGroup]='formgroup'> -->\n                <input type=\"text\" placeholder=\"My Brand\" [formControl]=\"myGroup.controls['addBrand']\" [(ngModel)]=\"brand\"/>\n                <button type=\"submit\" (click)=\"addBrand(brand)\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i></button>\n                <!-- </form> -->\n              </div>\n              <div class=\"form-group clearfix\">\n                <label>Product Tags</label>\n                <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"\n                  [formControl]=\"myGroup.controls['searchtag']\">\n                </tag-input>\n                <!-- <tag-input [ngModel]=\"itemsAsObjects\" ></tag-input> -->\n              </div>\n            </div>\n            <!--Product Category Section End Here-->\n\n            <!--Modify Variants Table Section Start Here-->\n            <!-- <form [formGroup]='dynamicForm'> -->\n            <div class=\"modify_variants\">\n              <h4>Modify Variants</h4>\n              <table class=\"table mytable\">\n                <thead>\n                  <tr>\n                    <th align=\"left\" valign=\"middle\">Variant</th>\n                    <th>Price</th>\n                    <th>SKU</th>\n                    <th>Inventory</th>\n                  </tr>\n                </thead>\n                <tbody>\n\n\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- <tr formArrayName=\"items\" *ngFor=\"let item of dynamicForm.get('items').controls;  let in = index\" >\n                      <td [formGroupName]=\"in\">\n                        <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id={{in}} />\n                          <label for={{in}}>&nbsp;</label>\n                        </span>\n                        <span class=\"sizenm\" >{{dataLoop[in]}}</span> <span class=\"colornm\"></span>\n                      </td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                    </tr> -->\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- {{dataLoop|json}} -->\n                  <tr *ngFor=\"let item of dataLoop;  let in = index\" class=\"pickvalue\">\n                    <td>\n                      <span class=\"checkboxbx\">\n                        <input type=\"checkbox\" id={{in}} value=\"{{item}}\" />\n                        <label for={{in}}>&nbsp;</label>\n                      </span>\n                      <span class=\"sizenm\">{{item}}</span>&nbsp;\n                      <!-- <span class=\"sizenm\">{{item[0]}}</span>&nbsp;\n                      <span class=\"colornm\">{{item[1]}}</span>&nbsp;\n                      <span class=\"colornm\">{{item[2]}}</span>&nbsp; -->\n                    </td>\n                    <td id=\"variancePrice\"><input class=\"form-control variancePrice\" type=\"text\" placeholder=\"230\" /></td>\n                    <td><input class=\"form-control varianceSKU\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                    <td><input class=\"form-control varianceInventory\" type=\"text\" placeholder=\"1234\" /></td>\n                  </tr>\n                  <!-- {{dynamicForm.value|json}} -->\n                  <!-- <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test2\" />\n                      <label for=\"test2\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Pink</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr>\n                <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test3\" />\n                      <label for=\"test3\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Blue</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr> -->\n                </tbody>\n              </table>\n            </div>\n            <!-- </form> -->\n            <!--Modify Variants Table Section End Here-->\n          </div>\n          <div class=\"col-sm-7 padwd10\">\n            <div class=\"row clearfix\">\n              <!--Selling Price Section Start Here-->\n              <div class=\"col-sm-6 pdrightwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Selling Price</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"499\" [(ngModel)]=\"SellingPrice\" [formControl]=\"myGroup.controls['sellingprice']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Cost/Item</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"399\" [formControl]=\"myGroup.controls['costprice']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Item Weight</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"0.5\" [formControl]=\"myGroup.controls['itemweight']\" />\n                  </div>\n                </div>\n                <!--Selling Price Section End Here-->\n              </div>\n              <!--Inventory Section Start Here-->\n              <div class=\"col-sm-6 pdleftwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Inventory SKU</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"BUI\" [formControl]=\"myGroup.controls['InventorySKU']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Quantity</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"50\" [formControl]=\"myGroup.controls['quantity']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Product Type</label>\n                    <select class=\"form-control\" [formControl]=\"myGroup.controls['trialPack']\">\n                      <option value=\"Avaiable for try\">Avaiable for try</option>\n                      <option value=\"saab\">Saab</option>\n                      <option value=\"mercedes\">Mercedes</option>\n                      <option value=\"audi\">Audi</option>\n                    </select>\n                  </div>\n                </div>\n              </div>\n              <!--Inventory Section End Here-->\n            </div>\n\n            <!--Variants Section Start Here-->\n            <div class=\"row clearfix\" *ngIf='true'>\n              <div class=\"col-sm-12\">\n                <div class=\"productCategorybox\">\n                  <div class=\"variants\">\n                    <h4>Variants</h4>\n                    <div class=\"sminfo\">Swimming hundreds of feet beneath the ocean’s surface in many parts of the\n                      world\n                      are prolific aey construct one or more spacious houses” that can exceed three feet in length.\n                    </div>\n                    <div class=\"variantsoption\">\n                      <div class=\"row clearfix\">\n                        <div class=\"col-sm-3\">\n                          <label>Option name</label>\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <label>Option Values</label>\n                        </div>\n                        <div class=\"col-sm-3\">\n                          <label>&nbsp;</label>\n                        </div>\n                      </div>\n                      <div class=\"form-group\">\n                        <div class=\"row clearfix\">\n                          <!-- <div class=\"col-sm-3\">\n                          <input class=\"form-control\" type=\"text\" value=\"Color\" (change)='getOptionKey($event.target.value)' />\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"></tag-input>\n                        </div> -->\n                          <!-- <div class=\"col-sm-3\">\n                          <a (click)=\"createComponent()\">Add Option</a>\n                        </div> -->\n\n\n                          <!-- <button type=\"button\" (click)=\"createComponent()\">\n                          I am Parent, Create Child\n                        </button> -->\n\n                          <!-- //!asdfj -->\n                          <div>\n                            <form [formGroup]=\"myForm\" novalidate (ngSubmit)=\"saveVariants(myForm)\" ngDefaultControl>\n                              <div class=\"form-group\">\n                                <!-- <label>Front End</label> -->\n                                <!-- <input type=\"text\" class=\"form-control\" formControlName=\"front\"> -->\n                              </div>\n                              <div formArrayName=\"languages\">\n\n                                <div *ngFor=\"let language of myForm.controls.languages.controls; let i=index\" class=\"panel panel-default\">\n\n                                  <div class=\"panel-heading variantsoption\">\n                                    <span>Variant {{i + 1}}</span>\n                                    <span class=\"glyphicon glyphicon-remove pull-right\" *ngIf=\"myForm.controls.languages.controls.length > 1\"\n                                      (click)=\"removeLanguage(i)\"></span>\n                                  </div>\n                                  <div class=\"panel-body\" [formGroupName]=\"i\">\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Option</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"React\"></div> -->\n                                      <select class=\"form-control dropdown\" formControlName=\"varianceKey\" id='varianceValue'>\n                                        <option value=\"color\" selected>Color</option>\n                                        <option value=\"size\">Size</option>\n                                        <option value=\"material\">Material</option>\n\n                                        <!-- <option  *ngFor=\"let c of varianceOption\" [value]=\"c\" selected>{{c}}</option> -->\n\n                                      </select>\n                                    </div>\n\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Value</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"Angular\"> -->\n                                      <tag-input (onAdd)=\"myfun($event)\" formControlName=\"varianceValue\" [placeholder]=\"'Enter a Tags'\"\n                                        [onTextChangeDebounce]=\"500\"></tag-input>\n                                    </div>\n\n                                  </div>\n                                </div>\n                              </div>\n                              <!-- {{check}} {{count}} -->\n                              <div class=\"margin-20\" *ngIf=\"check\">\n\n                                <a (click)=\"addLanguage(i)\" style=\"cursor: default\">Add another variants </a>\n                              </div>\n                              <div class=\"margin-20\">\n                                <button type=\"submit\" class=\"btn btn-primary pull-right\" [disabled]=\"!myForm.valid\">Submit</button></div>\n                              <div class=\"clearfix\"></div>\n                              <div class=\"margin-20\">\n                                <!-- <div>myForm details:-</div> -->\n                                <!-- <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre> -->\n                                <!-- <pre>form value: <br>{{myForm.value | json}}</pre> -->\n                                <!-- <p> {{dataLoop|json}}</p> -->\n                              </div>\n                            </form>\n                          </div>\n                          <!--//! asdfasdf -->\n                        </div>\n                      </div>\n                      <div>\n                        <ng-template #viewContainerRef></ng-template>\n                      </div>\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <!--Variants Section End Here-->\n\n          </div>\n        </div>\n      </div>\n\n    </form>\n  </div>\n  <!-- </form> -->\n  <!--Add Products Section End Here-->"
 
 /***/ }),
 
@@ -154,6 +154,9 @@ var AddProductComponent = /** @class */ (function () {
         this.imageData = [];
         this.temp = [];
         this.result4 = [];
+        this.check = true;
+        this.myAngularxQrCode = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        // this.myAngularxQrCode = 'Your QR code data string';
         this.dynamicForm = this._fb.group({
             items: this._fb.array([this.createItems()])
         });
@@ -205,9 +208,16 @@ var AddProductComponent = /** @class */ (function () {
         this.items = this.dynamicForm.get('item');
         this.items.push(this.createItems());
     };
+    /**
+     * name
+     */
+    AddProductComponent.prototype.myfun1 = function (this1) {
+        console.log(this1, 'asas');
+    };
     // [[red,blue,green],[xxl,xl,L],[Silk,cotton]]
     AddProductComponent.prototype.ngOnInit = function () {
         var _this = this;
+        //alert();
         // this.saveVariants(2);
         // console.log(JSON.stringify(this.dataLoop))
         this.myForm = this._fb.group({
@@ -229,15 +239,31 @@ var AddProductComponent = /** @class */ (function () {
             varianceValue: ['']
         });
     };
-    AddProductComponent.prototype.addLanguage = function () {
+    AddProductComponent.prototype.addLanguage = function (i) {
+        // this.check = "true"
         if (true) {
             var control = this.myForm.controls['languages'];
             control.push(this.initlanguage());
         }
-        // else{
-        //   alert()
-        // }
-        // this.saveVariants(this.myForm)
+        //     this.e = document.getElementById("varianceValue");
+        //     let a = $('#varianceValue :selected').val();
+        //   //   console.log(a)
+        //   // this.varianceOption.pop()
+        //   for( var i = 0; i < this.varianceOption.length-1; i++){ 
+        //     if ( this.varianceOption[i] == a) {
+        //       this.varianceOption.splice(i, 1); 
+        //     }
+        //  }
+        var count = 0;
+        count++;
+        if (count == 3) {
+            this.check = false;
+        }
+        console.log(this.check, "###", count);
+        $('#varianceValue option').on('click', function () {
+            console.log("tisss", $('this'));
+            $("this").attr('disabled', true);
+        });
     };
     AddProductComponent.prototype.removeLanguage = function (i) {
         var control = this.myForm.controls['languages'];
@@ -473,7 +499,7 @@ var AddProductComponent = /** @class */ (function () {
         var _this = this;
         this.service.getApi('vendor/getCategoryList', 0).subscribe(function (response) {
             if (response['statusCode'] == 200) {
-                _this.service.showSuccess('found');
+                // this.service.showSuccess('found')
                 _this.category = response['result'];
                 // console.log(this.category)
             }
@@ -496,7 +522,7 @@ var AddProductComponent = /** @class */ (function () {
         };
         this.service.postApi('vendor/getSubCategory', this.postSubCatory, 0).subscribe(function (response) {
             if (response['statusCode'] == 200) {
-                _this.service.showSuccess('data is find');
+                // this.service.showSuccess('data is find')
                 _this.getSubCatorydata = response['result'];
             }
             else {
@@ -517,7 +543,7 @@ var AddProductComponent = /** @class */ (function () {
         };
         this.service.postApi('vendor/getProductCategoryName', temp, 0).subscribe(function (response) {
             if (response['statusCode'] == 200) {
-                _this.service.showSuccess('get Product List');
+                // this.service.showSuccess('get Product List')
                 // console.log("getProductlist", response)
                 _this.productCategoryname = response['result'];
             }
@@ -535,7 +561,7 @@ var AddProductComponent = /** @class */ (function () {
         // console.log("function called")
         this.service.getApi('vendor/getBrandList', 0).subscribe(function (response) {
             if (response['statusCode'] == 200) {
-                _this.service.showSuccess("get bandlist");
+                // this.service.showSuccess("get bandlist")
                 // console.log("asdfasdf", response)
                 _this.getBrandList = response['result'];
             }
@@ -556,13 +582,15 @@ var AddProductComponent = /** @class */ (function () {
     //!addbrand 
     AddProductComponent.prototype.addBrand = function (data) {
         var _this = this;
+        console.log("#########33", data);
         // console.log("function valuevaluecalled", this.addNewBrand)
         var temp = {
-            brandName: this.addNewBrand
+            brandName: data
         };
         this.service.postApi('vendor/addBrand', temp, 0).subscribe(function (response) {
+            console.log("asdfasdfasdfas");
             if (response['statusCode'] == 200) {
-                _this.service.showSuccess("BRAND ADDED");
+                // this.service.showSuccess("BRAND ADDED")
                 // console.log("asdfasdf", response)
                 _this.getBrandListdata();
             }
@@ -571,36 +599,10 @@ var AddProductComponent = /** @class */ (function () {
                 // this.service.showError('Invalid email or password.')
             }
         }, function (error) {
-            // console.log('error occur', error)
+            console.log('error occur', error);
             _this.service.showError('Server Error');
         });
     };
-    // onFileChanged($event): void {
-    //   // console.log($event)
-    //   this.readThis($event.target);
-    //   this.readUrl($event.target);
-    // }
-    // readThis(inputValue: any): void {
-    //   var file: File = inputValue.files[0];
-    //   var myReader: FileReader = new FileReader();
-    //   myReader.onloadend = (e) => {
-    //     this.image = myReader.result;
-    //   }
-    //   // console.log(this.image)
-    //   myReader.readAsDataURL(file);
-    // }
-    // readUrl(inputValue: any) {
-    //   if (inputValue.files && inputValue.files[0]) {
-    //     var reader: FileReader = new FileReader();
-    //     reader.onload = (event: ProgressEvent) => {
-    //       this.url = reader.result;
-    //     }
-    //     // console.log(this.url)
-    //     reader.readAsDataURL(inputValue.files[0]);
-    //   }
-    // }
-    //!test image
-    // base64textString = [];
     AddProductComponent.prototype.onFileChanged = function (evt) {
         var file = evt.target.files[0];
         if (file) {
@@ -613,37 +615,8 @@ var AddProductComponent = /** @class */ (function () {
     AddProductComponent.prototype.handleReaderLoaded = function (e) {
         this.imageData.push('data:image/png;base64,' + btoa(e.target.result));
     };
-    // !image upload 
-    // onFileChanged(event) {
-    //   console.log("###33")
-    //   var self = this;
-    //   if (event.target.files && event.target.files[0]) {
-    //     var fileType = event.target.files[0].type
-    //     if (fileType === 'image/jpeg' || fileType === 'image/png' || fileType === 'image/jpg') {
-    //       this.image = event.target.files[0]
-    //       var reader = new FileReader()
-    //       reader.onload = (e) => {
-    //         self.imageUrl = e.target['result']
-    //       }
-    //       console.log(self.imageUrl,"++")
-    //       // this.imageData = self.imageUrl
-    //       this.imageData.push(self.imageUrl)
-    //       console.log("this is image--->>>>>>>>>",this.imageData)
-    //       // this.imageArray.push(this.imageData)
-    //       reader.readAsDataURL(event.target.files[0])
-    //       // debugger;
-    //     }
-    //     else {
-    //       self.imageUrl = '';
-    //       this.service.showError('Please select image file only !')
-    //     }
-    //   }
-    // }
     //!getCombination
     AddProductComponent.prototype.getCombination = function (res) {
-        // console.log('---------->>getCombination',localStorage.getItem('optionvalue'))
-        // console.log('---------->>getCombination',localStorage.getItem('options'))
-        // this.optionValue = localStorage.getItem('options').split(',')
         console.log('this => ', res.options, typeof res.options);
         this.optionValue = res.optionvalue;
     };
@@ -674,6 +647,7 @@ var AddProductComponent = /** @class */ (function () {
             tag: this.tagChips,
             color: this.result4[0].color,
             sellingPrice: val.sellingPrice,
+            qrCode: this.myAngularxQrCode,
             image: this.imageData,
             lang: "en",
             //!addon
@@ -690,7 +664,7 @@ var AddProductComponent = /** @class */ (function () {
             _this.service.spinnerShow();
             if (response['statusCode'] == 200) {
                 // this.service.spinnerHide()
-                _this.service.showSuccess("Product Added");
+                // this.service.showSuccess("Product Added")
                 console.log("asdfasdf", response);
                 // this.getBrandListdata()
             }
@@ -775,10 +749,6 @@ var AddProductComponent = /** @class */ (function () {
             }
         });
     };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('viewContainerRef', { read: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"] }),
-        __metadata("design:type", Object)
-    ], AddProductComponent.prototype, "combinationOfVariants", void 0);
     AddProductComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-add-product',
@@ -904,7 +874,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Dashboard Screen Start Here-->\n<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n   <!--Recent Order Table Section Start Here-->\n   <div class=\"recentorder_tablewrap\">\n    <h4>Product List</h4>\n    <div class=\"recentOrderTable\">\n      <table class=\"table\">\n        <thead>\n          <tr>\n            <!-- <th align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkboxall\" value=\"checkboxAll\" /></th> -->\n            <th>Sr.No</th>\n            <th>Product</th>\n            <th>Brand</th>\n            <th>Price</th>\n            <th>Status</th>\n          </tr>\n        </thead>\n        <tbody>\n          \n          <tr *ngFor=\"let product of apiData;let i = index\">\n            <!-- <td align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkbox1\" value=\"checkbox1\"></td> -->\n        \n            <td align=\"left\" valign=\"middle\">{{i+1}}</td>\n            <td align=\"left\" valign=\"middle\"><img class=\"pro_img\" src=\"{{product.image}}\" alt=\"\" />{{product.product}}</td>\n            <td>{{product.brand}}</td>\n            <td>{{product.price}}</td>\n            <td>{{product.status}}</td>\n          </tr>\n         </tbody>\n      </table>\n    </div>\n  </div>\n  <!--Recent Order Table Section End Here--> \n  </div>\n  </div>\n  </div>"
+module.exports = "<!--Dashboard Screen Start Here-->\n<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <!--All Products List Showing Start Here-->\n      <div class=\"allproductslistingwarp\">\n          <div class=\"products_alllist_numrow\">\n            <div class=\"row clearfix\" >\n              <div class=\"col-sm-4\">\n                <div class=\"pro_digitbx add_pro\">\n                  <h2>{{getProductCount}}</h2>\n                  <h3>Added Products</h3>\n                </div>\n              </div>\n              <div class=\"col-sm-4\">\n                <div class=\"pro_digitbx brands\">\n                  <h2>{{getbrandcount }}</h2>\n                  <h3>Brands</h3>\n                </div>\n              </div>\n              <div class=\"col-sm-4\">\n                <div class=\"pro_digitbx categories\">\n                  <h2>{{getCategoryCount}}</h2>\n                  <h3>Categories</h3>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"imports_row clearfix\">\n            <h3>Products</h3>\n            <div class=\"importsfile\"><span class=\"glyphicon glyphicon-download-alt\"></span> <span class=\"imports_text\">Import</span></div>\n          </div>\n        </div>\n      <!--All Products List Showing End Here-->\n\n   <div class=\"recentorder_tablewrap\" *ngIf=\"apiData;else notFound\">\n     <!--Filter Search Row Start Here-->\n      <div class=\"filter_search_row clearfix\">\n          <div class=\"filterbtnbx\">\n             <div class=\"dropdown\">\n                 <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter\n                 <span class=\"caret\"></span></button>\n                 <ul class=\"dropdown-menu\">\n                   <li><a href=\"#\">Edit</a></li>\n                   <li><a href=\"#\">Delete</a></li>\n                 </ul>\n               </div>\n          </div>\n          <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span><input class=\"form-control\" type=\"text\" placeholder=\"Search Products\" /></div>\n       </div>\n    <!--Filter Search Row End Here-->\n\n    <div class=\"recentOrderTable\">\n      <div class=\"table-responsive\">\n      <table class=\"table\">\n        <thead>\n          <tr>\n            <th align=\"left\" valign=\"middle\" width=\"40\">\n              <span class=\"checkboxbx\">\n                <input type=\"checkbox\" id=\"selectall\">\n                <label for=\"selectall\">&nbsp;</label>\n                </span></th>\n                  <th>Product</th>\n                  <th>Inventory</th>\n                  <th>Type/Category</th>\n                  <th>Brand</th>\n              </tr>\n        </thead>\n        <tbody>\n          \n          <tr *ngFor=\"let product of apiData;let i = index\">\n            <td align=\"left\" valign=\"middle\" width=\"40\">\n              <span class=\"checkboxbx\">\n                <input type=\"checkbox\" id={{i}}>\n                <label for={{i}}>&nbsp;</label>\n                </span></td>\n            <td class=\"lineH\" align=\"left\" valign=\"middle\" width=\"400\">\n              <div class=\"pro_img_wd\"><img class=\"pro_img\" src=\"{{product.image}}\" alt=\"\" /></div><div class=\"pro_info_rw\">{{product.product}}</div></td>\n            <td>{{product.inventorySKU}}</td>\n            <td>{{product.getProductCategoryName?product.getProductCategoryName:\"NULL\"}}</td>\n            <td>{{product.brand}}</td>\n          </tr>\n         </tbody>\n      </table>\n    </div>\n    </div>\n  </div>\n<!-- else condition -->\n  <ng-template #notFound>\n    <!-- <form [formGroup]='formgroup'> -->\n    NOT ADDED YET \n</ng-template>\n<!-- else condition -->\n\n  </div>\n   \n  </div>\n  </div>"
 
 /***/ }),
 
@@ -939,27 +909,78 @@ var AllproductsComponent = /** @class */ (function () {
         this.getproductList();
     }
     AllproductsComponent.prototype.ngOnInit = function () {
-        console.log("this.getproductList()", this.apiData);
-        console.log('---------->>>', this.rows);
+        this.getBrandList();
+        this.getCategory();
+        // console.log("this.getproductList()", this.apiData)
+        //     console.log('---------->>>', this.rows)
     };
     AllproductsComponent.prototype.getproductList = function () {
         var _this = this;
         var temp = {
             lang: "eng"
         };
-        this.service.postApi('vendor/getproductList', temp, 1).subscribe(function (response) {
+        this.service.getApi('vendor/getProductList', 1).subscribe(function (response) {
+            // console.log("response-======>>>",response)
             if (response['statusCode'] == 200) {
-                // this.service.showSuccess("getProduct")
-                // console.log("asdfasdf", response['result'])
+                _this.getProductCount = response['result'];
+                // console.log(this.getbrandcount.length)
+                _this.getProductCount = _this.getProductCount.length;
                 _this.apiData = response['result'];
-                _this.rows = response['result'];
-                _this.temp = response['result'].slice();
-                console.log('$$$$$$$sdfsdf$$$$$$$$$$$', _this.apiData);
+                // this.rows = response['result'];
+                // this.temp = [...response['result']];
+                // console.log('$$$$$$$sdfsdf$$$$$$$$$$$', this.apiData)
                 // this.getBrandListdata()
             }
             else {
                 // console.log(response['result'])
-                _this.service.showError('Invalid Email');
+                _this.getProductCount = 0;
+                _this.apiData = false;
+                console.log('this.apidtaa', _this.apiData);
+                _this.service.showError('NOT FOUND');
+                // this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            console.log('error occur', error);
+            _this.service.showError('Server Error');
+        });
+    };
+    //getbrandList
+    AllproductsComponent.prototype.getBrandList = function () {
+        var _this = this;
+        this.service.getApi('vendor/getBrandList', 0).subscribe(function (response) {
+            // console.log("response-======>>>",response)
+            if (response['statusCode'] == 200) {
+                // console.log(response['result'])
+                _this.getbrandcount = response['result'];
+                // console.log(this.getbrandcount.length)
+                _this.getbrandcount = _this.getbrandcount.length;
+            }
+            else {
+                // console.log(response['result'])
+                _this.getbrandcount = false;
+                _this.service.showError('NOT FOUND');
+                // this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            console.log('error occur', error);
+            _this.service.showError('Server Error');
+        });
+    };
+    //getCategoryList
+    AllproductsComponent.prototype.getCategory = function () {
+        var _this = this;
+        this.service.getApi('vendor/getCategoryList', 0).subscribe(function (response) {
+            // console.log("response-======>>>",response)
+            if (response['statusCode'] == 200) {
+                // console.log(response['result'])
+                _this.getCategoryCount = response['result'];
+                // console.log(this.getbrandcount.length)
+                _this.getCategoryCount = _this.getCategoryCount.length;
+            }
+            else {
+                _this.getCategoryCount = 0;
+                // console.log(response['result'])
+                _this.service.showError('NOT FOUND');
                 // this.service.showError('Invalid email or password.')
             }
         }, function (error) {
@@ -1000,7 +1021,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Business Details Screen Start Here-->\n<div class=\"business_detailswrap\">\n  <div class=\"businessrttopbg\"></div>\n  <div class=\"wakilogo\"></div>\n  <div class=\"businConbx\">\n    <div class=\"businesstextrow\"><img src=\"../../assets/img/business_details_text.png\" alt=\"\" /></div>\n    <div class=\"sminfo\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut\n      labore et dolore magna aliqua. Ut enim ad miemque laudantium, totam rem aperiam, eaque ipsa quae ab illo iem\n      aperiam,m ipsum dolor sit amet, consectetur adipisicing elit, lore magna aliqua. Ut enim ad miemque lauda</div>\n    <div class=\"businessfrombx\">\n      <form [formGroup]='formgroup'>\n        <div class=\"form-group\">\n          <input class=\"form-control\" type=\"text\" [formControl]=\"formgroup.controls['business']\" placeholder=\"Business Name\" />\n          <div class=\"error_box clearfix\">\n            <p *ngIf=\"formgroup.controls['business'].hasError('required') && formgroup.controls['business'].dirty\"\n              style=\"color:red;font-size:14px;\">*BusinessName is required</p>\n            <p *ngIf=\"formgroup.controls['business'].hasError('pattern') && formgroup.controls['business'].dirty\" style=\"color:red;font-size:14px;\">*Please\n              enter valid email.</p>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <input class=\"form-control\" type=\"number\" [formControl]=\"formgroup.controls['phone']\" placeholder=\"Phone no.\" />\n        </div>\n        <div class=\"form-group\">\n          <input class=\"form-control\" type=\"text\" [formControl]=\"formgroup.controls['email']\" placeholder=\"Email Address\" />\n          <div class=\"error_box clearfix\">\n            <p *ngIf=\"formgroup.controls['email'].hasError('required') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Email\n              is required</p>\n            <p *ngIf=\"formgroup.controls['email'].hasError('pattern') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Please\n              enter valid email.</p>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <!-- <select class=\"form-control custom_select\" name=\"basic\" id=\"ex-search\" multiple>\n  <option hidden selected>Selling Product Types</option>\n  <option *ngFor=\"let item of event\" value='item.category'>{{item.category}}</option>\n  <option value=\"1\">Apparels</option>\n  <option value=\"2\">Food Items</option>\n  <option value=\"3\">Perfumes</option>\n  <option value=\"4\">Electronics </option>\n  </select> -->\n          <ng-multiselect-dropdown [placeholder]=\"'Select your category'\" [data]=\"categoryList\" [formControl]=\"formgroup.controls['categorySelect']\"\n            [settings]=\"dropdownSettings\">\n          </ng-multiselect-dropdown>\n          <!-- <select class=\"form-control custom_select\" name=\"basic\" id=\"ex-search\" >\n  <option hidden selected>select Token</option>\n  <option *ngFor=\"let item of event\" value='item.categoryName'>{{item.categoryName}}</option>\n  </select> -->\n        </div>\n        <div class=\"form-group\">\n          <input class=\"form-control\" type=\"text\" [formControl]=\"formgroup.controls['address']\" placeholder=\"Street Address\" />\n        </div>\n        <div class=\"form-group\">\n          <!-- <ng-select [options]=\"options\" [displayKey]=\"displayKey\" [disable]=\"isDisable\" [styleGuide]=\"styleGuide\"\n            [isDatalist]=\"isDataList\" [searchKeys]=\"searchKeys\" [formControl]=\"selectBox\" [formControl]=\"formgroup.controls['selectBox']\" \n            (onChange)=\"onChange($event)\"></ng-select> -->\n        </div>\n        <tag-input [(ngModel)]='items' [formControl]=\"formgroup.controls['taginput']\" ></tag-input>\n        <div class=\"form-group\">\n          <button type=\"submit\" class=\"btn btn-primary businessbtn\" [disabled]=\"!formgroup.valid\" (click)=\"addBusinessDetail(formgroup.value)\">Submit</button>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>\n<!--Business Details Screen End Here-->"
+module.exports = "<!--Business Details Screen Start Here-->\n<div class=\"business_detailswrap\">\n  <div class=\"businessrttopbg\"></div>\n  <div class=\"wakilogo\"></div>\n  <div class=\"businConbx\">\n    <div class=\"businesstextrow\"><img src=\"../../assets/images/business_details_text.png\" alt=\"\" /></div>\n    <div class=\"sminfo\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut\n      labore et dolore magna aliqua. Ut enim ad miemque laudantium, totam rem aperiam, eaque ipsa quae ab illo iem\n      aperiam,m ipsum dolor sit amet, consectetur adipisicing elit, lore magna aliqua. Ut enim ad miemque lauda</div>\n    <div class=\"businessfrombx\">\n      <form [formGroup]='formgroup'>\n        <div class=\"form-group\">\n          <input class=\"form-control\" type=\"text\" [formControl]=\"formgroup.controls['business']\" placeholder=\"Business Name\" />\n          <div class=\"error_box clearfix\">\n            <p *ngIf=\"formgroup.controls['business'].hasError('required') && formgroup.controls['business'].dirty\"\n              style=\"color:red;font-size:14px;\">*BusinessName is required</p>\n            <p *ngIf=\"formgroup.controls['business'].hasError('pattern') && formgroup.controls['business'].dirty\" style=\"color:red;font-size:14px;\">*Please\n              enter valid email.</p>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <input class=\"form-control\" type=\"number\" [formControl]=\"formgroup.controls['phone']\" placeholder=\"Phone no.\" />\n        </div>\n        <div class=\"form-group\">\n          <input class=\"form-control\" type=\"text\" [formControl]=\"formgroup.controls['email']\" placeholder=\"Email Address\" />\n          <div class=\"error_box clearfix\">\n            <p *ngIf=\"formgroup.controls['email'].hasError('required') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Email\n              is required</p>\n            <p *ngIf=\"formgroup.controls['email'].hasError('pattern') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Please\n              enter valid email.</p>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <!-- <select class=\"form-control custom_select\" name=\"basic\" id=\"ex-search\" multiple>\n  <option hidden selected>Selling Product Types</option>\n  <option *ngFor=\"let item of event\" value='item.category'>{{item.category}}</option>\n  <option value=\"1\">Apparels</option>\n  <option value=\"2\">Food Items</option>\n  <option value=\"3\">Perfumes</option>\n  <option value=\"4\">Electronics </option>\n  </select> -->\n          <ng-multiselect-dropdown [placeholder]=\"'Select your category'\" [data]=\"categoryList\" [formControl]=\"formgroup.controls['categorySelect']\"\n            [settings]=\"dropdownSettings\">\n          </ng-multiselect-dropdown>\n          <!-- <select class=\"form-control custom_select\" name=\"basic\" id=\"ex-search\" >\n  <option hidden selected>select Token</option>\n  <option *ngFor=\"let item of event\" value='item.categoryName'>{{item.categoryName}}</option>\n  </select> -->\n        </div>\n        <div class=\"form-group\">\n          <input class=\"form-control\" type=\"text\" [formControl]=\"formgroup.controls['address']\" placeholder=\"Street Address\" />\n        </div>\n        <div class=\"form-group\">\n          <!-- <ng-select [options]=\"options\" [displayKey]=\"displayKey\" [disable]=\"isDisable\" [styleGuide]=\"styleGuide\"\n            [isDatalist]=\"isDataList\" [searchKeys]=\"searchKeys\" [formControl]=\"selectBox\" [formControl]=\"formgroup.controls['selectBox']\" \n            (onChange)=\"onChange($event)\"></ng-select> -->\n        </div>\n        <tag-input [(ngModel)]='items' [formControl]=\"formgroup.controls['taginput']\" ></tag-input>\n        <div class=\"form-group\">\n          <button type=\"submit\" class=\"btn btn-primary businessbtn\" [disabled]=\"!formgroup.valid\" (click)=\"addBusinessDetail(formgroup.value)\">Submit</button>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>\n<!--Business Details Screen End Here-->"
 
 /***/ }),
 
@@ -1336,115 +1357,6 @@ var EditproductComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/Components/enter-password-screen/enter-password-screen.component.css":
-/*!**************************************************************************************!*\
-  !*** ./src/app/Components/enter-password-screen/enter-password-screen.component.css ***!
-  \**************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/Components/enter-password-screen/enter-password-screen.component.html":
-/*!***************************************************************************************!*\
-  !*** ./src/app/Components/enter-password-screen/enter-password-screen.component.html ***!
-  \***************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\n<body class=\"loginscreen\">\n  <!--Login Screen Start Here-->\n  <div class=\"loginscreenwrap\">\n    <div class=\"wakilogo\"></div>\n    <div class=\"aboutwakiCon\">.\n      <div class=\"wakitextrow\"><img src=\"../../assets/img/waki_market_place.png\"  /></div>\n      <div class=\"sminfo\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut\n        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n        aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore\n        eu tus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo\n        inventor</div>\n      <div class=\"emailrow\">\n        <form [formGroup]='formgroup'>\n          <div class=\"form-group\">\n            <input class=\"form-control\" type=\"password\" minlength=\"8\"  [formControl]=\"formgroup.controls['password']\" placeholder=\"Enter the Password\" />\n            <button type=\"submit\" class=\"btn btn-primary loginbtn\" [disabled]=\"!formgroup.valid\" (click)=\"login(formgroup.value)\">Submit</button>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n  <!--Login Screen End Here-->\n</body>\n\n"
-
-/***/ }),
-
-/***/ "./src/app/Components/enter-password-screen/enter-password-screen.component.ts":
-/*!*************************************************************************************!*\
-  !*** ./src/app/Components/enter-password-screen/enter-password-screen.component.ts ***!
-  \*************************************************************************************/
-/*! exports provided: EnterPasswordScreenComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EnterPasswordScreenComponent", function() { return EnterPasswordScreenComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var EnterPasswordScreenComponent = /** @class */ (function () {
-    function EnterPasswordScreenComponent(formBuilder, route, service) {
-        this.formBuilder = formBuilder;
-        this.route = route;
-        this.service = service;
-        this.formgroup = formBuilder.group({
-            password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,20}/)])],
-        });
-    }
-    EnterPasswordScreenComponent.prototype.ngOnInit = function () {
-    };
-    EnterPasswordScreenComponent.prototype.login = function (val) {
-        var _this = this;
-        console.log("this is ===>>", this.formgroup.value);
-        var logindata = {
-            "email": localStorage.getItem('email'),
-            "password": val.password,
-            "userType": 'admin',
-            "lang": "en"
-        };
-        // console.log("########", logindata)
-        this.service.postApi('user/login', logindata, 0).subscribe(function (response) {
-            _this.responseData = response;
-            // console.log("WWWWWWWW", this.responseData)
-            if (response['statusCode'] == 200) {
-                _this.service.showSuccess(response['statusMessage']);
-                console.log('<<<<<', _this.responseData['result']);
-                localStorage.setItem('token', _this.responseData.accessToken);
-                localStorage.removeItem('email');
-                if (_this.responseData['result']['isBussinessAdded'] == false) {
-                    _this.route.navigate(['/business_details']);
-                }
-                else {
-                    _this.route.navigate(['/dashBoard']);
-                }
-            }
-            else {
-                _this.service.showError('Invalid password.');
-                //this.service.showError('Invalid email or password.')
-            }
-        }, function (error) {
-            console.log('error occur', error);
-            _this.service.showError('Server Error');
-        });
-    };
-    EnterPasswordScreenComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-enter-password-screen',
-            template: __webpack_require__(/*! ./enter-password-screen.component.html */ "./src/app/Components/enter-password-screen/enter-password-screen.component.html"),
-            styles: [__webpack_require__(/*! ./enter-password-screen.component.css */ "./src/app/Components/enter-password-screen/enter-password-screen.component.css")]
-        }),
-        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_3__["DataService"]])
-    ], EnterPasswordScreenComponent);
-    return EnterPasswordScreenComponent;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/Components/header/header.component.css":
 /*!********************************************************!*\
   !*** ./src/app/Components/header/header.component.css ***!
@@ -1463,7 +1375,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Header Start Here-->\n<div class=\"headers\">\n  <div class=\"menuiconbx\">\n    <div class=\"sidelogobx\">  \n      <div class=\"sidelogo\"></div>\n    </div>\n    <a id=\"menu-toggle\" class=\"sidemenubtn\" >Toggle Menu</a>\n    <div class=\"pgnm\" >Dashboard</div>\n    <div class=\"header_rtbx\">\n      <div class=\"notification_header\"><i class=\"glyphicon glyphicon-bell\" aria-hidden=\"true\"></i><span class=\"topdigit\">3</span></div>\n      <form action=\"\" class=\"search-form\">\n        <div class=\"form-group has-feedback\">\n          <label for=\"search\" class=\"sr-only\">Search</label>\n          <input type=\"text\" class=\"form-control\" name=\"search\" id=\"search\" placeholder=\"Search\">\n          <span class=\"glyphicon glyphicon-search form-control-feedback\"></span> </div>\n      </form>\n    </div>\n  </div>\n</div>\n<!--Header End Here--> "
+module.exports = "<!--Header Start Here-->\n<div class=\"headers\">\n  <div class=\"menuiconbx\">\n    <div class=\"sidelogobx\">  \n      <div class=\"sidelogo\"></div>\n    </div>\n    <a id=\"menu-toggle\" class=\"sidemenubtn\" >Toggle Menu</a>\n    <div class=\"pgnm\" >{{title}}</div>\n    <div class=\"header_rtbx\">\n      <div class=\"notification_header\"><i class=\"glyphicon glyphicon-bell\" aria-hidden=\"true\"></i><span class=\"topdigit\">3</span></div>\n      <form action=\"\" class=\"search-form\">\n        <div class=\"form-group has-feedback\">\n          <label for=\"search\" class=\"sr-only\">Search</label>\n          <input type=\"text\" class=\"form-control\" name=\"search\" id=\"search\" placeholder=\"Search\">\n          <span class=\"glyphicon glyphicon-search form-control-feedback\"></span> </div>\n      </form>\n    </div>\n  </div>\n</div>\n<!--Header End Here--> "
 
 /***/ }),
 
@@ -1478,6 +1390,7 @@ module.exports = "<!--Header Start Here-->\n<div class=\"headers\">\n  <div clas
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HeaderComponent", function() { return HeaderComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1488,10 +1401,18 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var HeaderComponent = /** @class */ (function () {
-    function HeaderComponent() {
+    function HeaderComponent(service) {
+        this.service = service;
+        this.title = '';
     }
     HeaderComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.service.title.subscribe(function (updatedTitle) {
+            _this.title = updatedTitle;
+        });
+        // this.service.setTitle()
     };
     HeaderComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1499,7 +1420,7 @@ var HeaderComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./header.component.html */ "./src/app/Components/header/header.component.html"),
             styles: [__webpack_require__(/*! ./header.component.css */ "./src/app/Components/header/header.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
     ], HeaderComponent);
     return HeaderComponent;
 }());
@@ -1526,7 +1447,7 @@ module.exports = "/* body {\n    font-family: 'RobotoDraft', 'Roboto', 'Helvetic
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Dashboard Screen Start Here-->\n<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n\n  <!--Dashboard Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <!--Welcome Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"welcomerw clearfix\">\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Welcome to Waki Market Place</h3>\n                  <h4>Total Open Orders</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2>102</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Total Active Carts</h3>\n                  <h4>Abandoned Checkouts</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2 class=\"totalcharts\">325</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Welcome Rows End Here-->\n\n      <!--Digit Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"digitrow clearfix\">\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,163</h3>\n              <h4>Orders Pending</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,134</h3>\n              <h4>Orders to be prepared</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>1256</h3>\n              <h4>Orders Ready to ship</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>4567</h3>\n              <h4>Order Delivery awaited</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Digit Rows End Here-->\n\n      <!--Total Sales Section Start Here-->\n      <div class=\"totalSeleswrap\">\n        <div class=\"row clearfix\">\n          <div class=\"col-sm-5\">\n            <div class=\"totalSelesinfobx\">\n              <h3>TOTAL SALES</h3>\n              <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks.\n                Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer\n                directed convergence without\n                revolutionary ROI.</div>\n            </div>\n          </div>\n          <div class=\"col-sm-7\">\n            <div class=\"salesgraph\"><img class=\"img-responsive\" src=\"../../assets/img/sales_graph.png\" alt=\"\" /></div>\n          </div>\n        </div>\n      </div>\n      <!--Total Sales Section End Here-->\n\n      <!--Orders Status Section Start Here-->\n      <div class=\"orderstatuswrap\">\n        <div class=\"row eqWrap equalHMWrap clearfix\">\n          <div class=\"col-sm-4 orderstatus\">\n            <h4>ORDER STATUS</h4>\n            <div class=\"pieChartsbx\"><img src=\"../../assets/img/pie_chart.png\" width=\"267\" height=\"288\"></div>\n          </div>\n          <div class=\"col-sm-8 orderstatus\">\n            <h4 class=\"activities\">ACTIVITIES <span class=\"viewall\"><a href=\"javascript:void(0);\">View All</a></span></h4>\n            <div class=\"activitiesCon\">\n              <div class=\"activitiesrow recent clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">2 mins ago</div>\n                  <div class=\"activisminfo\">Template Builder Access (Video tutorial inside documentation)</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow recent1hours clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">1 hour ago</div>\n                  <div class=\"activisminfo\">Designed the wordpress theme lily created her account.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Orders Status Section End Here-->\n\n     <!--Recent Order Table Section Start Here-->\n     <div class=\"recentorder_tablewrap\">\n      <h4>RECENT ORDERS</h4>\n      <div class=\"recentOrderTable\">\n        <table class=\"table\">\n          <thead>\n            <tr>\n              <!-- <th align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkboxall\" value=\"checkboxAll\" /></th> -->\n              <th>Sr.No</th>\n              <th>Product</th>\n              <th>Customer</th>\n              <th>Location</th>\n              <th>Quantity</th>\n              <th>Status</th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let product of apiData;let i = index\">\n              <!-- <td align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkbox1\" value=\"checkbox1\"></td> -->\n              <td align=\"left\" valign=\"middle\">{{i+1}}</td>\n              <td align=\"left\" valign=\"middle\"><img class=\"pro_img\" src=\"{{product.productImage}}\" alt=\"\" />{{product.productDetail}}</td>\n              <td>{{product.customerName}}</td>\n              <td>{{product.customerAddress}}</td>\n              <td>{{product.quantity}}</td>\n              <td>{{product.status}}</td>\n            </tr>\n           </tbody>\n        </table>\n      </div>\n    </div>\n    <!--Recent Order Table Section End Here--> \n     \n    <ng-chat [adapter]=\"adapter\" [userId]=\"userId\"></ng-chat>\n    </div>\n  </div>\n  <!--Dashboard Content Section End Here-->\n\n</div>\n<!--Dashboard Screen End Here-->"
+module.exports = "<!--Dashboard Screen Start Here-->\n<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n\n  <!--Dashboard Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <!--Welcome Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"welcomerw clearfix\">\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Welcome to Waki Market Place</h3>\n                  <h4>Total Open Orders</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2>102</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Total Active Carts</h3>\n                  <h4>Abandoned Checkouts</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2 class=\"totalcharts\">325</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Welcome Rows End Here-->\n\n      <!--Digit Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"digitrow clearfix\">\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,163</h3>\n              <h4>Orders Pending</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,134</h3>\n              <h4>Orders to be prepared</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>1256</h3>\n              <h4>Orders Ready to ship</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>4567</h3>\n              <h4>Order Delivery awaited</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Digit Rows End Here-->\n\n      <!--Total Sales Section Start Here-->\n      <div class=\"totalSeleswrap\">\n        <div class=\"row clearfix\">\n          <div class=\"col-sm-5\">\n            <div class=\"totalSelesinfobx\">\n              <h3>TOTAL SALES</h3>\n              <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks.\n                Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer\n                directed convergence without\n                revolutionary ROI.</div>\n            </div>\n          </div>\n          <div class=\"col-sm-7\">\n            <div class=\"salesgraph\"><img class=\"img-responsive\" src=\"../../assets/images/sales_graph.png\" alt=\"\" /></div>\n          </div>\n        </div>\n      </div>\n      <!--Total Sales Section End Here-->\n\n      <!--Orders Status Section Start Here-->\n      <div class=\"orderstatuswrap\">\n        <div class=\"row eqWrap equalHMWrap clearfix\">\n          <div class=\"col-sm-4 orderstatus\">\n            <h4>ORDER STATUS</h4>\n            <div class=\"pieChartsbx\"><img src=\"../../assets/images/pie_chart.png\" width=\"267\" height=\"288\"></div>\n          </div>\n          <div class=\"col-sm-8 orderstatus\">\n            <h4 class=\"activities\">ACTIVITIES <span class=\"viewall\"><a href=\"javascript:void(0);\">View All</a></span></h4>\n            <div class=\"activitiesCon\">\n              <div class=\"activitiesrow recent clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">2 mins ago</div>\n                  <div class=\"activisminfo\">Template Builder Access (Video tutorial inside documentation)</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow recent1hours clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">1 hour ago</div>\n                  <div class=\"activisminfo\">Designed the wordpress theme lily created her account.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Orders Status Section End Here-->\n\n     <!--Recent Order Table Section Start Here-->\n     <div class=\"recentorder_tablewrap\">\n      <h4>RECENT ORDERS</h4>\n      <div class=\"recentOrderTable\">\n        <table class=\"table\">\n          <thead>\n            <tr>\n              <!-- <th align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkboxall\" value=\"checkboxAll\" /></th> -->\n              <th>Sr.No</th>\n              <th>Product</th>\n              <th>Customer</th>\n              <th>Location</th>\n              <th>Quantity</th>\n              <th>Status</th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let product of apiData;let i = index\">\n              <!-- <td align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkbox1\" value=\"checkbox1\"></td> -->\n              <td align=\"left\" valign=\"middle\">{{i+1}}</td>\n              <td align=\"left\" valign=\"middle\"><img class=\"pro_img\" src=\"{{product.productImage}}\" alt=\"\" />{{product.productDetail}}</td>\n              <td>{{product.customerName}}</td>\n              <td>{{product.customerAddress}}</td>\n              <td>{{product.quantity}}</td>\n              <td>{{product.status}}</td>\n            </tr>\n           </tbody>\n        </table>\n      </div>\n    </div>\n    <!--Recent Order Table Section End Here--> \n     \n    <!-- <ng-chat [adapter]=\"adapter\" [userId]=\"userId\"></ng-chat> -->\n    </div>\n  </div>\n  <!--Dashboard Content Section End Here-->\n\n</div>\n<!--Dashboard Screen End Here-->"
 
 /***/ }),
 
@@ -1553,6 +1474,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+// import { ChatAdapter } from 'ng-chat';
 // import { MyAdapter } from 'my-adapter';
 var HomePageVendorComponent = /** @class */ (function () {
     /* rows = [];
@@ -1814,6 +1736,112 @@ var HomePageVendorComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Components/inventory-listing/inventory-listing.component.css":
+/*!******************************************************************************!*\
+  !*** ./src/app/Components/inventory-listing/inventory-listing.component.css ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Components/inventory-listing/inventory-listing.component.html":
+/*!*******************************************************************************!*\
+  !*** ./src/app/Components/inventory-listing/inventory-listing.component.html ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"wrapper\">\n    <!--Header Start Here-->\n    <app-header></app-header>\n    <!--Header End Here-->\n    <!-- Sidebar Start Here-->\n    <app-side-bar></app-side-bar>\n    <!-- Sidebar end Here-->\n  \n    <div id=\"page-content-wrapper\">\n      <div class=\"dashboardConbx\">\n  \n        <div class=\"allproductslistingwarp\">\n          <div class=\"imports_row clearfix\">\n            <h3>Inventory List</h3>\n          </div>\n        </div>\n  \n        <!--Recent Order Table Section Start Here-->\n        <div class=\"recentorder_tablewrap\">\n          <div class=\"filter_search_row clearfix\">\n            <div class=\"filterbtnbx\">\n              <div class=\"dropdown\">\n                <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter\n                  <span class=\"caret\"></span></button>\n                <ul class=\"dropdown-menu\">\n                  <li><a href=\"#\">Edit</a></li>\n                  <li><a href=\"#\">Delete</a></li>\n                </ul>\n              </div>\n            </div>\n            <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span><input class=\"form-control\"\n                type=\"text\" placeholder=\"Search Products\" /></div>\n          </div>\n          <div class=\"recentOrderTable\">\n            <div class=\"table-responsive\">\n              <table class=\"table\">\n                <thead>\n                  <tr>\n                    <th align=\"left\" valign=\"middle\">\n                      <span class=\"checkboxbx\">\n                        <input type=\"checkbox\" id=\"selectall1\">\n                        <label for=\"selectall1\">&nbsp;</label>\n                      </span></th>\n                    <th>Product Variant</th>\n                    <th class=\"text-center\">SKU Code</th>\n                    <th class=\"text-center\">Units Sold</th>\n                    <th class=\"text-center\">Quantity</th>\n                    <!-- <th class=\"text-center\">Update Stock</th> -->\n                  </tr>\n                </thead>\n                <tbody>\n                  <tr *ngFor=\"let product of apiData;let i = index\">\n                    <td align=\"left\" valign=\"middle\"><span class=\"checkboxbx\">\n                        <input type=\"checkbox\" id={{i}}>\n                        <label for={{i}}>&nbsp;</label>\n                      </span></td>\n                    <td align=\"left\" valign=\"middle\" class=\"lineH\">\n                      <div class=\"pro_img_wd\"><img alt=\"\" src={{product.image}}></div>\n                      <div class=\"pro_info_rw\" (click)=\"variants(product._id)\">{{product.product}}</div>\n                    </td>\n                    <td align=\"center\">{{product.InventorySKU}}</td>\n                    <td align=\"center\">{{product.unitSold}}</td>\n                    <td align=\"center\">{{product.quantity}}</td>\n                    <!-- <td class=\"updateddigit\">\n                      <div class=\"update_stock_box\">\n                        <div class=\"updatebx clearfix\">\n                          <div class=\"inputfillbx\"><input class=\"form-control\" type=\"text\" placeholder=\"0\" /></div>\n                          <button type=\"button\" class=\"btn btn-primary updatestockbtnbx\">\n                            <span class=\"tickicon\"></span>\n                          </button>\n                        </div>\n                      </div>\n                    </td> -->\n                  </tr>\n                </tbody>\n              </table>\n            </div>\n          </div>\n        </div>\n        <!--Recent Order Table Section End Here-->\n  \n      </div>\n    </div>\n  </div>"
+
+/***/ }),
+
+/***/ "./src/app/Components/inventory-listing/inventory-listing.component.ts":
+/*!*****************************************************************************!*\
+  !*** ./src/app/Components/inventory-listing/inventory-listing.component.ts ***!
+  \*****************************************************************************/
+/*! exports provided: InventoryListingComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InventoryListingComponent", function() { return InventoryListingComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var InventoryListingComponent = /** @class */ (function () {
+    function InventoryListingComponent(service, route) {
+        this.service = service;
+        this.route = route;
+    }
+    InventoryListingComponent.prototype.ngOnInit = function () {
+        this.getproductList();
+    };
+    InventoryListingComponent.prototype.getproductList = function () {
+        var _this = this;
+        var temp = {
+            lang: "eng"
+        };
+        this.service.getApi('vendor/getProductList', 1).subscribe(function (response) {
+            // console.log("response-======>>>",response)
+            if (response['statusCode'] == 200) {
+                console.log('===================??>>>>', response['result']);
+                _this.getProductCount = response['result'];
+                // console.log(this.getbrandcount.length)
+                _this.getProductCount = _this.getProductCount.length;
+                _this.apiData = response['result'];
+                // this.rows = response['result'];
+                // this.temp = [...response['result']];
+                // console.log('$$$$$$$sdfsdf$$$$$$$$$$$', this.apiData)
+                // this.getBrandListdata()
+            }
+            else {
+                // console.log(response['result'])
+                _this.getProductCount = 0;
+                _this.apiData = false;
+                console.log('this.apidtaa', _this.apiData);
+                _this.service.showError('NOT FOUND');
+                // this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            console.log('error occur', error);
+            _this.service.showError('Server Error');
+        });
+    };
+    InventoryListingComponent.prototype.variants = function (val) {
+        // this.route.navigate('/productvariant/?asf='+val)
+        this.route.navigate(['/productvariant/' + val]);
+        this.service.setTitle('Product Variance');
+    };
+    InventoryListingComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-inventory-listing',
+            template: __webpack_require__(/*! ./inventory-listing.component.html */ "./src/app/Components/inventory-listing/inventory-listing.component.html"),
+            styles: [__webpack_require__(/*! ./inventory-listing.component.css */ "./src/app/Components/inventory-listing/inventory-listing.component.css")]
+        }),
+        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+    ], InventoryListingComponent);
+    return InventoryListingComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Components/not-found/not-found.component.css":
 /*!**************************************************************!*\
   !*** ./src/app/Components/not-found/not-found.component.css ***!
@@ -1880,6 +1908,154 @@ var NotFoundComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Components/order-list/order-list.component.css":
+/*!****************************************************************!*\
+  !*** ./src/app/Components/order-list/order-list.component.css ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Components/order-list/order-list.component.html":
+/*!*****************************************************************!*\
+  !*** ./src/app/Components/order-list/order-list.component.html ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!-- Sidebar end Here-->\n\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <div class=\"allproductslistingwarp\">\n        <div class=\"imports_row tabsrow clearfix\">\n          <ul class=\"nav nav-tabs\">\n            <li class=\"active\"><a data-toggle=\"tab\" (click)=\"getOrderList()\" href=\"#all_orders\">All orders</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('PENDING')\" href=\"#order_pending\">Pending</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('INPROGRESS')\" href=\"#tobe_prepared\">To be prepared</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('ORDERSHIPPED')\" href=\"#readyto_ship\">Ready to Ship</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('DISPATCH')\" href=\"#in_transit\">In-Transit</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('PLACED')\" href=\"#order_comleted\">Completed</a></li>\n          </ul>\n        </div>\n      </div>\n      <!--Recent Order Table Section Start Here-->\n      <div class=\"recentorder_tablewrap\">\n        <div class=\"tab-content\">\n          <!--All Orders Listing Table Start Here-->\n          <div id=\"all_orders\" class=\"tab-pane fade in active\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\"  type=\"text\" placeholder=\"Search Order\" #val (input)=\"searchData(val.value)\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\" [hidden]=\"!isvalid\">\n\n              <!-- <ng-template #elseTemplate>\n              \n            </ng-template>\n              -->\n              <!-- <div class=\"filter_search_row clearfix\">\n                <div class=\"filterbtnbx\">\n                  <div class=\"dropdown\">\n                    <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                        class=\"caret\"></span></button>\n                    <ul class=\"dropdown-menu\">\n                      <li><a href=\"#\">Edit</a></li>\n                      <li><a href=\"#\">Delete</a></li>\n                    </ul>\n                  </div>\n                </div>\n                <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                  <input class=\"form-control\"  type=\"text\" placeholder=\"Search Order\" #val (input)=\"searchData(val.value)\" />\n                </div>\n              </div> -->\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr *ngFor=\"let product of apiData;let i = index\">\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">{{product.orderId}}</td>\n                      <td>{{product.createdAt  | date:fullDate}}</td>\n                      <td>{{product.customerName}}</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">{{product.paymentStatus}}</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">{{product.status}}</span></td>\n                      <td class=\"text-right\">{{ product.totalAmountPaid | currency:'&#8377;' }}</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n              </div>\n              <div class=\"recentOrderTable\" [hidden]=\"isvalid\">\n                not   found\n              </div>\n          </div>\n          <!--All Orders Listing Table End Here-->\n\n          <!--Pending Orders Listing Table Start Here-->\n          <!-- <div id=\"order_pending\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--Pending Orders Listing Table End Here-->\n\n          <!--To be Prepared Listing Table Start Here-->\n          <!-- <div id=\"tobe_prepared\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--To be Prepared Listing Table End Here-->\n\n          <!--To be Prepared Listing Table Start Here-->\n          <!-- <div id=\"readyto_ship\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--To be Prepared Listing Table End Here-->\n\n          <!--In-Transit Listing Table Start Here-->\n          <!-- <div id=\"in_transit\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--In-Transit Listing Table End Here-->\n\n          <!--Order Comleted Listing Table Start Here-->\n          <!-- <div id=\"order_comleted\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--Order Comleted Listing Table End Here-->\n\n        </div>\n      </div>\n      <!--Recent Order Table Section End Here-->\n\n    </div>\n  </div>\n\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/Components/order-list/order-list.component.ts":
+/*!***************************************************************!*\
+  !*** ./src/app/Components/order-list/order-list.component.ts ***!
+  \***************************************************************/
+/*! exports provided: OrderListComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OrderListComponent", function() { return OrderListComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var OrderListComponent = /** @class */ (function () {
+    function OrderListComponent(service) {
+        this.service = service;
+        this.isvalid = true;
+    }
+    OrderListComponent.prototype.ngOnInit = function () {
+        this.getOrderList();
+        this.service.setTitle('Orders List');
+    };
+    OrderListComponent.prototype.getOrderList = function () {
+        var _this = this;
+        var temp = {
+            lang: "eng"
+        };
+        this.service.postApi('vendor/vendorOrderList', temp, 1).subscribe(function (response) {
+            if (response['statusCode'] == 200) {
+                // this.service.showSuccess("getProduct")
+                // console.log("asdfasdf", response['result'])
+                _this.apiData = response['result'];
+                _this.isvalid = true;
+                // this.rows = response['result'];
+                // this.temp = [...response['result']];
+                console.log('$$$$$$$sdfsdf$$$$$$$$$$$', _this.apiData);
+                // this.getBrandListdata()
+            }
+            else {
+                // console.log(response['result'])
+                _this.isvalid = false;
+                // this.service.showError('NOT FOUND')
+                // this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            console.log('error occur', error);
+            _this.service.showError('Server Error');
+        });
+    };
+    OrderListComponent.prototype.changeStatus = function (val) {
+        var _this = this;
+        console.log("###", val);
+        var temp = {
+            status: val,
+            lang: "eng"
+        };
+        console.log("@@@@@@@@@2", temp);
+        this.service.postApi('vendor/vendorOrderStatus', temp, 1).subscribe(function (response) {
+            if (response['statusCode'] == 200) {
+                // this.service.showSuccess("getProduct")
+                // console.log("asdfasdf", response['result'])
+                _this.apiData = response['result'];
+                _this.isvalid = true;
+            }
+            else {
+                // console.log(response['result'])
+                _this.isvalid = false;
+                _this.service.showError('NOT FOUND');
+                // this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            console.log('error occur', error);
+            _this.service.showError('Server Error');
+        });
+    };
+    OrderListComponent.prototype.searchData = function (val) {
+        var _this = this;
+        console.log("###", val);
+        var temp = {
+            searchKeyword: val,
+            lang: "eng"
+        };
+        console.log("@@@@@@@@@2", temp);
+        this.service.postApi('vendor/searchVendorOrder', temp, 1).subscribe(function (response) {
+            if (response['statusCode'] == 200) {
+                // this.service.showSuccess("getProduct")
+                // console.log("asdfasdf", response['result'])
+                _this.apiData = response['result'];
+                _this.isvalid = true;
+            }
+            else {
+                // console.log(response['result'])
+                _this.isvalid = false;
+                // this.service.showError('NOT FOUND')
+                // this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            console.log('error occur', error);
+            _this.service.showError('Server Error');
+        });
+    };
+    OrderListComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-order-list',
+            template: __webpack_require__(/*! ./order-list.component.html */ "./src/app/Components/order-list/order-list.component.html"),
+            styles: [__webpack_require__(/*! ./order-list.component.css */ "./src/app/Components/order-list/order-list.component.css")]
+        }),
+        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+    ], OrderListComponent);
+    return OrderListComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Components/password-changed/password-changed.component.css":
 /*!****************************************************************************!*\
   !*** ./src/app/Components/password-changed/password-changed.component.css ***!
@@ -1898,7 +2074,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper \">\n  <!-- <app-sidebar></app-sidebar> -->\n  <div class=\"main-panel\">\n    <nav class=\"navbar navbar-expand-lg navbar-absolute fixed-top \">\n      <div class=\"container-fluid\">\n        <!-- <div class=\"navbar-wrapper\">\n          <a class=\"navbar-brand\">Change Password</a>\n        </div> -->\n\n        <div class=\"bottom-down\" >\n          <img src=\"../../../assets/img/waki_logo.png\"  alt=\"\" style=\"height: 90px;\"/>\n         </div>\n        <!-- <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" aria-controls=\"navigation-index\" aria-expanded=\"false\"\n              aria-label=\"Toggle navigation\">\n              <span class=\"sr-only\">Toggle Nav</span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n          </button> -->\n        <div class=\"collapse navbar-collapse justify-content-end\">\n          <!-- <app-side-icon></app-side-icon> -->\n        </div>\n      </div>\n    </nav>\n    <div class=\"content\">\n      <div class=\"container-fluid pt-4\">\n        <div class=\"card\">\n          <div class=\"card-header card-header-tabs card-header-primary\">\n            <h4 class=\"card-title font-weight-bold\">Password Changed Successfully</h4>\n          </div>\n          <div class=\"card-body\">\n            <!-- <form class=\"form\" [formGroup]='passwordForm'> -->\n              <!-- <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.controls['oldPassword'].dirty && passwordForm.controls['oldPassword'].invalid)}\">\n          <input type=\"password\" class=\"form-control\" placeholder=\"Old Password\" name='' formControlName='oldPassword' maxlength=\"16\"\n              id='oldPassword' />\n\n          <div class=\"errMsg\" *ngIf=\"passwordForm.get('oldPassword').dirty && passwordForm.get('oldPassword').invalid\">\n              <span [ngClass]=\"{error:passwordForm.get('oldPassword').hasError('required')}\" *ngIf=\"passwordForm.get('oldPassword').hasError('required')\" style=\"color:red;font-size:14px;\">*Please enter password.</span>\n              <span [ngClass]=\"{error:passwordForm.get('oldPassword').hasError('minlength') && !passwordForm.get('oldPassword').hasError('required')}\"\n                  *ngIf=\"passwordForm.get('oldPassword').hasError('minlength') && !passwordForm.get('oldPassword').hasError('required')\" style=\"color:red;font-size:14px;\">*Password must be of minimum 8 characters.</span>\n          </div>\n      </div> -->\n              <!-- <input type=\"password\" class=\"form-control\" placeholder=\"New Password\" formControlName='newPassword'\n                maxlength=\"16\" id='newPassword' /> -->\n              <!-- <div class=\"errMsg\" *ngIf=\"passwordForm.get('newPassword').dirty && passwordForm.get('newPassword').invalid\">\n                <span [ngClass]=\"{error:passwordForm.get('newPassword').hasError('required')}\" *ngIf=\"passwordForm.get('newPassword').hasError('required')\"\n                  style=\"color:red;font-size:14px;\">*Please enter password.</span>\n                <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.controls['newPassword'].dirty && passwordForm.controls['newPassword'].invalid)}\">\n                  <span [ngClass]=\"{error:passwordForm.get('newPassword').hasError('minlength') && !passwordForm.get('newPassword').hasError('required')}\"\n                    *ngIf=\"passwordForm.get('newPassword').hasError('minlength') && !passwordForm.get('newPassword').hasError('required')\"\n                    style=\"color:red;font-size:14px;\">*Password must be of minimum 8 characters.</span>\n                </div>\n              </div> -->\n              <br>\n              <br>\n              <br>\n              <!-- <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.get('newPassword').value != passwordForm.get('confirmPassword').value) && passwordForm.controls['confirmPassword'].dirty}\">\n                <input type=\"password\" class=\"form-control\" placeholder=\"Confirm Password\" formControlName='confirmPassword'\n                  maxlength=\"16\" id='confirmPassword' />\n                <div class=\"errMsg\" *ngIf=\"passwordForm.get('newPassword').value && passwordForm.get('confirmPassword').value\">\n                  <span [ngClass]=\"{error:passwordForm.get('newPassword').value != passwordForm.get('confirmPassword').value }\"\n                    *ngIf='passwordForm.get(\"newPassword\").value != passwordForm.get(\"confirmPassword\").value ' style=\"color:red;font-size:14px;\">*\n                    New password and confirm password does not match. </span>\n                </div>\n              </div> -->\n              <br>\n              <footer class=\"card__body\">\n\n                <!-- <button class=\"btn btn-primary full-width\" [disabled]=\"!passwordForm.valid\" (click)=\" save(passwordForm.value)\">SAVE</button> -->\n\n              </footer>\n            <!-- </form> -->\n            <br>\n          </div>\n        </div>\n      </div>\n    </div>\n    <!-- <app-footer> </app-footer> -->\n  </div>\n</div>\n<!-- <app-logout></app-logout> -->"
+module.exports = "<div class=\"wrapper \">\n  <!-- <app-sidebar></app-sidebar> -->\n  <div class=\"main-panel\">\n    <nav class=\"navbar navbar-expand-lg navbar-absolute fixed-top \">\n      <div class=\"container-fluid\">\n        <!-- <div class=\"navbar-wrapper\">\n          <a class=\"navbar-brand\">Change Password</a>\n        </div> -->\n\n        <div class=\"bottom-down\" >\n          <img src=\"../../../assets/images/waki_logo.png\"  alt=\"\" style=\"height: 90px;\"/>\n         </div>\n        <!-- <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" aria-controls=\"navigation-index\" aria-expanded=\"false\"\n              aria-label=\"Toggle navigation\">\n              <span class=\"sr-only\">Toggle Nav</span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n          </button> -->\n        <div class=\"collapse navbar-collapse justify-content-end\">\n          <!-- <app-side-icon></app-side-icon> -->\n        </div>\n      </div>\n    </nav>\n    <div class=\"content\">\n      <div class=\"container-fluid pt-4\">\n        <div class=\"card\">\n          <div class=\"card-header card-header-tabs card-header-primary\">\n            <h4 class=\"card-title font-weight-bold\">Password Changed Successfully</h4>\n          </div>\n          <div class=\"card-body\">\n            <!-- <form class=\"form\" [formGroup]='passwordForm'> -->\n              <!-- <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.controls['oldPassword'].dirty && passwordForm.controls['oldPassword'].invalid)}\">\n          <input type=\"password\" class=\"form-control\" placeholder=\"Old Password\" name='' formControlName='oldPassword' maxlength=\"16\"\n              id='oldPassword' />\n\n          <div class=\"errMsg\" *ngIf=\"passwordForm.get('oldPassword').dirty && passwordForm.get('oldPassword').invalid\">\n              <span [ngClass]=\"{error:passwordForm.get('oldPassword').hasError('required')}\" *ngIf=\"passwordForm.get('oldPassword').hasError('required')\" style=\"color:red;font-size:14px;\">*Please enter password.</span>\n              <span [ngClass]=\"{error:passwordForm.get('oldPassword').hasError('minlength') && !passwordForm.get('oldPassword').hasError('required')}\"\n                  *ngIf=\"passwordForm.get('oldPassword').hasError('minlength') && !passwordForm.get('oldPassword').hasError('required')\" style=\"color:red;font-size:14px;\">*Password must be of minimum 8 characters.</span>\n          </div>\n      </div> -->\n              <!-- <input type=\"password\" class=\"form-control\" placeholder=\"New Password\" formControlName='newPassword'\n                maxlength=\"16\" id='newPassword' /> -->\n              <!-- <div class=\"errMsg\" *ngIf=\"passwordForm.get('newPassword').dirty && passwordForm.get('newPassword').invalid\">\n                <span [ngClass]=\"{error:passwordForm.get('newPassword').hasError('required')}\" *ngIf=\"passwordForm.get('newPassword').hasError('required')\"\n                  style=\"color:red;font-size:14px;\">*Please enter password.</span>\n                <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.controls['newPassword'].dirty && passwordForm.controls['newPassword'].invalid)}\">\n                  <span [ngClass]=\"{error:passwordForm.get('newPassword').hasError('minlength') && !passwordForm.get('newPassword').hasError('required')}\"\n                    *ngIf=\"passwordForm.get('newPassword').hasError('minlength') && !passwordForm.get('newPassword').hasError('required')\"\n                    style=\"color:red;font-size:14px;\">*Password must be of minimum 8 characters.</span>\n                </div>\n              </div> -->\n              <br>\n              <br>\n              <br>\n              <!-- <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.get('newPassword').value != passwordForm.get('confirmPassword').value) && passwordForm.controls['confirmPassword'].dirty}\">\n                <input type=\"password\" class=\"form-control\" placeholder=\"Confirm Password\" formControlName='confirmPassword'\n                  maxlength=\"16\" id='confirmPassword' />\n                <div class=\"errMsg\" *ngIf=\"passwordForm.get('newPassword').value && passwordForm.get('confirmPassword').value\">\n                  <span [ngClass]=\"{error:passwordForm.get('newPassword').value != passwordForm.get('confirmPassword').value }\"\n                    *ngIf='passwordForm.get(\"newPassword\").value != passwordForm.get(\"confirmPassword\").value ' style=\"color:red;font-size:14px;\">*\n                    New password and confirm password does not match. </span>\n                </div>\n              </div> -->\n              <br>\n              <footer class=\"card__body\">\n\n                <!-- <button class=\"btn btn-primary full-width\" [disabled]=\"!passwordForm.valid\" (click)=\" save(passwordForm.value)\">SAVE</button> -->\n\n              </footer>\n            <!-- </form> -->\n            <br>\n          </div>\n        </div>\n      </div>\n    </div>\n    <!-- <app-footer> </app-footer> -->\n  </div>\n</div>\n<!-- <app-logout></app-logout> -->"
 
 /***/ }),
 
@@ -1943,6 +2119,80 @@ var PasswordChangedComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Components/productdetail/productdetail.component.css":
+/*!**********************************************************************!*\
+  !*** ./src/app/Components/productdetail/productdetail.component.css ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Components/productdetail/productdetail.component.html":
+/*!***********************************************************************!*\
+  !*** ./src/app/Components/productdetail/productdetail.component.html ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!-- <div class=\"appstorerow clearfix\"> <a href=\"https://play.google.com/store/apps/details?id=com.waki.app\"\n    target=\"_blank\" >\n    android\n    <div class=\"gappst\"></div>\n  </a>\n</div> -->\n<!-- \n<script>\n  $('a[data-applink]').applink();\n  </script> -->\n  \n  <!-- <a href=\"waki://other/parameter\" >Open Waki</a> -->"
+
+/***/ }),
+
+/***/ "./src/app/Components/productdetail/productdetail.component.ts":
+/*!*********************************************************************!*\
+  !*** ./src/app/Components/productdetail/productdetail.component.ts ***!
+  \*********************************************************************/
+/*! exports provided: ProductdetailComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductdetailComponent", function() { return ProductdetailComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ProductdetailComponent = /** @class */ (function () {
+    function ProductdetailComponent(router, query) {
+        this.router = router;
+        this.query = query;
+        // $('a[data-applink]').applink();
+        window.location.href = 'waki://other/parameter';
+    }
+    ProductdetailComponent.prototype.ngOnInit = function () {
+        console.log("@@@@@", this.router.url);
+        var currUrl = this.router.url.indexOf('?') == -1 ? this.router.url.split('/')[1] : this.router.url.slice(1, this.router.url.indexOf('?'));
+        console.log(currUrl);
+        // $('a[data-applink]').applink();
+        // this.router.navigate[('waki://other/parameter')]
+    };
+    ProductdetailComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-productdetail',
+            template: __webpack_require__(/*! ./productdetail.component.html */ "./src/app/Components/productdetail/productdetail.component.html"),
+            styles: [__webpack_require__(/*! ./productdetail.component.css */ "./src/app/Components/productdetail/productdetail.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]])
+    ], ProductdetailComponent);
+    return ProductdetailComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Components/reset-password/reset-password.component.css":
 /*!************************************************************************!*\
   !*** ./src/app/Components/reset-password/reset-password.component.css ***!
@@ -1961,7 +2211,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper \">\n  <!-- <app-sidebar></app-sidebar> -->\n  <div class=\"main-panel\">\n    <nav class=\"navbar navbar-expand-lg navbar-absolute fixed-top \">\n      <div class=\"container-fluid\">\n        <!-- <div class=\"navbar-wrapper\">\n          <a class=\"navbar-brand\">Change Password</a>\n        </div> -->\n\n        <div class=\"bottom-down\" >\n          <img src=\"../../../assets/img/waki_logo.png\"  alt=\"\" style=\"height: 90px;\"/>\n         </div>\n        <!-- <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" aria-controls=\"navigation-index\" aria-expanded=\"false\"\n              aria-label=\"Toggle navigation\">\n              <span class=\"sr-only\">Toggle Nav</span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n          </button> -->\n        <div class=\"collapse navbar-collapse justify-content-end\">\n          <!-- <app-side-icon></app-side-icon> -->\n        </div>\n      </div>\n    </nav>\n    <div class=\"content\">\n      <div class=\"container-fluid pt-4\">\n        <div class=\"card\">\n          <div class=\"card-header card-header-tabs card-header-primary\">\n            <h4 class=\"card-title font-weight-bold\">Reset Password</h4>\n          </div>\n          <div class=\"card-body\">\n            <form class=\"form\" [formGroup]='passwordForm'>\n              <!-- <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.controls['oldPassword'].dirty && passwordForm.controls['oldPassword'].invalid)}\">\n          <input type=\"password\" class=\"form-control\" placeholder=\"Old Password\" name='' formControlName='oldPassword' maxlength=\"16\"\n              id='oldPassword' />\n\n          <div class=\"errMsg\" *ngIf=\"passwordForm.get('oldPassword').dirty && passwordForm.get('oldPassword').invalid\">\n              <span [ngClass]=\"{error:passwordForm.get('oldPassword').hasError('required')}\" *ngIf=\"passwordForm.get('oldPassword').hasError('required')\" style=\"color:red;font-size:14px;\">*Please enter password.</span>\n              <span [ngClass]=\"{error:passwordForm.get('oldPassword').hasError('minlength') && !passwordForm.get('oldPassword').hasError('required')}\"\n                  *ngIf=\"passwordForm.get('oldPassword').hasError('minlength') && !passwordForm.get('oldPassword').hasError('required')\" style=\"color:red;font-size:14px;\">*Password must be of minimum 8 characters.</span>\n          </div>\n      </div> -->\n              <input type=\"password\" class=\"form-control\" placeholder=\"New Password\" formControlName='newPassword'\n                maxlength=\"16\" id='newPassword' />\n              <div class=\"errMsg\" *ngIf=\"passwordForm.get('newPassword').dirty && passwordForm.get('newPassword').invalid\">\n                <span [ngClass]=\"{error:passwordForm.get('newPassword').hasError('required')}\" *ngIf=\"passwordForm.get('newPassword').hasError('required')\"\n                  style=\"color:red;font-size:14px;\">*Please enter password.</span>\n                <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.controls['newPassword'].dirty && passwordForm.controls['newPassword'].invalid)}\">\n                  <span [ngClass]=\"{error:passwordForm.get('newPassword').hasError('minlength') && !passwordForm.get('newPassword').hasError('required')}\"\n                    *ngIf=\"passwordForm.get('newPassword').hasError('minlength') && !passwordForm.get('newPassword').hasError('required')\"\n                    style=\"color:red;font-size:14px;\">*Password must be of minimum 8 characters.</span>\n                </div>\n              </div>\n              <br>\n              <br>\n              <br>\n              <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.get('newPassword').value != passwordForm.get('confirmPassword').value) && passwordForm.controls['confirmPassword'].dirty}\">\n                <input type=\"password\" class=\"form-control\" placeholder=\"Confirm Password\" formControlName='confirmPassword'\n                  maxlength=\"16\" id='confirmPassword' />\n                <div class=\"errMsg\" *ngIf=\"passwordForm.get('newPassword').value && passwordForm.get('confirmPassword').value\">\n                  <span [ngClass]=\"{error:passwordForm.get('newPassword').value != passwordForm.get('confirmPassword').value }\"\n                    *ngIf='passwordForm.get(\"newPassword\").value != passwordForm.get(\"confirmPassword\").value ' style=\"color:red;font-size:14px;\">*\n                    New password and confirm password does not match. </span>\n                </div>\n              </div>\n              <br>\n              <footer class=\"card__body\">\n\n                <button class=\"btn btn-primary full-width\" [disabled]=\"!passwordForm.valid\" (click)=\" save(passwordForm.value)\">SAVE</button>\n\n              </footer>\n            </form>\n            <br>\n          </div>\n        </div>\n      </div>\n    </div>\n    <!-- <app-footer> </app-footer> -->\n  </div>\n</div>\n<!-- <app-logout></app-logout> -->"
+module.exports = "<div class=\"wrapper \">\n  <!-- <app-sidebar></app-sidebar> -->\n  <div class=\"main-panel\">\n    <nav class=\"navbar navbar-expand-lg navbar-absolute fixed-top \">\n      <div class=\"container-fluid\">\n        <!-- <div class=\"navbar-wrapper\">\n          <a class=\"navbar-brand\">Change Password</a>\n        </div> -->\n\n        <div class=\"bottom-down\" >\n          <img src=\"../../../assets/images/waki_logo.png\"  alt=\"\" style=\"height: 90px;\"/>\n         </div>\n        <!-- <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" aria-controls=\"navigation-index\" aria-expanded=\"false\"\n              aria-label=\"Toggle navigation\">\n              <span class=\"sr-only\">Toggle Nav</span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n              <span class=\"navbar-toggler-icon icon-bar\"></span>\n          </button> -->\n        <div class=\"collapse navbar-collapse justify-content-end\">\n          <!-- <app-side-icon></app-side-icon> -->\n        </div>\n      </div>\n    </nav>\n    <div class=\"content\">\n      <div class=\"container-fluid pt-4\">\n        <div class=\"card\">\n          <div class=\"card-header card-header-tabs card-header-primary\">\n            <h4 class=\"card-title font-weight-bold\">Reset Password</h4>\n          </div>\n          <div class=\"card-body\">\n            <form class=\"form\" [formGroup]='passwordForm'>\n              <!-- <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.controls['oldPassword'].dirty && passwordForm.controls['oldPassword'].invalid)}\">\n          <input type=\"password\" class=\"form-control\" placeholder=\"Old Password\" name='' formControlName='oldPassword' maxlength=\"16\"\n              id='oldPassword' />\n\n          <div class=\"errMsg\" *ngIf=\"passwordForm.get('oldPassword').dirty && passwordForm.get('oldPassword').invalid\">\n              <span [ngClass]=\"{error:passwordForm.get('oldPassword').hasError('required')}\" *ngIf=\"passwordForm.get('oldPassword').hasError('required')\" style=\"color:red;font-size:14px;\">*Please enter password.</span>\n              <span [ngClass]=\"{error:passwordForm.get('oldPassword').hasError('minlength') && !passwordForm.get('oldPassword').hasError('required')}\"\n                  *ngIf=\"passwordForm.get('oldPassword').hasError('minlength') && !passwordForm.get('oldPassword').hasError('required')\" style=\"color:red;font-size:14px;\">*Password must be of minimum 8 characters.</span>\n          </div>\n      </div> -->\n              <input type=\"password\" class=\"form-control\" placeholder=\"New Password\" formControlName='newPassword'\n                maxlength=\"16\" id='newPassword' />\n              <div class=\"errMsg\" *ngIf=\"passwordForm.get('newPassword').dirty && passwordForm.get('newPassword').invalid\">\n                <span [ngClass]=\"{error:passwordForm.get('newPassword').hasError('required')}\" *ngIf=\"passwordForm.get('newPassword').hasError('required')\"\n                  style=\"color:red;font-size:14px;\">*Please enter password.</span>\n                <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.controls['newPassword'].dirty && passwordForm.controls['newPassword'].invalid)}\">\n                  <span [ngClass]=\"{error:passwordForm.get('newPassword').hasError('minlength') && !passwordForm.get('newPassword').hasError('required')}\"\n                    *ngIf=\"passwordForm.get('newPassword').hasError('minlength') && !passwordForm.get('newPassword').hasError('required')\"\n                    style=\"color:red;font-size:14px;\">*Password must be of minimum 8 characters.</span>\n                </div>\n              </div>\n              <br>\n              <br>\n              <br>\n              <div class=\"form-group\" [ngClass]=\"{'has-error validate-style1': (passwordForm.get('newPassword').value != passwordForm.get('confirmPassword').value) && passwordForm.controls['confirmPassword'].dirty}\">\n                <input type=\"password\" class=\"form-control\" placeholder=\"Confirm Password\" formControlName='confirmPassword'\n                  maxlength=\"16\" id='confirmPassword' />\n                <div class=\"errMsg\" *ngIf=\"passwordForm.get('newPassword').value && passwordForm.get('confirmPassword').value\">\n                  <span [ngClass]=\"{error:passwordForm.get('newPassword').value != passwordForm.get('confirmPassword').value }\"\n                    *ngIf='passwordForm.get(\"newPassword\").value != passwordForm.get(\"confirmPassword\").value ' style=\"color:red;font-size:14px;\">*\n                    New password and confirm password does not match. </span>\n                </div>\n              </div>\n              <br>\n              <footer class=\"card__body\">\n\n                <button class=\"btn btn-primary full-width\" [disabled]=\"!passwordForm.valid\" (click)=\" save(passwordForm.value)\">SAVE</button>\n\n              </footer>\n            </form>\n            <br>\n          </div>\n        </div>\n      </div>\n    </div>\n    <!-- <app-footer> </app-footer> -->\n  </div>\n</div>\n<!-- <app-logout></app-logout> -->"
 
 /***/ }),
 
@@ -2074,6 +2324,216 @@ var ResetPasswordComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Components/show-variants/show-variants.component.css":
+/*!**********************************************************************!*\
+  !*** ./src/app/Components/show-variants/show-variants.component.css ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Components/show-variants/show-variants.component.html":
+/*!***********************************************************************!*\
+  !*** ./src/app/Components/show-variants/show-variants.component.html ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!-- Sidebar end Here-->\n\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n\n      <div class=\"allproductslistingwarp\">\n        <div class=\"imports_row clearfix\">\n          <h3>Product(Variants) Inventory Listing</h3>\n        </div>\n      </div>\n\n      <!--Recent Order Table Section Start Here-->\n      <div class=\"recentorder_tablewrap\">\n        <!-- <div class=\"filter_search_row clearfix\">\n            <div class=\"filterbtnbx\">\n              <div class=\"dropdown\">\n                <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter\n                  <span class=\"caret\"></span></button>\n                <ul class=\"dropdown-menu\">\n                  <li><a href=\"#\">Edit</a></li>\n                  <li><a href=\"#\">Delete</a></li>\n                </ul>\n              </div>\n            </div>\n            <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span><input class=\"form-control\"\n                type=\"text\" placeholder=\"Search Products\" /></div>\n          </div> -->\n        <div class=\"recentOrderTable\">\n          <div class=\"table-responsive\">\n            <table class=\"table\">\n              <thead>\n                <tr>\n                  <th align=\"left\" valign=\"middle\">\n                    <span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"selectall1\">\n                      <label for=\"selectall1\">&nbsp;</label>\n                    </span></th>\n                  <th>Product Variant</th>\n                  <th class=\"text-center\">SKU Code</th>\n                  <th class=\"text-center\">Units Sold</th>\n                  <th class=\"text-center\">Quantity</th>\n                  <th class=\"text-center\">Update Stock</th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr *ngFor=\"let product of apiData;let i = index\">\n                  <td align=\"left\" valign=\"middle\"><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id={{i}}>\n                      <label for={{i}}>&nbsp;</label>\n                    </span></td>\n                  <td align=\"left\" valign=\"middle\" class=\"lineH\">\n                    <div class=\"pro_img_wd\"><img alt=\"\" src={{product.image}}></div>\n                    <div class=\"pro_info_rw\">{{product.productName}}</div>\n                  </td>\n                  <td align=\"center\">{{product.inventorySKU}}</td>\n                  <td align=\"center\">{{product.unitSold}}</td>\n                  <td align=\"center\">{{product.quantity}}</td>\n                  <td class=\"updateddigit\">\n                    <form [formGroup]='formgroup' >\n                      <div class=\"update_stock_box\">\n                        <div class=\"updatebx clearfix\">\n                          <div class=\"inputfillbx\">\n                            <input class=\"form-control stock_{{i}} stockName\"  (input)=\"stockClickFunc()\"  name=\"stock\" type=\"text\" placeholder=\"0\"  [formControl]=\"formgroup.controls['update']\" />\n                            <!-- <span  *ngIf=\"formgroup.controls['update'].hasError('required')\"  style=\"color:red;font-size:14px\">*</span> -->\n                            <!-- <p *ngIf=\"formgroup.controls['business'].hasError('required') && formgroup.controls['business'].dirty\"\n                              style=\"color:red;font-size:14px;\">*BusinessName is required</p> -->\n                          </div>\n                          <button type=\"button\" class=\"btn btn-primary updatestockbtnbx\" (click)=\"addStock(product.varianceId,i)\" [disabled]=\"!formgroup.valid\">\n                            <span class=\"tickicon\"></span>\n                          </button>\n                        </div>\n                      </div>\n                    </form>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n      </div>\n      <!--Recent Order Table Section End Here-->\n\n    </div>\n  </div>\n</div>\n\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/show-variants/show-variants.component.ts":
+/*!*********************************************************************!*\
+  !*** ./src/app/Components/show-variants/show-variants.component.ts ***!
+  \*********************************************************************/
+/*! exports provided: ShowVariantsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShowVariantsComponent", function() { return ShowVariantsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ShowVariantsComponent = /** @class */ (function () {
+    function ShowVariantsComponent(formBuilder, route, activateRoute, service) {
+        this.formBuilder = formBuilder;
+        this.route = route;
+        this.activateRoute = activateRoute;
+        this.service = service;
+        this.formgroup = formBuilder.group({
+            update: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+        });
+    }
+    ShowVariantsComponent.prototype.stockClickFunc = function (val) {
+        $(".stockName").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                debugger;
+                if ($(".stockName").val().length == 1) {
+                    $(".stockName").val("");
+                }
+                else {
+                }
+                event.preventDefault();
+            }
+        });
+        // $('.update_stock_box .updatebx .updatestockbtnbx').on("click", function () {
+        // 	$(this).parents('.updateddigit').addClass("update");
+        // 	setTimeout(RemoveClass, 2000);
+        // 	});
+        // 	function RemoveClass() {
+        // 	$('.updateddigit').removeClass("update");
+        // 	}
+    };
+    ShowVariantsComponent.prototype.ngOnInit = function () {
+        this.getproductList();
+        this.validation();
+        this.service.setTitle('Product Variance');
+    };
+    ShowVariantsComponent.prototype.searchContacts = function () {
+        console.log("2345678");
+    };
+    ShowVariantsComponent.prototype.getproductList = function () {
+        var _this = this;
+        this.activateRoute.params.subscribe(function (params) {
+            _this.faqId = params['productId'];
+            console.log('params => ', 'vendor/getAllVariant/' + _this.faqId);
+        });
+        this.service.getApi('vendor/getAllVariant/' + this.faqId, 1).subscribe(function (response) {
+            // console.log("response-======>>>",response)
+            if (response['statusCode'] == 200) {
+                console.log('===================??>>>>', response['result']);
+                _this.getProductCount = response['result'];
+                // console.log(this.getbrandcount.length)
+                _this.getProductCount = _this.getProductCount.length;
+                _this.apiData = response['result'];
+                // this.rows = response['result'];
+                // this.temp = [...response['result']];
+                // console.log('$$$$$$$sdfsdf$$$$$$$$$$$', this.apiData)
+                // this.getBrandListdata()
+            }
+            else {
+                // console.log(response['result'])
+                _this.getProductCount = 0;
+                _this.apiData = false;
+                console.log('this.apidtaa', _this.apiData);
+                _this.service.showError('NOT FOUND');
+                // this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            console.log('error occur', error);
+            _this.service.showError('Server Error');
+        });
+    };
+    // addStock(val, variancdId) {
+    //   console.log(val, variancdId)
+    //   // localhost:5050/vendor/updateVarianceStock
+    //   let temp = {
+    //     "varianceId": variancdId,
+    //     "stock": val.update,
+    //     "lang": 'en'
+    //   }
+    //   this.service.postApi('vendor/updateVarianceStock', temp, 1).subscribe(response => {
+    //     // console.log("response-======>>>",response)
+    //     if (response['statusCode'] == 200) {
+    //       this.formgroup.reset();
+    //       this.service.showSuccess('UPDATE SUCCESSFULLY')
+    //       this.getproductList()
+    //     }
+    //     else {
+    //       this.service.showError('NOT UPDATE')
+    //       // this.service.showError('Invalid email or password.')
+    //     }
+    //   }, error => {
+    //     console.log('error occur', error)
+    //     this.service.showError('Server Error')
+    //   })
+    // }
+    ShowVariantsComponent.prototype.addStock = function (val, i) {
+        var _this = this;
+        // var stock = document.getElementById("stock").value
+        var temp = {
+            "varianceId": val,
+            "stock": $(".stock_" + i).val(),
+            "lang": 'en'
+        };
+        if (parseInt($(".stock_" + i).val()) == 0 || $(".stock_" + i).val() == "") {
+            this.service.showError("Wrong Input");
+        }
+        else {
+            console.log("requesr", temp);
+            this.service.postApi('vendor/updateVarianceStock', temp, 1).subscribe(function (response) {
+                // console.log("response-======>>>",response)
+                if (response['statusCode'] == 200) {
+                    _this.formgroup.reset();
+                    _this.service.showSuccess('UPDATE SUCCESSFULLY');
+                    _this.getproductList();
+                }
+                else {
+                    _this.service.showError('NOT UPDATE');
+                    // this.service.showError('Invalid email or password.')
+                }
+            }, function (error) {
+                console.log('error occur', error);
+                _this.service.showError('Server Error');
+            });
+        }
+    };
+    ShowVariantsComponent.prototype.validation = function () {
+        console.log("345678");
+        var specialKeys = [];
+        specialKeys.push(8);
+        $(function () {
+            console.log("3452131678");
+            $(".stockName").on("click", function (e) {
+                alert('hello');
+                var keyCode = e.which ? e.which : e.keyCode;
+                var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+                // $(".error").css("display", ret ? "none" : "inline");
+                return ret;
+            });
+            $(".stockName").on("paste", function (e) {
+                return false;
+            });
+            $(".stockName").on("drop", function (e) {
+                return false;
+            });
+        });
+    };
+    ShowVariantsComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-show-variants',
+            template: __webpack_require__(/*! ./show-variants.component.html */ "./src/app/Components/show-variants/show-variants.component.html"),
+            styles: [__webpack_require__(/*! ./show-variants.component.css */ "./src/app/Components/show-variants/show-variants.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_2__["DataService"]])
+    ], ShowVariantsComponent);
+    return ShowVariantsComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Components/side-bar/side-bar.component.css":
 /*!************************************************************!*\
   !*** ./src/app/Components/side-bar/side-bar.component.css ***!
@@ -2092,7 +2552,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = " <!-- Sidebar Start Here-->\n <div id=\"sidebar-wrapper\">\n  <div class=\"sidemenuwrap\">\n    <div class=\"userprofilebx clearfix\">\n      <div class=\"usercirbx\"> <img src=\"../../assets/img/user_img.jpg\" width=\"230\" height=\"222\" alt=\"\" /> </div>\n      <div class=\"userpnm\">\n        <h4>Johnathan Doe</h4>\n        <h5>Owner</h5>\n      </div>\n    </div>\n    <ul class=\"nav navbar-nav\">\n      <li class=\"active\"><a routerLink=\"/dashBoard\" routerLinkActive=\"active\">Dashboard</a></li>\n      <li class=\"orders dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Orders<span class=\"orders\">3</span></a>\n        <ul class=\"dropdown-menu\">\n          <li><a routerLink=\"/orderlist\" routerLinkActive=\"active\">Orders List</a></li>\n          <li><a href=\"javascript:void(0);\">Abandoned Checkouts</a></li>\n          <li><a href=\"javascript:void(0);\">Cancelled Orders</a></li>\n        </ul>\n      </li>\n      <li class=\"products dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Products</a>\n        <ul class=\"dropdown-menu\">\n          <li><a routerLink=\"/allproducts\" routerLinkActive=\"active\">All Products</a></li>\n          <li><a href=\"javascript:void(0);\" (click)=addProduct() >Add Products</a></li>\n          <li><a href=\"javascript:void(0);\">Inventory</a></li>\n        </ul>\n      </li>\n      <li><a href=\"javascript:void(0);\">Reports</a></li>\n      <li><a href=\"javascript:void(0);\">Sales & Offers<span class=\"salesoffers\">4</span></a></li>\n      <li><a href=\"javascript:void(0);\">My Earnings</a></li>\n      <li><a href=\"javascript:void(0);\">Notifications <span class=\"notification\">8</span></a></li>\n      <li><a href=\"javascript:void(0);\">Reviews & Feedbacks <span class=\"feedback\">8</span></a></li>\n    </ul>\n    <div class=\"settingsbx\">\n      <ul class=\"nav navbar-nav\">\n        <li><a href=\"javascript:void(0);\">My Account</a></li>\n        <li><a href=\"javascript:void(0);\">Settings</a></li>\n        <li><a href=\"javascript:void(0);\">Live Chat</a></li>\n        <li><a href=\"/login\" (click)=logout()>Logout</a></li>\n      </ul>\n    </div>\n  </div>\n</div>\n<!--sidebar-End -->"
+module.exports = " <!-- Sidebar Start Here-->\n <div id=\"sidebar-wrapper\">\n  <div class=\"sidemenuwrap\">\n    <div class=\"userprofilebx clearfix\">\n      <div class=\"usercirbx\"> <img src=\"../../assets/images/user_img.jpg\" width=\"230\" height=\"222\" alt=\"\" /> </div>\n      <div class=\"userpnm\">\n        <h4>Johnathan Doe</h4>\n        <h5>Owner</h5>\n      </div>\n    </div>\n    <ul class=\"nav navbar-nav\">\n      <li class=\"active\"><a routerLink=\"/dashBoard\" routerLinkActive=\"active\" (click) = \"changeStatus('Dashboard')\">Dashboard</a></li>\n      <li class=\"orders dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Orders<span class=\"orders\">3</span></a>\n        <ul class=\"dropdown-menu\">\n          <li><a  routerLink=\"/orderlist\" routerLinkActive=\"active\" (click) = \"changeStatus('Orders List')\" >Orders List</a></li>\n          <li><a href=\"javascript:void(0);\">Abandoned Checkouts</a></li>\n          <li><a href=\"javascript:void(0);\">Cancelled Orders</a></li>\n        </ul>\n      </li>\n      <li class=\"products dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Products</a>\n        <ul class=\"dropdown-menu\">\n          <li><a routerLink=\"/allproducts\" routerLinkActive=\"active\" (click) = \"changeStatus('All Product')\" >All Products</a></li>\n          <li><a href=\"javascript:void(0);\" (click)=addProduct() (click) = \"changeStatus('Add Product')\" >Add Products</a></li>\n          <li><a routerLink=\"/inventory\" routerLinkActive=\"active\" (click) = \"changeStatus('Inventory')\">Inventory</a></li>\n        </ul>\n      </li>\n      <li><a href=\"javascript:void(0);\">Reports</a></li>\n      <li><a href=\"javascript:void(0);\">Sales & Offers<span class=\"salesoffers\">4</span></a></li>\n      <li><a href=\"javascript:void(0);\">My Earnings</a></li>\n      <li><a href=\"javascript:void(0);\">Notifications <span class=\"notification\">8</span></a></li>\n      <li><a href=\"javascript:void(0);\">Reviews & Feedbacks <span class=\"feedback\">8</span></a></li>\n    </ul>\n    <div class=\"settingsbx\">\n      <ul class=\"nav navbar-nav\">\n        <li><a href=\"javascript:void(0);\">My Account</a></li>\n        <li><a href=\"javascript:void(0);\">Settings</a></li>\n        <li><a href=\"javascript:void(0);\">Live Chat</a></li>\n        <li><a  (click)=logout()>Logout</a></li>\n      </ul>\n    </div>\n  </div>\n</div>\n<!--sidebar-End -->"
 
 /***/ }),
 
@@ -2108,6 +2568,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SideBarComponent", function() { return SideBarComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2119,15 +2580,21 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var SideBarComponent = /** @class */ (function () {
-    function SideBarComponent(route) {
+    function SideBarComponent(route, service) {
         this.route = route;
+        this.service = service;
     }
     SideBarComponent.prototype.ngOnInit = function () {
     };
     SideBarComponent.prototype.addProduct = function () {
         console.log("hgfdfghujhgfds");
         this.route.navigate(['/addProductScreen']);
+        this.service.setTitle('Add Product');
+    };
+    SideBarComponent.prototype.changeStatus = function (val) {
+        this.service.setTitle(val);
     };
     SideBarComponent.prototype.logout = function () {
         localStorage.clear();
@@ -2139,7 +2606,7 @@ var SideBarComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./side-bar.component.html */ "./src/app/Components/side-bar/side-bar.component.html"),
             styles: [__webpack_require__(/*! ./side-bar.component.css */ "./src/app/Components/side-bar/side-bar.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_2__["DataService"]])
     ], SideBarComponent);
     return SideBarComponent;
 }());
@@ -2166,7 +2633,7 @@ module.exports = "/* HeroesComponent's private CSS styles */\n.heroes {\n    mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div>\n      <div>\n        <h2>Add Languages</h2>\n      </div>\n      <form [formGroup]=\"myForm\" novalidate (ngSubmit)=\"save(myForm)\">\n        <div class=\"form-group\">\n          <label>Front End</label>\n          <input type=\"text\" class=\"form-control\" formControlName=\"front\"></div>\n        <div formArrayName=\"languages\">\n          <div *ngFor=\"let language of myForm.controls.languages.controls; let i=index\" class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n              <span>Language {{i + 1}}</span>\n              <span class=\"glyphicon glyphicon-remove pull-right\" *ngIf=\"myForm.controls.languages.controls.length > 1\"\n                (click)=\"removeLanguage(i)\"></span>\n            </div>\n            <div class=\"panel-body\" [formGroupName]=\"i\">\n              <div class=\"form-group col-xs-6\">\n                <label>React</label>\n                <input type=\"text\" class=\"form-control\" formControlName=\"React\"></div>\n              <div class=\"form-group col-xs-6\">\n                <label>Angular5</label>\n                <input type=\"text\" class=\"form-control\" formControlName=\"angular\"></div>\n            </div>\n          </div>\n        </div>\n        <div class=\"margin-20\">\n          <a (click)=\"addLanguage()\" style=\"cursor: default\">Add another Language </a></div>\n        <div class=\"margin-20\">\n          <button type=\"submit\" class=\"btn btn-primary pull-right\" [disabled]=\"!myForm.valid\">Submit</button></div>\n        <div class=\"clearfix\"></div>\n        <div class=\"margin-20\">\n          <div>myForm details:-</div>\n          <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>\n          <pre>form value: <br>{{myForm.value | json}}</pre>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>"
+module.exports = "<!-- <div class=\"container\">\n\n  <div class=\"row\">\n    <div>\n      <div>\n        <h2>Add Languages</h2>\n      </div>\n      <form [formGroup]=\"myForm\" novalidate (ngSubmit)=\"save(myForm)\">\n        <div class=\"form-group\">\n          <label>Front End</label>\n          <input type=\"text\" class=\"form-control\" formControlName=\"front\"></div>\n        <div formArrayName=\"languages\">\n          <div *ngFor=\"let language of myForm.controls.languages.controls; let i=index\" class=\"panel panel-default\">\n            <div class=\"panel-heading\">\n              <span>Language {{i + 1}}</span>\n              <span class=\"glyphicon glyphicon-remove pull-right\" *ngIf=\"myForm.controls.languages.controls.length > 1\"\n                (click)=\"removeLanguage(i)\"></span>\n            </div>\n            <div class=\"panel-body\" [formGroupName]=\"i\">\n              <div class=\"form-group col-xs-6\">\n                <label>React</label>\n                <input type=\"text\" class=\"form-control\" formControlName=\"React\"></div>\n              <div class=\"form-group col-xs-6\">\n                <label>Angular5</label>\n                <input type=\"text\" class=\"form-control\" formControlName=\"angular\"></div>\n            </div>\n          </div>\n        </div>\n        <div class=\"margin-20\">\n          <a (click)=\"addLanguage()\" style=\"cursor: default\">Add another Language </a></div>\n        <div class=\"margin-20\">\n          <button type=\"submit\" class=\"btn btn-primary pull-right\" [disabled]=\"!myForm.valid\">Submit</button></div>\n        <div class=\"clearfix\"></div>\n        <div class=\"margin-20\">\n          <div>myForm details:-</div>\n          <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre>\n          <pre>form value: <br>{{myForm.value | json}}</pre>\n        </div>\n      </form>\n    </div>\n  </div>\n</div> -->\n\n<div>\n   <qrcode [qrdata]=\"myAngularxQrCode\" [allowEmptyString]='true' [size]=\"256\" [level]=\"'Q'\"></qrcode>\n\n\n</div>"
 
 /***/ }),
 
@@ -2196,6 +2663,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var TestSumitComponent = /** @class */ (function () {
     function TestSumitComponent(_fb) {
         this._fb = _fb;
+        this.myAngularxQrCode = 'Your QR code data string';
     }
     TestSumitComponent.prototype.ngOnInit = function () {
         this.myForm = this._fb.group({
@@ -2207,6 +2675,7 @@ var TestSumitComponent = /** @class */ (function () {
                 this.initlanguage(),
             ])
         });
+        // assign a value
         // console.log('---------------->>>>',this.myForm)
     };
     TestSumitComponent.prototype.initlanguage = function () {
@@ -2260,7 +2729,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"loginscreenwrap\" >\n  <div class=\"wakilogo\"></div>\n  <div class=\"aboutwakiCon\">.\n    <div class=\"wakitextrow\"><img src=\"../../assets/img/waki_market_place.png\"  /></div>\n    <div class=\"sminfo\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut\n      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore\n      eu tus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo\n      inventor</div>\n    <div class=\"emailrow\">\n      <form [formGroup]='formgroup'>\n        <div class=\"form-group\">\n          <input class=\"form-control\" type=\"text\" [formControl]=\"formgroup.controls['email']\" placeholder=\"Enter your email address\" />\n          <button type=\"submit\" class=\"btn btn-primary loginbtn\" [disabled]=\"!formgroup.valid\" (click)=\"login(formgroup.value)\">Submit</button>\n        </div>\n        <div class=\"error_box clearfix\">\n            <p *ngIf=\"formgroup.controls['email'].hasError('required') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Email is required</p>\n            <p *ngIf=\"formgroup.controls['email'].hasError('pattern') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Please enter valid email.</p>\n        </div>\n<!-- //! -->\n\n\n<!-- //! -->\n\n\n      </form>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"loginscreenwrap\" >\n  <div class=\"wakilogo\"></div>\n  <div class=\"aboutwakiCon\">.\n    <div class=\"wakitextrow\"><img src=\"../../assets/images/waki_market_place.png\"  /></div>\n    <div class=\"sminfo\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut\n      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore\n      eu tus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo\n      inventor</div>\n    <div class=\"emailrow\">\n        <form [formGroup]='formgroup'>\n\n        <div *ngIf=\"isValid;else password\">        \n        <!-- <ng-template #other_content>other content here...</ng-template> -->\n        <div class=\"form-group\">\n          <input class=\"form-control\" type=\"text\" [formControl]=\"formgroup.controls['email']\" placeholder=\"Enter your email address\" />\n          <button type=\"submit\" class=\"btn btn-primary loginbtn\"  (click)=\"login(formgroup.value)\">Submit</button>\n        </div>\n        <div class=\"error_box clearfix\">\n            <p *ngIf=\"formgroup.controls['email'].hasError('required') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Email is required</p>\n            <p *ngIf=\"formgroup.controls['email'].hasError('pattern') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Please enter valid email.</p>\n        </div>\n      <!-- </form> -->\n      </div>\n      <!-- //!password field -->\n      <ng-template #password>\n          <!-- <form [formGroup]='formgroup'> -->\n              <div class=\"form-group\">\n                <input class=\"form-control\" type=\"password\" [formControl]=\"formgroup.controls['pass']\" placeholder=\"Enter your Password\" />\n                <button type=\"submit\" class=\"btn btn-primary loginbtn\" (click)=\"enterpassword(formgroup.value)\">Submit</button>\n              </div>\n              <div class=\"error_box clearfix\">\n                  <p *ngIf=\"formgroup.controls['pass'].hasError('required') && formgroup.controls['pass'].dirty\" style=\"color:red;font-size:14px;\">*Password is required</p>\n                  <p *ngIf=\"formgroup.controls['pass'].hasError('pattern') && formgroup.controls['pass'].dirty\" style=\"color:red;font-size:14px;\">*Please enter valid Password.</p>\n              </div>\n      </ng-template>\n      <!-- //!password field -->\n    </form>\n\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -2296,16 +2765,20 @@ var WakiLoginComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this.route = route;
         this.service = service;
+        this.isValid = true;
         this.formgroup = formBuilder.group({
             email: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^[A-Z0-9_-]+([\.-][A-Z0-9_-]+)*@[A-Z0-9-]+(\.[a-zA-Z]{2,4})+$/i)])],
+            // email:['',],
+            // pass: ['',Validators]
+            pass: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')])],
         });
     }
     WakiLoginComponent.prototype.ngOnInit = function () {
     };
     WakiLoginComponent.prototype.login = function (val) {
         var _this = this;
-        console.log(this.formgroup.value);
-        console.log(val);
+        // console.log("formdata",this.formgroup.value)
+        // console.log("val",val)
         var logindata = {
             "email": val.email.toLowerCase(),
             "lang": "en"
@@ -2316,17 +2789,53 @@ var WakiLoginComponent = /** @class */ (function () {
             console.log("WWWWWWWW", _this.responseData);
             if (response['statusCode'] == 200) {
                 _this.service.showSuccess("Please enter password");
-                localStorage.setItem('email', val.email.toLowerCase());
+                // localStorage.setItem('email', val.email.toLowerCase())
                 // localStorage.setItem('adminId', this.responseData.result._id)
-                console.log('successfully login', response['statusMessage']);
-                _this.route.navigate(['/enterPassword']);
+                // console.log('successfully login', response['statusMessage'])
+                // this.route.navigate(['/enterPassword']);
                 // window.location.replace("/enterPassword");
                 // localStorage.token = response[`data`][`token`];
                 // localStorage.adminId = response[`data`][`_id`];
+                _this.isValid = false;
             }
             else {
                 _this.service.showError('Invalid Email');
                 //  this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            console.log('error occur', error);
+            _this.service.showError('Server Error');
+        });
+    };
+    //!enterpasswordScreen
+    WakiLoginComponent.prototype.enterpassword = function (val) {
+        var _this = this;
+        // console.log("formdata",this.formgroup.value)
+        // console.log("val",val)
+        var logindata = {
+            "email": val.email,
+            "password": val.pass,
+            "userType": 'admin',
+            "lang": "en"
+        };
+        this.service.postApi('user/login', logindata, 0).subscribe(function (response) {
+            _this.responseData = response;
+            console.log("WWWWWWWW", _this.responseData);
+            if (response['statusCode'] == 200) {
+                _this.service.showSuccess(response['statusMessage']);
+                // console.log('<<<<<', this.responseData['result'])
+                localStorage.setItem('token', _this.responseData.accessToken);
+                // localStorage.removeItem('email')
+                if (_this.responseData['result']['isBussinessAdded'] == false) {
+                    // this.route.navigate(['/business_details']);
+                }
+                else {
+                    _this.route.navigate(['/dashBoard']);
+                }
+            }
+            else {
+                _this.service.showError('Invalid password.');
+                //this.service.showError('Invalid email or password.')
             }
         }, function (error) {
             console.log('error occur', error);
@@ -2387,6 +2896,7 @@ var DataService = /** @class */ (function () {
         this.optionSubject = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
         this.optionObs = this.optionSubject.asObservable();
         this.baseUrl = 'http://13.126.131.184:5050/'; //!live 
+        this.title = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"]('DASHBOARD');
     }
     DataService.prototype.changeOption = function (msg) {
         this.optionSubject.next(msg);
@@ -2422,10 +2932,10 @@ var DataService = /** @class */ (function () {
             return this.http.get((this.baseUrl + url), httpOptions);
         }
         else if (isHeader == 1) {
-            console.log('token', localStorage.token);
+            // console.log('token', localStorage.token)
             var httpOptions;
             httpOptions = {
-                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ "token": localStorage.token, "_id": localStorage.adminId, "Content-Type": "application/json" })
+                headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ "accessToken": localStorage.getItem("token"), "Content-Type": "application/json" })
             };
             return this.http.get((this.baseUrl + url), httpOptions);
         }
@@ -2445,6 +2955,9 @@ var DataService = /** @class */ (function () {
     };
     DataService.prototype.spinnerHide = function () {
         this.spinner.hide();
+    };
+    DataService.prototype.setTitle = function (title) {
+        this.title.next(title);
     };
     DataService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -2472,18 +2985,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _Components_waki_login_waki_login_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Components/waki-login/waki-login.component */ "./src/app/Components/waki-login/waki-login.component.ts");
-/* harmony import */ var _Components_enter_password_screen_enter_password_screen_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Components/enter-password-screen/enter-password-screen.component */ "./src/app/Components/enter-password-screen/enter-password-screen.component.ts");
-/* harmony import */ var _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Components/business-detail/business-detail.component */ "./src/app/Components/business-detail/business-detail.component.ts");
-/* harmony import */ var _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Components/home-page-vendor/home-page-vendor.component */ "./src/app/Components/home-page-vendor/home-page-vendor.component.ts");
-/* harmony import */ var _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Components/add-product-screen/add-product-screen.component */ "./src/app/Components/add-product-screen/add-product-screen.component.ts");
-/* harmony import */ var _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Components/add-product/add-product.component */ "./src/app/Components/add-product/add-product.component.ts");
-/* harmony import */ var _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Components/editproduct/editproduct.component */ "./src/app/Components/editproduct/editproduct.component.ts");
-/* harmony import */ var _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Components/test-sumit/test-sumit.component */ "./src/app/Components/test-sumit/test-sumit.component.ts");
-/* harmony import */ var _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Components/reset-password/reset-password.component */ "./src/app/Components/reset-password/reset-password.component.ts");
-/* harmony import */ var _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Components/not-found/not-found.component */ "./src/app/Components/not-found/not-found.component.ts");
-/* harmony import */ var _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Components/allproducts/allproducts.component */ "./src/app/Components/allproducts/allproducts.component.ts");
-/* harmony import */ var _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Components/password-changed/password-changed.component */ "./src/app/Components/password-changed/password-changed.component.ts");
-/* harmony import */ var _Components_allorders_allorders_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Components/allorders/allorders.component */ "./src/app/Components/allorders/allorders.component.ts");
+/* harmony import */ var _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Components/business-detail/business-detail.component */ "./src/app/Components/business-detail/business-detail.component.ts");
+/* harmony import */ var _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Components/home-page-vendor/home-page-vendor.component */ "./src/app/Components/home-page-vendor/home-page-vendor.component.ts");
+/* harmony import */ var _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Components/add-product-screen/add-product-screen.component */ "./src/app/Components/add-product-screen/add-product-screen.component.ts");
+/* harmony import */ var _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Components/add-product/add-product.component */ "./src/app/Components/add-product/add-product.component.ts");
+/* harmony import */ var _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Components/editproduct/editproduct.component */ "./src/app/Components/editproduct/editproduct.component.ts");
+/* harmony import */ var _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Components/test-sumit/test-sumit.component */ "./src/app/Components/test-sumit/test-sumit.component.ts");
+/* harmony import */ var _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Components/reset-password/reset-password.component */ "./src/app/Components/reset-password/reset-password.component.ts");
+/* harmony import */ var _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Components/not-found/not-found.component */ "./src/app/Components/not-found/not-found.component.ts");
+/* harmony import */ var _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Components/allproducts/allproducts.component */ "./src/app/Components/allproducts/allproducts.component.ts");
+/* harmony import */ var _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Components/password-changed/password-changed.component */ "./src/app/Components/password-changed/password-changed.component.ts");
+/* harmony import */ var _Components_productdetail_productdetail_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Components/productdetail/productdetail.component */ "./src/app/Components/productdetail/productdetail.component.ts");
+/* harmony import */ var _Components_inventory_listing_inventory_listing_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Components/inventory-listing/inventory-listing.component */ "./src/app/Components/inventory-listing/inventory-listing.component.ts");
+/* harmony import */ var _Components_show_variants_show_variants_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Components/show-variants/show-variants.component */ "./src/app/Components/show-variants/show-variants.component.ts");
+/* harmony import */ var _Components_order_list_order_list_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Components/order-list/order-list.component */ "./src/app/Components/order-list/order-list.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2505,21 +3020,26 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
 var routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: _Components_waki_login_waki_login_component__WEBPACK_IMPORTED_MODULE_2__["WakiLoginComponent"] },
-    { path: 'enterPassword', component: _Components_enter_password_screen_enter_password_screen_component__WEBPACK_IMPORTED_MODULE_3__["EnterPasswordScreenComponent"] },
-    { path: 'business_details', component: _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_4__["BusinessDetailComponent"] },
-    { path: 'dashBoard', component: _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_5__["HomePageVendorComponent"] },
-    { path: 'addProductScreen', component: _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_6__["AddProductScreenComponent"] },
-    { path: 'addProduct', component: _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_7__["AddProductComponent"] },
-    { path: 'editProduct', component: _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_8__["EditproductComponent"] },
-    { path: 'allproducts', component: _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_12__["AllproductsComponent"] },
-    { path: 'test', component: _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_9__["TestSumitComponent"] },
-    { path: 'resetPassword', component: _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_10__["ResetPasswordComponent"] },
-    { path: 'notFound', component: _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_11__["NotFoundComponent"] },
-    { path: 'passwordChanged', component: _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_13__["PasswordChangedComponent"] },
-    { path: 'orderlist', component: _Components_allorders_allorders_component__WEBPACK_IMPORTED_MODULE_14__["AllordersComponent"] }
+    { path: 'business_details', component: _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_3__["BusinessDetailComponent"] },
+    { path: 'dashBoard', component: _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_4__["HomePageVendorComponent"] },
+    { path: 'addProductScreen', component: _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_5__["AddProductScreenComponent"] },
+    { path: 'addProduct', component: _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_6__["AddProductComponent"] },
+    { path: 'editProduct', component: _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_7__["EditproductComponent"] },
+    { path: 'allproducts', component: _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_11__["AllproductsComponent"] },
+    { path: 'test', component: _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_8__["TestSumitComponent"] },
+    { path: 'resetPassword', component: _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_9__["ResetPasswordComponent"] },
+    { path: 'notFound', component: _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_10__["NotFoundComponent"] },
+    { path: 'passwordChanged', component: _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_12__["PasswordChangedComponent"] },
+    // { path: 'orderlist', component: AllordersComponent },
+    { path: 'productdetails', component: _Components_productdetail_productdetail_component__WEBPACK_IMPORTED_MODULE_13__["ProductdetailComponent"] },
+    { path: 'inventory', component: _Components_inventory_listing_inventory_listing_component__WEBPACK_IMPORTED_MODULE_14__["InventoryListingComponent"] },
+    { path: 'productvariant/:productId', component: _Components_show_variants_show_variants_component__WEBPACK_IMPORTED_MODULE_15__["ShowVariantsComponent"] },
+    { path: 'orderlist', component: _Components_order_list_order_list_component__WEBPACK_IMPORTED_MODULE_16__["OrderListComponent"] }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -2596,32 +3116,27 @@ var AppComponent = /** @class */ (function () {
                     window.scroll(0, 0);
                     var currUrl_1 = _this.router.url.indexOf('?') == -1 ? _this.router.url.split('/')[1] : _this.router.url.slice(1, _this.router.url.indexOf('?'));
                     if (localStorage.getItem('token') === null) {
-                        if (currUrl_1 === 'addProduct' || currUrl_1 === 'dashBoard') {
+                        if (currUrl_1 === 'resetPassword') {
+                            _this.router.navigate(['/resetPassword']);
+                        }
+                        else if (currUrl_1 == 'productdetails') {
+                            window.location.href = 'waki://other/parameter';
+                        }
+                        else {
                             _this.router.navigate(['/login']);
                         }
                     }
                     else if ((localStorage.getItem('token') != null)) {
-                        if (currUrl_1 === 'enterPassword' || currUrl_1 === 'login') {
-                            _this.router.navigate(['/business_details']);
+                        // if (currUrl === 'enterPassword' || currUrl === 'login') {
+                        //   this.router.navigate(['/business_details'])
+                        // }
+                        if (currUrl_1 === 'resetPassword') {
+                            _this.router.navigate(['/resetPassword']);
+                        }
+                        else if (currUrl_1 == 'login') {
+                            _this.router.navigate(['/dashBoard']);
                         }
                     }
-                    // if(localStorage.getItem('token') === null){
-                    //   console.log(this.router.url)         
-                    //   // this.router.navigate(['/resetPassword'])
-                    //       /* if(!(this.router.url === '/login' || this.router.url === '/forgot-password' || this.router.url.substring(this.router.url.lastIndexOf("4200/") + 4,this.router.url.lastIndexOf("/?token")) === '/reset-password')){
-                    //         this.router.navigate(['/login']);
-                    //       }   */
-                    //       if(!(currUrl === 'login' || currUrl === 'forgot-password' || currUrl === 'resetpassword')){
-                    //         this.router.navigate(['/login']);
-                    //       }  
-                    //     } else {
-                    //       /* if(this.router.url === '/login' || this.router.url === '/forgot-password' || this.router.url.substring(this.router.url.lastIndexOf("4200/") + 4,this.router.url.lastIndexOf("/?token")) === '/reset-password'){
-                    //         this.router.navigate(['/dashboard'])
-                    //       } */
-                    //       if(currUrl === 'login' || currUrl === 'forgot-password' || currUrl === 'reset-password'){
-                    //         this.router.navigate(['/dashboard'])
-                    //       }
-                    //     }
                 }
             }
         });
@@ -2670,30 +3185,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _google_places_directive__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./google-places.directive */ "./src/app/google-places.directive.ts");
 /* harmony import */ var _Components_waki_login_waki_login_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Components/waki-login/waki-login.component */ "./src/app/Components/waki-login/waki-login.component.ts");
 /* harmony import */ var _Components_side_bar_side_bar_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Components/side-bar/side-bar.component */ "./src/app/Components/side-bar/side-bar.component.ts");
-/* harmony import */ var _Components_enter_password_screen_enter_password_screen_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Components/enter-password-screen/enter-password-screen.component */ "./src/app/Components/enter-password-screen/enter-password-screen.component.ts");
-/* harmony import */ var _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Components/business-detail/business-detail.component */ "./src/app/Components/business-detail/business-detail.component.ts");
-/* harmony import */ var _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Components/home-page-vendor/home-page-vendor.component */ "./src/app/Components/home-page-vendor/home-page-vendor.component.ts");
-/* harmony import */ var _Components_header_header_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Components/header/header.component */ "./src/app/Components/header/header.component.ts");
-/* harmony import */ var _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Components/add-product/add-product.component */ "./src/app/Components/add-product/add-product.component.ts");
-/* harmony import */ var _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Components/add-product-screen/add-product-screen.component */ "./src/app/Components/add-product-screen/add-product-screen.component.ts");
-/* harmony import */ var ngx_image_uploader__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ngx-image-uploader */ "./node_modules/ngx-image-uploader/fesm5/ngx-image-uploader.js");
-/* harmony import */ var ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ng-multiselect-dropdown */ "./node_modules/ng-multiselect-dropdown/fesm5/ng-multiselect-dropdown.js");
-/* harmony import */ var ng_custom_select__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ng-custom-select */ "./node_modules/ng-custom-select/fesm5/ng-custom-select.js");
-/* harmony import */ var ngx_chips__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ngx-chips */ "./node_modules/ngx-chips/esm5/ngx-chips.js");
-/* harmony import */ var _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./Components/editproduct/editproduct.component */ "./src/app/Components/editproduct/editproduct.component.ts");
-/* harmony import */ var ngx_dynamic_form__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ngx-dynamic-form */ "./node_modules/ngx-dynamic-form/fesm5/ngx-dynamic-form.js");
-/* harmony import */ var _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @swimlane/ngx-datatable */ "./node_modules/@swimlane/ngx-datatable/release/index.js");
-/* harmony import */ var _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ng2-table/ng2-table */ "./node_modules/ng2-table/ng2-table.js");
-/* harmony import */ var ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var _Components_child_child_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Components/child/child.component */ "./src/app/Components/child/child.component.ts");
-/* harmony import */ var _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Components/test-sumit/test-sumit.component */ "./src/app/Components/test-sumit/test-sumit.component.ts");
-/* harmony import */ var _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Components/reset-password/reset-password.component */ "./src/app/Components/reset-password/reset-password.component.ts");
-/* harmony import */ var _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Components/not-found/not-found.component */ "./src/app/Components/not-found/not-found.component.ts");
-/* harmony import */ var _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./Components/allproducts/allproducts.component */ "./src/app/Components/allproducts/allproducts.component.ts");
-/* harmony import */ var _Components_allorders_allorders_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./Components/allorders/allorders.component */ "./src/app/Components/allorders/allorders.component.ts");
-/* harmony import */ var _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./Components/password-changed/password-changed.component */ "./src/app/Components/password-changed/password-changed.component.ts");
-/* harmony import */ var ng_chat__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ng-chat */ "./node_modules/ng-chat/fesm5/ng-chat.js");
+/* harmony import */ var _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Components/business-detail/business-detail.component */ "./src/app/Components/business-detail/business-detail.component.ts");
+/* harmony import */ var _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Components/home-page-vendor/home-page-vendor.component */ "./src/app/Components/home-page-vendor/home-page-vendor.component.ts");
+/* harmony import */ var _Components_header_header_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Components/header/header.component */ "./src/app/Components/header/header.component.ts");
+/* harmony import */ var _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Components/add-product/add-product.component */ "./src/app/Components/add-product/add-product.component.ts");
+/* harmony import */ var _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Components/add-product-screen/add-product-screen.component */ "./src/app/Components/add-product-screen/add-product-screen.component.ts");
+/* harmony import */ var ngx_image_uploader__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ngx-image-uploader */ "./node_modules/ngx-image-uploader/fesm5/ngx-image-uploader.js");
+/* harmony import */ var ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ng-multiselect-dropdown */ "./node_modules/ng-multiselect-dropdown/fesm5/ng-multiselect-dropdown.js");
+/* harmony import */ var ng_custom_select__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ng-custom-select */ "./node_modules/ng-custom-select/fesm5/ng-custom-select.js");
+/* harmony import */ var ngx_chips__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-chips */ "./node_modules/ngx-chips/esm5/ngx-chips.js");
+/* harmony import */ var _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Components/editproduct/editproduct.component */ "./src/app/Components/editproduct/editproduct.component.ts");
+/* harmony import */ var ngx_dynamic_form__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ngx-dynamic-form */ "./node_modules/ngx-dynamic-form/fesm5/ngx-dynamic-form.js");
+/* harmony import */ var _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @swimlane/ngx-datatable */ "./node_modules/@swimlane/ngx-datatable/release/index.js");
+/* harmony import */ var _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ng2-table/ng2-table */ "./node_modules/ng2-table/ng2-table.js");
+/* harmony import */ var ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_28__);
+/* harmony import */ var _Components_child_child_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./Components/child/child.component */ "./src/app/Components/child/child.component.ts");
+/* harmony import */ var _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Components/test-sumit/test-sumit.component */ "./src/app/Components/test-sumit/test-sumit.component.ts");
+/* harmony import */ var _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Components/reset-password/reset-password.component */ "./src/app/Components/reset-password/reset-password.component.ts");
+/* harmony import */ var _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Components/not-found/not-found.component */ "./src/app/Components/not-found/not-found.component.ts");
+/* harmony import */ var _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Components/allproducts/allproducts.component */ "./src/app/Components/allproducts/allproducts.component.ts");
+/* harmony import */ var _Components_allorders_allorders_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./Components/allorders/allorders.component */ "./src/app/Components/allorders/allorders.component.ts");
+/* harmony import */ var _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./Components/password-changed/password-changed.component */ "./src/app/Components/password-changed/password-changed.component.ts");
+/* harmony import */ var ng_chat__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ng-chat */ "./node_modules/ng-chat/fesm5/ng-chat.js");
+/* harmony import */ var angularx_qrcode__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! angularx-qrcode */ "./node_modules/angularx-qrcode/dist/index.js");
+/* harmony import */ var _Components_productdetail_productdetail_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./Components/productdetail/productdetail.component */ "./src/app/Components/productdetail/productdetail.component.ts");
+/* harmony import */ var _Components_show_variants_show_variants_component__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./Components/show-variants/show-variants.component */ "./src/app/Components/show-variants/show-variants.component.ts");
+/* harmony import */ var _Components_inventory_listing_inventory_listing_component__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Components/inventory-listing/inventory-listing.component */ "./src/app/Components/inventory-listing/inventory-listing.component.ts");
+/* harmony import */ var _Components_order_list_order_list_component__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Components/order-list/order-list.component */ "./src/app/Components/order-list/order-list.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2714,8 +3233,8 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+// import { HeaderFooterComponent } from './Common/header-footer/header-footer.component';
 // import { SocketService } from './Services/socket.service';
-
 
 
 
@@ -2744,6 +3263,11 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
+
+
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -2755,21 +3279,25 @@ var AppModule = /** @class */ (function () {
                 _google_places_directive__WEBPACK_IMPORTED_MODULE_13__["GooglePlacesDirective"],
                 _Components_waki_login_waki_login_component__WEBPACK_IMPORTED_MODULE_14__["WakiLoginComponent"],
                 _Components_side_bar_side_bar_component__WEBPACK_IMPORTED_MODULE_15__["SideBarComponent"],
-                _Components_enter_password_screen_enter_password_screen_component__WEBPACK_IMPORTED_MODULE_16__["EnterPasswordScreenComponent"],
-                _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_17__["BusinessDetailComponent"],
-                _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_18__["HomePageVendorComponent"],
-                _Components_header_header_component__WEBPACK_IMPORTED_MODULE_19__["HeaderComponent"],
-                _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_20__["AddProductComponent"],
-                _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_21__["AddProductScreenComponent"],
-                _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_26__["EditproductComponent"],
+                _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_16__["BusinessDetailComponent"],
+                _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_17__["HomePageVendorComponent"],
+                _Components_header_header_component__WEBPACK_IMPORTED_MODULE_18__["HeaderComponent"],
+                _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_19__["AddProductComponent"],
+                _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_20__["AddProductScreenComponent"],
+                _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_25__["EditproductComponent"],
                 // ChidComponent,
-                _Components_child_child_component__WEBPACK_IMPORTED_MODULE_30__["ChildComponent"],
-                _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_31__["TestSumitComponent"],
-                _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_32__["ResetPasswordComponent"],
-                _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_33__["NotFoundComponent"],
-                _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_34__["AllproductsComponent"],
-                _Components_allorders_allorders_component__WEBPACK_IMPORTED_MODULE_35__["AllordersComponent"],
-                _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_36__["PasswordChangedComponent"],
+                _Components_child_child_component__WEBPACK_IMPORTED_MODULE_29__["ChildComponent"],
+                _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_30__["TestSumitComponent"],
+                _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_31__["ResetPasswordComponent"],
+                _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_32__["NotFoundComponent"],
+                _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_33__["AllproductsComponent"],
+                _Components_allorders_allorders_component__WEBPACK_IMPORTED_MODULE_34__["AllordersComponent"],
+                _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_35__["PasswordChangedComponent"],
+                _Components_productdetail_productdetail_component__WEBPACK_IMPORTED_MODULE_38__["ProductdetailComponent"],
+                _Components_show_variants_show_variants_component__WEBPACK_IMPORTED_MODULE_39__["ShowVariantsComponent"],
+                _Components_inventory_listing_inventory_listing_component__WEBPACK_IMPORTED_MODULE_40__["InventoryListingComponent"],
+                _Components_order_list_order_list_component__WEBPACK_IMPORTED_MODULE_41__["OrderListComponent"]
+                // FancyImageUploaderModule
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -2783,17 +3311,18 @@ var AppModule = /** @class */ (function () {
                 ngx_pagination__WEBPACK_IMPORTED_MODULE_8__["NgxPaginationModule"],
                 ng2_ckeditor__WEBPACK_IMPORTED_MODULE_10__["CKEditorModule"],
                 ngx_tooltip__WEBPACK_IMPORTED_MODULE_9__["TooltipModule"],
-                ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_23__["NgMultiSelectDropDownModule"].forRoot(),
-                ng_custom_select__WEBPACK_IMPORTED_MODULE_24__["NgSelectModule"],
-                ngx_chips__WEBPACK_IMPORTED_MODULE_25__["TagInputModule"],
-                _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_28__["NgxDatatableModule"],
-                ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_29__["Ng2TableModule"],
-                ngx_image_uploader__WEBPACK_IMPORTED_MODULE_22__["ImageUploaderModule"],
-                ngx_dynamic_form__WEBPACK_IMPORTED_MODULE_27__["DynamicFormModule"],
-                ng_chat__WEBPACK_IMPORTED_MODULE_37__["NgChatModule"]
+                ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_22__["NgMultiSelectDropDownModule"].forRoot(),
+                ng_custom_select__WEBPACK_IMPORTED_MODULE_23__["NgSelectModule"],
+                ngx_chips__WEBPACK_IMPORTED_MODULE_24__["TagInputModule"],
+                _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_27__["NgxDatatableModule"],
+                ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_28__["Ng2TableModule"],
+                ngx_image_uploader__WEBPACK_IMPORTED_MODULE_21__["ImageUploaderModule"],
+                ngx_dynamic_form__WEBPACK_IMPORTED_MODULE_26__["DynamicFormModule"],
+                ng_chat__WEBPACK_IMPORTED_MODULE_36__["NgChatModule"],
+                angularx_qrcode__WEBPACK_IMPORTED_MODULE_37__["QRCodeModule"]
             ],
             entryComponents: [
-                _Components_child_child_component__WEBPACK_IMPORTED_MODULE_30__["ChildComponent"]
+                _Components_child_child_component__WEBPACK_IMPORTED_MODULE_29__["ChildComponent"]
             ],
             providers: [ngx_cookie_service__WEBPACK_IMPORTED_MODULE_7__["CookieService"],],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_12__["AppComponent"]]

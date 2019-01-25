@@ -17,12 +17,12 @@ var brandDescription = mongoose.Schema({
         ref: 'productcategoryListing'
     },
 
-    // brandId:{                //!MI SAMSUNG SONG 
+    // brandId:{          //!MI SAMSUNG SONG 
     //     type:mongoose.Schema.Types.ObjectId,
     //     ref:'brandListing'
     // },
-    brandDesc: [{         
-        sellerId: {       
+    brandDesc: [{
+        sellerId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'login'
         },
@@ -38,14 +38,38 @@ var brandDescription = mongoose.Schema({
         varianceId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'variance',
-            default:null
+            default: null
         },
         tag: [],
         specifications: [{
         }],
+        productTry: {
+            type: Boolean,
+            default: false
+        },
+        tryImage: {
+            type: String,
+            default: null
+        },
+        qrCode: {
+            type: String,
+            default: null
+        },
+        inventorySKU: {
+            type: String,
+            default: null
+        },
+        weight: {
+            type: String,
+            default: null
+        },
+        quantity: {
+            type: String,
+            default: null
+        },
         status: {
             type: String,
-            enum: ["ACTIVE", "INACTIVE"],
+            enum: ["ACTIVE", "INACTIVE", "REJECT"],
             upperCase: true,
             default: "INACTIVE"
         }

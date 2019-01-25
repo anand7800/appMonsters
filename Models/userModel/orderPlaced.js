@@ -42,6 +42,11 @@ var orderPlaced = mongoose.Schema({
             type: String,
             default: "50"
         },
+        totalAmountPaid:{
+            type:String,
+            default:""
+
+        },
         orderPayment: {
             type: String,
             enum: ["COD", "ONLINE", "ADDTOCART", "PENDING"],

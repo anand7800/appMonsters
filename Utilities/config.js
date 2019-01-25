@@ -4,7 +4,7 @@ let serverURLs = {
     "dev": {
         "NODE_SERVER": "http://localhost",
         "NODE_SERVER_PORT": "5050",
-        "MONGO_DB": "mongodb://admin:oursport_admin@13.126.131.184:27017/waki?authSource=admin",
+        "MONGO_DB": "mongodb://admin:oursport_admin@13.126.131.184:27017/WAKINEW?authSource=admin",
         "EMAIL_USER": 'toothfairysanjeet@gmail.com',
         "EMAIL_PASS": 'Sanj1234A',
         "EMAIL_HOST": 'smtp.gmail.com',
@@ -15,14 +15,15 @@ let serverURLs = {
     "staging": {
         "NODE_SERVER": "http://13.126.131.184",
         "NODE_SERVER_PORT": "5050",
-        "MONGO_DB": "mongodb://admin:oursport_admin@13.126.131.184:27017/wakitesting?authSource=admin",
+        "MONGO_DB": "mongodb://admin:oursport_admin@13.126.131.184:27017/waki?authSource=admin",
         "EMAIL_USER": 'toothfairysanjeet@gmail.com',
         "EMAIL_PASS": 'Sanj1234A',
         "EMAIL_HOST": 'smtp.gmail.com',
         "EMAIL_PORT": 465,
         "EMAIL_SECURE": true,
         "CRON_PATTERN": '1 * * * * *',
-    }
+    },
+    
 }
 let config = {
     "OTP_SMS_CONFIG": {

@@ -82,7 +82,7 @@ login = (data, callback) => {
         return
     }
     else {
-        userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod').exec((err, succ) => {
+        userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod isBussinessAdded').exec((err, succ) => {
             console.log(err, succ)
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
@@ -108,7 +108,8 @@ login = (data, callback) => {
                         "paymentAdded": succ.paymentAdded,
                         "address": succ.address,
                         "paymentMethod": succ.paymentMethod,
-                        "countryCode": succ.countryCode
+                        "countryCode": succ.countryCode,
+                        "isBussinessAdded": succ.isBussinessAdded
                     }
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
                     // commonFunction.android_notification("fdUDE4j000M:APA91bEkgqRGHyIqHEYhhpbYA3n2mxYohNh1RIOEUvQRlBFp1SCYUS6cwOTtAdNZ2RbwwgL4CcYyzLDCz0Geh6iVjeOEioKKq0JgRgKJB9GAEilLX5pLAo1NUly8ofZnIVQYMBuIwXcR", "msg", "chatType", "title", "sendorId", "senderName", "type")
@@ -327,21 +328,21 @@ getOtp = (data, callback) => {
     else {
         console.log(typeof commonFunction.getOTP())
         var otp = commonFunction.getOTP()
-        // commonFunction.sendSMS(otp, data.phone, async (err, sent) => {
-        //     console.log(err,sent)
-        //     if (err) {
-        //         callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-        //     }
-        //     else {
-        //         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.InvalidPhoneNuber[data.lang], 'result': otp })
-        //     }
-        // })
-        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.OTP[data.lang], 'result': "123456" })
+        commonFunction.sendSMS(otp, data.phone, async (err, sent) => {
+            console.log(err,sent)
+            if (err) {
+                callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+            }
+            else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.InvalidPhoneNuber[data.lang], 'result': otp })
+            }
+        })
+        // callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.OTP[data.lang], 'result': "123456" })
     }
 }
 //! forgot Password of user
 forgotPassword = (data, callback) => {
-    console.log("---------->>>",data)
+    console.log("---------->>>", data)
     obj = data
     if (!obj) {
         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
@@ -573,8 +574,8 @@ resetPassword = (query, body, callback) => {
 
 //!email exist 
 checkEmail = (data, callback) => {
-    console.log("api is called")
-    userModel.find({ email: data.email }, (err, found) => {
+    console.log("api is called",data)
+    userModel.find({ email: data.email,userType:'vendor'}, (err, found) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
         }
@@ -693,7 +694,7 @@ reset = (data, callback) => {
     }
     update = {
         password: util.encryptData(data.newPassword),
-        forgotToken:null
+        forgotToken: null
     }
     userModel.findOneAndUpdate(query, update, { new: true }, (err, reset) => {
         // console.log(err,reset)
@@ -706,25 +707,83 @@ reset = (data, callback) => {
     })
 }
 //! api for angular verify token
-
 verifyLink = (data, callback) => {
     log("######", data)
     var criteria = {
         $and: [{
             email: data.email
         }, {
-            forgotToken:data.forgotToken
+            forgotToken: data.forgotToken
         }]
     }
     userModel.find(criteria, (err, result) => {
         log(err, "ambuj")
         log(result, "pppp")
-        if (result.length>0) {
+        if (result.length > 0) {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "email": data.email })
         }
         else {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
         }
+    })
+}
+
+//! UPDATE IMAGE
+updateImage = (data, headers, callback) => {
+    console.log("headers", headers,data)
+    var userId
+    commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
+        console.log("^^^^",err,decodeId)
+        if (err) throw err
+        else {
+            userId = decodeId
+        }
+    })
+
+    async.parallel({
+        uploadImage: (cb) => {
+            commonFunction.uploadImg(data.image, (err, image) => {
+                console.log(err, image)
+                if (err) cb(null)
+                else if (!image) cb(null)
+                else cb(null, image)
+            })
+        }
+    }, (err, response) => {
+        console.log("######",err,response)
+        query = {
+            _id: userId
+        }
+        update = {
+            $set: {
+                image: response.uploadImage
+            }
+        }
+        console.log('@@@@@@@@@@@@@@@2',query,update)
+        userModel.findOneAndUpdate(query, update, { new: true }).exec((err, success) => {
+            console.log(err,success)
+            result = {
+                "_id": success._id,
+                "firstName": success.firstName,
+                "lastName": success.lastName,
+                "email": success.email,
+                "image": success.image,
+                "addressAdded": success.isAddressAdded,
+                "phone": success.phone,
+                "countryCode": success.countryCode,
+                "paymentAdded": success.paymentAdded,
+                "address": success.address,
+                "paymentMethod": success.paymentMethod,
+                "countryCode": success.countryCode,
+                "isBussinessAdded": success.isBussinessAdded
+            }
+            if (success) {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PROFILE_UPDATE[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(success._id) })
+            } else {
+
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+            }
+        })
     })
 }
 module.exports = {
@@ -746,5 +805,6 @@ module.exports = {
     editProfile,
     //! this is for angular 
     reset,
-    verifyLink
+    verifyLink,
+    updateImage
 }

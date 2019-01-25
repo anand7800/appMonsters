@@ -136,21 +136,24 @@ userRouter.post('/editProfile', (req, res) => {
         res.send(data) 
     })
 })   
-
+//!reset
 userRouter.post('/reset',(req,res)=>{
     userHandler.reset(req.body,(data)=>{
         res.send(data)
     })
 })
-
+//!verifyLink
 userRouter.post('/verifyLink',(req,res)=>{
     userHandler.verifyLink(req.body,(data)=>{
         res.send(data)
     })
 })
+
+//!updateImage
+userRouter.post('/updateImage',(req,res)=>{
+    userHandler.updateImage(req.body,req.headers,(data)=>{
+        res.send(data)
+    })
+})
+
 module.exports = userRouter
-
-
-
-
-

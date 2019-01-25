@@ -1,6 +1,9 @@
 var mongoose = require("mongoose")
 var physicalStore = mongoose.Schema({
-
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'login'
+    },
     businessName: String,
     address: String,
     building_shopNo: String,

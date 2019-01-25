@@ -1,14 +1,17 @@
-const orderModel = require('../Models/userModel/userOrder')
-const brandDescriptionL4 = require('../Models/userModel/brandDescription')
-const categoryBrandModelL3 = require('../Models/userModel/productCategory')
-const placeOrderModel = require('../Models/userModel/orderPlaced')
-const wishListModel = require('../Models/userModel/userWishListModel')
+// const orderModel = require('../Models/userModel/userOrder')
+const orderModel = require('../Models/ProductModel/bagModel')
+const placeOrderModel = require('../Models/ProductModel/orderPlaceModel')
+
+const brandDescriptionL4 = require('../Models/ProductModel/productModel')
+const categoryBrandModelL3 = require('../Models/ProductModel/productCategory')
+// const placeOrderModel = require('../Models/ProductModel/orderPlaceModel')
+const wishListModel = require('../Models/ProductModel/wishModel')
 const expriedModel = require('../Models/userModel/expiredTable')
-const categoryModelL1 = require('../Models/userModel/categoryModel')
+const categoryModelL1 = require('../Models/ProductModel/categoryModel')
 const topOffersL6 = require('../Models/userModel/topOffers')
-const subCategoryModelL2 = require('../Models/userModel/subCategoryModel')
+const subCategoryModelL2 = require('../Models/ProductModel/subcategoryModel')
 const reviewAndRatingL5 = require('../Models/userModel/reviewAndRating')
-var brandListModel = require('../Models/userModel/brandListing')
+var brandListModel = require('../Models/ProductModel/allBrandModel')
 const userModel = require('../Models/userModel/userPanelModel')
 const commonFunction = require('../commonFile/commonFunction')
 var async = require('async')
@@ -53,7 +56,7 @@ deleteCart = async (userId, productId) => {
 
 //!productProduct
 findProduct = async (_id, cb) => {
-    brandDescriptionL4.findOne({ "brandDesc._id": _id }, { "brandDesc.$": 1 }).exec((err, result) => {
+    brandDescriptionL4.findOne({ "_id": _id }).exec((err, result) => {
         // log("#########33", err, result)
         if (err) cb(null)
         else cb(null, result)
@@ -62,11 +65,9 @@ findProduct = async (_id, cb) => {
 
 //!findBrand
 findBrand = async (_id, cb) => {
-    brandDescriptionL4.findOne({ "brandDesc._id": _id }).exec((err, result) => {
-        categoryBrandModelL3.findOne({ 'categoriesBrand._id': result.categoryBrand }, { "categoriesBrand.$": 1 }).exec((err, result2) => {
-            if (err) cb(null)
-            else cb(null, result2)
-        })
+    brandListModel.findOne({ _id: _id }).exec((err, res) => {
+        if (err) cb(null)
+        else cb(null, res)
     })
 }
 
@@ -171,7 +172,7 @@ mobile = async (callback) => {
         if (err) callback(null)
 
         else if (result.length > 0) {
-            brandDescriptionL4.find({ subCategory: result[0].subCategories[0]._id }).populate({ 'path': 'brandDesc.brandId', 'select': 'brandName' }).populate({ path: 'brandDesc.varianceId' }).lean().exec((err, res) => {
+            brandDescriptionL4.find({ subCategory: result[0].subCategories[0]._id, 'brandDesc.$.status': 'ACTIVE' }).populate({ 'path': 'brandDesc.brandId', 'select': 'brandName' }).populate({ path: 'brandDesc.varianceId' }).lean().exec((err, res) => {
                 // console.log("product description",JSON.stringify(res))
                 if (err) callback(null)
                 else {
@@ -237,6 +238,8 @@ trending = async (cb) => {
 //!top Offer
 offers = async (cb) => {
     topOffersL6.find({ 'topOffers.status': "ACTIVE" }).select({ 'topOffers.topOfferName': 1, '_id': 1, 'topOffers.offerImage': 1, 'topOffers.description': 1 }).exec((err, result) => {
+
+        console.log("@#$%&^%$#$", err, result)
         if (err) {
             cb(null)
         }
@@ -244,7 +247,7 @@ offers = async (cb) => {
             cb(null)
         }
         else {
-            temp = []
+            var temp = []
             async.forEachOf(result, function (item, key, callback) {
                 data = {
                     "_id": item._id,
@@ -294,11 +297,8 @@ findBrandListBysubcatory = async (subCategoryId, cb) => {
 
 //!similar Product
 getSimilarProductlist = async (productId, cb) => {
-    brandDescriptionL4.findOne({ "brandDesc._id": productId }).lean().exec((err, result1) => {
-        // console.log("result",result1)
-        // console.log("result===>>",JSON.stringify(result1.brandId),'end ')
-        //   console.log("common api",err, result2.categoriesBrand[0]._id)
-        brandDescriptionL4.findOne({ brandId: result1.brandId }).populate({ path: 'brandDesc.brandId', select: 'brandName' }).lean().exec((err, result3) => {
+    brandDescriptionL4.findOne({ "_id": productId }).lean().exec((err, result1) => {
+        brandDescriptionL4.find({ brandId: result1.brandId }).populate({ path: 'brandId', select: 'brandName' }).lean().exec((err, result3) => {
             // console.log("errAnd result",err, result3)
             if (err || !result3) {
 
@@ -312,7 +312,7 @@ getSimilarProductlist = async (productId, cb) => {
     })
 
 }
-
+//!placeOrder
 placeOrder = async (userId, data, addressId, orderPayment, orderId, callback) => {
     console.log("@@@@@@@@@2", userId, data, addressId, orderPayment, orderId)
     placeOrderModel.findOne({ userId: userId }, (err, userFind) => {
@@ -321,26 +321,25 @@ placeOrder = async (userId, data, addressId, orderPayment, orderId, callback) =>
         }
         else if (userFind) {
             console.log("user is find")
-            query = { userId: userId },
-                update = {
-                    $push: {
-                        orderPlacedDescription: {
-                            sellerId: data.sellerId,
-                            productId: data.productId,
-                            varianceId: data.varianceId,
-                            orderPayment: orderPayment ? orderPayment : "COD",
-                            orderStatus: "PLACED",
-                            productQuantity: data.productQuantity ? data.productQuantity : 1,
-                            orderId: orderId,
-                            transactionId: "1234567890",
-                            addressId: addressId ? addressId : "null",
-                            deliveryCharges: "50",
-                            estimateTax: "17"
-                        }
+            placeOrderModel.findOneAndUpdate( { userId: userId },  {
+                $push: {
+                    orderPlacedDescription: {
+                        sellerId: data.sellerId,
+                        productId: data.productId,
+                        // varianceId: data.varianceId,
+                        orderPayment: orderPayment ? orderPayment : "COD",
+                        orderStatus: "PLACED",
+                        productQuantity: data.productQuantity ? data.productQuantity : 1,
+                        orderId: orderId,
+                        transactionId: "1234567890",
+                        addressId: addressId ? addressId : "null",
+                        deliveryCharges: "50",
+                        estimateTax: "17",
+                        totalAmountPaid:data.totalAmountPaid?data.totalAmountPaid:"0000"
+
                     }
                 }
-            console.log(update)
-            placeOrderModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, orderPlaced) => {
+            }, { new: true, lean: true }, (err, orderPlaced) => {
                 if (err) {
                     callback(null)
                 }
@@ -363,10 +362,12 @@ placeOrder = async (userId, data, addressId, orderPayment, orderId, callback) =>
                     orderStatus: "PLACED",
                     productQuantity: data.productQuantity ? data.productQuantity : 1,
                     orderId: orderId,
-                    addressId: addressId ? addressId : "null"
+                    addressId: addressId ? addressId : "null",
+                    totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "234"
                 }
             }
-            placeOrderModel.create(query, (err, result) => {
+            var place=new placeOrderModel(query)
+            place.save(query, (err, result) => {
                 if (err) {
                     callback(null)
                 }
@@ -474,16 +475,17 @@ getUserDetail = async (userId, cb) => {
         else cb(null, result)
     })
 }
-
+//!send notification
 notify = (data, userId, cb) => {
 
+    
     getUserDetail(userId, (err, result) => {
 
         if (result.deviceType == 2) {
-            commonFunction.IOS_NOTIFICATION(result.deviceToken, data.msg, data.title, "senderid", "sendorName", data.type, "0")
+            commonFunction.IOS_NOTIFICATION(result.deviceToken, data.msg, data.title, data.orderId, data.type, "1")
         }
         else if (result.deviceType == 1) {
-            commonFunction.android_notification(result.deviceToken, data.msg, data.title, "senderid", "sendorName", data.type)
+            commonFunction.android_notification(result.deviceToken, data.msg, data.title, data.orderId, data.type)
         }
         let query = {
             userId: mongoose.Types.ObjectId(userId)
@@ -492,9 +494,10 @@ notify = (data, userId, cb) => {
             $push: {
                 notification: {
                     info: data.productId,
+                    orderId: data.orderId,
                     notificationTitle: data.title,
                     notificationMessage: data.msg,
-                    notificationType: data.type
+                    notificationType: data.type,
                 }
             }
         }
@@ -510,7 +513,8 @@ notify = (data, userId, cb) => {
                 let createNew = {
                     userId: userId,
                     notification: {
-                        info: data.productId ? data.productId:data.info,
+                        info: data.productId ? data.productId : "",
+                        orderId: data.orderId ? data.orderId : '',
                         notificationTitle: data.title,
                         notificationMessage: data.msg,
                         notificationType: data.type
@@ -518,7 +522,7 @@ notify = (data, userId, cb) => {
                 }
                 notificationModel.create(createNew, (err, create) => {
                     console.log(err, create)
-                    cb(null, result)
+                    cb(null, create)
 
                 })
             }
@@ -527,6 +531,35 @@ notify = (data, userId, cb) => {
     })
 
 }
+
+//!change statue notifcaition
+changeNotification = (data, callback) => {
+    console.log("data", data)
+
+    query = {
+        $and: [
+            { userId: "5bfbb0bbfd72a14b693fa9a0" },
+            { 'notification.orderId': 'ORDZ1LIQZ' }
+        ]
+    }
+    update = {
+        $set: {
+            notification: { info: "efjghfgdh" },
+            notification: { orderId: "efjghfgdh" },
+            notification: { notificationMessage: "efjghfgdh" },
+            notification: { notificationTitle: "efjghfgdh" },
+            notification: { notificationType: "12345678" },
+
+        }
+    }
+    notificationModel.findOneAndUpdate(query, update, { multi: true, new: true }).exec((err, success) => {
+        console.log("common api", err, success)
+        callback(null, success)
+
+    })
+    // callback(null,success)
+}
+
 module.exports = {
     deleteCart,
     findProduct,
@@ -548,6 +581,7 @@ module.exports = {
     changeFeedBackStatus,
     getUsername,
     getUserDetail,
-    notify
+    notify,
+    changeNotification
 
 }

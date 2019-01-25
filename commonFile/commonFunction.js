@@ -93,6 +93,7 @@ module.exports = {
     //function to upload image
     uploadImg: (base64, callback) => {
         cloudinary.uploader.upload(base64, (result1) => {
+            // console.log("err,result",err,result1)
             if (result1.url) {
                 callback(null, result1.url)
             }
@@ -392,23 +393,15 @@ module.exports = {
 
 
     //!android notification
-    "android_notification": function (deviceToken, msg, title, sendorId, senderName, type) {
-        // console.log("chatType==>>", deviceToken);
-        console.log("module called")
-        //    var deviceToken ="APA91bFLyrVqNOdk-u8Ci29vpcZaMQap4YrtMX6WMlpWjb8apGQrl8GfpZvKZezsziGY90n5-1jkcjs-yYA_5w5GFGQCLKh2-7SSekrBSqXjiaboeuSDePE";
-        //   var serverKey = "AIzaSyChK0J_JT_UjxVu6YqV7PfAzOLIpiDSsWQ";
+    "android_notification": function (deviceToken, msg, title, orderId, type) {
+        console.log("module calledANDROID")
         var serverKey = "AAAAoBcORhQ:APA91bGfm_qj7PaZQfjiqKNJ76A4vFlx4W-rSy6jciyskt80ykuJxZqePZ5s6S1rcMUFHLeGFkqtJqXusZXDtfGv7lO8kHMpNjlWkypJBPqNr0Uozm6Ay5rQTia8pnm37DtUs2LWt4hP"
         console.log("title====>", title)
         var fcm = new FCM(serverKey);
         var message = {
             to: deviceToken,
-            /*   'data.sound': "default",
-              'data.message': "aasd",
-              "data.title": "title",
-              'data.type': "chatType",
-              'data.senderName': "senderName", */
             "data": {
-                "title": title, "type": type, "msg": msg
+                "title": title, "type": type, "msg": msg,"orderId":'ORD'+orderId
             },
 
         };
@@ -426,22 +419,18 @@ module.exports = {
 
     },
     // !IOS_NOTIFICATION
-    "IOS_NOTIFICATION": function (deviceToken, msg, title, sendorId, senderName, type, badge) {
-        console.log("chatType==>>", deviceToken);
-        console.log("module called")
-        //    var deviceToken ="APA91bFLyrVqNOdk-u8Ci29vpcZaMQap4YrtMX6WMlpWjb8apGQrl8GfpZvKZezsziGY90n5-1jkcjs-yYA_5w5GFGQCLKh2-7SSekrBSqXjiaboeuSDePE";
-        //   var serverKey = "AIzaSyChK0J_JT_UjxVu6YqV7PfAzOLIpiDSsWQ";
+    "IOS_NOTIFICATION": function (deviceToken, msg, title, orderId, type, badge) {
+        console.log("module calledIOS")
         var serverKey = "AAAAoBcORhQ:APA91bGfm_qj7PaZQfjiqKNJ76A4vFlx4W-rSy6jciyskt80ykuJxZqePZ5s6S1rcMUFHLeGFkqtJqXusZXDtfGv7lO8kHMpNjlWkypJBPqNr0Uozm6Ay5rQTia8pnm37DtUs2LWt4hP"
         console.log("title====>", title)
         var fcm = new FCM(serverKey);
         var message =
         {
             "to": deviceToken,
-            "notification": { "title": title, "body": msg, badge: badge, "type": type },
+            "notification": { "title": title, "body": msg, badge: badge, "type": type ,"orderId":"ORD"+orderId },
             "priority": "high"
         };
 
-        // };
         console.log("IOS_NOTIFICATION message===>", message);
         fcm.send(message, function (err, response) {
             if (err) {
@@ -453,9 +442,7 @@ module.exports = {
                 console.log("Successfully sent with response: " + response);
             }
         });
-
     },
-
     generatePassword:  () => {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

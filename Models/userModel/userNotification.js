@@ -7,8 +7,10 @@ var notification = mongoose.Schema({
     },
 
     notification: [{
+        orderId:String,
         info:{
-            type:mongoose.Schema.Types.ObjectId
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'productDescription'
         },
         notificationTitle: String,
         notificationMessage: String,
@@ -25,4 +27,4 @@ var notification = mongoose.Schema({
 }, {
         timestamps: true
     })
-module.exports = mongoose.model("notification", notification, "notification")
+module.exports = mongoose.model("notification", notification, "usernotification")

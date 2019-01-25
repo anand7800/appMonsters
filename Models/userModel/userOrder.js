@@ -29,6 +29,10 @@ var orderList = mongoose.Schema({
             default: "PENDING",
             upperCase: true
         },
+        totalAmountPaid:{
+            type:String,
+            default:""
+        },
         orderStatus: {
             type: String,
             enum: ["PENDING", "PLACED", "DISPATCH", "ADDTOCART", "WISHLIST"],

@@ -362,6 +362,18 @@ let statusMessage = {
         en: "DELETE VENDOR SUCCESSFULLY",
         ar: ""
     },
+    COMPARE_SCREEN: {
+        en: "Comparsion of Screen",
+        ar: ""
+    },
+    NOTIFICATION_SCREEN: {
+        en: "Notification Screen",
+        ar: ""
+    },
+    PROFILE_UPDATE: {
+        en: "Profile Picture Upload successfully",
+        ar: ""
+    },
     TITLE: {
 
         PLACED: {

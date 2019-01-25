@@ -5,6 +5,8 @@ var login = mongoose.Schema({
     email: {
         type: String,
         require: true,
+        lowercase: true,
+        trim: true,
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
         unique: true
     },
@@ -101,7 +103,8 @@ var login = mongoose.Schema({
         type: String,
         enum: ['block', 'active', "admin"],
         default: 'active',
-        upperCase: true
+        uppercase: true,
+        lowercase:false
     },
     isBussinessAdded:{
         type:Boolean,
