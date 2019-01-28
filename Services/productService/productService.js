@@ -1703,7 +1703,7 @@ orderDetail = (data, callback) => {
                                 productName: value.productId.productName,
                                 color: getVariance.variants[0].color,
                                 price: getVariance.variants[0].price,
-                                productQuantity: getVariance.variants[0].quantity,
+                                productQuantity: value.productQuantity,
                                 image: getVariance.variants[0].image,
                                 orderStatus: value.orderStatus,
                                 feedbackAdded: value.feedbackAdded,
