@@ -1110,173 +1110,189 @@ productDetails = (data, callback) => {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
     }
-    async.parallel({
-        findProduct: (cb) => {
-            productModel.findById({ "_id": data._id }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, result) => {
-                // console.log("2222", err, result)
-                cb(null, result)
-            })
-        },
-
-        reviewAndRating: (cb) => {
-            commonAPI.reviewAndRating(data._id, async (err, result) => {
-                // console.log('=========', err, result)
-                if (err && !result.length > 0) {
-                    cb(null)
-                }
-                else {
-                    rating = [];
-                    // console.log("start")
-                    result.forEach(element => {
-                        console.log("check review and rating", element.reviewAndRating)
-                        if (element.reviewAndRating.length > 0) {
-                            async.forEachOf(element.reviewAndRating, async (value, key, back) => {
-                                await commonAPI.getUsername(value.userId, async (err, userDetail) => {
-
-                                    if (await userDetail) {
-                                        // await console.log(userDetail)
-                                        console.log("middle")
-
-                                        temp = {
-                                            firstName: userDetail.firstName,
-                                            lastName: userDetail.lastName,
-                                            image: userDetail.image,
-                                            review: value.review,
-                                            rating: value.rating
-                                        }
-                                        await rating.push(temp)
-                                    }
-
-                                    back()
-                                })
-                                console.log("ASFDFFFFFF")
-
-                            }, (err, result) => {
-                                console.log(rating)
-                                // cb(null, rating)
-
-                            })
-                        }
-                        // cb(null,rating)
-                    })
-                    console.log("end")
-                    cb(null, rating)
-                }
-            })
-        },
-        getSimilarProduct: (cb) => {
-            productModel.findOne({ "_id": data._id }).lean().exec((err, result1) => {
-                productModel.find({
-                    $or: [
-                        { brandId: result1.brandId },
-                        { productCategoryId: result1.productCategoryId },
-
-                    ]
-                }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: "varianceId" }).lean().exec((err, result3) => {
-                    console.log("errAnd result", err, result3)
-                    if (err || !result3) {
-
-                        cb(null)
-                    }
-                    else {
-                        var similarProduct = []
-                        result3.forEach(element => {
-                            if (element._id != data._id) {
-                                let temp = {
-                                    _id: element._id,
-                                    description: element.description,
-                                    price: element.varianceId.variants[0].price,
-                                    productName: element.productName,
-                                    // sellerId: element.sellerId,
-                                    brand: element.brandId.brandName,
-                                    // specifications: element.specifications,
-                                    image: element.image,
-                                }
-                                similarProduct.push(temp)
-                            }
-                        })
-                        // console.log(result3)
-                        cb(null, similarProduct)
-                    }
-                })
-            })
-
-        }
-
-    }, (err, response) => {
-        // console.log('------------>>', err, response)
-        if (response) {
-            // console.log("sadfsadfasfsadfdfasdf", response)
-            res = {}
-            var ratingAndReview = []
-            // console.log(response.findProduct.brandDesc[0].varianceId)
-            if (response.findProduct.varianceId == null) {
-                // console.log("variant not inserted")
-                data = {
-                    _id: response.findProduct._id,
-                    brand: response.findProduct.brandId.brandName,
-                    productName: response.findProduct.productName,
-                    price: response.findProduct.price,
-                    color: response.findProduct.color,
-                    description: response.findProduct.description,
-                    image: response.findProduct.image,
-                    specifications: response.findProduct.specifications[0],
-                    productTry: response.findProduct.productTry,
-                    tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
-                    inStock: test.quantity > 0 ? true : false,
-                    variants: {},
-                    color: [],
-                    material: [],
-                    size: []
-                }
-                res.product = data
-
-            }
-            else if (response.findProduct.varianceId != null) {
-                var b = []
-                var color = []
-                var material = []
-                var size = []
-                // var test2;
-                response.findProduct.varianceId.variants.forEach(test => {
-                    color.push(test.color)
-                    material.push(test.material)
-                    size.push(test.size)
-                    // console.log(test.color.toUpperCase())
-                    data = {
-                        _id: response.findProduct._id,
-                        brand: response.findProduct.brandId.brandName,
-                        productName: response.findProduct.productName,
-                        // price: response.findProduct.price,
-                        description: response.findProduct.description,
-                        specifications: response.findProduct.specifications[0],
-                        productTry: response.findProduct.productTry,
-                        inStock: test.quantity > 0 ? true : false,
-                        tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
-                        price: test.price ? test.price : '',
-                        image: test.image ? test.image : [],
-                        colors: [...new Set(color)].reverse().map(function (x) { return x.toUpperCase() }),
-                        material: [...new Set(material)].reverse().map(function (x) { return x.toUpperCase() }),
-                        size: [...new Set(size)].reverse().map(function (x) { return x.toUpperCase() })
-                    }
-                    res.product = data
-                    // })
-                })
-            }
-            sellerInfo = {
-                _id: response.findProduct.sellerId._id,
-                sellerName: response.findProduct.sellerId.firstName,
-                selllerImage: response.findProduct.sellerId.image ? response.findProduct.image : "",
-                selllerRating: "3"
-            }
-            res.sellerInfo = sellerInfo
-            res.reviewAndRating = response.reviewAndRating
-            res.similarProduct = response.getSimilarProduct
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
+    productModel.findOne({ _id: data._id }).exec((err, result) => {
+        if (err || !result || result == null) {
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PRODUCT_NOT_FOUND[data.lang] })
+            return
         }
         else {
-            console.log("###############errrorr#####################################3")
-            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY })
+            // })
+
+            async.parallel({
+                findProduct: (cb) => {
+                    productModel.findById({ "_id": data._id }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, result) => {
+                        console.log("44444444444444444444444444444444", err, result)
+                        if (err || !result || result == null) {
+
+                            cb(null)
+                        }
+                        else {
+                            cb(null, result)
+                        }
+                    })
+                },
+
+                reviewAndRating: (cb) => {
+                    commonAPI.reviewAndRating(data._id, async (err, result) => {
+                        // console.log('=========', err, result)
+                        if (err && !result.length > 0) {
+                            cb(null)
+                        }
+                        else {
+                            rating = [];
+                            // console.log("start")
+                            result.forEach(element => {
+                                // console.log("check review and rating", element.reviewAndRating)
+                                if (element.reviewAndRating.length > 0) {
+                                    async.forEachOf(element.reviewAndRating, async (value, key, back) => {
+                                        await commonAPI.getUsername(value.userId, async (err, userDetail) => {
+
+                                            if (await userDetail) {
+                                                // await console.log(userDetail)
+                                                console.log("middle")
+
+                                                temp = {
+                                                    firstName: userDetail.firstName,
+                                                    lastName: userDetail.lastName,
+                                                    image: userDetail.image,
+                                                    review: value.review,
+                                                    rating: value.rating
+                                                }
+                                                await rating.push(temp)
+                                            }
+
+                                            back()
+                                        })
+                                        console.log("ASFDFFFFFF")
+
+                                    }, (err, result) => {
+                                        console.log(rating)
+                                        // cb(null, rating)
+
+                                    })
+                                }
+                                // cb(null,rating)
+                            })
+                            console.log("end")
+                            cb(null, rating)
+                        }
+                    })
+                },
+                getSimilarProduct: (cb) => {
+                    productModel.findOne({ "_id": data._id }).lean().exec((err, result1) => {
+                        productModel.find({
+                            $or: [
+                                { brandId: result1.brandId },
+                                { productCategoryId: result1.productCategoryId },
+
+                            ]
+                        }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: "varianceId" }).lean().exec((err, result3) => {
+                            // console.log("errAnd result", err, result3)
+                            if (err || !result3) {
+
+                                cb(null)
+                            }
+                            else {
+                                var similarProduct = []
+                                result3.forEach(element => {
+                                    if (element._id != data._id) {
+                                        let temp = {
+                                            _id: element._id,
+                                            description: element.description,
+                                            price: element.varianceId.variants[0].price,
+                                            productName: element.productName,
+                                            // sellerId: element.sellerId,
+                                            brand: element.brandId.brandName,
+                                            // specifications: element.specifications,
+                                            image: element.image,
+                                        }
+                                        similarProduct.push(temp)
+                                    }
+                                })
+                                // console.log(result3)
+                                cb(null, similarProduct)
+                            }
+                        })
+                    })
+
+                }
+
+            }, (err, response) => {
+                console.log('------------>>', err, response)
+                if (response) {
+                    // console.log("sadfsadfasfsadfdfasdf", response)
+                    res = {}
+                    var ratingAndReview = []
+                    // console.log(response.findProduct.brandDesc[0].varianceId)
+                    if (response.findProduct.varianceId == null) {
+                        // console.log("variant not inserted")
+                        data = {
+                            _id: response.findProduct._id,
+                            brand: response.findProduct.brandId.brandName,
+                            productName: response.findProduct.productName,
+                            price: response.findProduct.price,
+                            color: response.findProduct.color,
+                            description: response.findProduct.description,
+                            image: response.findProduct.image,
+                            specifications: response.findProduct.specifications[0],
+                            productTry: response.findProduct.productTry,
+                            tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
+                            inStock: test.quantity > 0 ? true : false,
+                            variants: {},
+                            color: [],
+                            material: [],
+                            size: []
+                        }
+                        res.product = data
+
+                    }
+                    else if (response.findProduct.varianceId != null) {
+                        var b = []
+                        var color = []
+                        var material = []
+                        var size = []
+                        // var test2;
+                        response.findProduct.varianceId.variants.forEach(test => {
+                            color.push(test.color)
+                            material.push(test.material)
+                            size.push(test.size)
+                            // console.log(test.color.toUpperCase())
+                            data = {
+                                _id: response.findProduct._id,
+                                brand: response.findProduct.brandId.brandName,
+                                productName: response.findProduct.productName,
+                                // price: response.findProduct.price,
+                                description: response.findProduct.description,
+                                specifications: response.findProduct.specifications[0],
+                                productTry: response.findProduct.productTry,
+                                inStock: test.quantity > 0 ? true : false,
+                                tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
+                                price: test.price ? test.price : '',
+                                image: test.image ? test.image : [],
+                                colors: [...new Set(color)].reverse().map(function (x) { return x.toUpperCase() }),
+                                material: [...new Set(material)].reverse().map(function (x) { return x.toUpperCase() }),
+                                size: [...new Set(size)].reverse().map(function (x) { return x.toUpperCase() })
+                            }
+                            res.product = data
+                            // })
+                        })
+                    }
+                    sellerInfo = {
+                        _id: response.findProduct.sellerId._id,
+                        sellerName: response.findProduct.sellerId.firstName,
+                        selllerImage: response.findProduct.sellerId.image ? response.findProduct.image : "",
+                        selllerRating: "3"
+                    }
+                    res.sellerInfo = sellerInfo
+                    res.reviewAndRating = response.reviewAndRating
+                    res.similarProduct = response.getSimilarProduct
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
+                }
+                else {
+                    console.log("###############errrorr#####################################3")
+                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PRODUCT_NOT_FOUND })
+                }
+            })
         }
     })
 }
@@ -1569,19 +1585,19 @@ vendorOrderList = (header, callback) => {
             // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
             $or: [
                 { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) },
-
             ]
         },
         // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
     }
     ], (err, result) => {
-        console.log(err, result)
+        // console.log(err, result)
         var demo = []
         async.forEachOf(result, (value, key, cb) => {
             productModel.findOne({ '_id': mongoose.Types.ObjectId(value.orderPlacedDescription.productId) }).populate({ path: 'brandId' }).exec((err, productDetail) => {
-                // console.log('############', err, productDetail)
+                console.log('############', err, productDetail)
                 userModel.findById({ _id: value.userId }, { firstName: 1, address: 1 }).exec((err, userInfo) => {
-                    temp = {
+                    console.log("---------->>", err, userInfo.firstName)
+                    let temp = {
                         customerName: userInfo.firstName,
                         customerAddress: "delhi",
                         productDetail: productDetail.productName,
@@ -1594,10 +1610,12 @@ vendorOrderList = (header, callback) => {
                         totalAmountPaid: value.orderPlacedDescription.totalAmountPaid + value.orderPlacedDescription.deliveryCharges + value.orderPlacedDescription.estimateTax
                     }
                     demo.push(temp)
+                    console.log(demo)
                     cb()
                 })
             })
         }, (err, response) => {
+            console.log('@@@@@@@@@@@2', demo)
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY.en, 'result': demo })
         })
         // callback(result)
@@ -1888,15 +1906,14 @@ inActiveProductList = (data, callback) => {
                 })
             }
             else {
-                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+                let res = []
+                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], 'result': res })
             }
 
         })
     }
     else {
-        productModel.find({
-
-        }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
+        productModel.find({}).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
             // console.log(err, JSON.stringify(response))
             if (response.length > 0) {
                 var res = []
@@ -1923,9 +1940,9 @@ inActiveProductList = (data, callback) => {
                 })
             }
             else {
-                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+                let res = []
+                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], 'result': res })
             }
-
         })
     }
 }
@@ -3362,10 +3379,10 @@ getNotification = (data, header, callback) => {
 
 
 fuckApi = async (data, callback) => {
-    console.log("fuck api",data)
-    var e=data.push
+    console.log("fuck api", data)
+    var e = data.push
     let final = []
-    e = [{ "varianceKey": "color", "varianceValue": [{ "display": "red", "value": "red" }, { "display": "blue", "value": "blue" }] }, { "varianceKey": "size", "varianceValue": [{ "display": "xxl", "value": "xxl" }, { "display": "xl", "value": "xl" }] }, { "varianceKey": "material", "varianceValue": [{ "display": "cottom", "value": "cottom" }, { "display": "silk", "value": "silk" }] }]
+
 
     var result = []
     e.forEach(element => {
@@ -3419,12 +3436,12 @@ fuckApi = async (data, callback) => {
         start[a] = z[index][a]
     }
     // console.log(JSON.stringify(demo))
-   data
+    data
     // let start = { "color": ["red", "blue"], "size": ["xxl", "xl"], "material": ["cottom", "silk"] }
- 
+
     for (let index = 0; index < Object.keys(start).length; index++) {
-        temp={
-            [Object.keys(start)[index]]:start[Object.keys(start)[index]]
+        temp = {
+            [Object.keys(start)[index]]: start[Object.keys(start)[index]]
         }
         final.push(temp)
     }
@@ -3440,12 +3457,12 @@ fuckApi = async (data, callback) => {
                 c(p, index + 1);
             });
         }
-    
+
         var r = [];
         c({}, 0);
         return r;
     }
-    
+
     // console.log(cartesian(final));
     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': cartesian(final) })
 }
@@ -3490,5 +3507,4 @@ module.exports = {
     deleteWishItem,
     getNotification,
     fuckApi
-
 }

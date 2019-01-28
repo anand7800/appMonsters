@@ -271,20 +271,23 @@ getProductList = (data, headers, callback) => {
             sellerId = decodeSellerId
         }
     })
-    brandDescriptionL4.find({ 'brandDesc.sellerId': sellerId }).populate({ path: 'brandDesc.brandId', select: { 'brandName': 1 } }).populate({ path: 'brandDesc.varianceId' }).exec((err, success) => {
+    console.log("seller id", sellerId)
+    brandDescriptionL4.find({ 'sellerId': sellerId }).populate({ path: 'brandId', select: { 'brandName': 1 } }).populate({ path: 'varianceId' }).exec((err, success) => {
+        // console.log(err,success)
         if (err) throw err
         else if (success.length > 0) {
             async.forEachOf(success, async (value, key, cb) => {
                 // if (value.productCategoryId) {
                 await async.parallel({
-
                     getProductCategoryName: async (cb) => {
-                        console.log("#$$#$#", value.productCategoryId ? value.productCategoryId : null)
+                        // console.log("#$$#$#", value.productCategoryId ? value.productCategoryId : null)
                         if (value.productCategoryId) {
-                            await productCategoryModel.findOne({ 'productcategory._id': value.productCategoryId }, { 'productcategory.$': 1 }).exec(async (err, productCategoryName) => {
+
+                            await productCategoryModel.findById({ '_id': value.productCategoryId }).exec(async (err, productCategoryName) => {
+                                console.log("-----------------?>>>", productCategoryName)
                                 if (err) cb(null)
                                 else {
-                                    cb(null, productCategoryName.productcategory[0].productcategoryName)
+                                    cb(null, productCategoryName.productcategoryName)
                                 }
                             })
                         }
@@ -294,8 +297,8 @@ getProductList = (data, headers, callback) => {
                     }
 
                 }, (err, response) => {
-                    console.log(err, response)
-                    value.brandDesc.forEach(element => {
+                    // console.log(err, response)
+                    success.forEach(element => {
                         console.log("####", element)
                         temp = {
                             _id: element._id,
