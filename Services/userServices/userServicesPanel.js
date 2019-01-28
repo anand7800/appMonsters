@@ -329,7 +329,7 @@ getOtp = (data, callback) => {
         console.log(typeof commonFunction.getOTP())
         var otp = commonFunction.getOTP()
         commonFunction.sendSMS(otp, data.phone, async (err, sent) => {
-            console.log(err,sent)
+            console.log(err, sent)
             if (err) {
                 callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
             }
@@ -574,8 +574,8 @@ resetPassword = (query, body, callback) => {
 
 //!email exist 
 checkEmail = (data, callback) => {
-    console.log("api is called",data)
-    userModel.find({ email: data.email,userType:'vendor'}, (err, found) => {
+    console.log("api is called", data)
+    userModel.find({ email: data.email, userType: 'vendor' }, (err, found) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
         }
@@ -730,10 +730,10 @@ verifyLink = (data, callback) => {
 
 //! UPDATE IMAGE
 updateImage = (data, headers, callback) => {
-    console.log("headers", headers,data)
+    console.log("headers", headers, data)
     var userId
     commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
-        console.log("^^^^",err,decodeId)
+        console.log("^^^^", err, decodeId)
         if (err) throw err
         else {
             userId = decodeId
@@ -750,7 +750,7 @@ updateImage = (data, headers, callback) => {
             })
         }
     }, (err, response) => {
-        console.log("######",err,response)
+        console.log("######", err, response)
         query = {
             _id: userId
         }
@@ -759,9 +759,9 @@ updateImage = (data, headers, callback) => {
                 image: response.uploadImage
             }
         }
-        console.log('@@@@@@@@@@@@@@@2',query,update)
+        console.log('@@@@@@@@@@@@@@@2', query, update)
         userModel.findOneAndUpdate(query, update, { new: true }).exec((err, success) => {
-            console.log(err,success)
+            console.log(err, success)
             result = {
                 "_id": success._id,
                 "firstName": success.firstName,
@@ -786,6 +786,41 @@ updateImage = (data, headers, callback) => {
         })
     })
 }
+
+getUserInfo = (data, headers, callback) => {
+    console.log("incoming data", data)
+
+    async.waterfall([
+
+        function (cb) {
+            commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
+                if (err || !decodeId)
+                    cb(null)
+                else
+                    cb(null, decodeId)
+
+            })
+        },
+        function (decodeId, cb) {
+
+            userModel.findOne({ _id: decodeId }).exec((err,success)=>{
+                if(err || !success)
+                cb(null)
+                else 
+                cb(null,success)
+            })
+        }
+
+    ],(err,response)=>{
+
+        if(err)
+        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+        else
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],'result':response })
+
+        
+    })
+}
 module.exports = {
     signup,
     login,
@@ -806,5 +841,6 @@ module.exports = {
     //! this is for angular 
     reset,
     verifyLink,
-    updateImage
+    updateImage,
+    getUserInfo
 }

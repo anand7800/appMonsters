@@ -1562,7 +1562,7 @@ vendorOrderList = (header, callback) => {
         userId = result
     })
     //!
-    placeOrderModel.aggregate([{
+    orderPlaced.aggregate([{
         $unwind: '$orderPlacedDescription'
     }, {
         $match: {
@@ -1759,7 +1759,7 @@ searchVendorOrder = (data, header, callback) => {
         userId = result
     })
     console.log("##################################", value)
-    placeOrderModel.aggregate([{
+    orderPlaced.aggregate([{
         $unwind: '$orderPlacedDescription'
     }, {
         $match: {
@@ -3155,26 +3155,6 @@ listOfAddCart = (data, headers, callback) => {
         var main = []
         var totalPrice = 0
         async.forEachOf(response.bagDetails.orderDescription, async (value, key, callback) => {
-            // console.log('333333333333333333333333333333',value.productId._id)
-            // query = {
-            //     "productId": mongoose.Types.ObjectId(value.productId._id),
-            //     "variants": {
-            //         "$elemMatch": {
-            //             "$and": [
-            //                 {
-            //                     "color": value.color.toLowerCase(),
-            //                 },
-            //                 {
-            //                     "size": value.size.toLowerCase(),
-            //                 },
-            //                 {
-            //                     "material": value.material.toLowerCase(),
-            //                 }
-            //             ]
-            //         }
-            //     }
-            // }
-            // console.log("345678", JSON.stringify(query))
             await commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
                 await varianceModel.findOne({
                     "productId": mongoose.Types.ObjectId(value.productId._id),
@@ -3381,6 +3361,94 @@ getNotification = (data, header, callback) => {
 }
 
 
+fuckApi = async (data, callback) => {
+    console.log("fuck api",data)
+    var e=data.push
+    let final = []
+    e = [{ "varianceKey": "color", "varianceValue": [{ "display": "red", "value": "red" }, { "display": "blue", "value": "blue" }] }, { "varianceKey": "size", "varianceValue": [{ "display": "xxl", "value": "xxl" }, { "display": "xl", "value": "xl" }] }, { "varianceKey": "material", "varianceValue": [{ "display": "cottom", "value": "cottom" }, { "display": "silk", "value": "silk" }] }]
+
+    var result = []
+    e.forEach(element => {
+        result.push({
+            [element.varianceKey]: element.varianceValue
+        })
+
+    });
+
+    // console.log("result===>>", JSON.stringify(result))
+    let test = result
+    let w = []
+    for (let index = 0; index < test.length; index++) {
+        var s = Object.keys(test[index])[0]
+        c = ''
+        for (let j = 0; j < test[index][s].length; j++) {
+            c = c + test[index][s][j].value + ","
+
+        }
+        a = [c]
+        w.push({
+            [s]: c
+        })
+    }
+    let now = w
+    var z = []
+    for (let index = 0; index < now.length; index++) {
+
+        var c = Object.keys(now[index])[0]
+        // console.log("44",now[index][c].split(','))
+        let ee = now[index][c].split(',')
+        let temp = {
+            [c]: ee
+        }
+        z.push(temp)
+    }
+    // console.log(z)
+    // callback(z)
+    let start = {}
+    for (let index = 0; index < z.length; index++) {
+
+        // console.log(z[index])
+        // console.log(Object.keys(z[index])[0])
+        let a = Object.keys(z[index])[0]
+        // console.log(z[index][a].splice(-1, 1))
+        z[index][a].splice(-1, 1)
+        let temp = {
+            [a]: z[index][a]
+
+        }
+        start[a] = z[index][a]
+    }
+    // console.log(JSON.stringify(demo))
+   data
+    // let start = { "color": ["red", "blue"], "size": ["xxl", "xl"], "material": ["cottom", "silk"] }
+ 
+    for (let index = 0; index < Object.keys(start).length; index++) {
+        temp={
+            [Object.keys(start)[index]]:start[Object.keys(start)[index]]
+        }
+        final.push(temp)
+    }
+    function cartesian(array) {
+        function c(part, index) {
+            var k = Object.keys(array[index])[0];
+            array[index][k].forEach(function (a) {
+                var p = Object.assign({}, part, { [k]: a });
+                if (index + 1 === array.length) {
+                    r.push(p);
+                    return;
+                }
+                c(p, index + 1);
+            });
+        }
+    
+        var r = [];
+        c({}, 0);
+        return r;
+    }
+    
+    // console.log(cartesian(final));
+    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': cartesian(final) })
+}
 
 module.exports = {
     addCategory,
@@ -3420,6 +3488,7 @@ module.exports = {
     checkoutOrder,
     wishList,
     deleteWishItem,
-    getNotification
+    getNotification,
+    fuckApi
 
 }

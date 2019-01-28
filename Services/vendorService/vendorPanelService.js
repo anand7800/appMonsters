@@ -730,112 +730,6 @@ vendorOrderStatus = (data, header, callback) => {
         // callback(result)
     })
 }
-// !searchVendorOrdersearchVendorOrdersearchVendorOrdersearchVendorOrder 
-searchVendorOrder = (data, header, callback) => {
-    // console.log("vendororderList", data, header)
-
-    console.log('---------------?>>>', data.searchKeyword.trim())
-    var value = new RegExp(data.searchKeyword.trim(), 'i');
-    var key = new RegExp(data.searchKeyword.trim(), 'i')
-    var userId
-    commonFunction.jwtDecode(header.accesstoken, (err, result) => {
-        userId = result
-    })
-    console.log("##################################", value)
-    placeOrderModel.aggregate([{
-        $unwind: '$orderPlacedDescription'
-    }, {
-        $match: {
-            $and: [
-                { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId('5bfbb9c3fd72a14b693fa9e7') },
-                {
-                    $or: [
-                        { 'orderPlacedDescription.orderId': { $regex: key } },
-                        { 'orderPlacedDescription.totalAmountPaid': { $regex: value } },
-                        // { 'brandDesc.tag': { $in: [value] } },
-                        // { 'brandDesc.brandId': mongoose.Types.ObjectId(brandId._id) },
-
-                    ]
-                }]
-        }
-    }
-    ], (err, result) => {
-        // console.log(err)
-        // callback({ 'result': result, 'err': err })
-        if (result.length == 0) {
-            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], })
-            return
-        }
-        var successfully = []
-        async.auto({
-            search: async (cb) => {
-                async.forEachOf(result, (element, key, go) => {
-                    // result.forEach(element => {
-                    async.waterfall([
-                        function (callback) {
-                            userModel.findOne({ _id: element.userId }, { firstName: 1 }).exec(async (err, userInfo) => {
-                                if (err)
-                                    callback(null)
-                                else {
-                                    callback(null, userInfo)
-                                }
-                            })
-                        },
-                        function (userInfo, callback) {
-                            // console.log("varianceid", element.orderPlacedDescription.varianceId)
-                            varianceModel.findOne({ 'variants._id': element.orderPlacedDescription.varianceId }, { 'variants.$': 1 }).exec((err, variance) => {
-                                // console.log('=====>>', err, variance)
-                                callback(null, userInfo, variance)
-                            })
-                        },
-                        function (userInfo, variance, callback) {
-                            // console.log("&&&&&&&&&&&&&&&&&&&&7", userInfo, variance)
-
-                            brandDescriptionL4.findOne({ '_id': element.orderPlacedDescription.productId }).exec(async (err, productDetail) => {
-                                // console.log("ee333",err, 'productDetail',productDetail,'userinfo',userInfo, 'variance',variance)
-                                let temp = {
-                                    customerName: userInfo.firstName,
-                                    customerAddress: "delhi",
-                                    productDetail: productDetail.productName,
-                                    quantity: element.orderPlacedDescription.productQuantity,
-                                    productImage: productDetail.image[0],
-                                    status: element.orderPlacedDescription.orderStatus,
-                                    orderId: element.orderPlacedDescription.orderId,
-                                    paymentStatus: element.orderPlacedDescription.orderPayment,
-                                    totalAmountPaid: element.orderPlacedDescription.totalAmountPaid + element.orderPlacedDescription.deliveryCharges + element.orderPlacedDescription.estimateTax,
-                                    createdAt: element.orderPlacedDescription.createdAt,
-                                }
-                                // var a=[].push(temp)
-                                callback(null, temp)
-                                go()
-                            })
-                        }
-
-                    ], async (err, response) => {
-                        // console.log("waterfall", err, response)
-                        successfully.push(response)
-                    })
-                    // })
-
-                }, (err, responseEach) => {
-                    console.log("((((((((((((((((((((((((((((9", err, responseEach)
-                    console.log("3333", successfully)
-                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': successfully })
-                })
-
-                // console.log("3333", successfully)
-                cb(null, successfully)
-            }
-        }, (err, response) => {
-            console.log("finall", successfully, response)
-        })
-    })
-}
-
-
-
-
-
 deleteCategory = (data, callback) => {
     console.log("data", data)
     query = {
@@ -905,8 +799,6 @@ changeProductStatus = (data, callback) => {
 
 changeReviewStatus = (data, callback) => {
     console.log("incoming data ", data)
-
-
     if (!data.reviewId) {
         return
     }
@@ -923,7 +815,6 @@ changeReviewStatus = (data, callback) => {
             }
         }
         reviewAndRatingL5.update(query, update, { new: true }).exec((err, success) => {
-
             if (err) throw err
             else {
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': success })
@@ -955,7 +846,6 @@ module.exports = {
     updateVarianceStock,
     editCatogory,
     vendorOrderStatus,
-    searchVendorOrder,
     deleteCategory,
     deleteSubCategory,
     changeProductStatus,

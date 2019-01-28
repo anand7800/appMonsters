@@ -59,7 +59,7 @@ productRouter.get('/productDetails', (req, res) => {
 // }) */
 //!addReviewAndRating
 productRouter.post('/addReviewAndRating', (req, res) => {
-    productService.addReviewAndRating(req.headers,req.body, (data) => {
+    productService.addReviewAndRating(req.headers, req.body, (data) => {
         res.send(data)
     })
 })
@@ -275,7 +275,7 @@ productRouter.post('/updateBrand', (req, res) => {
 
 //!get vendorOrder list
 productRouter.post('/vendorOrderList', (req, res) => {
-    productService.vendorOrderList(req.headers,(data) => {
+    productService.vendorOrderList(req.headers, (data) => {
         res.send(data)
     })
 })
@@ -289,7 +289,7 @@ productRouter.post('/vendorOrderList', (req, res) => {
 
 //!getSubCategoryList
 productRouter.get('/getSubCategoryList', (req, res) => {
-    productService.getSubCategoryList(req.query,(data) => {
+    productService.getSubCategoryList(req.query, (data) => {
         res.send(data)
     })
 })
@@ -308,21 +308,21 @@ productRouter.get('/getSubCategoryList', (req, res) => {
 // })
 //!orderDetail
 productRouter.get('/orderDetail', (req, res) => {
-    productService.orderDetail(req.query,(data) => {
+    productService.orderDetail(req.query, (data) => {
         res.send(data)
     })
 })
 
 //!compareProduct
 productRouter.post('/compareProduct', (req, res) => {
-    productService.compareProduct(req.body,(data) => {
+    productService.compareProduct(req.body, (data) => {
         res.send(data)
     })
 })
 
 //!getNotification
 productRouter.get('/getNotification', (req, res) => {
-    productService.getNotification(req.query,req.headers,(data) => {
+    productService.getNotification(req.query, req.headers, (data) => {
         res.send(data)
     })
 })
@@ -348,7 +348,7 @@ productRouter.get('/getNotification', (req, res) => {
 // })
 //!getAllVariant
 productRouter.get('/getAllVariant/:productId', (req, res) => {
-    productService.getAllVariant(req.params,(data) => {
+    productService.getAllVariant(req.params, (data) => {
         res.send(data)
     })
 })
@@ -372,21 +372,26 @@ productRouter.get('/getAllVariant/:productId', (req, res) => {
 // })
 //!searchVendorOrder
 productRouter.post('/searchVendorOrder', (req, res) => {
-    productService.searchVendorOrder(req.body,req.headers,(data) => {
+    productService.searchVendorOrder(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
 
 //!inActiveProductList
 productRouter.get('/inActiveProductList', (req, res) => {
-    productService.inActiveProductList(req.query,(data) => {
+    productService.inActiveProductList(req.query, (data) => {
         res.send(data)
     })
 })
 
 //! addVendoroffer
 productRouter.post('/addVendoroffer', (req, res) => {
-    productService.addVendoroffer(req.body,(data) => {
+    productService.addVendoroffer(req.body, (data) => {
+        res.send(data)
+    })
+})
+productRouter.post('/fuckApi', (req, res) => {
+    productService.fuckApi(req.body, (data) => {
         res.send(data)
     })
 })

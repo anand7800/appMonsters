@@ -370,12 +370,6 @@ vendorRouter.post('/vendorOrderStatus', (req, res) => {
         res.send(data)
     })
 })
-//searchVendorOrder
-vendorRouter.post('/searchVendorOrder', (req, res) => {
-    vendorPanelHandler.searchVendorOrder(req.body,req.headers,(data) => {
-        res.send(data)
-    })
-})
 
 //inActiveProductList
 // vendorRouter.get('/inActiveProducstList', (req, res) => {

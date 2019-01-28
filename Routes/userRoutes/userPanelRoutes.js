@@ -156,4 +156,10 @@ userRouter.post('/updateImage',(req,res)=>{
     })
 })
 
+//!getUserInfo
+userRouter.get('/getUserInfo',(req,res)=>{
+    userHandler.getUserInfo(req.query,req.headers,(data)=>{
+        res.send(data)
+    })
+})
 module.exports = userRouter
