@@ -3005,27 +3005,27 @@ wishList = (data, headers, callback) => {
     }, (err, response) => {
         var main = []
         async.forEachOf(response.getWishProduct.wishListDescription, (value, key, callback) => {
-            query = {
-                "productId": mongoose.Types.ObjectId(value.productId._id),
-                "variants": {
-                    "$elemMatch": {
-                        // "closed": false,
-                        "$and": [
-                            {
-                                "color": value.color.toLowerCase(),
-                            },
-                            {
-                                "size": value.size.toLowerCase(),
-                            },
-                            {
-                                "material": value.material.toLowerCase(),
-                            }
-                        ]
+            
+            commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
+                varianceModel.findOne({
+                    "productId": mongoose.Types.ObjectId(value.productId._id),
+                    "variants": {
+                        "$elemMatch": {
+                            // "closed": false,
+                            "$and": [
+                                {
+                                    "color": value.color.toLowerCase(),
+                                },
+                                {
+                                    "size": value.size.toLowerCase(),
+                                },
+                                {
+                                    "material": value.material.toLowerCase(),
+                                }
+                            ]
+                        }
                     }
-                }
-            }
-            commonAPI.findBrand(value.productId.brandId, (err, brandName) => {
-                varianceModel.findOne(query).exec((err, varianceValue) => {
+                }).exec((err, varianceValue) => {
                     console.log("result", err, varianceValue)
                     temp = {
                         productId: value.productId._id,
@@ -3038,7 +3038,7 @@ wishList = (data, headers, callback) => {
                         description: value.productId.description,
                         specifications: value.productId.specifications
                     }
-                    main.push(temp)
+                     main.push(temp)
                     callback()
                 })
             })
@@ -3126,7 +3126,7 @@ physicalStore = (data, headers, callback) => {
             }
             else {
                 let query = {
-                    'userId':userId,
+                    'userId': userId,
                     'businessName': data.businessName,
                     'address': data.address,
                     'building_shopNo': data.building_shopNo,
@@ -3267,7 +3267,7 @@ orderList = (data, headers, callback) => {
         }
     }, (err, response) => {
         var main = []
-        async.forEachOf(response.getOrderDetails.orderPlacedDescription, (value, key, callback) => {
+        async.forEachOf(response.getOrderDetails.orderPlacedDescription, (value, key, cb) => {
             brandModel.findOne(value.productId.brandId, (err, brand) => {
                 varianceModel.findOne({
                     "productId": mongoose.Types.ObjectId(value.productId._id),
@@ -3316,7 +3316,7 @@ orderList = (data, headers, callback) => {
                             // console.log("#@@@@@@@@@@@2", temp)
                             main.push(temp)
                         }
-                        callback()
+                        cb()
                     })
                 })
             })
