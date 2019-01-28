@@ -3322,8 +3322,9 @@ orderList = (data, headers, callback) => {
                             // console.log("#@@@@@@@@@@@2", temp)
                             main.push(temp)
                         }
-                        cb()
+                      
                     })
+                    cb()
                 })
             })
         }, (err, successfully) => {
