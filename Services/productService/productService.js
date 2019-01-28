@@ -3259,7 +3259,7 @@ orderList = (data, headers, callback) => {
             else userId = token
         })
     }
-    
+
     async.parallel({
         getOrderDetails: (cb) => {
             orderPlaced.findOne({ userId: userId }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).exec((err, result) => {
@@ -3329,7 +3329,9 @@ orderList = (data, headers, callback) => {
             })
         }, (err, successfully) => {
             var res = {}
-            res.productDetail = main
+            var success=_.sortBy(main,'orderDate')
+
+            res.productDetail = success
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "result": res })
 
         })
