@@ -1653,7 +1653,7 @@ getSubCategoryList = (query, callback) => {
 **************************orderDetail***********************
 ***********************************************************************/
 orderDetail = (data, callback) => {
-    console.log('orderDetails',data)
+    console.log('orderDetails', data)
     let query = {
         'orderPlacedDescription.orderId': data.orderId.substring(3)
     }
@@ -1693,7 +1693,7 @@ orderDetail = (data, callback) => {
                     }
                 }, { 'variants.$': 1 }).exec((err, getVariance) => {
                     response.getOrderDetails.userId.address.forEach(element => {
-                        console.log('------>>>',element)
+                        console.log('------>>>', element)
                         if (element._id.toString() == value.addressId.toString()) {
                             temp = {
                                 brand: brand.brandName,
@@ -1717,7 +1717,7 @@ orderDetail = (data, callback) => {
                             }
                             main.push(temp)
                         }
-                       
+
                     })
                     callback()
                 })
@@ -2726,7 +2726,7 @@ applyFilter = (data, callback) => {
             ]
 
         }
-        productModel.find(query4).populate({ path: 'varianceId' }).populate({path:'brandId'}).exec((err, success) => {
+        productModel.find(query4).populate({ path: 'varianceId' }).populate({ path: 'brandId' }).exec((err, success) => {
             var successfully = []
             if (err) {
                 throw err
@@ -2739,7 +2739,7 @@ applyFilter = (data, callback) => {
                     subCategory: element.subCategory._id,
                     productCategoryId: element.productCategoryId,
                     brandId: element.brandId._id,
-                    brandName: element.brandId.brandName?element.brandId.brandName:"NIKE",
+                    brandName: element.brandId.brandName ? element.brandId.brandName : "NIKE",
                     description: element.description,
                     price: element.varianceId.variants[0].price,
                     image: element.varianceId.variants[0].image,
@@ -2877,7 +2877,7 @@ compareProduct = (data, callback) => {
 checkoutOrder = (data, headers, callback) => {
     console.log('api is hitted', data)
 
-    var userId 
+    var userId
 
     var orderId = commonFunction.generateOrderId(6)
     commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
@@ -3262,7 +3262,7 @@ orderList = (data, headers, callback) => {
 
     async.parallel({
         getOrderDetails: (cb) => {
-            orderPlaced.findOne({ userId: userId }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).exec((err, result) => {
+            orderPlaced.findOne({ userId: userId }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).sort({ 'orderPlacedDescription.createdAt': -1 }).exec((err, result) => {
                 if (err || !result || !result.orderPlacedDescription.length) {
                     res = {}
                     callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.ORDER_EMPTY[data.lang], 'result': res })
@@ -3322,7 +3322,7 @@ orderList = (data, headers, callback) => {
                             // console.log("#@@@@@@@@@@@2", temp)
                             main.push(temp)
                         }
-                      
+
                     })
                     cb()
                 })
