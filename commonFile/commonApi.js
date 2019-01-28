@@ -321,7 +321,7 @@ placeOrder = async (userId, data, addressId, orderPayment, orderId, callback) =>
         }
         else if (userFind) {
             console.log("user is find")
-            placeOrderModel.findOneAndUpdate( { userId: userId },  {
+            placeOrderModel.findOneAndUpdate({ userId: userId }, {
                 $push: {
                     orderPlacedDescription: {
                         sellerId: data.sellerId,
@@ -335,7 +335,7 @@ placeOrder = async (userId, data, addressId, orderPayment, orderId, callback) =>
                         addressId: addressId ? addressId : "null",
                         deliveryCharges: "50",
                         estimateTax: "17",
-                        totalAmountPaid:data.totalAmountPaid?data.totalAmountPaid:"0000"
+                        totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "0000"
 
                     }
                 }
@@ -366,7 +366,7 @@ placeOrder = async (userId, data, addressId, orderPayment, orderId, callback) =>
                     totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "234"
                 }
             }
-            var place=new placeOrderModel(query)
+            var place = new placeOrderModel(query)
             place.save(query, (err, result) => {
                 if (err) {
                     callback(null)
@@ -444,7 +444,12 @@ reviewAndRating = async (_id, cb) => {
                     $filter: {
                         input: "$reviewAndRating",
                         as: "item",
-                        cond: { $eq: ["$$item.productId", _id.toString()] }
+                        cond: {
+                            $and: [
+                                { $eq: ["$$item.productId", _id.toString()] },
+                                { $eq: ["$$item.status", "ACTIVE"] }
+                            ]
+                        }
                     }
                 }
             }
@@ -478,7 +483,7 @@ getUserDetail = async (userId, cb) => {
 //!send notification
 notify = (data, userId, cb) => {
 
-    
+
     getUserDetail(userId, (err, result) => {
 
         if (result.deviceType == 2) {

@@ -1120,7 +1120,7 @@ productDetails = (data, callback) => {
 
             async.parallel({
                 findProduct: (cb) => {
-                    productModel.findById({ "_id": data._id }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, result) => {
+                    productModel.findById({ "_id": data._id, }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, result) => {
                         console.log("44444444444444444444444444444444", err, result)
                         if (err || !result || result == null) {
 
@@ -1150,8 +1150,8 @@ productDetails = (data, callback) => {
                                             if (await userDetail) {
                                                 // await console.log(userDetail)
                                                 console.log("middle")
-
                                                 temp = {
+                                                    reviewId:value._id,
                                                     firstName: userDetail.firstName,
                                                     lastName: userDetail.lastName,
                                                     image: userDetail.image,
@@ -1189,7 +1189,6 @@ productDetails = (data, callback) => {
                         }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: "varianceId" }).lean().exec((err, result3) => {
                             // console.log("errAnd result", err, result3)
                             if (err || !result3) {
-
                                 cb(null)
                             }
                             else {
@@ -1636,6 +1635,7 @@ getSubCategoryList = (query, callback) => {
             //     console.log("@@@@@2", element)
             // })
             temp = {
+                _id:value._id,
                 categoryName: value.categoryModel.categoryName,
                 subCategoryName: value.subCategoryName,
                 image: value.image
@@ -1876,7 +1876,8 @@ searchVendorOrder = (data, header, callback) => {
 inActiveProductList = (data, callback) => {
     console.log("get product listddsss", data)
 
-    if (data.status || data.status.length > 2) {
+    if (!data.status=="all" || data.status=="active"||data.status=="inactive"||data.status=='reject') {
+        console.log("status in",data.status)
         productModel.find({
             status: data.status.toUpperCase()
         }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
@@ -1913,6 +1914,7 @@ inActiveProductList = (data, callback) => {
         })
     }
     else {
+        console.log("status out",data.status)
         productModel.find({}).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
             // console.log(err, JSON.stringify(response))
             if (response.length > 0) {

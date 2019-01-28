@@ -326,18 +326,18 @@ getOtp = (data, callback) => {
         return
     }
     else {
-        console.log(typeof commonFunction.getOTP())
-        var otp = commonFunction.getOTP()
-        commonFunction.sendSMS(otp, data.phone, async (err, sent) => {
-            console.log(err, sent)
-            if (err) {
-                callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-            }
-            else {
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.InvalidPhoneNuber[data.lang], 'result': otp })
-            }
-        })
-        // callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.OTP[data.lang], 'result': "123456" })
+        // console.log(typeof commonFunction.getOTP())
+        // var otp = commonFunction.getOTP()
+        // commonFunction.sendSMS(otp, data.phone, async (err, sent) => {
+        //     console.log(err, sent)
+        //     if (err) {
+        //         callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+        //     }
+        //     else {
+        //         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.InvalidPhoneNuber[data.lang], 'result': otp })
+        //     }
+        // })
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.OTP[data.lang], 'result': "123456" })
     }
 }
 //! forgot Password of user
