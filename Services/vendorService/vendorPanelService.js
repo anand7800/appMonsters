@@ -775,8 +775,6 @@ deleteSubCategory = (data, callback) => {
         else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
         }
-
-
     })
 }
 

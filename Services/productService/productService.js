@@ -3262,7 +3262,7 @@ orderList = (data, headers, callback) => {
 
     async.parallel({
         getOrderDetails: (cb) => {
-            orderPlaced.findOne({ userId: userId }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).sort({ 'orderPlacedDescription.createdAt': -1 }).exec((err, result) => {
+            orderPlaced.findOne({ userId: userId }, { $orderby: { 'orderPlacedDescription.createdAt': -1 } }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).exec((err, result) => {
                 if (err || !result || !result.orderPlacedDescription.length) {
                     res = {}
                     callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.ORDER_EMPTY[data.lang], 'result': res })
