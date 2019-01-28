@@ -2723,7 +2723,7 @@ applyFilter = (data, callback) => {
             ]
 
         }
-        productModel.find(query4).populate({ path: 'varianceId' }).exec((err, success) => {
+        productModel.find(query4).populate({ path: 'varianceId' }).populate({path:'brandId'}).exec((err, success) => {
             var successfully = []
             if (err) {
                 throw err
@@ -2736,7 +2736,7 @@ applyFilter = (data, callback) => {
                     subCategory: element.subCategory._id,
                     productCategoryId: element.productCategoryId,
                     brandId: element.brandId._id,
-                    brandName: element.brandId.brandName?element.brandId.brandName:"e5ytgh",
+                    brandName: element.brandId.brandName?element.brandId.brandName:"NIKE",
                     description: element.description,
                     price: element.varianceId.variants[0].price,
                     image: element.varianceId.variants[0].image,
