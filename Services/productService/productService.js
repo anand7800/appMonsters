@@ -3329,7 +3329,7 @@ orderList = (data, headers, callback) => {
             })
         }, (err, successfully) => {
             var res = {}
-            var success=_.sortBy(main,'orderDate')
+            var success = _.sortBy(main, [{'orderdate' :'desc'}])
 
             res.productDetail = success
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "result": res })
