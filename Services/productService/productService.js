@@ -3126,6 +3126,7 @@ physicalStore = (data, headers, callback) => {
             }
             else {
                 let query = {
+                    'userId':userId,
                     'businessName': data.businessName,
                     'address': data.address,
                     'building_shopNo': data.building_shopNo,
