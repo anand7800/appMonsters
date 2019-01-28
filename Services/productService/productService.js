@@ -1653,6 +1653,7 @@ getSubCategoryList = (query, callback) => {
 **************************orderDetail***********************
 ***********************************************************************/
 orderDetail = (data, callback) => {
+    console.log('orderDetails',data)
     let query = {
         'orderPlacedDescription.orderId': data.orderId.substring(3)
     }
@@ -1692,6 +1693,7 @@ orderDetail = (data, callback) => {
                     }
                 }, { 'variants.$': 1 }).exec((err, getVariance) => {
                     response.getOrderDetails.userId.address.forEach(element => {
+                        console.log('------>>>',element)
                         if (element._id.toString() == value.addressId.toString()) {
                             temp = {
                                 brand: brand.brandName,
@@ -1715,8 +1717,9 @@ orderDetail = (data, callback) => {
                             }
                             main.push(temp)
                         }
-                        callback()
+                       
                     })
+                    callback()
                 })
             })
         }, (err, successfully) => {
@@ -3294,7 +3297,6 @@ orderList = (data, headers, callback) => {
                 }, { 'variants.$': 1 }).exec((err, getVariance) => {
                     response.getOrderDetails.userId.address.forEach(element => {
                         if (element._id.toString() == value.addressId.toString()) {
-
                             // console.log('asdfasfd')
                             temp = {
                                 brand: brand.brandName,
@@ -3330,13 +3332,7 @@ orderList = (data, headers, callback) => {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "result": res })
 
         })
-
-
-
-
-
     })
-
 }
 
 /**************************getNotification*************************

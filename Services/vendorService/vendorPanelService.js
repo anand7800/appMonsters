@@ -825,7 +825,12 @@ changeReviewStatus = (data, callback) => {
         })
         // )
     }
+}
 
+
+//allProduct count
+countProduct=(data,callback)=>{
+    console.log()
 }
 module.exports = {
 
