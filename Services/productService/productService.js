@@ -2877,12 +2877,12 @@ compareProduct = (data, callback) => {
 checkoutOrder = (data, headers, callback) => {
     console.log('api is hitted', data)
 
-    var userId = "5c47f56e9e685b28c9fc7bc5"
+    var userId 
 
     var orderId = commonFunction.generateOrderId(6)
-    // commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-    //     userId = result
-    // })
+    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+        userId = result
+    })
     async.parallel({
         checkoutOrder: (cb) => {
             bagModel.findOne({ userId: userId }, (err, result) => {
