@@ -2631,9 +2631,13 @@ applyFilter = (data, callback) => {
     }
 
  */    query1 = {
-        $or: [
-            { 'variants.color': { $in: dataManage.Colors ? dataManage.Colors : [] } },
-            { 'variants.size': { $in: dataManage.Sizes ? dataManage.Sizes : [] } },
+        $and: [
+            {
+                $or: [
+                    { 'variants.color': { $in: dataManage.Colors ? dataManage.Colors : [] } },
+                    { 'variants.size': { $in: dataManage.Sizes ? dataManage.Sizes : [] } }
+                ]
+            },
             { 'variants.price': { $lte: data.Price } }
         ]
     }
@@ -3005,7 +3009,7 @@ wishList = (data, headers, callback) => {
     }, (err, response) => {
         var main = []
         async.forEachOf(response.getWishProduct.wishListDescription, (value, key, callback) => {
-            
+
             commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
                 varianceModel.findOne({
                     "productId": mongoose.Types.ObjectId(value.productId._id),
@@ -3038,7 +3042,7 @@ wishList = (data, headers, callback) => {
                         description: value.productId.description,
                         specifications: value.productId.specifications
                     }
-                     main.push(temp)
+                    main.push(temp)
                     callback()
                 })
             })
