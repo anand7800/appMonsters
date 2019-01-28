@@ -757,7 +757,7 @@ deleteCategory = (data, callback) => {
 
 }
 
-
+//deleteSubCategory
 deleteSubCategory = (data, callback) => {
     console.log("data", data)
     query = {
@@ -765,7 +765,7 @@ deleteSubCategory = (data, callback) => {
     }
     update = {
         $set: {
-            status: data.status
+            status: data.status.toUpperCase()
         }
     }
     subCategoryModelL2.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {

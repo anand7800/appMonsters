@@ -1626,8 +1626,8 @@ vendorOrderList = (header, callback) => {
 ***********************************************************************/
 getSubCategoryList = (query, callback) => {
     console.log("get subcategory list ", query)
-    subCategoryModelL2.find({}, { 'subCategoryName': 1, 'image': 1, categoryModel: 1 }).populate({ path: 'categoryModel' }).exec((err, result) => {
-        console.log(err, result)
+    subCategoryModelL2.find({ status: 'ACTIVE' }, { 'subCategoryName': 1, 'image': 1, categoryModel: 1 }).populate({ path: 'categoryModel' }).exec((err, result) => {
+        // console.log(err, result)
         demo = []
         async.forEachOf(result, (value, key, cb) => {
             // console.log("@@@@@2",value)
@@ -3095,8 +3095,13 @@ deleteWishItem = (data, headers, callback) => {
 /********************************************************************
 **************************physicalStore*************************
 ***********************************************************************/
-physicalStore = (data, callback) => {
-    log("addCategory")
+physicalStore = (data, headers, callback) => {
+    var userId
+    log("addCategory", data)
+    commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
+        if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        else userId = token
+    })
     if (!data) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
@@ -3120,14 +3125,14 @@ physicalStore = (data, callback) => {
                 callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
             }
             else {
-
-                query = {
+                let query = {
                     'businessName': data.businessName,
                     'address': data.address,
                     'building_shopNo': data.building_shopNo,
                     "location": { type: "Point", coordinates: [data.lat, data.lng] }
                 }
-                physicalStores.create(query, (err, result) => {
+                const physical = new physicalStores(query)
+                physical.save(query, (err, result) => {
                     if (err)
                         callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
                     else if (!result)

@@ -1,5 +1,5 @@
 var mongoose = require("mongoose")
-var physicalStore = mongoose.Schema({
+var storeDetails = mongoose.Schema({
     userId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'login'
@@ -11,4 +11,4 @@ var physicalStore = mongoose.Schema({
 }, {
         timestamps: true
     }) 
-module.exports = mongoose.model('physicalStore', physicalStore, 'physicalStore')
+module.exports = mongoose.model('storeDetails', storeDetails, 'storeDetails')

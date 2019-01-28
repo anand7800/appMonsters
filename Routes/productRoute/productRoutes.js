@@ -196,7 +196,7 @@ productRouter.post('/filter', (req, res) => {
 
 //! Add physical store 
 productRouter.post('/addPhysicalStore', (req, res) => {
-    productService.physicalStore(req.body, (data) => {
+    productService.physicalStore(req.body,req.headers, (data) => {
         res.send(data)
     })
 })
