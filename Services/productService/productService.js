@@ -3504,5 +3504,6 @@ module.exports = {
     wishList,
     deleteWishItem,
     getNotification,
-    fuckApi
+    fuckApi,
+    physicalStore
 }
