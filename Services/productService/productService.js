@@ -2638,7 +2638,7 @@ applyFilter = (data, callback) => {
                     { 'variants.size': { $in: dataManage.Sizes ? dataManage.Sizes : [] } }
                 ]
             },
-            { 'variants.price': { $lte: data.Price } }
+            { 'variants.price': { $lt: data.Price } }
         ]
     }
     console.log("######", query1)
