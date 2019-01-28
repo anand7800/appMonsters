@@ -3213,7 +3213,7 @@ listOfAddCart = (data, headers, callback) => {
                         productName: value.productId.productName,
                         color: value.color,//!
                         price: varianceValue.variants[0].price,//!
-                        productQuantity: varianceValue.variants[0].quantity,
+                        productQuantity: value.productQuantity,
                         image: varianceValue.variants[0].image,//!
                         description: value.productId.description,
                         specifications: value.productId.specifications

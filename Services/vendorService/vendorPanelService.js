@@ -829,8 +829,38 @@ changeReviewStatus = (data, callback) => {
 
 
 //allProduct count
-countProduct=(data,callback)=>{
-    console.log()
+countProduct = (data, callback) => {
+    console.log('count api ', data)
+    async.auto({
+        allProduct: (cb) => {
+            brandDescriptionL4.find({}).count().exec((err, allProduct) => {
+                if (err || !allProduct)
+                cb(null)
+                else
+                cb(null,allProduct)
+            })
+        },
+        activeProduct:(cb)=>{
+            brandDescriptionL4.find({status:'ACTIVE'}).count().exec((err,active)=>{
+                if (err || !active)
+                cb(null)
+                else
+                cb(null,active)
+            })
+        },
+        rejectProduct:(cb)=>{
+            brandDescriptionL4.find({status:'REJECTED'}).count().exec((err,REJECTED)=>{
+                if (err || !REJECTED)
+                cb(null)
+                else
+                cb(null,REJECTED)
+            })
+        }
+    },(err,response)=>{
+        console.log('----',err,response)
+        const res={}
+        // res[a]
+    })
 }
 module.exports = {
 
