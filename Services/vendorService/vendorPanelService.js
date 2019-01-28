@@ -456,7 +456,7 @@ createVendor = (data, callback) => {
 //!delete vendor
 deleteVendor = (data, callback) => {
     console.log("incoming data", data)
-    userModel.findOneAndUpdate({ _id: mongoose.Types.ObjectId(data._id) }, { $set: { status: 'block' } }, { new: true }).exec((err, result) => {
+    userModel.findOneAndUpdate({ _id: mongoose.Types.ObjectId(data._id) }, { $set: { status: data.status } }, { new: true }).exec((err, result) => {
         console.log(err, result)
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })

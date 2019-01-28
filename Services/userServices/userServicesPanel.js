@@ -82,8 +82,9 @@ login = (data, callback) => {
         return
     }
     else {
-        userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod isBussinessAdded').exec((err, succ) => {
-            console.log(err, succ)
+        userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod isBussinessAdded countryCode').exec((err, succ) => {
+            // console.log(err, succ)
+            console.log('2222222222222222222',succ)
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                 return
@@ -104,11 +105,11 @@ login = (data, callback) => {
                         "image": succ.image,
                         "addressAdded": succ.isAddressAdded,
                         "phone": succ.phone,
-                        "countryCode": succ.countryCode,
+                        "countryCode": succ.countryCode?succ.countryCode:"",
                         "paymentAdded": succ.paymentAdded,
                         "address": succ.address,
                         "paymentMethod": succ.paymentMethod,
-                        "countryCode": succ.countryCode,
+                        // "countryCode": succ.countryCode,
                         "isBussinessAdded": succ.isBussinessAdded
                     }
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
@@ -121,7 +122,7 @@ login = (data, callback) => {
                     }
                 }
                 else {
-                    callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.INCORRECT_OLD_PASSWORD[data.lang] })
+                    callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.INCORRECT_CREDENTIALS[data.lang] })
                 }
             }
         })
