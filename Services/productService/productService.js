@@ -1110,8 +1110,8 @@ productDetails = (data, callback) => {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
     }
-    productModel.findOne({ _id: data._id }).exec((err, result) => {
-        if (err || !result || result == null) {
+    productModel.findOne({ _id: data._id }).exec((err, check) => {
+        if (err || !check || check == null) {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PRODUCT_NOT_FOUND[data.lang] })
             return
         }
@@ -1151,7 +1151,7 @@ productDetails = (data, callback) => {
                                                 // await console.log(userDetail)
                                                 console.log("middle")
                                                 temp = {
-                                                    reviewId:value._id,
+                                                    reviewId: value._id,
                                                     firstName: userDetail.firstName,
                                                     lastName: userDetail.lastName,
                                                     image: userDetail.image,
@@ -1182,7 +1182,7 @@ productDetails = (data, callback) => {
                     productModel.findOne({ "_id": data._id }).lean().exec((err, result1) => {
                         productModel.find({
                             $or: [
-                                { brandId: result1.brandId },
+                                // { brandId: result1.brandId },
                                 { productCategoryId: result1.productCategoryId },
 
                             ]
@@ -1635,7 +1635,7 @@ getSubCategoryList = (query, callback) => {
             //     console.log("@@@@@2", element)
             // })
             temp = {
-                _id:value._id,
+                _id: value._id,
                 categoryName: value.categoryModel.categoryName,
                 subCategoryName: value.subCategoryName,
                 image: value.image
@@ -1876,12 +1876,12 @@ searchVendorOrder = (data, header, callback) => {
 inActiveProductList = (data, callback) => {
     console.log("get product listddsss", data)
 
-    if (!data.status=="all" || data.status=="active"||data.status=="inactive"||data.status=='reject') {
-        console.log("status in",data.status)
+    if (!data.status == "all" || data.status == "active" || data.status == "inactive" || data.status == 'rejected') {
+        // console.log("status in", data.status)
         productModel.find({
-            status: data.status.toUpperCase()
+            $and: [{ status: data.status.toUpperCase() }]
         }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
-            // console.log(err, JSON.stringify(response))
+            console.log(err, JSON.stringify(response))
             if (response.length > 0) {
                 var res = []
                 async.forEachOf(response, (value, key, callback) => {
@@ -1914,7 +1914,7 @@ inActiveProductList = (data, callback) => {
         })
     }
     else {
-        console.log("status out",data.status)
+        console.log("status out", data.status)
         productModel.find({}).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
             // console.log(err, JSON.stringify(response))
             if (response.length > 0) {
@@ -2521,7 +2521,7 @@ addReviewAndRating = (header, data, callback) => {
 ***********************************************************************/
 applyFilter = (data, callback) => {
     console.log('call filter api -==>', data)
-    console.log('call filter api -==>', typeof data.Price)
+    // console.log('call filter api -==>', typeof data.Price)
     var dataManage = {}
     // console.log(JSON.parse(data.Colors))
     if (data.Colors && data.Sizes && data.Brands && data.Price) {
@@ -2634,8 +2634,7 @@ applyFilter = (data, callback) => {
         $or: [
             { 'variants.color': { $in: dataManage.Colors ? dataManage.Colors : [] } },
             { 'variants.size': { $in: dataManage.Sizes ? dataManage.Sizes : [] } },
-            { 'variants.price': { $lte: data.Price } },
-
+            { 'variants.price': { $lte: data.Price } }
         ]
     }
     console.log("######", query1)
@@ -3414,22 +3413,17 @@ fuckApi = async (data, callback) => {
     for (let index = 0; index < now.length; index++) {
 
         var c = Object.keys(now[index])[0]
-        // console.log("44",now[index][c].split(','))
         let ee = now[index][c].split(',')
         let temp = {
             [c]: ee
         }
         z.push(temp)
     }
-    // console.log(z)
-    // callback(z)
+
     let start = {}
     for (let index = 0; index < z.length; index++) {
 
-        // console.log(z[index])
-        // console.log(Object.keys(z[index])[0])
         let a = Object.keys(z[index])[0]
-        // console.log(z[index][a].splice(-1, 1))
         z[index][a].splice(-1, 1)
         let temp = {
             [a]: z[index][a]
@@ -3437,9 +3431,6 @@ fuckApi = async (data, callback) => {
         }
         start[a] = z[index][a]
     }
-    // console.log(JSON.stringify(demo))
-    data
-    // let start = { "color": ["red", "blue"], "size": ["xxl", "xl"], "material": ["cottom", "silk"] }
 
     for (let index = 0; index < Object.keys(start).length; index++) {
         temp = {

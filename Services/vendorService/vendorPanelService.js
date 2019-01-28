@@ -378,7 +378,7 @@ getUserList = (data, callback) => {
     console.log("getVendorList")
     let query = {
         $and: [
-            { status: 'active' },
+            // { status: 'active' },
             { userType: data.userType }
         ]
     }
