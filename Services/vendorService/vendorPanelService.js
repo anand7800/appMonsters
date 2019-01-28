@@ -833,31 +833,45 @@ countProduct = (data, callback) => {
         allProduct: (cb) => {
             brandDescriptionL4.find({}).count().exec((err, allProduct) => {
                 if (err || !allProduct)
-                cb(null)
+                    cb(null)
                 else
-                cb(null,allProduct)
+                    cb(null, allProduct)
             })
         },
-        activeProduct:(cb)=>{
-            brandDescriptionL4.find({status:'ACTIVE'}).count().exec((err,active)=>{
+        activeProduct: (cb) => {
+            brandDescriptionL4.find({ status: 'ACTIVE' }).count().exec((err, active) => {
                 if (err || !active)
-                cb(null)
+                    cb(null)
                 else
-                cb(null,active)
+                    cb(null, active)
             })
         },
-        rejectProduct:(cb)=>{
-            brandDescriptionL4.find({status:'REJECTED'}).count().exec((err,REJECTED)=>{
+        rejectProduct: (cb) => {
+            brandDescriptionL4.find({ status: 'REJECTED' }).count().exec((err, REJECTED) => {
                 if (err || !REJECTED)
-                cb(null)
+                    cb(null)
                 else
-                cb(null,REJECTED)
+                    cb(null, REJECTED)
+            })
+        },
+        inactiveProduct: (cb) => {
+            brandDescriptionL4.find({ status: 'INACTIVE' }).count().exec((err, INACTIVE) => {
+                if (err || !INACTIVE)
+                    cb(null ,0)
+                else
+                    cb(null, INACTIVE)
             })
         }
-    },(err,response)=>{
-        console.log('----',err,response)
-        const res={}
-        // res[a]
+    }, (err, response) => {
+        console.log('----', err, response)
+        const res = {}
+        res.totatProduct = response.allProduct
+        res.activeProduct = response.activeProduct
+        res.rejectProduct = response.rejectProduct
+        res.inactiveProduct = response.inactiveProduct
+
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': res })
+
     })
 }
 module.exports = {
@@ -885,5 +899,6 @@ module.exports = {
     deleteCategory,
     deleteSubCategory,
     changeProductStatus,
-    changeReviewStatus
+    changeReviewStatus,
+    countProduct
 }

@@ -398,9 +398,16 @@ vendorRouter.post('/changeProductStatus', (req, res) => {
     })
 })
 
-// changeReviewStatus
+// countProduct
 vendorRouter.post('/changeReviewStatus', (req, res) => {
     vendorPanelHandler.changeReviewStatus(req.body,(data) => {
+        res.send(data)
+    })
+})
+
+// changeReviewStatus
+vendorRouter.get('/countProduct', (req, res) => {
+    vendorPanelHandler.countProduct(req.body,(data) => {
         res.send(data)
     })
 })
