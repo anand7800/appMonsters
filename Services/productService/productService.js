@@ -3249,7 +3249,7 @@ listOfAddCart = (data, headers, callback) => {
 //!orderList
 orderList = (data, headers, callback) => {
     log("list of ORDER", data)
-    var userId
+    var userId 
     if (data.userId)
         userId = data.userId
     else {
@@ -3262,7 +3262,7 @@ orderList = (data, headers, callback) => {
 
     async.parallel({
         getOrderDetails: (cb) => {
-            orderPlaced.findOne({ userId: userId }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).exec((err, result) => {
+            orderPlaced.findOne({ userId: userId }).sort({ 'orderPlacedDescription.createdAt': 1 }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).exec((err, result) => {
                 if (err || !result || !result.orderPlacedDescription.length) {
                     res = {}
                     callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.ORDER_EMPTY[data.lang], 'result': res })
@@ -3329,7 +3329,7 @@ orderList = (data, headers, callback) => {
             })
         }, (err, successfully) => {
             var res = {}
-            var success = _.sortBy(main, [{'orderdate' :'desc'}])
+            var success = _.sortBy(main, ['orderDate'])
 
             res.productDetail = success
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "result": res })
