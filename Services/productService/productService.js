@@ -2736,7 +2736,7 @@ applyFilter = (data, callback) => {
                     subCategory: element.subCategory._id,
                     productCategoryId: element.productCategoryId,
                     brandId: element.brandId._id,
-                    brandName: element.brandId.brandName,
+                    brandName: element.brandId.brandName?element.brandId.brandName:"e5ytgh",
                     description: element.description,
                     price: element.varianceId.variants[0].price,
                     image: element.varianceId.variants[0].image,
