@@ -3020,7 +3020,7 @@ checkoutOrder = (data, headers, callback) => {
                                     sellerId: value.sellerId,
                                     productId: value.productId,
                                     // varianceId: data.varianceId ? data.varianceId : null,
-                                    orderPayment: data.orderPayment ? orderPayment : "COD",
+                                    orderPayment: data.orderPayment ? data.orderPayment : "COD",
                                     orderStatus: "PLACED",
                                     productQuantity: value.productQuantity ? value.productQuantity : 1,
                                     orderId: orderId,
@@ -3474,7 +3474,8 @@ getNotification = (data, header, callback) => {
 
 fuckApi = async (data, callback) => {
     console.log("fuck api", data)
-    var e = data.push
+    var e=[{"varianceKey":"color","varianceValue":[{"display":"red","value":"red"},{"display":"blue","value":"blue"},{"display":"green","value":"green"}]},{"varianceKey":"size","varianceValue":[{"display":"l","value":"l"},{"display":"m","value":"m"},{"display":"xxl","value":"xxl"}]},{"varianceKey":"material","varianceValue":[{"display":"silk","value":"silk"},{"display":"cotton","value":"cotton"}]}]
+    // var e = data.push
     let final = []
     var result = []
     e.forEach(element => {

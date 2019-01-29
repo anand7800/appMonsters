@@ -658,7 +658,7 @@ updateVarianceStock = (data, callback) => {
     })
 }
 //!editcategory
-editCatogory = (data, callback) => {
+editCategory = (data, callback) => {
     console.log('incoming data', data)
     if (!data.categoryId || !data.categoryName) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
@@ -899,13 +899,47 @@ editSubCategory = (data, callback) => {
 }
 
 //getcategorybyId
-getCategoryId = (data, callback) => {
+getCategoryById = (data, callback) => {
     if (data.categoryId) {
         categoryModelL1.findById({ _id: data.categoryId }).exec((err, result) => {
             if (err || !result)
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], 'result': result })
             else {
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': result })
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
+
+            }
+        })
+    }
+    else {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+}
+
+//getcategorybyId
+getBrandById = (data, callback) => {
+    if (data.brandId) {
+        brandListModel.findById({ _id: data.brandId }).exec((err, result) => {
+            if (err || !result)
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], 'result': result })
+            else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
+
+            }
+        })
+    }
+    else {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+}
+
+//getcategorybyId
+getSubcategoryById = (data, callback) => {
+    if (data.subCategoryId) {
+        subCategoryModelL2.findById({ _id: data.subCategoryId }).exec((err, result) => {
+            if (err || !result)
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], 'result': result })
+            else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
 
             }
         })
@@ -926,14 +960,13 @@ module.exports = {
     updateBrand,
     getUserList,
     createVendor,
-    // getSubCategoryList,
     deleteVendor,
     changeOrderStatus,
     dashBoard,
     getUserinfo,
     getAllVariant,
     updateVarianceStock,
-    editCatogory,
+    editCategory,
     vendorOrderStatus,
     deleteCategory,
     deleteSubCategory,
@@ -941,5 +974,7 @@ module.exports = {
     changeReviewStatus,
     countProduct,
     editSubCategory,
-    getCategoryId
+    getCategoryById,
+    getBrandById,
+    getSubcategoryById
 }

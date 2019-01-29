@@ -359,8 +359,8 @@ vendorRouter.post('/updateVarianceStock', (req, res) => {
     })
 })
 //editCatogory
-vendorRouter.post('/editCatogory', (req, res) => {
-    vendorPanelHandler.editCatogory(req.body,(data) => {
+vendorRouter.post('/editCategory', (req, res) => {
+    vendorPanelHandler.editCategory(req.body,(data) => {
         res.send(data)
     })
 })
@@ -419,7 +419,19 @@ vendorRouter.post('/editSubCategory', (req, res) => {
     })
 })
 vendorRouter.get('/getCategoryId', (req, res) => {
-    vendorPanelHandler.getCategoryId(req.query,(data) => {
+    vendorPanelHandler.getCategoryById(req.query,(data) => {
+        res.send(data)
+    })
+})
+
+vendorRouter.get('/getBrandById', (req, res) => {
+    vendorPanelHandler.getBrandById(req.query,(data) => {
+        res.send(data)
+    })
+})
+
+vendorRouter.get('/getSubcategoryById', (req, res) => {
+    vendorPanelHandler.getSubcategoryById(req.query,(data) => {
         res.send(data)
     })
 })
