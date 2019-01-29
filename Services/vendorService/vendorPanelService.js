@@ -660,22 +660,26 @@ updateVarianceStock = (data, callback) => {
 //!editcategory
 editCatogory = (data, callback) => {
     console.log('incoming data', data)
-
-    query = {
-        _id: data.categoryId
+    if (!data.categoryId || !data.categoryName) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
-    update = {
-        $set: {
-            'categories': data.categoryName
+    else {
+        let query = {
+            _id: data.categoryId
         }
+        let update = {
+            $set: {
+                'categoryName': data.categoryName
+            }
+        }
+        categoryModelL1.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
+            console.log(err, result)
+            if (err) throw err
+            else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': result })
+            }
+        })
     }
-    categoryModelL1.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
-        console.log(err, result)
-        if (err) throw err
-        else {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': result })
-        }
-    })
 }
 //!vendor order Status api // saturday
 vendorOrderStatus = (data, header, callback) => {
@@ -735,10 +739,10 @@ vendorOrderStatus = (data, header, callback) => {
 }
 deleteCategory = (data, callback) => {
     console.log("data", data)
-    query = {
+    let query = {
         _id: data.categoryId,
     }
-    update = {
+    let update = {
         $set: {
             status: data.status
         }
@@ -751,12 +755,8 @@ deleteCategory = (data, callback) => {
 
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
         }
-
     })
-
-
 }
-
 //deleteSubCategory
 deleteSubCategory = (data, callback) => {
     console.log("data", data)
@@ -777,7 +777,6 @@ deleteSubCategory = (data, callback) => {
         }
     })
 }
-
 
 changeProductStatus = (data, callback) => {
     console.log("data is ", data)
@@ -824,8 +823,6 @@ changeReviewStatus = (data, callback) => {
         // )
     }
 }
-
-
 //allProduct count
 countProduct = (data, callback) => {
     console.log('count api ', data)
@@ -857,7 +854,7 @@ countProduct = (data, callback) => {
         inactiveProduct: (cb) => {
             brandDescriptionL4.find({ status: 'INACTIVE' }).count().exec((err, INACTIVE) => {
                 if (err || !INACTIVE)
-                    cb(null ,0)
+                    cb(null, 0)
                 else
                     cb(null, INACTIVE)
             })
@@ -865,7 +862,7 @@ countProduct = (data, callback) => {
     }, (err, response) => {
         console.log('----', err, response)
         const res = {}
-        res.totatProduct = response.allProduct
+        res.totalProduct = response.allProduct
         res.activeProduct = response.activeProduct
         res.rejectProduct = response.rejectProduct
         res.inactiveProduct = response.inactiveProduct
@@ -874,8 +871,50 @@ countProduct = (data, callback) => {
 
     })
 }
-module.exports = {
 
+
+//!editcategory
+editSubCategory = (data, callback) => {
+    console.log('incoming data', data)
+    if (!data.subCategoryId || !data.subCategoryId) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+    else {
+        let query = {
+            _id: data.subCategoryId
+        }
+        let update = {
+            $set: {
+                'subCategoryName': data.subCategoryId
+            }
+        }
+        categoryModelL1.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
+            console.log(err, result)
+            if (err) throw err
+            else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': result })
+            }
+        })
+    }
+}
+
+//getcategorybyId
+getCategoryId = (data, callback) => {
+    if (data.categoryId) {
+        categoryModelL1.findById({ _id: data.categoryId }).exec((err, result) => {
+            if (err || !result)
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], 'result': result })
+            else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': result })
+
+            }
+        })
+    }
+    else {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+}
+module.exports = {
     addTopOffers,
     uploadImage,
     addBrand,
@@ -900,5 +939,7 @@ module.exports = {
     deleteSubCategory,
     changeProductStatus,
     changeReviewStatus,
-    countProduct
+    countProduct,
+    editSubCategory,
+    getCategoryId
 }

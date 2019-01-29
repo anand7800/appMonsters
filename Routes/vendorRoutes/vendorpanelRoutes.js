@@ -411,4 +411,16 @@ vendorRouter.get('/countProduct', (req, res) => {
         res.send(data)
     })
 })
+
+//editSubCategory
+vendorRouter.post('/editSubCategory', (req, res) => {
+    vendorPanelHandler.editSubCategory(req.body,(data) => {
+        res.send(data)
+    })
+})
+vendorRouter.get('/getCategoryId', (req, res) => {
+    vendorPanelHandler.getCategoryId(req.query,(data) => {
+        res.send(data)
+    })
+})
 module.exports = vendorRouter

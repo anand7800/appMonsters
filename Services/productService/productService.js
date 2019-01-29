@@ -265,9 +265,8 @@ addProduct = (data, header, callback) => {
         return
     }
     else {
-        async.parallel({
-            uploadImage: (cb) => {
-
+        async.waterfall([
+            (cb) => {
                 commonFunction.uploadMultipleImages(data.image, (err, image) => {
                     log(err, image)
                     if (err) cb(null)
@@ -275,60 +274,128 @@ addProduct = (data, header, callback) => {
                     else cb(null, image)
                 })
 
-            }
-        }, (err, response) => {
-            query = {
-                categoryModel: data.categoryId,
-                subCategory: data.subCategoryId,
-                productCategoryId: data.productCategoryId,
-                // brandDesc: {
-                brandId: data.brandId,
-                sellerId: sellerId,
-                productName: data.productName,
-                sellingPrice: data.sellingPrice,
-                summary: data.summary,
-                color: data.color,
-                size: data.size,
-                material: data.material,
-                description: data.description,
-                image: response.uploadImage,
-                specifications: data.specifications,
-                tag: data.tag,
-                productType: data.productType,
-                tryImage: null,
-                qrCode: data.qrCode,
-                inventorySKU: data.inventorySKU,
-                weight: data.weight,
-                quantity: data.quantity,
-                costItem: data.costItem,
-                status: data.status
+            },
+            function (image, cb) {
+                query = {
+                    categoryModel: data.categoryId,
+                    subCategory: data.subCategoryId,
+                    productCategoryId: data.productCategoryId,
+                    brandId: data.brandId,
+                    sellerId: sellerId,
+                    productName: data.productName,
+                    sellingPrice: data.sellingPrice,
+                    summary: data.summary,
+                    color: data.color,
+                    size: data.size,
+                    material: data.material,
+                    description: data.description,
+                    image: image,
+                    specifications: data.specifications,
+                    tag: data.tag,
+                    productType: data.productType,
+                    tryImage: null,
+                    qrCode: data.qrCode,
+                    inventorySKU: data.inventorySKU,
+                    weight: data.weight,
+                    quantity: data.quantity,
+                    costItem: data.costItem,
+                    status: data.status
+                }
+                var product = new productModel(query)
+                product.save((err, result) => {
+                    if (err || !result) cb(null)
+                    else {
+                        cb(null, result)
+                    }
+                })
             }
 
+        ], (err, response) => {
+            // console.log('waterfall', response)
+            // query = {
+            //     categoryModel: data.categoryId,
+            //     subCategory: data.subCategoryId,
+            //     productCategoryId: data.productCategoryId,
+            //     // brandDesc: {
+            //     brandId: data.brandId,
+            //     sellerId: sellerId,
+            //     productName: data.productName,
+            //     sellingPrice: data.sellingPrice,
+            //     summary: data.summary,
+            //     color: data.color,
+            //     size: data.size,
+            //     material: data.material,
+            //     description: data.description,
+            //     image: response.uploadImage,
+            //     specifications: data.specifications,
+            //     tag: data.tag,
+            //     productType: data.productType,
+            //     tryImage: null,
+            //     qrCode: data.qrCode,
+            //     inventorySKU: data.inventorySKU,
+            //     weight: data.weight,
+            //     quantity: data.quantity,
+            //     costItem: data.costItem,
+            //     status: data.status
             // }
 
-            var product = new productModel(query)
-            product.save((err, result) => {
-                if (err) {
-                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-                }
-                else if (!result) {
-                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+            // // }
 
-                }
-                else {
-                    varianceModel.create({
-                        productId: result._id,
-                        sellerId: sellerId,
-                        variants: data.variants
-                    }, (err, succ) => {
-                        productModel.findByIdAndUpdate({ _id: result._id }, { $set: { varianceId: succ._id } }, { new: true }).exec((err, saveVariance) => {
-                        })
-                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.categoriesList_found[data.lang], "result": succ })
+            // var product = new productModel(query)
+            // product.save((err, result) => {
+            //     if (err) {
+            //         callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+            //     }
+            //     else if (!result) {
+            //         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+
+            //     }
+            if (response) {
+                var variance = []
+                async.forEachOf(data.variants, async (value, key, callback) => {
+
+                    await commonFunction.uploadMultipleImages(value.varianceImage, (err, img) => {
+                        log(err, img)
+                        if (err) throw err
+                        else {
+                            let temp = {
+                                image: img,
+                                color: value.color ? value.color : "",
+                                size: value.size ? value.size : "",
+                                material: value.material ? value.material : "",
+                                quantity: data.quantity ? data.quantity : "",
+                                inventory: data.inventory ? value.inventory : "",
+                                SKU: value.SKU ? value.SKU : "",
+                                price: value.price ? value.price : "",
+                                status: 'ACTIVE'
+                            }
+                            variance.push(temp)
+                            callback()
+                        }
                     })
+                    // callback()
+                }, (err, res) => {
+                    console.log('variance', variance)
+                    let varianceSave = new varianceModel({
+                        productId: response._id,
+                        sellerId: sellerId,
+                        variants: variance
+                    })
+                    varianceSave.save((err, succ) => {
 
-                }
-            })
+                        productModel.findByIdAndUpdate({ _id: response._id }, { $set: { varianceId: succ._id } }, { new: true }).exec((err, saveVariance) => {
+                        })
+                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_PRODUCT[data.lang], "result": response })
+                    })
+                })
+
+
+            }
+            else {
+                callback('wrong')
+            }
         })
+        // }
     }
 }
 /* *******************************************************************
@@ -1549,21 +1616,38 @@ deleteBrand = (data, callback) => {
 **************************updateBrand***********************
 ***********************************************************************/
 updateBrand = (data, callback) => {
-    update = {
-        $set: {
-            brandName: data.brandName,
-            image: data.brandImage,
-            icon: data.brandIcon
-        }
+    if (!data.brandId || !data.brandName || data.brandImage) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
-    brandModel.findByIdAndUpdate({ _id: data.brandId }, update, { __v: 0, new: true }).exec((err, result) => {
-        if (err) {
-            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-        }
-        else {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
-        }
-    })
+    else {
+        async.parallel({
+            uploadImage: (cb) => {
+                commonFunction.uploadImg(data.brandImage, (err, image) => {
+                    if (err) cb(null)
+                    else if (!image) cb(null)
+                    else cb(null, image)
+                })
+            },
+        }, (err, response) => {
+
+            let update = {
+                $set: {
+                    brandName: data.brandName,
+                    image: response.uploadImage ? response.uploadImage : "",
+                    icon: response.uploadImage ? response.uploadImage : ""
+                }
+            }
+            brandModel.findByIdAndUpdate({ _id: data.brandId }, update, { __v: 0, new: true }).exec((err, result) => {
+                if (err) {
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+                }
+                else {
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
+                }
+            })
+        })
+
+    }
 }
 
 
@@ -3249,7 +3333,7 @@ listOfAddCart = (data, headers, callback) => {
 //!orderList
 orderList = (data, headers, callback) => {
     log("list of ORDER", data)
-    var userId 
+    var userId
     if (data.userId)
         userId = data.userId
     else {
@@ -3392,8 +3476,6 @@ fuckApi = async (data, callback) => {
     console.log("fuck api", data)
     var e = data.push
     let final = []
-
-
     var result = []
     e.forEach(element => {
         result.push({
@@ -3464,7 +3546,6 @@ fuckApi = async (data, callback) => {
         c({}, 0);
         return r;
     }
-
     // console.log(cartesian(final));
     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': cartesian(final) })
 }
@@ -3509,5 +3590,6 @@ module.exports = {
     deleteWishItem,
     getNotification,
     fuckApi,
-    physicalStore
+    physicalStore,
+    updateBrand
 }

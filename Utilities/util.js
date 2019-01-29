@@ -228,6 +228,10 @@ let statusMessage = {
         en: "Categories List is found",
         ar: "تم العثور على قائمة الفئات"
     },
+    ADD_PRODUCT: {
+        en: "ADD PRODUCT SUCCESSFULLY",
+        ar: ""
+    },
     PAYMENT_ADD: {
         en: "payment method add successfully.",
         ar: "طريقة الدفع تضاف بنجاح."
@@ -428,7 +432,7 @@ let statusMessage = {
         }
     },
     notifyMsg: {
-        
+
         PLACED: {
             en: 'Your Order Placed Successfully',
             ar: ''
