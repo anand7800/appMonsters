@@ -1013,7 +1013,7 @@ filters = (data, callback) => {
                             dataa.push(co)
                         }
                     })
-                    console.log('+++++++++++++++++', dataa)
+                    // console.log('+++++++++++++++++', dataa)
                 })
                 cb(null, dataa)
                 // var data = [{'name': 'Amir', 'surname': 'Rahnama'}, {'name': 'Amir', 'surname': 'Stevens'}];
@@ -1081,7 +1081,7 @@ filters = (data, callback) => {
                     "_id": "4"
                 },
                 {
-                    "name": "XL",
+                    "name": "X",
                     "_id": "5"
                 },
                 {
@@ -1103,11 +1103,12 @@ filters = (data, callback) => {
         res1[1] = Colors;
         res1[2] = Size;
 
-        subCategoryModelL2.findOne({ '_id': data.subCategoryId }).populate({ path: 'categoryModel', select: 'categories.categoryName' }).exec((err, subCategoryName) => {
-            // console.log("$$$$$$$$$$$$$$", err, subCategoryName.categoryModel.categories.categoryName)
+        subCategoryModelL2.findOne({ '_id': data.subCategoryId }).populate({ path: 'categoryModel'}).exec((err, subCategoryName) => {
+            console.log("$$$$$$$$$$$$$$", err, subCategoryName)
 
-            if (err) throw err
-
+            if (err) callback({
+                'statusCode': util.statusCode.INTERNAL_SERVER_ERROR, 'statusMessage': util.statusMessage.SERVER_BUSY[data.lang]
+            })
             else if (subCategoryName) {
                 // })
                 if (subCategoryName.categoryModel.categoryName == 'Electronic') {
@@ -3474,7 +3475,7 @@ getNotification = (data, header, callback) => {
 
 fuckApi = async (data, callback) => {
     console.log("fuck api", data)
-    var e=[{"varianceKey":"color","varianceValue":[{"display":"red","value":"red"},{"display":"blue","value":"blue"},{"display":"green","value":"green"}]},{"varianceKey":"size","varianceValue":[{"display":"l","value":"l"},{"display":"m","value":"m"},{"display":"xxl","value":"xxl"}]},{"varianceKey":"material","varianceValue":[{"display":"silk","value":"silk"},{"display":"cotton","value":"cotton"}]}]
+    var e = [{ "varianceKey": "color", "varianceValue": [{ "display": "red", "value": "red" }, { "display": "blue", "value": "blue" }, { "display": "green", "value": "green" }] }, { "varianceKey": "size", "varianceValue": [{ "display": "l", "value": "l" }, { "display": "m", "value": "m" }, { "display": "xxl", "value": "xxl" }] }, { "varianceKey": "material", "varianceValue": [{ "display": "silk", "value": "silk" }, { "display": "cotton", "value": "cotton" }] }]
     // var e = data.push
     let final = []
     var result = []
