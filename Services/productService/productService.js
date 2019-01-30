@@ -765,7 +765,7 @@ categoryProductList = (data, callback) => {
                         _id: element._id,
                         brand: element.brandId.brandName,
                         productName: element.productName,
-                        price: element.sellingPrice!=null?true:"",
+                        price: element.sellingPrice?element.sellingPrice:"",
                         status: element.status
                     }
                     response.push(temp)
