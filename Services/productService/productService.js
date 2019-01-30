@@ -253,7 +253,7 @@ addProductCategory = (data, callback) => {
 
 addProduct = (data, header, callback) => {
     // log("api is hitted addBrandDescription",data,header)
-    var sellerId 
+    var sellerId
     commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
         if (err) throw err
         else {
@@ -651,12 +651,12 @@ homeScreenApi = (query, callback) => {
 OpenSubCategory = (data, callback) => {
     log('incoming data', data)
     var res = []
-    subCategoryModelL2.find({ categoryModel: data.categoryId  ,status:"ACTIVE"}).exec((err, succ) => {
+    subCategoryModelL2.find({ categoryModel: data.categoryId, status: "ACTIVE" }).exec((err, succ) => {
         // console.log(JSON.stringify(succ))
 
         async.forEachOf(succ, (value, key, callback) => {
             console.log('value', value)
-            productCategoryModelL3.find({ subCategory: value._id  ,status:"ACTIVE"}).exec((err, findData) => {
+            productCategoryModelL3.find({ subCategory: value._id, status: "ACTIVE" }).exec((err, findData) => {
                 // console.log("&^%$#@", err, findData)
                 if (findData.length > 0) {
 
@@ -706,9 +706,7 @@ categoryProductList = (data, callback) => {
     var response = []
     var parkar = Object
     if (data.productListType == 'brand') {
-        productModel.find({
-            brandId: mongoose.Types.ObjectId(data.productCategoryId)
-        }).populate({ path: 'brandId' }).exec((err, productDetail) => {
+        productModel.find({ brandId: mongoose.Types.ObjectId(data.productCategoryId) }).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
 
             if (err) {
                 throw err
@@ -728,12 +726,12 @@ categoryProductList = (data, callback) => {
                         // console.log('---------->>', element.brandDesc)
                         let temp = {
                             description: element.description,
-                            image: element.image,
+                            image: element.varianceId == null ? element.image : element.varianceId.variants[0].image,
                             specifications: element.specifications,
                             _id: element._id,
                             brand: element.brandId.brandName,
                             productName: element.productName,
-                            price: element.sellingPrice,
+                            price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
                         }
                         response.push(temp)
                     }
@@ -751,7 +749,7 @@ categoryProductList = (data, callback) => {
         })
     }
     else {
-        productModel.find({ productCategoryId: data.productCategoryId }).populate({ path: 'brandId', select: 'brandName' }).exec((err, productDetail) => {
+        productModel.find({ productCategoryId: data.productCategoryId }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
             console.log("err,product", err, productDetail)
             if (err) {
                 throw err
@@ -760,12 +758,13 @@ categoryProductList = (data, callback) => {
                 productDetail.forEach(element => {
                     let temp = {
                         description: element.description,
-                        image: element.image,
+                        // image: element.image,
+                        image: element.varianceId == null ? element.image : element.varianceId.variants[0].image,
                         specifications: element.specifications,
                         _id: element._id,
                         brand: element.brandId.brandName,
                         productName: element.productName,
-                        price: element.sellingPrice?element.sellingPrice:"",
+                        price: element.varianceId == null ? "" : element.varianceId.variants[0].price,
                         status: element.status
                     }
                     response.push(temp)
@@ -787,7 +786,6 @@ categoryProductList = (data, callback) => {
 /* *******************************************************************
 **************************searchProduct*******************************
 ***********************************************************************/
-
 searchProduct = (data, callback) => {
     console.log('---------------?>>>', data.searchKeyword.trim())
     var temp = []
@@ -834,7 +832,7 @@ searchProduct = (data, callback) => {
                         { 'tag': { $in: [value] } },
                         // { 'brandId': mongoose.Types.ObjectId(brandId._id) },
 
-                    ]
+                    ], status: "ACTIVE"
                 }).populate({ path: 'subCategory' }).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, result) => {
                     if (err) callback(null)
                     else callback(null, result)
@@ -847,7 +845,7 @@ searchProduct = (data, callback) => {
                         { 'color': { $regex: value } },
                         { 'tag': { $in: [value] } },
                         { 'brandId': mongoose.Types.ObjectId(brandId._id) },
-                    ]
+                    ], status: "ACTIVE"
                 }).populate({ path: 'subCategory' }).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, result) => {
                     if (err) callback(null)
                     else callback(null, result)
@@ -868,8 +866,9 @@ searchProduct = (data, callback) => {
                 brandId: element.brandId._id,
                 brandName: element.brandId.brandName,
                 description: element.description,
-                price: element.varianceId.variants[0].price,
-                image: element.varianceId.variants[0].image,
+                // price: element.varianceId.variants[0].price,
+                price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
+                image: element.variants == null ? element.image : element.varianceId.variants[0].image,
                 specifications: element.specifications
             }
             productDetail.push(temp)
@@ -1104,7 +1103,7 @@ filters = (data, callback) => {
         res1[1] = Colors;
         res1[2] = Size;
 
-        subCategoryModelL2.findOne({ '_id': data.subCategoryId }).populate({ path: 'categoryModel'}).exec((err, subCategoryName) => {
+        subCategoryModelL2.findOne({ '_id': data.subCategoryId }).populate({ path: 'categoryModel' }).exec((err, subCategoryName) => {
             console.log("$$$$$$$$$$$$$$", err, subCategoryName)
 
             if (err) callback({
@@ -3476,7 +3475,7 @@ getNotification = (data, header, callback) => {
 
 combination = async (data, callback) => {
     console.log("fuck api", data)
-    var e = [{"varianceKey":"color","varianceValue":[{"display":"red","value":"red"}]},{"varianceKey":"size","varianceValue":[{"display":"xl","value":"xl"}]},{"varianceKey":"material","varianceValue":[{"display":"silk","value":"silk"}]}]
+    var e = [{ "varianceKey": "color", "varianceValue": [{ "display": "red", "value": "red" }] }, { "varianceKey": "size", "varianceValue": [{ "display": "xl", "value": "xl" }] }, { "varianceKey": "material", "varianceValue": [{ "display": "silk", "value": "silk" }] }]
     // var e = data.push
     let final = []
     var result = []
