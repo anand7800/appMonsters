@@ -390,8 +390,8 @@ productRouter.post('/addVendoroffer', (req, res) => {
         res.send(data)
     })
 })
-productRouter.post('/fuckApi', (req, res) => {
-    productService.fuckApi(req.body, (data) => {
+productRouter.post('/combination', (req, res) => {
+    productService.combination(req.body, (data) => {
         res.send(data)
     })
 })

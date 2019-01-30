@@ -253,13 +253,15 @@ addProductCategory = (data, callback) => {
 
 addProduct = (data, header, callback) => {
     // log("api is hitted addBrandDescription",data,header)
-    var sellerId = data.sellerId
-    // commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
-    //     if (err) throw err
-    //     else {
-    //         sellerId = userId1
-    //     }
-    // })
+    var sellerId 
+    commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
+        if (err) throw err
+        else {
+            sellerId = userId1
+        }
+    })
+    console.log(JSON.stringify(data))
+    // return
     if (!data && !header.accesstoken && !data.subCategoryId && !data.productCategoryId && !data.productName && !data.categoryId && !data.variants) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
@@ -353,7 +355,6 @@ addProduct = (data, header, callback) => {
             if (response) {
                 var variance = []
                 async.forEachOf(data.variants, async (value, key, callback) => {
-
                     await commonFunction.uploadMultipleImages(value.varianceImage, (err, img) => {
                         log(err, img)
                         if (err) throw err
@@ -363,8 +364,8 @@ addProduct = (data, header, callback) => {
                                 color: value.color ? value.color : "",
                                 size: value.size ? value.size : "",
                                 material: value.material ? value.material : "",
-                                quantity: data.quantity ? data.quantity : "",
-                                inventory: data.inventory ? value.inventory : "",
+                                quantity: value.quantity ? value.quantity : "",
+                                inventory: value.quantity ? value.quantity : "",
                                 SKU: value.SKU ? value.SKU : "",
                                 price: value.price ? value.price : "",
                                 status: 'ACTIVE'
@@ -650,12 +651,12 @@ homeScreenApi = (query, callback) => {
 OpenSubCategory = (data, callback) => {
     log('incoming data', data)
     var res = []
-    subCategoryModelL2.find({ categoryModel: data.categoryId }).exec((err, succ) => {
+    subCategoryModelL2.find({ categoryModel: data.categoryId  ,status:"ACTIVE"}).exec((err, succ) => {
         // console.log(JSON.stringify(succ))
 
         async.forEachOf(succ, (value, key, callback) => {
             console.log('value', value)
-            productCategoryModelL3.find({ subCategory: value._id }).exec((err, findData) => {
+            productCategoryModelL3.find({ subCategory: value._id  ,status:"ACTIVE"}).exec((err, findData) => {
                 // console.log("&^%$#@", err, findData)
                 if (findData.length > 0) {
 
@@ -1833,7 +1834,7 @@ getAllVariant = (data, callback) => {
                     productName: result.productName,
                     inventorySKU: element.SKU,
                     unitSold: "PENDING",
-                    quantity: element.inventory,
+                    quantity: element.quantity,
                     image: element.image[0],
                     varianceId: element._id
                 }
@@ -3473,9 +3474,9 @@ getNotification = (data, header, callback) => {
 }
 
 
-fuckApi = async (data, callback) => {
+combination = async (data, callback) => {
     console.log("fuck api", data)
-    var e = [{ "varianceKey": "color", "varianceValue": [{ "display": "red", "value": "red" }, { "display": "blue", "value": "blue" }, { "display": "green", "value": "green" }] }, { "varianceKey": "size", "varianceValue": [{ "display": "l", "value": "l" }, { "display": "m", "value": "m" }, { "display": "xxl", "value": "xxl" }] }, { "varianceKey": "material", "varianceValue": [{ "display": "silk", "value": "silk" }, { "display": "cotton", "value": "cotton" }] }]
+    var e = [{"varianceKey":"color","varianceValue":[{"display":"red","value":"red"}]},{"varianceKey":"size","varianceValue":[{"display":"xl","value":"xl"}]},{"varianceKey":"material","varianceValue":[{"display":"silk","value":"silk"}]}]
     // var e = data.push
     let final = []
     var result = []
@@ -3591,7 +3592,7 @@ module.exports = {
     wishList,
     deleteWishItem,
     getNotification,
-    fuckApi,
+    combination,
     physicalStore,
     updateBrand
 }

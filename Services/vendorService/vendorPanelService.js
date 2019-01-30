@@ -648,7 +648,7 @@ updateVarianceStock = (data, callback) => {
 
     console.log("data", typeof data.varianceId, typeof data.stock)
 
-    varianceModel.findOneAndUpdate({ 'variants._id': data.varianceId }, { $set: { 'variants.$.inventory': data.stock } }, { new: true }).exec((err, success) => {
+    varianceModel.findOneAndUpdate({ 'variants._id': data.varianceId }, { $set: { 'variants.$.quantity': data.stock } }, { new: true }).exec((err, success) => {
         console.log(err, success)
         if (err) throw err
         else {
@@ -876,19 +876,20 @@ countProduct = (data, callback) => {
 //!editcategory
 editSubCategory = (data, callback) => {
     console.log('incoming data', data)
-    if (!data.subCategoryId || !data.subCategoryId) {
+    if (!data.subCategoryId || !data.categoryId) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
     else {
         let query = {
             _id: data.subCategoryId
-        }
+        }   
         let update = {
             $set: {
-                'subCategoryName': data.subCategoryId
+                'categoryModel': data.categoryId,
+                'subCategoryName': data.subCategoryName
             }
         }
-        categoryModelL1.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
+        subCategoryModelL2.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
             console.log(err, result)
             if (err) throw err
             else {
