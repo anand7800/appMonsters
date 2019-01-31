@@ -1189,7 +1189,7 @@ productDetails = (data, callback) => {
             async.parallel({
                 findProduct: (cb) => {
                     productModel.findById({ "_id": data._id, }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, result) => {
-                        console.log("44444444444444444444444444444444", err, result)
+                        // console.log("44444444444444444444444444444444", err, result)
                         if (err || !result || result == null) {
 
                             cb(null)
@@ -1234,7 +1234,7 @@ productDetails = (data, callback) => {
                                         console.log("ASFDFFFFFF")
 
                                     }, (err, result) => {
-                                        console.log(rating)
+                                        // console.log(rating)
                                         // cb(null, rating)
 
                                     })
@@ -1320,10 +1320,10 @@ productDetails = (data, callback) => {
                         var size = []
                         // var test2;
                         response.findProduct.varianceId.variants.forEach(test => {
-                            color.push(test.color1)
+                            color.push(test.color)
                             material.push(test.material)
                             size.push(test.size)
-                            // console.log(test.color.toUpperCase())
+                            console.log('into the looop',test)
                             data = {
                                 _id: response.findProduct._id,
                                 brand: response.findProduct.brandId.brandName,
@@ -1353,6 +1353,7 @@ productDetails = (data, callback) => {
                     res.sellerInfo = sellerInfo
                     res.reviewAndRating = response.reviewAndRating
                     res.similarProduct = response.getSimilarProduct
+                    console.log(res)
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
                 }
                 else {
@@ -3475,8 +3476,8 @@ getNotification = (data, header, callback) => {
 
 combination = async (data, callback) => {
     console.log("fuck api", data)
-    var e = [{ "varianceKey": "color", "varianceValue": [{ "display": "red", "value": "red" }] }, { "varianceKey": "size", "varianceValue": [{ "display": "xl", "value": "xl" }] }, { "varianceKey": "material", "varianceValue": [{ "display": "silk", "value": "silk" }] }]
-    // var e = data.push
+    // var e = [{ "varianceKey": "color", "varianceValue": [{ "display": "red", "value": "red" }] }, { "varianceKey": "size", "varianceValue": [{ "display": "xl", "value": "xl" }] }, { "varianceKey": "material", "varianceValue": [{ "display": "silk", "value": "silk" }] }]
+    var e = data.push
     let final = []
     var result = []
     e.forEach(element => {
@@ -3548,7 +3549,7 @@ combination = async (data, callback) => {
         c({}, 0);
         return r;
     }
-    // console.log(cartesian(final));
+    console.log(cartesian(final));
     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': cartesian(final) })
 }
 

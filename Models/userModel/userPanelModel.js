@@ -103,7 +103,7 @@ var login = mongoose.Schema({
         type: String,
         enum: ['block', 'active', "inactive"],
         default: 'active',
-        uppercase: true,
+        uppercase: false,
     },
     isBussinessAdded:{
         type:Boolean,

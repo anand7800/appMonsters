@@ -293,21 +293,21 @@ getProductList = (data, headers, callback) => {
                     }
 
                 }, (err, response) => {
-                        temp = {
-                            _id: value._id,
-                            product: value.productName,
-                            brand: value.brandId.brandName,
-                            image: value.image[0],
-                            description: value.description,
-                            color: value.color,
-                            status: value.status,
-                            price: value.price,
-                            getProductCategoryName: response.getProductCategoryName,
-                            inventorySKU: value.inventorySKU,
-                            quantity: value.quantity,
-                            unitSold: "PENDING STATUS"
-                        }
-                        result.push(temp)
+                    temp = {
+                        _id: value._id,
+                        product: value.productName,
+                        brand: value.brandId.brandName,
+                        image: value.image[0],
+                        description: value.description,
+                        color: value.color,
+                        status: value.status,
+                        price: value.price,
+                        getProductCategoryName: response.getProductCategoryName,
+                        inventorySKU: value.inventorySKU,
+                        quantity: value.quantity,
+                        unitSold: "PENDING STATUS"
+                    }
+                    result.push(temp)
                     cb()
                 })
             }, (err, response) => {
@@ -378,7 +378,7 @@ getUserList = (data, callback) => {
 }
 //!create vendor
 createVendor = (data, callback) => {
-    console.log('create  vendor', data)
+    // console.log('create  vendor', data)
     if (!data.image && !data.email) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
@@ -403,7 +403,7 @@ createVendor = (data, callback) => {
                 if (err)
                     cb(null)
                 else {
-                    userModel.findOneAndRemove({ email: data.email }).exec((err, result) => {
+                    userModel.findOneAndUpdate({ email: data.email }, { $set: { status: "active" } }).exec((err, result) => {
                         console.log('@@@@@@@@@@@@@@', err, result)
                         cb(null, result)
                     })
@@ -421,7 +421,9 @@ createVendor = (data, callback) => {
             phone: data.phone,
             address: { addresses: data.address, lat: data.lat, lng: data.lng },
             image: response.uploadImage,
-            storeType: data.storeType
+            storeType: data.storeType,
+            countryCode:data.countryCode,
+            status: data.status ? data.status : 'inactive'
 
         })
         user.save((err, save) => {
@@ -611,7 +613,7 @@ getAllVariant = (data, callback) => {
                 var temp = {
                     _id: result._id,
                     productName: result.productName,
-                    inventorySKU: element.varianceId==null?element.inventorySKU:element.varianceId.variants[0].SKU,
+                    inventorySKU: element.varianceId == null ? element.inventorySKU : element.varianceId.variants[0].SKU,
                     unitSold: "PENDING",
                     quantity: element.inventory,
                     image: element.image[0],
@@ -868,7 +870,7 @@ editSubCategory = (data, callback) => {
     else {
         let query = {
             _id: data.subCategoryId
-        }   
+        }
         let update = {
             $set: {
                 'categoryModel': data.categoryId,
