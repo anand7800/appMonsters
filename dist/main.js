@@ -23,6 +23,78 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 
 /***/ }),
 
+/***/ "./src/app/Components/active-offer/active-offer.component.css":
+/*!********************************************************************!*\
+  !*** ./src/app/Components/active-offer/active-offer.component.css ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Components/active-offer/active-offer.component.html":
+/*!*********************************************************************!*\
+  !*** ./src/app/Components/active-offer/active-offer.component.html ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n\n\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\"> \n      <div class=\"recentorder_tablewrap\">\n        <div class=\"filter_search_row clearfix\">\n           <div class=\"filterbtnbx\">\n              <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter\n                  <span class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n           </div>\n           <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span><input class=\"form-control\" type=\"text\" placeholder=\"Search Products\" /></div>\n        </div>\n        <div class=\"recentOrderTable\">\n        <div class=\"table-responsive\">\n          <table class=\"table orderlist\">\n            <thead>\n              <tr>\n                <th align=\"left\" valign=\"middle\" width=\"40\"> \n                  <span class=\"checkboxbx\">\n                    <input type=\"checkbox\" id=\"selectall1\">\n                    <label for=\"selectall1\">&nbsp;</label>\n                    </span></th>\n                    <th>Offer Title</th>\n                    <th class=\"text-center\">Start Date</th>\n                    <th class=\"text-center\">End Date</th>\n                    <th class=\"text-center\">Type</th>\n                    <th class=\"text-center\">Users</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr>\n                <td align=\"left\" valign=\"middle\" width=\"40\"><span class=\"checkboxbx\">\n                    <input type=\"checkbox\" id=\"checkrow1\">\n                    <label for=\"checkrow1\">&nbsp;</label>\n                    </span></td>\n                <td align=\"left\" valign=\"middle\">Offers 1</td>\n                <td align=\"center\">13- Dec , 2018</td>\n                <td align=\"center\">31- Dec , 2018</td>\n                <td align=\"center\">%age</td>\n                <td align=\"center\">124</td>\n              </tr>\n              <tr>\n                <td align=\"left\" valign=\"middle\"><span class=\"checkboxbx\">\n                    <input type=\"checkbox\" id=\"checkrow1\">\n                    <label for=\"checkrow1\">&nbsp;</label>\n                    </span></td>\n                <td align=\"left\" valign=\"middle\">Offers 1</td>\n                <td align=\"center\">13- Dec , 2018</td>\n                <td align=\"center\">31- Dec , 2018</td>\n                <td align=\"center\">%age</td>\n                <td align=\"center\">124</td>\n              </tr>\n              <tr>\n                <td align=\"left\" valign=\"middle\"><span class=\"checkboxbx\">\n                    <input type=\"checkbox\" id=\"checkrow1\">\n                    <label for=\"checkrow1\">&nbsp;</label>\n                    </span></td>\n                <td align=\"left\" valign=\"middle\">Offers 1</td>\n                <td align=\"center\">13- Dec , 2018</td>\n                <td align=\"center\">31- Dec , 2018</td>\n                <td align=\"center\">%age</td>\n                <td align=\"center\">124</td>\n              </tr>\n            </tbody>\n          </table>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  </div>"
+
+/***/ }),
+
+/***/ "./src/app/Components/active-offer/active-offer.component.ts":
+/*!*******************************************************************!*\
+  !*** ./src/app/Components/active-offer/active-offer.component.ts ***!
+  \*******************************************************************/
+/*! exports provided: ActiveOfferComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ActiveOfferComponent", function() { return ActiveOfferComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ActiveOfferComponent = /** @class */ (function () {
+    function ActiveOfferComponent(service) {
+        // this.socket.initChat({
+        //   userId: "123456789"
+        // })
+        this.service = service;
+        this.service.setTitle('Active Offer');
+    }
+    ActiveOfferComponent.prototype.ngOnInit = function () {
+        // this.service.spinnerShow()
+        // this.service.spinnerHide()
+    };
+    ActiveOfferComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-active-offer',
+            template: __webpack_require__(/*! ./active-offer.component.html */ "./src/app/Components/active-offer/active-offer.component.html"),
+            styles: [__webpack_require__(/*! ./active-offer.component.css */ "./src/app/Components/active-offer/active-offer.component.css")]
+        }),
+        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+    ], ActiveOfferComponent);
+    return ActiveOfferComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Components/add-product-screen/add-product-screen.component.css":
 /*!********************************************************************************!*\
   !*** ./src/app/Components/add-product-screen/add-product-screen.component.css ***!
@@ -110,7 +182,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n  <!--Add Products Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\">\n\n      <div class=\"dashboardConbx\">\n        <!-- <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\" > -->\n        <div class=\"addproductheadingrow\">\n          <h3>Add your product</h3>\n          <div class=\"addproheadingbtn\">\n            <button type=\"button\" class=\"btn btn-primary addprobtn cancel\">Cancel</button>\n            <button (click)=\"saveProduct(myGroup.value)\" type=\"button\" class=\"btn btn-primary addprobtn\">Save</button>\n          </div>\n        </div>\n        <!-- <qrcode [qrdata]=\"myAngularxQrCode\" [size]=\"256\" [level]=\"'M'\"></qrcode> -->\n\n        <div class=\"productsviewrow\">\n          <div class=\"row eqWrap equalHMWrap clearfix\">\n            <!--Text Editor Section Start Here-->\n            <div class=\"col-sm-5 texteditorwrap\">\n              <div class=\"form-group\">\n                <label>Title</label>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Product Name Here\" [formControl]=\"myGroup.controls['title']\"\n                  ngDefaultControl />\n\n              </div>\n              <div class=\"form-group\">\n                <label>Description</label>\n                <div class=\"texteditorbox\"><img class=\"img-responsive\" width=\"606\" height=\"255\" />\n\n                  <ckeditor [(ngModel)]=\"ckeditorContent\" [formControl]=\"myGroup.controls['description']\"\n                    ngDefaultControl>\n                    <ckbutton [name]=\"'saveButton'\" [command]=\"'saveCmd'\" (click)=\"save($event)\" [icon]=\"'save.png'\"\n                      [label]=\"'Save Document'\" [toolbar]=\"'clipboard,1'\">\n                    </ckbutton>\n                  </ckeditor>\n                </div>\n              </div>\n            </div>\n            <!--Text Editor Section End Here-->\n            <!-- </form> -->\n            <!--Image Upload Section Start Here-->\n            <div class=\"col-sm-7 fileuploadbox\">\n              <label>Product Images</label>\n              <!-- <input type=\"file\" (change)='onFileChanged($event)' accept=\"image/jpeg,image/jpg,image/png\"> -->\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" id='fImage' data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image1']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image2']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image3']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image4']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image5']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image6']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image7']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image8']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n            </div>\n            <!--Image Upload Section End Here-->\n          </div>\n        </div>\n\n        <div class=\"row productcategorywrap clearfix\">\n          <div class=\"col-sm-5 padwd10\">\n            <!--Product Category Section Start Here-->\n            <div class=\"productCategorybox\">\n              <div class=\"form-group\">\n                <label>Product Category</label>\n                <select class=\"form-control\" (change)=\"getCatgory($event.target.value)\" [formControl]=\"myGroup.controls['productcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select category</option>\n                  <option *ngFor=\"let c of category\" [value]=\"c._id\">{{c.categoryName}}</option>\n                </select>\n\n              </div>\n              <div class=\"form-group\">\n                <label>Product Subcategory</label>\n                <select class=\"form-control\" (change)=\"SubCatorydata($event.target.value)\" [formControl]=\"myGroup.controls['productsubcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select SubCategory</option>\n                  <option *ngFor=\"let c of getSubCatorydata\" [value]=\"c._id\">{{c.subCategoryName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Type</label>\n                <select class=\"form-control\" (change)=\"getProductCategoryId($event.target.value)\" [formControl]=\"myGroup.controls['producttype']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select Type</option>\n                  <option *ngFor=\"let c of productCategoryname\" [value]=\"c._id\">{{c.productcategoryName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Brand</label>\n                <select class=\"form-control\" (change)=\"getBrandId($event.target.value)\" [formControl]=\"myGroup.controls['productbrand']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select Brand</option>\n                  <option *ngFor=\"let c of getBrandList\" [value]=\"c._id\">{{c.brandName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group mybrand clearfix\">\n                <!-- <form [formGroup]='formgroup'> -->\n                <input type=\"text\" placeholder=\"My Brand\" [formControl]=\"myGroup.controls['addBrand']\" [(ngModel)]=\"brand\"/>\n                <button type=\"submit\" (click)=\"addBrand(brand)\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i></button>\n                <!-- </form> -->\n              </div>\n              <div class=\"form-group clearfix\">\n                <label>Product Tags</label>\n                <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"\n                  [formControl]=\"myGroup.controls['searchtag']\">\n                </tag-input>\n                <!-- <tag-input [ngModel]=\"itemsAsObjects\" ></tag-input> -->\n              </div>\n            </div>\n            <!--Product Category Section End Here-->\n\n            <!--Modify Variants Table Section Start Here-->\n            <!-- <form [formGroup]='dynamicForm'> -->\n            <div class=\"modify_variants\">\n              <h4>Modify Variants</h4>\n              <table class=\"table mytable\">\n                <thead>\n                  <tr>\n                    <th align=\"left\" valign=\"middle\">Variant</th>\n                    <th>Price</th>\n                    <th>SKU</th>\n                    <th>Inventory</th>\n                  </tr>\n                </thead>\n                <tbody>\n\n\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- <tr formArrayName=\"items\" *ngFor=\"let item of dynamicForm.get('items').controls;  let in = index\" >\n                      <td [formGroupName]=\"in\">\n                        <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id={{in}} />\n                          <label for={{in}}>&nbsp;</label>\n                        </span>\n                        <span class=\"sizenm\" >{{dataLoop[in]}}</span> <span class=\"colornm\"></span>\n                      </td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                    </tr> -->\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- {{dataLoop|json}} -->\n                  <tr *ngFor=\"let item of dataLoop;  let in = index\" class=\"pickvalue\">\n                    <td>\n                      <span class=\"checkboxbx\">\n                        <input type=\"checkbox\" id={{in}} value=\"{{item}}\" />\n                        <label for={{in}}>&nbsp;</label>\n                      </span>\n                      <span class=\"sizenm\">{{item}}</span>&nbsp;\n                      <!-- <span class=\"sizenm\">{{item[0]}}</span>&nbsp;\n                      <span class=\"colornm\">{{item[1]}}</span>&nbsp;\n                      <span class=\"colornm\">{{item[2]}}</span>&nbsp; -->\n                    </td>\n                    <td id=\"variancePrice\"><input class=\"form-control variancePrice\" type=\"text\" placeholder=\"230\" /></td>\n                    <td><input class=\"form-control varianceSKU\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                    <td><input class=\"form-control varianceInventory\" type=\"text\" placeholder=\"1234\" /></td>\n                  </tr>\n                  <!-- {{dynamicForm.value|json}} -->\n                  <!-- <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test2\" />\n                      <label for=\"test2\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Pink</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr>\n                <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test3\" />\n                      <label for=\"test3\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Blue</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr> -->\n                </tbody>\n              </table>\n            </div>\n            <!-- </form> -->\n            <!--Modify Variants Table Section End Here-->\n          </div>\n          <div class=\"col-sm-7 padwd10\">\n            <div class=\"row clearfix\">\n              <!--Selling Price Section Start Here-->\n              <div class=\"col-sm-6 pdrightwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Selling Price</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"499\" [(ngModel)]=\"SellingPrice\" [formControl]=\"myGroup.controls['sellingprice']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Cost/Item</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"399\" [formControl]=\"myGroup.controls['costprice']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Item Weight</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"0.5\" [formControl]=\"myGroup.controls['itemweight']\" />\n                  </div>\n                </div>\n                <!--Selling Price Section End Here-->\n              </div>\n              <!--Inventory Section Start Here-->\n              <div class=\"col-sm-6 pdleftwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Inventory SKU</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"BUI\" [formControl]=\"myGroup.controls['InventorySKU']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Quantity</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"50\" [formControl]=\"myGroup.controls['quantity']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Product Type</label>\n                    <select class=\"form-control\" [formControl]=\"myGroup.controls['trialPack']\">\n                      <option value=\"Avaiable for try\">Avaiable for try</option>\n                      <option value=\"saab\">Saab</option>\n                      <option value=\"mercedes\">Mercedes</option>\n                      <option value=\"audi\">Audi</option>\n                    </select>\n                  </div>\n                </div>\n              </div>\n              <!--Inventory Section End Here-->\n            </div>\n\n            <!--Variants Section Start Here-->\n            <div class=\"row clearfix\" *ngIf='true'>\n              <div class=\"col-sm-12\">\n                <div class=\"productCategorybox\">\n                  <div class=\"variants\">\n                    <h4>Variants</h4>\n                    <div class=\"sminfo\">Swimming hundreds of feet beneath the ocean’s surface in many parts of the\n                      world\n                      are prolific aey construct one or more spacious houses” that can exceed three feet in length.\n                    </div>\n                    <div class=\"variantsoption\">\n                      <div class=\"row clearfix\">\n                        <div class=\"col-sm-3\">\n                          <label>Option name</label>\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <label>Option Values</label>\n                        </div>\n                        <div class=\"col-sm-3\">\n                          <label>&nbsp;</label>\n                        </div>\n                      </div>\n                      <div class=\"form-group\">\n                        <div class=\"row clearfix\">\n                          <!-- <div class=\"col-sm-3\">\n                          <input class=\"form-control\" type=\"text\" value=\"Color\" (change)='getOptionKey($event.target.value)' />\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"></tag-input>\n                        </div> -->\n                          <!-- <div class=\"col-sm-3\">\n                          <a (click)=\"createComponent()\">Add Option</a>\n                        </div> -->\n\n\n                          <!-- <button type=\"button\" (click)=\"createComponent()\">\n                          I am Parent, Create Child\n                        </button> -->\n\n                          <!-- //!asdfj -->\n                          <div>\n                            <form [formGroup]=\"myForm\" novalidate (ngSubmit)=\"saveVariants(myForm)\" ngDefaultControl>\n                              <div class=\"form-group\">\n                                <!-- <label>Front End</label> -->\n                                <!-- <input type=\"text\" class=\"form-control\" formControlName=\"front\"> -->\n                              </div>\n                              <div formArrayName=\"languages\">\n\n                                <div *ngFor=\"let language of myForm.controls.languages.controls; let i=index\" class=\"panel panel-default\">\n\n                                  <div class=\"panel-heading variantsoption\">\n                                    <span>Variant {{i + 1}}</span>\n                                    <span class=\"glyphicon glyphicon-remove pull-right\" *ngIf=\"myForm.controls.languages.controls.length > 1\"\n                                      (click)=\"removeLanguage(i)\"></span>\n                                  </div>\n                                  <div class=\"panel-body\" [formGroupName]=\"i\">\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Option</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"React\"></div> -->\n                                      <select class=\"form-control dropdown\" formControlName=\"varianceKey\" id='varianceValue'>\n                                        <option value=\"color\" selected>Color</option>\n                                        <option value=\"size\">Size</option>\n                                        <option value=\"material\">Material</option>\n\n                                        <!-- <option  *ngFor=\"let c of varianceOption\" [value]=\"c\" selected>{{c}}</option> -->\n\n                                      </select>\n                                    </div>\n\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Value</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"Angular\"> -->\n                                      <tag-input (onAdd)=\"myfun($event)\" formControlName=\"varianceValue\" [placeholder]=\"'Enter a Tags'\"\n                                        [onTextChangeDebounce]=\"500\"></tag-input>\n                                    </div>\n\n                                  </div>\n                                </div>\n                              </div>\n                              <!-- {{check}} {{count}} -->\n                              <div class=\"margin-20\" *ngIf=\"check\">\n\n                                <a (click)=\"addLanguage(i)\" style=\"cursor: default\">Add another variants </a>\n                              </div>\n                              <div class=\"margin-20\">\n                                <button type=\"submit\" class=\"btn btn-primary pull-right\" [disabled]=\"!myForm.valid\">Submit</button></div>\n                              <div class=\"clearfix\"></div>\n                              <div class=\"margin-20\">\n                                <!-- <div>myForm details:-</div> -->\n                                <!-- <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre> -->\n                                <!-- <pre>form value: <br>{{myForm.value | json}}</pre> -->\n                                <!-- <p> {{dataLoop|json}}</p> -->\n                              </div>\n                            </form>\n                          </div>\n                          <!--//! asdfasdf -->\n                        </div>\n                      </div>\n                      <div>\n                        <ng-template #viewContainerRef></ng-template>\n                      </div>\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <!--Variants Section End Here-->\n\n          </div>\n        </div>\n      </div>\n\n    </form>\n  </div>\n  <!-- </form> -->\n  <!--Add Products Section End Here-->"
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n  <!--Add Products Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\">\n\n      <div class=\"dashboardConbx\">\n        <!-- <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\" > -->\n        <div class=\"addproductheadingrow\">\n          <h3>Add your product</h3>\n          <div class=\"addproheadingbtn\">\n            <button type=\"button\" class=\"btn btn-primary addprobtn cancel\">Cancel</button>\n            <button (click)=\"saveProduct(myGroup.value)\" type=\"button\" [disabled]=\"!myGroup.valid\" class=\"btn btn-primary addprobtn\">Save</button>\n          </div>\n        </div>\n        <!-- <qrcode [qrdata]=\"myAngularxQrCode\" [size]=\"256\" [level]=\"'M'\"></qrcode> -->\n\n        <div class=\"productsviewrow\">\n          <div class=\"row eqWrap equalHMWrap clearfix\">\n            <!--Text Editor Section Start Here-->\n            <div class=\"col-sm-5 texteditorwrap\">\n              <div class=\"form-group\">\n                <label>Title</label>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Product Name Here\" [formControl]=\"myGroup.controls['title']\"\n                  ngDefaultControl />\n                  <p *ngIf=\"myGroup.controls['title'].hasError('required') && myGroup.controls['title'].dirty\"\n                  style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Description</label>\n                <div class=\"texteditorbox\"><img class=\"img-responsive\" width=\"606\" height=\"255\" />\n\n                  <ckeditor [(ngModel)]=\"ckeditorContent\" [formControl]=\"myGroup.controls['description']\"\n                    ngDefaultControl>\n                    <ckbutton [name]=\"'saveButton'\" [command]=\"'saveCmd'\" (click)=\"save($event)\" [icon]=\"'save.png'\"\n                      [label]=\"'Save Document'\" [toolbar]=\"'clipboard,1'\">\n                    </ckbutton>\n                  </ckeditor>\n                  <p *ngIf=\"myGroup.controls['description'].hasError('required') && myGroup.controls['description'].dirty\"\n                  style=\"color:red;font-size:14px;\">*required</p>\n                </div>\n              </div>\n            </div>\n            <!--Text Editor Section End Here-->\n            <!-- </form> -->\n            <!--Image Upload Section Start Here-->\n            <div class=\"col-sm-7 fileuploadbox\">\n              <label>Product Images</label>\n              <!-- <input type=\"file\" (change)='onFileChanged($event)' accept=\"image/jpeg,image/jpg,image/png\"> -->\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" id='fImage' data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image1']\" ngDefaultControl>\n                    </span> \n                    <p *ngIf=\"myGroup.controls['description'].hasError('required') && myGroup.controls['description'].dirty\"\n                    style=\"color:red;font-size:14px;\">*required</p>\n                  </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image2']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image3']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image4']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image5']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image6']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image7']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image8']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n            </div>\n            <!--Image Upload Section End Here-->\n          </div>\n        </div>\n\n        <div class=\"row productcategorywrap clearfix\">\n          <div class=\"col-sm-5 padwd10\">\n            <!--Product Category Section Start Here-->\n            <div class=\"productCategorybox\">\n              <div class=\"form-group\">\n                <label>Product Category</label>\n                <select class=\"form-control\" (change)=\"getCatgory($event.target.value)\" [formControl]=\"myGroup.controls['productcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select category</option>\n                  <option *ngFor=\"let c of category\" [value]=\"c._id\">{{c.categoryName}}</option>\n                </select>\n                <p *ngIf=\"myGroup.controls['productcategory'].hasError('required') && myGroup.controls['productcategory'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Subcategory</label>\n                <select class=\"form-control\" (change)=\"SubCatorydata($event.target.value)\" [formControl]=\"myGroup.controls['productsubcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select SubCategory</option>\n                  <option *ngFor=\"let c of getSubCatorydata\" [value]=\"c._id\">{{c.subCategoryName}}</option>\n                </select>\n                <p *ngIf=\"myGroup.controls['productsubcategory'].hasError('required') && myGroup.controls['productsubcategory'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Type</label>\n                <select class=\"form-control\" (change)=\"getProductCategoryId($event.target.value)\" [formControl]=\"myGroup.controls['producttype']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select Type</option>\n                  <option *ngFor=\"let c of productCategoryname\" [value]=\"c._id\">{{c.productcategoryName}}</option>\n                </select>\n                  \n\n              </div>\n              <div class=\"form-group\">\n                <label>Product Brand</label>\n                <select class=\"form-control\" (change)=\"getBrandId($event.target.value)\" [formControl]=\"myGroup.controls['productbrand']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select Brand</option>\n                  <option *ngFor=\"let c of getBrandList\" [value]=\"c._id\">{{c.brandName}}</option>\n                </select>\n              </div>\n              <!-- <div class=\"form-group mybrand clearfix\" [hidden]=\"true\">\n                <form [formGroup]='formgroup'>\n                <input type=\"text\" placeholder=\"My Brand\" [formControl]=\"myGroup.controls['addBrand']\" [(ngModel)]=\"brand\"/>\n                <button type=\"submit\" (click)=\"addBrand(myGroup.controls.addBrand.value)\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i></button>\n                </form>\n              </div> -->\n              <div class=\"form-group clearfix\">\n                <label>Product Tags</label>\n                <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"\n                  [formControl]=\"myGroup.controls['searchtag']\">\n                </tag-input>\n                <p *ngIf=\"myGroup.controls['searchtag'].hasError('required') && myGroup.controls['searchtag'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n                <!-- <tag-input [ngModel]=\"itemsAsObjects\" ></tag-input> -->\n              </div>\n            </div>\n            <!--Product Category Section End Here-->\n\n            <!--Modify Variants Table Section Start Here-->\n            <!-- <form [formGroup]='dynamicForm'> -->\n            <div class=\"modify_variants\" *ngIf=\"modification\">\n              <h4>Modify Variants</h4>\n              <table class=\"table mytable\" id=\"thisTable\">\n                <thead>\n                  <tr>\n                    <th align=\"left\" valign=\"middle\">Variant</th>\n                    <th>Price</th>\n                    <th>SKU</th>\n                    <th>Inventory</th>\n                    <th>Image1</th>\n                  </tr>\n                </thead>\n                <tbody>\n\n\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- <tr formArrayName=\"items\" *ngFor=\"let item of dynamicForm.get('items').controls;  let in = index\" >\n                      <td [formGroupName]=\"in\">\n                        <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id={{in}} />\n                          <label for={{in}}>&nbsp;</label>\n                        </span>\n                        <span class=\"sizenm\" >{{dataLoop[in]}}</span> <span class=\"colornm\"></span>\n                      </td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                    </tr> -->\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- {{dataLoop|json}} -->\n                  <tr formArrayName=\"variance\" *ngFor=\"let item of myGroup.get('variance').controls; let i = index;\"\n                    class=\"pickvalue\">\n                    <ng-container [formGroupName]=\"i\">\n                      <td>\n                        <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id={{i}} formControlName=\"checked\" />\n                          <label for={{i}}>&nbsp;</label>\n                        </span>\n                        <span class=\"sizenm\">{{item?.controls.size.value}}</span>&nbsp;\n                        <span class=\"sizenm\">{{item?.controls.material.value}}</span>&nbsp;\n                        <span class=\"colornm\">{{item?.controls.color.value}}</span>&nbsp;\n                        <!-- <span class=\"colornm\">{{item[2]}}</span>&nbsp; -->\n                      </td>\n                      <td id=\"variancePrice\"><input class=\"form-control variancePrice\" type=\"text\" placeholder=\"230\"\n                          formControlName=\"price\" /></td>\n                        \n                      <td><input class=\"form-control varianceSKU\" type=\"text\" placeholder=\"BHJ89\" formControlName=\"SKU\" />\n                        \n                        <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['price'].hasError('required') && this.myGroup.controls['variance']['controls'][0]['controls']['price'].dirty\"\n                          style=\"color:red;font-size:14px;\">*required</p>\n                        <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['price'].hasError('pattern') && this.myGroup.controls['variance']['controls'][0]['controls']['price'].dirty\"\n                          style=\"color:red;font-size:14px;\">*Please\n                          Enter number.</p>\n\n                      </td>\n\n                      <td><input class=\"form-control varianceInventory\" type=\"text\" placeholder=\"1234\" formControlName=\"quantity\" />\n                        <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].hasError('required') && this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].dirty\"\n                        style=\"color:red;font-size:14px;\">*required</p>\n                      <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].hasError('pattern') && this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].dirty\"\n                        style=\"color:red;font-size:14px;\">*Please\n                        Enter number.</p>\n\n                      </td>\n\n                      <td> <input id=\"input-22\" type=\"file\" name=\"...\" (change)='readThis($event, i)' accept=\".jpg,.gif,.png\"\n                          ngDefaultControl multiple></td>\n                    </ng-container>\n                  </tr>\n                  <!-- {{dynamicForm.value|json}} -->\n                  <!-- <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test2\" />\n                      <label for=\"test2\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Pink</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr>\n                <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test3\" />\n                      <label for=\"test3\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Blue</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr> -->\n                </tbody>\n              </table>\n            </div>\n            <!-- </form> -->\n            <!--Modify Variants Table Section End Here-->\n          </div>\n          <div class=\"col-sm-7 padwd10\">\n            <div class=\"row clearfix\">\n              <!--Selling Price Section Start Here-->\n              <div class=\"col-sm-6 pdrightwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Selling Price</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"499\" [(ngModel)]=\"SellingPrice\" [formControl]=\"myGroup.controls['sellingprice']\" />\n                    <p *ngIf=\"myGroup.controls['sellingprice'].hasError('required') && myGroup.controls['sellingprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['sellingprice'].hasError('pattern') && myGroup.controls['sellingprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Cost/Item</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"399\" [formControl]=\"myGroup.controls['costprice']\" />\n                    <p *ngIf=\"myGroup.controls['costprice'].hasError('required') && myGroup.controls['costprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['costprice'].hasError('pattern') && myGroup.controls['costprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Item Weight</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"0.5\" [formControl]=\"myGroup.controls['itemweight']\" />\n                    <p *ngIf=\"myGroup.controls['itemweight'].hasError('required') && myGroup.controls['itemweight'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['itemweight'].hasError('pattern') && myGroup.controls['itemweight'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n                  </div>\n                </div>\n                <!--Selling Price Section End Here-->\n              </div>\n              <!--Inventory Section Start Here-->\n              <div class=\"col-sm-6 pdleftwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Inventory SKU</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"BUI\" [formControl]=\"myGroup.controls['InventorySKU']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Quantity</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"50\" [formControl]=\"myGroup.controls['quantity']\" />\n                    <p *ngIf=\"myGroup.controls['quantity'].hasError('required') && myGroup.controls['quantity'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['quantity'].hasError('pattern') && myGroup.controls['quantity'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Product Type</label>\n                    <select class=\"form-control\" [formControl]=\"myGroup.controls['trialPack']\">\n                      <option value=\"Avaiable for try\">Avaiable for try</option>\n                      <option value=\"saab\">Saab</option>\n                      <option value=\"mercedes\">Mercedes</option>\n                      <option value=\"audi\">Audi</option>\n                    </select>\n                  </div>\n                </div>\n              </div>\n              <!--Inventory Section End Here-->\n            </div>\n\n            <!--Variants Section Start Here-->\n            <div class=\"row clearfix\" *ngIf='true'>\n              <div class=\"col-sm-12\">\n                <div class=\"productCategorybox\">\n                  <div class=\"variants\">\n                    <h4>Variants</h4>\n                    <div class=\"sminfo\">Swimming hundreds of feet beneath the ocean’s surface in many parts of the\n                      world\n                      are prolific aey construct one or more spacious houses” that can exceed three feet in length.\n                    </div>\n                    <div class=\"variantsoption\">\n                      <div class=\"row clearfix\">\n                        <div class=\"col-sm-3\">\n                          <label>Option name</label>\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <label>Option Values</label>\n                        </div>\n                        <div class=\"col-sm-3\">\n                          <label>&nbsp;</label>\n                        </div>\n                      </div>\n                      <div class=\"form-group\">\n                        <div class=\"row clearfix\">\n                          <!-- <div class=\"col-sm-3\">\n                          <input class=\"form-control\" type=\"text\" value=\"Color\" (change)='getOptionKey($event.target.value)' />\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"></tag-input>\n                        </div> -->\n                          <!-- <div class=\"col-sm-3\">\n                          <a (click)=\"createComponent()\">Add Option</a>\n                        </div> -->\n\n\n                          <!-- <button type=\"button\" (click)=\"createComponent()\">\n                          I am Parent, Create Child\n                        </button> -->\n\n                          <!-- //!asdfj -->\n                          <div>\n                            <form [formGroup]=\"myForm\" novalidate (ngSubmit)=\"saveVariants(myForm)\" ngDefaultControl>\n                              <div class=\"form-group\">\n                                <!-- <label>Front End</label> -->\n                                <!-- <input type=\"text\" class=\"form-control\" formControlName=\"front\"> -->\n                              </div>\n                              <div formArrayName=\"languages\">\n\n                                <div *ngFor=\"let language of myForm.controls.languages.controls; let i=index\" class=\"panel panel-default\">\n\n                                  <div class=\"panel-heading variantsoption\">\n                                    <span>Variant {{i + 1}}</span>\n                                    <span class=\"glyphicon glyphicon-remove pull-right\" *ngIf=\"myForm.controls.languages.controls.length > 1\"\n                                      (click)=\"removeLanguage(i)\"></span>\n                                  </div>\n                                  <div class=\"panel-body\" [formGroupName]=\"i\">\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Option</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"React\"></div> -->\n                                      <select class=\"form-control dropdown\" formControlName=\"varianceKey\" id='varianceValue'>\n                                        <option [hidden]=\"false\" value=\"color\" selected>Color</option>\n                                        <option value=\"size\">Size</option>\n                                        <option value=\"material\">Material</option>\n\n                                        <!-- <option  *ngFor=\"let c of varianceOption\" [value]=\"c\" selected>{{c}}</option> -->\n\n                                      </select>\n\n\n                                    </div>\n\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Value</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"Angular\"> -->\n                                      <tag-input formControlName=\"varianceValue\" [placeholder]=\"'Enter a Tags'\"\n                                        [onTextChangeDebounce]=\"500\"></tag-input>\n                                    </div>\n\n                                  </div>\n                                </div>\n                              </div>\n                              <!-- {{check}} {{count}} -->\n                              <div class=\"margin-20\" *ngIf=\"check\">\n\n                                <a (click)=\"addLanguage(i)\" type=\"button\" id=\"btn\" id=\"variantbutton\" style=\"cursor: default\">Add\n                                  another variants </a>\n                              </div>\n                              <div class=\"margin-20\">\n                                <button type=\"submit\" class=\"btn btn-primary pull-right\" [disabled]=\"!myForm.valid\">Submit</button></div>\n                              <div class=\"clearfix\"></div>\n                              <div class=\"margin-20\">\n                                <!-- <div>myForm details:-</div> -->\n                                <!-- <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre> -->\n                                <!-- <pre>form value: <br>{{myForm.value | json}}</pre> -->\n                                <!-- <p> {{dataLoop|json}}</p> -->\n                              </div>\n                            </form>\n                          </div>\n                          <!--//! asdfasdf -->\n                        </div>\n                      </div>\n                      <div>\n                        <ng-template #viewContainerRef></ng-template>\n                      </div>\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <!--Variants Section End Here-->\n\n          </div>\n        </div>\n      </div>\n\n    </form>\n  </div>\n  <!-- </form> -->\n  <!--Add Products Section End Here-->"
 
 /***/ }),
 
@@ -140,36 +212,41 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var AddProductComponent = /** @class */ (function () {
-    function AddProductComponent(_fb, formBuilder, service, CFR) {
+    function AddProductComponent(_fb, formBuilder, service) {
+        // this.myAngularxQrCode = 'Your QR code data string';
+        // this.dynamicForm = this._fb.group({
+        //   items: this._fb.array([this.createItems()])
+        // })
         this._fb = _fb;
         this.formBuilder = formBuilder;
         this.service = service;
-        this.CFR = CFR;
+        // @ViewChild('viewContainerRef', { read: ViewContainerRef })
+        // varianceOption = ["color", "size", "material"]
+        // combinationOfVariants: any
+        // VCR: ViewContainerRef;
         this.index = 0;
-        this.componentsReferences = [];
-        this.k = [];
         // itemsAsObjectss: any;
         this.varianceObj = [];
         this.tagChips = [];
         this.imageData = [];
         this.temp = [];
+        this.dataLoop = [];
         this.result4 = [];
         this.check = true;
+        this.modification = false;
         this.myAngularxQrCode = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        // this.myAngularxQrCode = 'Your QR code data string';
-        this.dynamicForm = this._fb.group({
-            items: this._fb.array([this.createItems()])
-        });
-        this.formgroup = formBuilder.group({
-            brand: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
-        });
+        this.count = 0;
+        this.smartGlasses = [{}];
+        // this.formgroup = formBuilder.group({
+        //   brand: ['']
+        // });
         //   this.myGroup = new FormGroup({
         //     title: new FormControl()
         //  });
         this.myGroup = formBuilder.group({
-            title: [''],
-            description: [''],
-            image1: [''],
+            title: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            description: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            image1: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             image2: [''],
             image3: [''],
             image4: [''],
@@ -177,51 +254,39 @@ var AddProductComponent = /** @class */ (function () {
             image6: [''],
             image7: [''],
             image8: [''],
-            productcategory: [''],
-            productsubcategory: [''],
-            producttype: [''],
-            productbrand: [''],
-            addBrand: [''],
-            searchtag: [''],
-            combinationOfVariants: [''],
-            sellingprice: [''],
-            costprice: [''],
-            itemweight: [''],
-            InventorySKU: [''],
-            quantity: [''],
-            trialPack: [''],
+            imageArray: this.formBuilder.array([]),
+            productcategory: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            productsubcategory: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            producttype: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            productbrand: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            // addBrand: [''],
+            searchtag: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            // combinationOfVariants: [''],
+            sellingprice: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^[0-9]*$')])],
+            costprice: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^[0-9]*$')])],
+            itemweight: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^[0-9]*$')])],
+            InventorySKU: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            quantity: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^[0-9]*$')])],
+            trialPack: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            // brand: [''],
+            variance: this.formBuilder.array([])
         });
     }
-    AddProductComponent.prototype.onUpload = function (file) {
-        // console.log("image upload", file.response);
-    };
-    //!create items
-    AddProductComponent.prototype.createItems = function () {
-        return this._fb.group({
-            variancePrice: '',
-            varianceSKU: '',
-            varianceInventory: '',
+    AddProductComponent.prototype.createItem = function (item) {
+        return this.formBuilder.group({
+            size: [item.size],
+            color: [item.color],
+            material: [item.material],
+            checked: [true],
+            price: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^[0-9]*$')])],
+            SKU: [''],
+            quantity: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^[0-9]*$')])],
+            varianceImage: [[], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
         });
     };
-    //!additem
-    AddProductComponent.prototype.addItem = function () {
-        this.items = this.dynamicForm.get('item');
-        this.items.push(this.createItems());
-    };
-    /**
-     * name
-     */
-    AddProductComponent.prototype.myfun1 = function (this1) {
-        console.log(this1, 'asas');
-    };
-    // [[red,blue,green],[xxl,xl,L],[Silk,cotton]]
     AddProductComponent.prototype.ngOnInit = function () {
         var _this = this;
-        //alert();
-        // this.saveVariants(2);
-        // console.log(JSON.stringify(this.dataLoop))
         this.myForm = this._fb.group({
-            // front: ['',],
             languages: this._fb.array([
                 this.initlanguage(),
             ])
@@ -241,242 +306,60 @@ var AddProductComponent = /** @class */ (function () {
     };
     AddProductComponent.prototype.addLanguage = function (i) {
         // this.check = "true"
+        this.modification = true;
         if (true) {
             var control = this.myForm.controls['languages'];
             control.push(this.initlanguage());
         }
-        //     this.e = document.getElementById("varianceValue");
-        //     let a = $('#varianceValue :selected').val();
-        //   //   console.log(a)
-        //   // this.varianceOption.pop()
-        //   for( var i = 0; i < this.varianceOption.length-1; i++){ 
-        //     if ( this.varianceOption[i] == a) {
-        //       this.varianceOption.splice(i, 1); 
-        //     }
-        //  }
-        var count = 0;
-        count++;
-        if (count == 3) {
+        this.count++;
+        if (this.count == 3) {
             this.check = false;
         }
-        console.log(this.check, "###", count);
+        console.log(this.check, "###", this.count);
         $('#varianceValue option').on('click', function () {
             console.log("tisss", $('this'));
             $("this").attr('disabled', true);
+        });
+        $('#variantbutton').click(function () {
+            $('#varianceValue option:selected').remove();
         });
     };
     AddProductComponent.prototype.removeLanguage = function (i) {
         var control = this.myForm.controls['languages'];
         control.removeAt(i);
+        this.count--;
+        this.check = true;
+        console.log(this.count, this.check);
     };
     //!save variants
     AddProductComponent.prototype.saveVariants = function (val) {
-        var x = [];
-        var y = [];
-        var z = [];
-        for (var i = 0; i < val.value.languages.length; i++) {
-            if (val.value.languages[i].varianceKey == 'color') {
-                for (var j = 0; j < val.value.languages[i].varianceValue.length; j++) {
-                    x.push(val.value.languages[i].varianceValue[j].value);
+        var _this = this;
+        this.modification = true;
+        console.log(JSON.stringify(val.value.languages));
+        var temp = {
+            push: val.value.languages
+        };
+        this.service.postApi('vendor/combination', temp, 0).subscribe(function (response) {
+            if (response['statusCode'] == 200) {
+                // this.service.showSuccess('found')
+                _this.dataLoop = response['result'];
+                // console.log('-----------------', this.dataLoop)
+                _this.myGroup.get('variance').reset();
+                for (var i = 0; i < _this.dataLoop.length; i++) {
+                    _this.addItem(_this.dataLoop[i]);
                 }
+                // console.log(this.category)
             }
-            if (val.value.languages[i].varianceKey == 'size') {
-                for (var j = 0; j < val.value.languages[i].varianceValue.length; j++) {
-                    y.push(val.value.languages[i].varianceValue[j].value);
-                }
+            else {
+                _this.service.showError('Invalid Email');
             }
-            if (val.value.languages[i].varianceKey == 'material') {
-                for (var j = 0; j < val.value.languages[i].varianceValue.length; j++) {
-                    z.push(val.value.languages[i].varianceValue[j].value);
-                }
-            }
-        }
-        var finalArr = [];
-        console.log(x.length, y.length, z.length);
-        if (x.length == 0 && y.length == 0 && z.length == 0) {
-            alert("Select Any variants");
-        }
-        else {
-            finalArr = [x, y, z];
-            console.log("$$$");
-        }
-        // console.log(finalArr)
-        this.dataLoop = this.cartesian(finalArr);
-        // this.dataLoop = this.cartesian([["red", 'blue'], ['xl', 'm'], ['silk']]);
-        // console.log('##################33', this.dataLoop)
-        // dataloop=[
-        //   ['red','xl','silk'],
-        //   ['red','xl','silk'],
-        //   ['red','xl','silk'],
-        //   ['red','xl','silk'],
-        //   ['red','xl','silk'],
-        // ]
-        //   "result": [
-        //     {
-        //         "color": "R",
-        //         "matrial": "SK"
-        //     },
-        //     {
-        //         "matrial": "COT",
-        //         "color": "G"
-        //     },
-        //     {
-        //         "matrial": "Feb",
-        //         "color": "B"
-        //     }
-        // 
-        //result=color
-        // console.log("#############",val)
-        // console.log("=======>>", JSON.stringify(val.value.languages))
-        var e = [
-            { "varianceKey": "SIZE", "varianceValue": [{ "display": "xxl", "value": "xxl" }, { "display": "xl", "value": "xl" }] },
-            { "varianceKey": "COLOR", "varianceValue": [{ "display": "red", "value": "red" }, { "display": "blue", "value": "blue" }] }
-        ];
-        // var result = []
-        // e.forEach(element => {
-        //   console.log(element.varianceKey)
-        //   result.push({
-        //     [element.varianceKey]: element.varianceValue
-        //   })
-        // });
-        // console.log("result===>>", JSON.stringify(result))
-        var test = [
-            { "SIZE": [{ "display": "xxl", "value": "xxl" }, { "display": "xl", "value": "xl" }] },
-            { "COLOR": [{ "display": "red", "value": "red" }, { "display": "blue", "value": "blue" }] }
-        ];
-        var w = [];
-        var a = [];
-        var c = "";
-        for (var index = 0; index < test.length; index++) {
-            var s = Object.keys(test[index])[0];
-            c = '';
-            for (var j_1 = 0; j_1 < test[index][s].length; j_1++) {
-                c = c + test[index][s][j_1].value + ",";
-            }
-            a = [c];
-            w.push((_a = {},
-                _a[s] = c,
-                _a));
-        }
-        // console.log("wwwwwwwwwww", JSON.stringify(w))
-        // var demo = []
-        // var now = [{ "SIZE": ["xxl,xl,"] }, { "COLOR": ["red,blue,"] }]
-        var now = [{ "SIZE": "xxl,xl," }, { "COLOR": "red,blue," }];
-        var z = [];
-        for (var index = 0; index < now.length; index++) {
-            var c = Object.keys(now[index])[0];
-            // console.log("44",now[index][c].split(','))
-            var ee = now[index][c].split(',');
-            var temp = (_b = {},
-                _b[c] = ee,
-                _b);
-            z.push(temp);
-        }
-        // console.log("json", JSON.stringify(z))
-        var result1 = [{ "SIZE": ["xxl", "xl", ""] }, { "COLOR": ["red", "blue", ""] }];
-        // for (let index = 0; index < test.length; index++) {
-        //   var s = Object.keys(test[index])[0]
-        //   // console.log(test[index][s])
-        //   for (let j = 0; j < test[index][s].length; j++) {
-        //     // console.log("####33",test[index])
-        //     demo.push({
-        //       [s]: test[index][s][j].value
-        //     })
-        //   }
-        // }
-        // console.log('final', JSON.stringify(demo))
-        var last = [{ "SIZE": "xxl" }, { "SIZE": "xl" }, { "COLOR": "red" }, { "COLOR": "blue" }];
-        var _a, _b;
-        // res=[
-        //   {
-        //     size:"xxl",
-        //     color:"red"
-        //   },
-        //   {
-        //     size:"xxl",
-        //     color:"blue"
-        //   },
-        //   {
-        //     size:"xl",
-        //     color:"red"
-        //   },
-        //   {
-        //     size:"xl",
-        //     color:"Blue"
-        //   }
-        // ]
-        // ==>> {  SIZE:[XXL,XL] ,COLOR:[RED,BLUE]  }
-        // last.forEach(element => {
-        //   let KEY=Object.keys(element)[0]
-        //   console.log('+++',element[Object.keys(element)[0]])
-        // });
-        // let test1 = []
-        // for (let z = 0; z < last.length; z++) {
-        //   let KEY = Object.keys(last[z])[0]
-        //   console.log("last", last[z][KEY])
-        //   console.log(test1.length)
-        //   if (test1.length == 0) {
-        //     test1.push({
-        //       [KEY]: [last[z][KEY]]
-        //     })
-        //   }
-        //   else {
-        //   }
-        // }
-        // console.log(test1)
-        //   public function testApi($data)
-        //   {
-        //     $color=array('R','G','B');
-        //     $matrial=array('SK','COT','Feb');
-        //     $resultData=array();
-        //     for ($i=0; $i <count($color) ; $i++) { 
-        //       //$colorValue=;
-        //       for ($j=0; $j <count($matrial) ; $j++) { 
-        //         $resultData[$i]['color']=$color[$i];
-        //         $resultData[$j]['matrial']=$matrial[$j];
-        //       }
-        //     }
-        //     return $resultData;
-        //   }
-        //  }
-        // var lang = val.value.languages
-        // var outerArr = []
-        // for (let index = 0; index < lang.length; index++) {
-        //   var angData = lang[index].varianceValue;
-        //   var innarr = []
-        //   for (let index2 = 0; index2 < angData.length; index2++) {
-        //     innarr.push(angData[index2].value);
-        //   }
-        //   console.log("Inner", innarr)
-        //   outerArr.push(innarr)
-        // }
-        // console.log("outerArr", outerArr)
-        // this.dataLoop = this.cartesian(outerArr);
-        // console.log('##################33', this.dataLoop)
+        }, function (error) {
+            _this.service.showError('Server Error');
+        });
     };
-    AddProductComponent.prototype.cartesian = function (arg) {
-        // !this.cartesian([[0,1], [0,1,2,3]]);
-        // [["red", "blue", "green"], ["xxl", "xl", "L"], ["Silk", "cotton"]]
-        var r = [], /* arg = arguments, */ max = arg.length - 1;
-        function helper(arr, i) {
-            for (var j = 0, l = arg[i].length; j < l; j++) {
-                // console.log('before slice', arr)
-                var a = arr.slice(0); // clone arr
-                // console.log('slicedata', a, i)
-                // console.log(arg, 'Y^^^^^^6666', arg[i][j], i, j, max)
-                a.push(arg[i][j]);
-                if (i == max) {
-                    r.push(a);
-                    // this.createItems()
-                    // console.log('R VALUE', r)
-                }
-                else
-                    helper(a, i + 1);
-            }
-        }
-        helper([], 0);
-        // console.log('combination--->>', r)
-        return r;
+    AddProductComponent.prototype.addItem = function (item) {
+        this.items = this.myGroup.get('variance');
+        this.items.push(this.createItem(item));
     };
     //!getCategory
     AddProductComponent.prototype.getCatgory = function (categoryId) {
@@ -536,22 +419,18 @@ var AddProductComponent = /** @class */ (function () {
     };
     //!getproduct
     AddProductComponent.prototype.getProductName = function (subCatId) {
-        // console.log("getProductlist enter", subCatId)
         var _this = this;
         var temp = {
             subCategoryId: subCatId
         };
         this.service.postApi('vendor/getProductCategoryName', temp, 0).subscribe(function (response) {
             if (response['statusCode'] == 200) {
-                // this.service.showSuccess('get Product List')
-                // console.log("getProductlist", response)
                 _this.productCategoryname = response['result'];
             }
             else {
                 _this.service.showError('error');
             }
         }, function (error) {
-            // console.log('error occur', error)
             _this.service.showError('Server Error');
         });
     };
@@ -559,7 +438,7 @@ var AddProductComponent = /** @class */ (function () {
     AddProductComponent.prototype.getBrandListdata = function () {
         var _this = this;
         // console.log("function called")
-        this.service.getApi('vendor/getBrandList', 0).subscribe(function (response) {
+        this.service.getApi('admin/getBrandList', 0).subscribe(function (response) {
             if (response['statusCode'] == 200) {
                 // this.service.showSuccess("get bandlist")
                 // console.log("asdfasdf", response)
@@ -583,11 +462,11 @@ var AddProductComponent = /** @class */ (function () {
     AddProductComponent.prototype.addBrand = function (data) {
         var _this = this;
         console.log("#########33", data);
-        // console.log("function valuevaluecalled", this.addNewBrand)
+        // return
         var temp = {
             brandName: data
         };
-        this.service.postApi('vendor/addBrand', temp, 0).subscribe(function (response) {
+        this.service.postApi('admin/addBrand', temp, 0).subscribe(function (response) {
             console.log("asdfasdfasdfas");
             if (response['statusCode'] == 200) {
                 // this.service.showSuccess("BRAND ADDED")
@@ -606,6 +485,7 @@ var AddProductComponent = /** @class */ (function () {
     AddProductComponent.prototype.onFileChanged = function (evt) {
         var file = evt.target.files[0];
         if (file) {
+            console.log('2222', file);
             var reader = new FileReader();
             reader.onload = this.handleReaderLoaded.bind(this);
             reader.readAsBinaryString(file);
@@ -614,6 +494,25 @@ var AddProductComponent = /** @class */ (function () {
     };
     AddProductComponent.prototype.handleReaderLoaded = function (e) {
         this.imageData.push('data:image/png;base64,' + btoa(e.target.result));
+        // this.dataLoop[inde
+        // console.log('this is multiple image', this.imageData)
+    };
+    AddProductComponent.prototype.readThis = function (evt, i) {
+        var _this = this;
+        var a = [];
+        console.log("readthis", typeof evt.target.files['length']);
+        for (var index = 0; index < evt.target.files['length']; index++) {
+            var file = evt.target.files[index];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (file) {
+                    var url = btoa(file.target['result']);
+                    a.push('data:image/png;base64,' + url);
+                    _this.myGroup.controls['variance'].controls[i].controls['varianceImage'].setValue(a);
+                };
+                reader.readAsBinaryString(file);
+            }
+        }
     };
     //!getCombination
     AddProductComponent.prototype.getCombination = function (res) {
@@ -623,12 +522,9 @@ var AddProductComponent = /** @class */ (function () {
     //!save Product
     AddProductComponent.prototype.saveProduct = function (val) {
         var _this = this;
-        // console.log('this is dynamic ', this.dynamicForm)
-        this.go();
-        console.log("#form data", val);
-        console.log("form build==>>", this.myGroup);
-        // console.log("#########################33", [this.imageData])
-        // console.log(this.itemsAsObjects);
+        console.log('form value =>>', this.myGroup.controls['variance']['controls'][0]['controls']['price']);
+        // console.log("#form data", val)
+        // console.log("form build==>>", this.myGroup)
         this.itemsAsObjects.forEach(function (element) {
             // console.log(element.value)
             _this.tagChips.push(element.value);
@@ -636,117 +532,50 @@ var AddProductComponent = /** @class */ (function () {
         // console.log("this is data of ck editor", this.ckeditorContent);
         // console.log(this.tagChips)
         var temp = {
+            sellerId: localStorage.getItem('token'),
             productCategoryId: val.producttype,
             subCategoryId: val.productsubcategory,
             brandId: val.productbrand,
             productName: val.title,
-            price: this.result4[0].variancePrice,
+            // sellingPrice: /,
             categoryId: val.productcategory,
-            description: this.ckeditorContent,
-            variants: this.result4,
+            description: val.description,
+            variants: val.variance,
             tag: this.tagChips,
-            color: this.result4[0].color,
+            color: val.variance[0].color,
             sellingPrice: val.sellingPrice,
             qrCode: this.myAngularxQrCode,
             image: this.imageData,
             lang: "en",
             //!addon
             // inventory:"",
+            SKU: "",
             inventorySKU: val.InventorySKU,
             costItem: val.costprice,
-            quantity: val.quantity,
+            inventory: val.quantity,
             weight: val.itemweight,
             productType: val.trialPack
         };
-        console.log("temp", JSON.stringify(temp));
-        //!api called
-        this.service.postApi('vendor/addBrandDescription', temp, 1).subscribe(function (response) {
+        // console.log("temp", JSON.stringify(temp))
+        // return
+        this.service.postApi('vendor/addProduct', temp, 1).subscribe(function (response) {
             _this.service.spinnerShow();
             if (response['statusCode'] == 200) {
-                // this.service.spinnerHide()
-                // this.service.showSuccess("Product Added")
+                console.log("33333", response);
+                _this.service.spinnerHide();
+                _this.service.showSuccess("Product Added");
                 console.log("asdfasdf", response);
                 // this.getBrandListdata()
             }
             else {
+                _this.service.spinnerShow();
                 console.log(response['result']);
-                _this.service.showError('Invalid Email');
+                _this.service.showError('SOME THING WENT TO WRONG');
                 // this.service.showError('Invalid email or password.')
             }
         }, function (error) {
             console.log('error occur', error);
             _this.service.showError('Server Error');
-        });
-    };
-    AddProductComponent.prototype.myfun = function (event) {
-        var selectVal = jQuery('select[formcontrolname="varianceKey"]').val();
-        if (selectVal == 'size') {
-            this.varianceObj.push({
-                size: event.value,
-            });
-        }
-        else if (selectVal == 'color') {
-            this.varianceObj.push({
-                color: event.value,
-            });
-        }
-        else if (selectVal == 'material') {
-            this.varianceObj.push({
-                matrial: event.value,
-            });
-        }
-        else {
-            alert('please select any item from dropdown');
-        }
-    };
-    AddProductComponent.prototype.go = function () {
-        // var myArr = [];
-        // $('table.mytable tr td span.sizenm ').each(function (i, item) {
-        //   myArr.push($(this).text());
-        // })
-        // myArr.forEach(element => {
-        //   this.k.push({
-        //     color: element.split(",")[0],
-        //     size: element.split(",")[1],
-        //     material: element.split(",")[2]
-        //   })
-        // });
-        var _this = this;
-        // // console.log("######", this.k)
-        var myArr2 = [];
-        $('table.mytable tr.pickvalue td input').each(function (i) {
-            myArr2.push($(this).val());
-        });
-        var result2 = myArr2;
-        var result3 = [];
-        var count = 4;
-        for (var index = 0; index < result2.length; index++) {
-            if (index == count) {
-                result3.push('+');
-                result3.push(result2[index]);
-                count = count + 4;
-            }
-            else {
-                result3.push(result2[index]);
-            }
-        }
-        var temp = [];
-        result3.push('+');
-        result3.forEach(function (element) {
-            if (element == "+") {
-                _this.result4.push({
-                    color: temp[0].split(",")[0],
-                    size: temp[0].split(",")[1],
-                    material: temp[0].split(",")[2],
-                    variancePrice: temp[1],
-                    varianceSKU: temp[2],
-                    varianceInventory: temp[3],
-                });
-                temp = [];
-            }
-            else {
-                temp.push(element);
-            }
         });
     };
     AddProductComponent = __decorate([
@@ -755,7 +584,7 @@ var AddProductComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./add-product.component.html */ "./src/app/Components/add-product/add-product.component.html"),
             styles: [__webpack_require__(/*! ./add-product.component.css */ "./src/app/Components/add-product/add-product.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]])
+        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
     ], AddProductComponent);
     return AddProductComponent;
 }());
@@ -822,7 +651,9 @@ var AllordersComponent = /** @class */ (function () {
             lang: "eng"
         };
         this.service.postApi('vendor/vendorOrderList', temp, 1).subscribe(function (response) {
-            if (response['statusCode'] == 200) {
+            _this.service.spinnerShow();
+            if (response['statusCode'] == 22200) {
+                _this.service.spinnerHide();
                 // this.service.showSuccess("getProduct")
                 // console.log("asdfasdf", response['result'])
                 _this.apiData = response['result'];
@@ -833,10 +664,11 @@ var AllordersComponent = /** @class */ (function () {
             }
             else {
                 // console.log(response['result'])
-                _this.service.showError('Invalid Email');
+                _this.service.showError('Not found ');
                 // this.service.showError('Invalid email or password.')
             }
         }, function (error) {
+            // this.service.spinnerShow()
             console.log('error occur', error);
             _this.service.showError('Server Error');
         });
@@ -919,7 +751,7 @@ var AllproductsComponent = /** @class */ (function () {
         var temp = {
             lang: "eng"
         };
-        this.service.getApi('vendor/getProductList', 1).subscribe(function (response) {
+        this.service.getApi('admin/getProductList', 1).subscribe(function (response) {
             // console.log("response-======>>>",response)
             if (response['statusCode'] == 200) {
                 _this.getProductCount = response['result'];
@@ -947,7 +779,7 @@ var AllproductsComponent = /** @class */ (function () {
     //getbrandList
     AllproductsComponent.prototype.getBrandList = function () {
         var _this = this;
-        this.service.getApi('vendor/getBrandList', 0).subscribe(function (response) {
+        this.service.getApi('admin/getBrandList', 0).subscribe(function (response) {
             // console.log("response-======>>>",response)
             if (response['statusCode'] == 200) {
                 // console.log(response['result'])
@@ -997,6 +829,73 @@ var AllproductsComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
     ], AllproductsComponent);
     return AllproductsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/analytics/analytics.component.css":
+/*!**************************************************************!*\
+  !*** ./src/app/Components/analytics/analytics.component.css ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Components/analytics/analytics.component.html":
+/*!***************************************************************!*\
+  !*** ./src/app/Components/analytics/analytics.component.html ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n\n\n\n\n\n\n<div id=\"page-content-wrapper\">\n  <div class=\"dashboardConbx\">\n    <div class=\"analyticsheading row clearfix\">\n      <div class=\"col-sm-8 col-lg-9\">\n        <div class=\"row clearfix\">\n          <div class=\"col-sm-6 storesession\">\n            <div class=\"seesiongraphwrap paddrw\">\n              <div class=\"sessionheading\">\n                <h4>online store sessions</h4>\n                <span class=\"btn-min minus collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\"\n                  aria-controls=\"navbar\">-</span>\n                <span class=\"btn-min plus\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\"\n                  aria-controls=\"navbar\">+</span>\n              </div>\n              <div class=\"collapse in analyticsgraph\" id=\"navbar\">\n                <img src=\"../../../assets/images/analytics-graph.jpg\" alt=\"Analytics Graph\" />\n              </div>\n            </div>\n            <div class=\"sessionwrap paddrw\">\n              <h4>sessions over time</h4>\n              <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks.\n                Dramtically visualize customer directed convergence without revolutionary ROI.</div>\n              <div class=\"linkrow\"><a href=\"javascript:void(0);\" class=\"viewclass\">view reports</a></div>\n            </div>\n          </div>\n          <div class=\"col-sm-6 onlinestore\">\n            <div class=\"storeheadings paddrw\">\n              <h4>Online store sessions by device type</h4>\n              <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks.\n                Dramtically visualize customer directed convergence without revolutionary ROI.</div>\n              <div class=\"linkrow\"><a href=\"javascript:void(0);\" class=\"viewclass\">view reports</a></div>\n            </div>\n            <div class=\"storeheadings paddrw\">\n              <h4>Online store sessions by Location</h4>\n              <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks.\n                Dramtically visualize customer directed convergence without revolutionary ROI.</div>\n              <div class=\"linkrow\"><a href=\"javascript:void(0);\" class=\"viewclass\">view reports</a></div>\n            </div>\n            <div class=\"storeheadings paddrw\">\n              <h4>Extra Random Stat Space</h4>\n              <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks.\n                Dramtically visualize customer directed convergence without revolutionary ROI.</div>\n              <div class=\"linkrow\"><a href=\"javascript:void(0);\" class=\"viewclass\">view reports</a></div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class=\"col-sm-4 col-lg-3 topproducts\">\n        <div class=\"paddrw\">\n          <h4>Top Products by units Sold</h4>\n          <div class=\"productdetailswrap\">\n            <div class=\"productlisting clearfix\">\n              <div class=\"proimg\">\n                <img src=\"../../../assets/images/sold_pro.jpg\" alt=\"proimg\" />\n              </div>\n              <div class=\"aboutproductwrap\">\n                <div class=\"soldpro_sminfo\">deadpool mask half sleeve t-shirt(DPL)</div>\n                <div class=\"item_num_sold\">07</div>\n              </div>\n            </div>\n            <div class=\"productlisting clearfix\">\n              <div class=\"proimg\">\n                <img src=\"../../../assets/images/sold_pro.jpg\" alt=\"proimg\" />\n              </div>\n              <div class=\"aboutproductwrap\">\n                <div class=\"soldpro_sminfo\">deadpool mask half sleeve t-shirt(DPL)</div>\n                <div class=\"item_num_sold\">07</div>\n              </div>\n            </div>\n            <div class=\"productlisting clearfix\">\n              <div class=\"proimg\">\n                <img src=\"../../../assets/images/sold_pro.jpg\" alt=\"proimg\" />\n              </div>\n              <div class=\"aboutproductwrap\">\n                <div class=\"soldpro_sminfo\">deadpool mask half sleeve t-shirt(DPL)</div>\n                <div class=\"item_num_sold\">07</div>\n              </div>\n            </div>\n            <div class=\"productlisting clearfix\">\n              <div class=\"proimg\">\n                <img src=\"../../../assets/images/sold_pro.jpg\" alt=\"proimg\" />\n              </div>\n              <div class=\"aboutproductwrap\">\n                <div class=\"soldpro_sminfo\">deadpool mask half sleeve t-shirt(DPL)</div>\n                <div class=\"item_num_sold\">07</div>\n              </div>\n            </div>\n            <div class=\"productlisting clearfix\">\n              <div class=\"proimg\">\n                <img src=\"../../../assets/images/sold_pro.jpg\" alt=\"proimg\" />\n              </div>\n              <div class=\"aboutproductwrap\">\n                <div class=\"soldpro_sminfo\">deadpool mask half sleeve t-shirt(DPL)</div>\n                <div class=\"item_num_sold\">07</div>\n              </div>\n            </div>\n            <div class=\"productlisting clearfix\">\n              <div class=\"proimg\">\n                <img src=\"../../../assets/images/sold_pro.jpg\" alt=\"proimg\" />\n              </div>\n              <div class=\"aboutproductwrap\">\n                <div class=\"soldpro_sminfo\">deadpool mask half sleeve t-shirt(DPL)</div>\n                <div class=\"item_num_sold\">07</div>\n              </div>\n            </div>\n            <div class=\"productlisting clearfix\">\n              <div class=\"proimg\">\n                <img src=\"../../../assets/images/sold_pro.jpg\" alt=\"proimg\" />\n              </div>\n              <div class=\"aboutproductwrap\">\n                <div class=\"soldpro_sminfo\">deadpool mask half sleeve t-shirt(DPL)</div>\n                <div class=\"item_num_sold\">07</div>\n              </div>\n            </div>\n            <div class=\"productlisting clearfix\">\n              <div class=\"proimg\">\n                <img src=\"../../../assets/images/sold_pro.jpg\" alt=\"proimg\" />\n              </div>\n              <div class=\"aboutproductwrap\">\n                <div class=\"soldpro_sminfo\">deadpool mask half sleeve t-shirt(DPL)</div>\n                <div class=\"item_num_sold\">07</div>\n              </div>\n            </div>\n            <div class=\"productlisting clearfix\">\n              <div class=\"proimg\">\n                <img src=\"assets/images/sold_pro.jpg\" alt=\"proimg\" />\n              </div>\n              <div class=\"aboutproductwrap\">\n                <div class=\"soldpro_sminfo\">deadpool mask half sleeve t-shirt(DPL)</div>\n                <div class=\"item_num_sold\">07</div>\n              </div>\n            </div>\n            <div class=\"productlisting clearfix\">\n              <div class=\"proimg\">\n                <img src=\"assets/images/sold_pro.jpg\" alt=\"proimg\" />\n              </div>\n              <div class=\"aboutproductwrap\">\n                <div class=\"soldpro_sminfo\">deadpool mask half sleeve t-shirt(DPL)</div>\n                <div class=\"item_num_sold\">07</div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/Components/analytics/analytics.component.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/Components/analytics/analytics.component.ts ***!
+  \*************************************************************/
+/*! exports provided: AnalyticsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AnalyticsComponent", function() { return AnalyticsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AnalyticsComponent = /** @class */ (function () {
+    function AnalyticsComponent(service) {
+        this.service = service;
+        this.service.setTitle('Analytics');
+    }
+    AnalyticsComponent.prototype.ngOnInit = function () {
+    };
+    AnalyticsComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-analytics',
+            template: __webpack_require__(/*! ./analytics.component.html */ "./src/app/Components/analytics/analytics.component.html"),
+            styles: [__webpack_require__(/*! ./analytics.component.css */ "./src/app/Components/analytics/analytics.component.css")]
+        }),
+        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+    ], AnalyticsComponent);
+    return AnalyticsComponent;
 }());
 
 
@@ -1141,7 +1040,7 @@ var BusinessDetailComponent = /** @class */ (function () {
             // cityName: ,
             lang: "en"
         };
-        this.service.postApi('vendor/BusinessDetail', this.sentData, 1).subscribe(function (response) {
+        this.service.postApi('admin/BusinessDetail', this.sentData, 1).subscribe(function (response) {
             _this.responseData = response;
             // console.log("WWWWWWWW", this.responseData)
             if (response['statusCode'] == 200) {
@@ -1263,6 +1162,124 @@ var ChildComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
     ], ChildComponent);
     return ChildComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/create-offer/create-offer.component.css":
+/*!********************************************************************!*\
+  !*** ./src/app/Components/create-offer/create-offer.component.css ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Components/create-offer/create-offer.component.html":
+/*!*********************************************************************!*\
+  !*** ./src/app/Components/create-offer/create-offer.component.html ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!-- Sidebar end Here-->\n  <!--Create New Offer Products Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n        <form class=\"form\" [formGroup]='Form'>\n      <div class=\"addproductheadingrow\">\n        <h3>Lorem Ipsum Heading</h3>\n        <div class=\"addproheadingbtn\">\n          <button type=\"button\" class=\"btn btn-primary addprobtn cancel\">Cancel</button>\n          <button type=\"button\" class=\"btn btn-primary addprobtn\">Save</button>\n        </div>\n      </div>\n      <div class=\"productsviewrow create_new_offer\">\n        <div class=\"row eqWrap equalHMWrap clearfix\"> \n          <!--Text Editor Section Start Here-->\n          <div class=\"col-lg-5 texteditorwrap\">\n            <div class=\"form-group\">\n              <label>Title</label>\n              <input class=\"form-control\" type=\"text\" placeholder=\"Black Typography Top\" />\n            </div>\n            <div class=\"form-group\">\n              <label>Description</label>\n              <div class=\"texteditorbox\"><img class=\"img-responsive\" src=\"assets/images/text_editor.jpg\" width=\"606\" height=\"255\" alt=\"\" /></div>\n            </div>\n          </div>\n          <!--Text Editor Section End Here--> \n          \n          <!--Image Upload Section Start Here-->\n          <div class=\"col-lg-7 fileuploadbox\">\n            <label>Product Images</label>\n            <div class=\"row clearfix\">\n                <div class=\"col-sm-5 pdr10wds\">\n                    <div class=\"uploadimgbx wd100\">\n                        <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                          <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                          <div> <span class=\"btn btn-default btn-file\">\n                            <input id=\"input-22\" type=\"file\" name=\"...\" accept=\".jpg,.gif,.png\">\n                            </span> </div>\n                        </div>\n                      </div>\n                </div>\n                <div class=\"col-sm-7 pdlsunye\">\n                    <div class=\"uploadimgbx wd100_landsscape\">\n                        <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                          <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                          <div> <span class=\"btn btn-default btn-file\">\n                            <input id=\"input-22\" type=\"file\" name=\"...\" accept=\".jpg,.gif,.png\">\n                            </span> </div>\n                        </div>\n                      </div>\n                      <div class=\"uploadimgbx wd100_landsscape\">\n                          <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                            <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                            <div> <span class=\"btn btn-default btn-file\">\n                              <input id=\"input-22\" type=\"file\" name=\"...\" accept=\".jpg,.gif,.png\">\n                              </span> </div>\n                          </div>\n                        </div>\n                </div>\n            </div>\n           \n          </div>\n          <!--Image Upload Section End Here--> \n        </div>\n      </div>\n\n      <div class=\"productsviewrow create_new_offer\">\n        <div class=\"row eqWrap equalHMWrap clearfix\"> \n          <div class=\"col-lg-5 texteditorwrap\">\n            <!--Product Category Section Start Here-->\n            <div class=\"form-group\">\n              <label>Offer Type</label>\n              <select class=\"form-control\">\n                <option value=\"volvo\">Volvo</option>\n                <option value=\"saab\">Saab</option>\n                <option value=\"mercedes\">Mercedes</option>\n                <option value=\"audi\">Audi</option>\n              </select>\n            </div>\n            <div class=\"form-group\">\n              <label>Value</label>\n              <input class=\"form-control\" type=\"text\" placeholder=\"50\" />\n            </div>\n            <div class=\"form-group\">\n              <label>Minimum Requirement</label>\n              <select class=\"form-control\">\n                <option value=\"volvo\">Volvo</option>\n                <option value=\"saab\">Saab</option>\n                <option value=\"mercedes\">Mercedes</option>\n                <option value=\"audi\">Audi</option>\n              </select>\n            </div>\n            <div class=\"form-group\">\n              <label>Applicable on</label>\n              <select class=\"form-control\">\n                <option value=\"volvo\">Volvo</option>\n                <option value=\"saab\">Saab</option>\n                <option value=\"mercedes\">Mercedes</option>\n                <option value=\"audi\">Audi</option>\n              </select>\n            </div>\n          <!--Product Category Section End Here--> \n          </div>\n         \n          \n          <!--Choose Date Section Start Here-->\n          <div class=\"col-lg-7 fileuploadbox\">\n            <div class=\"row clearfix\">\n              <div class=\"col-sm-6\">\n                  <label>Start Date</label>\n                  <form #myForm=\"ngForm\" novalidate>\n                    <my-date-picker name=\"mydate\" [options]=\"myDatePickerOptions\"\n                    [formControl]=\"Form.controls['StartDate']\" (dateChanged)=\"onDateChanged($event)\" required></my-date-picker>\n                </form>\n              </div>\n              <div class=\"col-sm-6\">\n                  <label>End Date</label>\n\n                  <my-date-picker name=\"mydate\" [options]=\"myDatePickerOptions2\"\n                  (dateChanged)=\"onDateChanged($event)\" required></my-date-picker>\n              </div>\n            </div>\n           \n          </div>\n           <!--Choose Date Section End Here-->\n        </div>\n      </div>\n </form>\n    </div>\n  </div>\n  <!--Create New Offer Products End Here--> \n\n\n  </div>"
+
+/***/ }),
+
+/***/ "./src/app/Components/create-offer/create-offer.component.ts":
+/*!*******************************************************************!*\
+  !*** ./src/app/Components/create-offer/create-offer.component.ts ***!
+  \*******************************************************************/
+/*! exports provided: CreateOfferComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateOfferComponent", function() { return CreateOfferComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CreateOfferComponent = /** @class */ (function () {
+    function CreateOfferComponent(service, formBuilder) {
+        this.service = service;
+        this.formBuilder = formBuilder;
+        this.myDatePickerOptions = {
+            dateFormat: 'yyyy-mm-dd',
+            inline: false,
+            showInputField: true,
+            showTodayBtn: false,
+        };
+        this.myDatePickerOptions2 = {
+            dateFormat: 'yyyy-mm-dd',
+            inline: false,
+            showInputField: true,
+            showTodayBtn: false,
+        };
+        this.Form = this.formBuilder.group({
+            title: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            Description: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            StartDate: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            EndDate: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            user: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            file: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+        });
+    }
+    CreateOfferComponent.prototype.ngOnInit = function () {
+        this.onDateChange();
+        this.service.setTitle('Create Offer');
+    };
+    CreateOfferComponent.prototype.onDateChanged = function (event) {
+        // console.log(`event${JSON.stringify(event)}`)
+        this.Form.value.StartDate;
+        var endDate = new Date(event.formatted);
+        var copy2 = this.getCopyOfOptions();
+        copy2.disableUntil = {
+            year: endDate.getFullYear(),
+            month: endDate.getMonth() + 1,
+            day: endDate.getDate()
+        };
+        this.myDatePickerOptions2 = copy2;
+    };
+    CreateOfferComponent.prototype.onDateChange = function () {
+        var startD = new Date();
+        var copy1 = this.getCopyOfOptions();
+        copy1.disableUntil = {
+            year: startD.getFullYear(),
+            month: startD.getMonth() + 1,
+            day: startD.getDate()
+        };
+        this.myDatePickerOptions = copy1;
+    };
+    CreateOfferComponent.prototype.onDateChanged2 = function (event) {
+    };
+    CreateOfferComponent.prototype.getCopyOfOptions = function () {
+        return JSON.parse(JSON.stringify(this.myDatePickerOptions));
+    };
+    CreateOfferComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-create-offer',
+            template: __webpack_require__(/*! ./create-offer.component.html */ "./src/app/Components/create-offer/create-offer.component.html"),
+            styles: [__webpack_require__(/*! ./create-offer.component.css */ "./src/app/Components/create-offer/create-offer.component.css")]
+        }),
+        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])
+    ], CreateOfferComponent);
+    return CreateOfferComponent;
 }());
 
 
@@ -1447,7 +1464,7 @@ module.exports = "/* body {\n    font-family: 'RobotoDraft', 'Roboto', 'Helvetic
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Dashboard Screen Start Here-->\n<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n\n  <!--Dashboard Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <!--Welcome Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"welcomerw clearfix\">\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Welcome to Waki Market Place</h3>\n                  <h4>Total Open Orders</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2>102</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Total Active Carts</h3>\n                  <h4>Abandoned Checkouts</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2 class=\"totalcharts\">325</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Welcome Rows End Here-->\n\n      <!--Digit Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"digitrow clearfix\">\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,163</h3>\n              <h4>Orders Pending</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,134</h3>\n              <h4>Orders to be prepared</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>1256</h3>\n              <h4>Orders Ready to ship</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>4567</h3>\n              <h4>Order Delivery awaited</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Digit Rows End Here-->\n\n      <!--Total Sales Section Start Here-->\n      <div class=\"totalSeleswrap\">\n        <div class=\"row clearfix\">\n          <div class=\"col-sm-5\">\n            <div class=\"totalSelesinfobx\">\n              <h3>TOTAL SALES</h3>\n              <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks.\n                Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer\n                directed convergence without\n                revolutionary ROI.</div>\n            </div>\n          </div>\n          <div class=\"col-sm-7\">\n            <div class=\"salesgraph\"><img class=\"img-responsive\" src=\"../../assets/images/sales_graph.png\" alt=\"\" /></div>\n          </div>\n        </div>\n      </div>\n      <!--Total Sales Section End Here-->\n\n      <!--Orders Status Section Start Here-->\n      <div class=\"orderstatuswrap\">\n        <div class=\"row eqWrap equalHMWrap clearfix\">\n          <div class=\"col-sm-4 orderstatus\">\n            <h4>ORDER STATUS</h4>\n            <div class=\"pieChartsbx\"><img src=\"../../assets/images/pie_chart.png\" width=\"267\" height=\"288\"></div>\n          </div>\n          <div class=\"col-sm-8 orderstatus\">\n            <h4 class=\"activities\">ACTIVITIES <span class=\"viewall\"><a href=\"javascript:void(0);\">View All</a></span></h4>\n            <div class=\"activitiesCon\">\n              <div class=\"activitiesrow recent clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">2 mins ago</div>\n                  <div class=\"activisminfo\">Template Builder Access (Video tutorial inside documentation)</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow recent1hours clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">1 hour ago</div>\n                  <div class=\"activisminfo\">Designed the wordpress theme lily created her account.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Orders Status Section End Here-->\n\n     <!--Recent Order Table Section Start Here-->\n     <div class=\"recentorder_tablewrap\">\n      <h4>RECENT ORDERS</h4>\n      <div class=\"recentOrderTable\">\n        <table class=\"table\">\n          <thead>\n            <tr>\n              <!-- <th align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkboxall\" value=\"checkboxAll\" /></th> -->\n              <th>Sr.No</th>\n              <th>Product</th>\n              <th>Customer</th>\n              <th>Location</th>\n              <th>Quantity</th>\n              <th>Status</th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let product of apiData;let i = index\">\n              <!-- <td align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkbox1\" value=\"checkbox1\"></td> -->\n              <td align=\"left\" valign=\"middle\">{{i+1}}</td>\n              <td align=\"left\" valign=\"middle\"><img class=\"pro_img\" src=\"{{product.productImage}}\" alt=\"\" />{{product.productDetail}}</td>\n              <td>{{product.customerName}}</td>\n              <td>{{product.customerAddress}}</td>\n              <td>{{product.quantity}}</td>\n              <td>{{product.status}}</td>\n            </tr>\n           </tbody>\n        </table>\n      </div>\n    </div>\n    <!--Recent Order Table Section End Here--> \n     \n    <!-- <ng-chat [adapter]=\"adapter\" [userId]=\"userId\"></ng-chat> -->\n    </div>\n  </div>\n  <!--Dashboard Content Section End Here-->\n\n</div>\n<!--Dashboard Screen End Here-->"
+module.exports = "<!--Dashboard Screen Start Here-->\n<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n\n  <!--Dashboard Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <!--Welcome Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"welcomerw clearfix\">\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Welcome to Waki Market Place</h3>\n                  <h4>Total Open Orders</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2>102</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Total Active Carts</h3>\n                  <h4>Abandoned Checkouts</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2 class=\"totalcharts\">325</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Welcome Rows End Here-->\n\n      <!--Digit Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"digitrow clearfix\">\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,163</h3>\n              <h4>Orders Pending</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,134</h3>\n              <h4>Orders to be prepared</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>1256</h3>\n              <h4>Orders Ready to ship</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>4567</h3>\n              <h4>Order Delivery awaited</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Digit Rows End Here-->\n\n      <!--Total Sales Section Start Here-->\n      <div class=\"totalSeleswrap\">\n        <div class=\"row clearfix\">\n          <div class=\"col-sm-5\">\n            <div class=\"totalSelesinfobx\">\n              <h3>TOTAL SALES</h3>\n              <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks.\n                Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer\n                directed convergence without\n                revolutionary ROI.</div>\n            </div>\n          </div>\n          <div class=\"col-sm-7\">\n            <div class=\"salesgraph\"><img class=\"img-responsive\" src=\"../../assets/images/sales_graph.png\" alt=\"\" /></div>\n          </div>\n        </div>\n      </div>\n      <!--Total Sales Section End Here-->\n\n      <!--Orders Status Section Start Here-->\n      <div class=\"orderstatuswrap\">\n        <div class=\"row eqWrap equalHMWrap clearfix\">\n          <div class=\"col-sm-4 orderstatus\">\n            <h4>ORDER STATUS</h4>\n            <div class=\"pieChartsbx\"><img src=\"../../assets/images/pie_chart.png\" width=\"267\" height=\"288\"></div>\n          </div>\n          <div class=\"col-sm-8 orderstatus\">\n            <h4 class=\"activities\">ACTIVITIES <span class=\"viewall\"><a href=\"javascript:void(0);\">View All</a></span></h4>\n            <div class=\"activitiesCon\">\n              <div class=\"activitiesrow recent clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">2 mins ago</div>\n                  <div class=\"activisminfo\">Template Builder Access (Video tutorial inside documentation)</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow recent1hours clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">1 hour ago</div>\n                  <div class=\"activisminfo\">Designed the wordpress theme lily created her account.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Orders Status Section End Here-->\n\n     <!--Recent Order Table Section Start Here-->\n     <div class=\"recentorder_tablewrap\">\n      <h4>RECENT ORDERS</h4>\n      <div class=\"recentOrderTable\">\n        <table class=\"table\">\n          <thead>\n            <tr>\n              <!-- <th align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkboxall\" value=\"checkboxAll\" /></th> -->\n              <th>Sr.No</th>\n              <th>Product</th>\n              <th>Customer</th>\n              <th>Location</th>\n              <th>Quantity</th>\n              <th>Status</th>\n            </tr>\n          </thead>\n          <tbody>\n\n            <!-- <div [hidden]=\"apiData.length==0\">\n              \n            </div> -->\n\n            <tr *ngFor=\"let product of apiData;let i = index\" >\n              <!-- <td align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkbox1\" value=\"checkbox1\"></td> -->\n              <td align=\"left\" valign=\"middle\">{{i+1}}</td>\n              <td align=\"left\" valign=\"middle\"><img class=\"pro_img\" src=\"{{product.productImage}}\" alt=\"\" />{{product.productDetail}}</td>\n              <td>{{product.customerName}}</td>\n              <td>{{product.customerAddress}}</td>\n              <td>{{product.quantity}}</td>\n              <td>{{product.status}}</td>\n            </tr>\n\n           </tbody>\n        </table>\n      </div>\n    </div>\n    <!--Recent Order Table Section End Here--> \n     \n    <!-- <ng-chat [adapter]=\"adapter\" [userId]=\"userId\"></ng-chat> -->\n    </div>\n  </div>\n  <!--Dashboard Content Section End Here-->\n\n</div>\n<!--Dashboard Screen End Here-->"
 
 /***/ }),
 
@@ -1702,6 +1719,7 @@ var HomePageVendorComponent = /** @class */ (function () {
             lang: "eng"
         };
         this.service.postApi('vendor/vendorOrderList', temp, 1).subscribe(function (response) {
+            console.log("response--->>", response);
             if (response['statusCode'] == 200) {
                 // this.service.showSuccess("getProduct")
                 // console.log("asdfasdf", response['result'])
@@ -1709,6 +1727,9 @@ var HomePageVendorComponent = /** @class */ (function () {
                 _this.rows = response['result'];
                 _this.temp = response['result'].slice();
                 console.log('$$$$$$$sdfsdf$$$$$$$$$$$', _this.apiData);
+                if (_this.apiData.length < 0) {
+                    _this.isVaild = false;
+                }
                 // this.getBrandListdata()
             }
             else {
@@ -1754,7 +1775,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"wrapper\">\n    <!--Header Start Here-->\n    <app-header></app-header>\n    <!--Header End Here-->\n    <!-- Sidebar Start Here-->\n    <app-side-bar></app-side-bar>\n    <!-- Sidebar end Here-->\n  \n    <div id=\"page-content-wrapper\">\n      <div class=\"dashboardConbx\">\n  \n        <div class=\"allproductslistingwarp\">\n          <div class=\"imports_row clearfix\">\n            <h3>Inventory List</h3>\n          </div>\n        </div>\n  \n        <!--Recent Order Table Section Start Here-->\n        <div class=\"recentorder_tablewrap\">\n          <div class=\"filter_search_row clearfix\">\n            <div class=\"filterbtnbx\">\n              <div class=\"dropdown\">\n                <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter\n                  <span class=\"caret\"></span></button>\n                <ul class=\"dropdown-menu\">\n                  <li><a href=\"#\">Edit</a></li>\n                  <li><a href=\"#\">Delete</a></li>\n                </ul>\n              </div>\n            </div>\n            <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span><input class=\"form-control\"\n                type=\"text\" placeholder=\"Search Products\" /></div>\n          </div>\n          <div class=\"recentOrderTable\">\n            <div class=\"table-responsive\">\n              <table class=\"table\">\n                <thead>\n                  <tr>\n                    <th align=\"left\" valign=\"middle\">\n                      <span class=\"checkboxbx\">\n                        <input type=\"checkbox\" id=\"selectall1\">\n                        <label for=\"selectall1\">&nbsp;</label>\n                      </span></th>\n                    <th>Product Variant</th>\n                    <th class=\"text-center\">SKU Code</th>\n                    <th class=\"text-center\">Units Sold</th>\n                    <th class=\"text-center\">Quantity</th>\n                    <!-- <th class=\"text-center\">Update Stock</th> -->\n                  </tr>\n                </thead>\n                <tbody>\n                  <tr *ngFor=\"let product of apiData;let i = index\">\n                    <td align=\"left\" valign=\"middle\"><span class=\"checkboxbx\">\n                        <input type=\"checkbox\" id={{i}}>\n                        <label for={{i}}>&nbsp;</label>\n                      </span></td>\n                    <td align=\"left\" valign=\"middle\" class=\"lineH\">\n                      <div class=\"pro_img_wd\"><img alt=\"\" src={{product.image}}></div>\n                      <div class=\"pro_info_rw\" (click)=\"variants(product._id)\">{{product.product}}</div>\n                    </td>\n                    <td align=\"center\">{{product.InventorySKU}}</td>\n                    <td align=\"center\">{{product.unitSold}}</td>\n                    <td align=\"center\">{{product.quantity}}</td>\n                    <!-- <td class=\"updateddigit\">\n                      <div class=\"update_stock_box\">\n                        <div class=\"updatebx clearfix\">\n                          <div class=\"inputfillbx\"><input class=\"form-control\" type=\"text\" placeholder=\"0\" /></div>\n                          <button type=\"button\" class=\"btn btn-primary updatestockbtnbx\">\n                            <span class=\"tickicon\"></span>\n                          </button>\n                        </div>\n                      </div>\n                    </td> -->\n                  </tr>\n                </tbody>\n              </table>\n            </div>\n          </div>\n        </div>\n        <!--Recent Order Table Section End Here-->\n  \n      </div>\n    </div>\n  </div>"
+module.exports = "<div id=\"wrapper\">\n    <!--Header Start Here-->\n    <app-header></app-header>\n    <!--Header End Here-->\n    <!-- Sidebar Start Here-->\n    <app-side-bar></app-side-bar>\n    <!-- Sidebar end Here-->\n  \n    <div id=\"page-content-wrapper\">\n      <div class=\"dashboardConbx\">\n  \n        <div class=\"allproductslistingwarp\">\n          <div class=\"imports_row clearfix\">\n            <h3>Inventory List</h3>\n          </div>\n        </div>\n  \n        <!--Recent Order Table Section Start Here-->\n        <div class=\"recentorder_tablewrap\">\n          <div class=\"filter_search_row clearfix\">\n            <div class=\"filterbtnbx\">\n              <div class=\"dropdown\">\n                <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter\n                  <span class=\"caret\"></span></button>\n                <ul class=\"dropdown-menu\">\n                  <li><a href=\"#\">Edit</a></li>\n                  <li><a href=\"#\">Delete</a></li>\n                </ul>\n              </div>\n            </div>\n            <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span><input class=\"form-control\"\n                type=\"text\" placeholder=\"Search Products\" /></div>\n          </div>\n          <div class=\"recentOrderTable\">\n            <div class=\"table-responsive\">\n              <table class=\"table\">\n                <thead>\n                  <tr>\n                    <th align=\"left\" valign=\"middle\">\n                      <span class=\"checkboxbx\">\n                        <input type=\"checkbox\" id=\"selectall1\">\n                        <label for=\"selectall1\">&nbsp;</label>\n                      </span></th>\n                    <th>Product Variant</th>\n                    <th class=\"text-center\">SKU Code</th>\n                    <th class=\"text-center\">Units Sold</th>\n                    <th class=\"text-center\">Quantity</th>\n                    <!-- <th class=\"text-center\">Update Stock</th> -->\n                  </tr>\n                </thead>\n                <tbody>\n                  <tr *ngFor=\"let product of apiData;let i = index\">\n                    <td align=\"left\" valign=\"middle\"><span class=\"checkboxbx\">\n                        <input type=\"checkbox\" id={{i}}>\n                        <label for={{i}}>&nbsp;</label>\n                      </span></td>\n                    <td align=\"left\" valign=\"middle\" class=\"lineH\">\n                      <div class=\"pro_img_wd\"><img alt=\"\" src={{product.image}}></div>\n                      <div class=\"pro_info_rw\" (click)=\"variants(product._id)\">{{product.product}}</div>\n                    </td>\n                    <td align=\"center\">{{product.inventorySKU}}</td>\n                    <td align=\"center\">{{product.unitSold}}</td>\n                    <td align=\"center\">{{product.quantity}}</td>\n                    <!-- <td class=\"updateddigit\">\n                      <div class=\"update_stock_box\">\n                        <div class=\"updatebx clearfix\">\n                          <div class=\"inputfillbx\"><input class=\"form-control\" type=\"text\" placeholder=\"0\" /></div>\n                          <button type=\"button\" class=\"btn btn-primary updatestockbtnbx\">\n                            <span class=\"tickicon\"></span>\n                          </button>\n                        </div>\n                      </div>\n                    </td> -->\n                  </tr>\n                </tbody>\n              </table>\n            </div>\n          </div>\n        </div>\n        <!--Recent Order Table Section End Here-->\n  \n      </div>\n    </div>\n  </div>"
 
 /***/ }),
 
@@ -1796,18 +1817,13 @@ var InventoryListingComponent = /** @class */ (function () {
         var temp = {
             lang: "eng"
         };
-        this.service.getApi('vendor/getProductList', 1).subscribe(function (response) {
+        this.service.getApi('admin/getProductList', 1).subscribe(function (response) {
             // console.log("response-======>>>",response)
             if (response['statusCode'] == 200) {
-                console.log('===================??>>>>', response['result']);
+                console.log('===================>>>>', response['result']);
                 _this.getProductCount = response['result'];
-                // console.log(this.getbrandcount.length)
                 _this.getProductCount = _this.getProductCount.length;
                 _this.apiData = response['result'];
-                // this.rows = response['result'];
-                // this.temp = [...response['result']];
-                // console.log('$$$$$$$sdfsdf$$$$$$$$$$$', this.apiData)
-                // this.getBrandListdata()
             }
             else {
                 // console.log(response['result'])
@@ -1839,6 +1855,298 @@ var InventoryListingComponent = /** @class */ (function () {
 }());
 
 
+
+/***/ }),
+
+/***/ "./src/app/Components/live-view/live-view.component.css":
+/*!**************************************************************!*\
+  !*** ./src/app/Components/live-view/live-view.component.css ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Components/live-view/live-view.component.html":
+/*!***************************************************************!*\
+  !*** ./src/app/Components/live-view/live-view.component.html ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\"> \n      <!--Reports Live View Row Start Here-->\n      <div class=\"totalSeleswrap live_view_row\">\n        <div class=\"row clearfix\">\n          <div class=\"col-xs-6 col-sm-3\">\n             <div class=\"live_view_headingsbx\">\n               <h4>Visitor Right Now</h4>\n               <h3>08</h3>\n             </div>\n          </div>\n          <div class=\"col-xs-6 col-sm-3\">\n              <div class=\"live_view_headingsbx\">\n                  <h4>Today;s Total</h4>\n                  <h3>08</h3>\n                </div>\n          </div>\n          <div class=\"col-xs-6 col-sm-3\">\n              <div class=\"live_view_headingsbx\">\n                  <h4>Orders</h4>\n                  <h3>08</h3>\n                </div>\n          </div>\n          <div class=\"col-xs-6 col-sm-3\">\n              <div class=\"live_view_headingsbx\">\n                  <h4>Sales</h4>\n                  <h3>INR 345</h3>\n                </div>\n          </div>\n        </div>\n      </div>\n      <!--Reports Live View Row End Here-->\n       <!--Reports On Google Map Start Here-->\n       <div class=\"totalSeleswrap live_view_row\">\n            <div class=\"map_live_view\">\n                <div #gmap style=\"width:1000px;height:805px\"></div>\n            </div>\n        </div>\n       <!--Reports On Google Map End Here-->\n  </div>\n\n  </div>\n  </div>\n  "
+
+/***/ }),
+
+/***/ "./src/app/Components/live-view/live-view.component.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/Components/live-view/live-view.component.ts ***!
+  \*************************************************************/
+/*! exports provided: LiveViewComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LiveViewComponent", function() { return LiveViewComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
+/* harmony import */ var _style__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style */ "./src/app/Components/live-view/style.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var LiveViewComponent = /** @class */ (function () {
+    // map: google.maps.Map;
+    function LiveViewComponent(service) {
+        this.service = service;
+        this.locations = [];
+        this.service.setTitle("Live View");
+        // this.initialize1()
+    }
+    //  map: google.maps.Map;
+    LiveViewComponent.prototype.ngOnInit = function () {
+        var mapProp = {
+            center: new google.maps.LatLng(29.448414, 77.2898482),
+            zoom: 5,
+            streetViewControl: false,
+            styles: _style__WEBPACK_IMPORTED_MODULE_2__["style"],
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+        };
+        this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('gmap'),
+        __metadata("design:type", Object)
+    ], LiveViewComponent.prototype, "gmapElement", void 0);
+    LiveViewComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-live-view',
+            template: __webpack_require__(/*! ./live-view.component.html */ "./src/app/Components/live-view/live-view.component.html"),
+            styles: [__webpack_require__(/*! ./live-view.component.css */ "./src/app/Components/live-view/live-view.component.css")]
+        }),
+        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+    ], LiveViewComponent);
+    return LiveViewComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/live-view/style.js":
+/*!***********************************************!*\
+  !*** ./src/app/Components/live-view/style.js ***!
+  \***********************************************/
+/*! exports provided: style */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "style", function() { return style; });
+const style=[
+    {
+      // "featureType": "administrative",
+  
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#212121"
+        }
+      ]
+    },
+    {
+      // "featureType": "administrative",
+  
+      "elementType": "labels.icon",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      // "featureType": "administrative",
+  
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
+    },
+    {
+      // "featureType": "administrative",
+  
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#212121"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.country",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#9e9e9e"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.land_parcel",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
+    {
+      "featureType": "administrative.locality",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#bdbdbd"
+        }
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#181818"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#616161"
+        }
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {
+          "color": "#1b1b1b"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry.fill",
+      "stylers": [
+        {
+          "color": "#2c2c2c"
+        }
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#8a8a8a"
+        }
+      ]
+    },
+    {
+      "featureType": "road.arterial",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#373737"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#3c3c3c"
+        }
+      ]
+    },
+    {
+      "featureType": "road.highway.controlled_access",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#4e4e4e"
+        }
+      ]
+    },
+    {
+      "featureType": "road.local",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#616161"
+        }
+      ]
+    },
+    {
+      "featureType": "transit",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#757575"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry",
+      "stylers": [
+        {
+          "color": "#000000"
+        }
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {
+          "color": "#3d3d3d"
+        }
+      ]
+    }
+  ]
 
 /***/ }),
 
@@ -1926,7 +2234,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!-- Sidebar end Here-->\n\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <div class=\"allproductslistingwarp\">\n        <div class=\"imports_row tabsrow clearfix\">\n          <ul class=\"nav nav-tabs\">\n            <li class=\"active\"><a data-toggle=\"tab\" (click)=\"getOrderList()\" href=\"#all_orders\">All orders</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('PENDING')\" href=\"#order_pending\">Pending</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('INPROGRESS')\" href=\"#tobe_prepared\">To be prepared</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('ORDERSHIPPED')\" href=\"#readyto_ship\">Ready to Ship</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('DISPATCH')\" href=\"#in_transit\">In-Transit</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('PLACED')\" href=\"#order_comleted\">Completed</a></li>\n          </ul>\n        </div>\n      </div>\n      <!--Recent Order Table Section Start Here-->\n      <div class=\"recentorder_tablewrap\">\n        <div class=\"tab-content\">\n          <!--All Orders Listing Table Start Here-->\n          <div id=\"all_orders\" class=\"tab-pane fade in active\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\"  type=\"text\" placeholder=\"Search Order\" #val (input)=\"searchData(val.value)\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\" [hidden]=\"!isvalid\">\n\n              <!-- <ng-template #elseTemplate>\n              \n            </ng-template>\n              -->\n              <!-- <div class=\"filter_search_row clearfix\">\n                <div class=\"filterbtnbx\">\n                  <div class=\"dropdown\">\n                    <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                        class=\"caret\"></span></button>\n                    <ul class=\"dropdown-menu\">\n                      <li><a href=\"#\">Edit</a></li>\n                      <li><a href=\"#\">Delete</a></li>\n                    </ul>\n                  </div>\n                </div>\n                <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                  <input class=\"form-control\"  type=\"text\" placeholder=\"Search Order\" #val (input)=\"searchData(val.value)\" />\n                </div>\n              </div> -->\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr *ngFor=\"let product of apiData;let i = index\">\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">{{product.orderId}}</td>\n                      <td>{{product.createdAt  | date:fullDate}}</td>\n                      <td>{{product.customerName}}</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">{{product.paymentStatus}}</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">{{product.status}}</span></td>\n                      <td class=\"text-right\">{{ product.totalAmountPaid | currency:'&#8377;' }}</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n              </div>\n              <div class=\"recentOrderTable\" [hidden]=\"isvalid\">\n                not   found\n              </div>\n          </div>\n          <!--All Orders Listing Table End Here-->\n\n          <!--Pending Orders Listing Table Start Here-->\n          <!-- <div id=\"order_pending\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--Pending Orders Listing Table End Here-->\n\n          <!--To be Prepared Listing Table Start Here-->\n          <!-- <div id=\"tobe_prepared\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--To be Prepared Listing Table End Here-->\n\n          <!--To be Prepared Listing Table Start Here-->\n          <!-- <div id=\"readyto_ship\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--To be Prepared Listing Table End Here-->\n\n          <!--In-Transit Listing Table Start Here-->\n          <!-- <div id=\"in_transit\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--In-Transit Listing Table End Here-->\n\n          <!--Order Comleted Listing Table Start Here-->\n          <!-- <div id=\"order_comleted\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--Order Comleted Listing Table End Here-->\n\n        </div>\n      </div>\n      <!--Recent Order Table Section End Here-->\n\n    </div>\n  </div>\n\n</div>"
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!-- Sidebar end Here-->\n\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <div class=\"allproductslistingwarp\">\n        <div class=\"imports_row tabsrow clearfix\">\n          <ul class=\"nav nav-tabs\">\n            <li class=\"active\"><a data-toggle=\"tab\" (click)=\"getOrderList()\" href=\"#all_orders\">All orders</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('PENDING')\" href=\"#order_pending\">Pending</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('INPROGRESS')\" href=\"#tobe_prepared\">To be prepared</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('ORDERSHIPPED')\" href=\"#readyto_ship\">Ready to Ship</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('DISPATCH')\" href=\"#in_transit\">In-Transit</a></li>\n            <li><a data-toggle=\"tab\" (click)=\"changeStatus('PLACED')\" href=\"#order_comleted\">Completed</a></li>\n          </ul>\n        </div>\n      </div>\n      <!--Recent Order Table Section Start Here-->\n      <div class=\"recentorder_tablewrap\">\n        <div class=\"tab-content\">\n          <!--All Orders Listing Table Start Here-->\n          <div id=\"all_orders\" class=\"tab-pane fade in active\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\"  type=\"text\" placeholder=\"Search Order\" #val (input)=\"searchData(val.value)\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\" [hidden]=\"!isvalid\">\n\n              <!-- <ng-template #elseTemplate>\n              \n            </ng-template>\n              -->\n              <!-- <div class=\"filter_search_row clearfix\">\n                <div class=\"filterbtnbx\">\n                  <div class=\"dropdown\">\n                    <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                        class=\"caret\"></span></button>\n                    <ul class=\"dropdown-menu\">\n                      <li><a href=\"#\">Edit</a></li>\n                      <li><a href=\"#\">Delete</a></li>\n                    </ul>\n                  </div>\n                </div>\n                <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                  <input class=\"form-control\"  type=\"text\" placeholder=\"Search Order\" #val (input)=\"searchData(val.value)\" />\n                </div>\n              </div> -->\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr *ngFor=\"let product of apiData;let i = index\">\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">{{product?.orderId}}</td>\n                      <td>{{product?.createdAt  | date:fullDate}}</td>\n                      <td>{{product?.customerName}}</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">{{product?.paymentStatus}}</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">{{product?.status}}</span></td>\n                      <td class=\"text-right\">{{ product?.totalAmountPaid | currency:'EUR' }}</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n              </div>\n              <div class=\"recentOrderTable\" [hidden]=\"isvalid\">\n                not   found\n              </div>\n          </div>\n          <!--All Orders Listing Table End Here-->\n\n          <!--Pending Orders Listing Table Start Here-->\n          <!-- <div id=\"order_pending\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--Pending Orders Listing Table End Here-->\n\n          <!--To be Prepared Listing Table Start Here-->\n          <!-- <div id=\"tobe_prepared\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--To be Prepared Listing Table End Here-->\n\n          <!--To be Prepared Listing Table Start Here-->\n          <!-- <div id=\"readyto_ship\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--To be Prepared Listing Table End Here-->\n\n          <!--In-Transit Listing Table Start Here-->\n          <!-- <div id=\"in_transit\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--In-Transit Listing Table End Here-->\n\n          <!--Order Comleted Listing Table Start Here-->\n          <!-- <div id=\"order_comleted\" class=\"tab-pane fade\">\n            <div class=\"filter_search_row clearfix\">\n              <div class=\"filterbtnbx\">\n                <div class=\"dropdown\">\n                  <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter <span\n                      class=\"caret\"></span></button>\n                  <ul class=\"dropdown-menu\">\n                    <li><a href=\"#\">Edit</a></li>\n                    <li><a href=\"#\">Delete</a></li>\n                  </ul>\n                </div>\n              </div>\n              <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Search Order\" />\n              </div>\n            </div>\n            <div class=\"recentOrderTable\">\n              <div class=\"table-responsive\">\n                <table class=\"table orderlist\">\n                  <thead>\n                    <tr>\n                      <th valign=\"middle\"> <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"selectall1\">\n                          <label for=\"selectall1\">&nbsp;</label>\n                        </span></th>\n                      <th>Order</th>\n                      <th>Date</th>\n                      <th>Customer</th>\n                      <th>Payment status</th>\n                      <th class=\"text-center\">Fulfillment status</th>\n                      <th class=\"text-right\">Total</th>\n                    </tr>\n                  </thead>\n                  <tbody>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"pending\">Pending</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n                    <tr>\n                      <td valign=\"middle\"><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id=\"checkrow1\">\n                          <label for=\"checkrow1\">&nbsp;</label>\n                        </span></td>\n                      <td valign=\"middle\">#1002</td>\n                      <td>Yesterday at 4:46 pm</td>\n                      <td>-</td>\n                      <td><button type=\"button\" class=\"btn btn-primary paid\">Paid</button></td>\n                      <td class=\"text-center\"><span class=\"readytoship\">Ready to Ship</span></td>\n                      <td class=\"text-right\">Rs. 6,789.00</td>\n                    </tr>\n\n                  </tbody>\n                </table>\n              </div>\n            </div>\n          </div> -->\n          <!--Order Comleted Listing Table End Here-->\n\n        </div>\n      </div>\n      <!--Recent Order Table Section End Here-->\n\n    </div>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -1997,7 +2305,7 @@ var OrderListComponent = /** @class */ (function () {
             lang: "eng"
         };
         console.log("@@@@@@@@@2", temp);
-        this.service.postApi('vendor/vendorOrderStatus', temp, 1).subscribe(function (response) {
+        this.service.postApi('admin/vendorOrderStatus', temp, 1).subscribe(function (response) {
             if (response['statusCode'] == 200) {
                 // this.service.showSuccess("getProduct")
                 // console.log("asdfasdf", response['result'])
@@ -2324,6 +2632,136 @@ var ResetPasswordComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Components/revenue/revenue.component.css":
+/*!**********************************************************!*\
+  !*** ./src/app/Components/revenue/revenue.component.css ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Components/revenue/revenue.component.html":
+/*!***********************************************************!*\
+  !*** ./src/app/Components/revenue/revenue.component.html ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!-- Sidebar end Here-->\n\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\"> \n      <!--Revenue Info Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"digitrow clearfix\">\n          <div class=\"col-sm-6 col-md-6\">\n            <div class=\"digitbx mnbt7\">\n              <h3>$ 66,163</h3>\n              <h4>Revenue Info 1</h4>\n              <span class=\"bdrbtm\"></span> </div>\n          </div>\n          <div class=\"col-sm-6 col-md-6\">\n            <div class=\"digitbx\">\n              <h3>$ 1256</h3>\n              <h4>Revenue Info 2</h4>\n              <span class=\"bdrbtm\"></span> </div>\n          </div>\n        </div>\n      </div>\n      <!--Revenue Info Rows End Here--> \n      \n      <!--Total Sales Revenue Section Start Here-->\n      <div class=\"totalSeleswrap revenue\">\n            <div class=\"totalSelesinfobx\">\n              <h3>TOTAL SALES</h3>\n              <div class=\"sales_year_choose\">\n                  <select class=\"select\">\n                    <option>2017</option>\n                    <option>2018</option>\n                  </select>\n                </div>\n            </div>\n            <div class=\"salesgraph\"><img class=\"img-responsive\" src=\"assets/images/revenue_graph.jpg\" alt=\"\" /></div>\n      </div>\n       <!--Total Sales Revenue Section End Here-->\n      \n      <!--Revenue Sales Order List Section Start Here-->\n      <div class=\"recentorder_tablewrap revenue\">\n        <div class=\"recentOrderTable\">\n        <div class=\"table-responsive revenue\">\n          <table class=\"table orderlist\">\n            <thead>\n              <tr>\n                <th class=\"text-center\">Orders</th>\n                <th class=\"text-center\">Gross sales</th>\n                <th class=\"text-center\">Discounts</th>\n                <th class=\"text-center\">Returns</th>\n                <th class=\"text-center\">Net sales</th>\n                <th class=\"text-center\">Shipping</th>\n                <th class=\"text-center\">Tax</th>\n                <th class=\"text-center\">Total sales</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr>\n                <td class=\"text-center\">1</td>\n                <td class=\"text-center\">Rs. 275.00</td>\n                <td class=\"text-center\">Rs. 0.00</td>\n                <td class=\"text-center\">Rs. 0.00</td>\n                <td class=\"text-center\">Rs. 275.00</td>\n                <td class=\"text-center\">Rs. 0.00</td>\n                <td class=\"text-center\">Rs. 0.00</td>\n                <td class=\"text-center\">Rs. 275.00</td>\n              </tr>\n              <tr>\n                <td class=\"text-center\">2</td>\n                <td class=\"text-center\">Rs. 275.00</td>\n                <td class=\"text-center\">Rs. 0.00</td>\n                <td class=\"text-center\">Rs. 0.00</td>\n                <td class=\"text-center\">Rs. 275.00</td>\n                <td class=\"text-center\">Rs. 0.00</td>\n                <td class=\"text-center\">Rs. 0.00</td>\n                <td class=\"text-center\">Rs. 275.00</td>\n                </tr>\n                <tr>\n                  <td class=\"text-center\">3</td>\n                  <td class=\"text-center\">Rs. 275.00</td>\n                  <td class=\"text-center\">Rs. 0.00</td>\n                  <td class=\"text-center\">Rs. 0.00</td>\n                  <td class=\"text-center\">Rs. 275.00</td>\n                  <td class=\"text-center\">Rs. 0.00</td>\n                  <td class=\"text-center\">Rs. 0.00</td>\n                  <td class=\"text-center\">Rs. 275.00</td>\n                    </tr>\n            </tbody>\n          </table>\n          </div>\n        </div>\n      </div>\n      <!--Revenue Sales Order List Section End Here-->\n      \n    </div>\n  </div>\n\n\n\n\n  </div>\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/revenue/revenue.component.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/Components/revenue/revenue.component.ts ***!
+  \*********************************************************/
+/*! exports provided: RevenueComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RevenueComponent", function() { return RevenueComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var RevenueComponent = /** @class */ (function () {
+    function RevenueComponent(service) {
+        this.service = service;
+        this.service.setTitle('Revenue');
+    }
+    RevenueComponent.prototype.ngOnInit = function () {
+    };
+    RevenueComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-revenue',
+            template: __webpack_require__(/*! ./revenue.component.html */ "./src/app/Components/revenue/revenue.component.html"),
+            styles: [__webpack_require__(/*! ./revenue.component.css */ "./src/app/Components/revenue/revenue.component.css")]
+        }),
+        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+    ], RevenueComponent);
+    return RevenueComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/sales-reports/sales-reports.component.css":
+/*!**********************************************************************!*\
+  !*** ./src/app/Components/sales-reports/sales-reports.component.css ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Components/sales-reports/sales-reports.component.html":
+/*!***********************************************************************!*\
+  !*** ./src/app/Components/sales-reports/sales-reports.component.html ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"wrapper\">\n    <!--Header Start Here-->\n    <app-header></app-header>\n    <!--Header End Here-->\n    <!-- Sidebar Start Here-->\n    <app-side-bar></app-side-bar>\n    <!-- Sidebar end Here-->\n\n\n    <div id=\"page-content-wrapper\">\n        <div class=\"dashboardConbx\"> \n          <!--Total Sales Row Start Here-->\n          <div class=\"totalSeleswrap\">\n            <div class=\"row clearfix\">\n              <div class=\"col-sm-6\">\n                <div class=\"totalSelesinfobx sales_reports\">\n                  <h4>Total Sales</h4>\n                  <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without \n                    revolutionary ROI.</div>\n                </div>\n              </div>\n              <div class=\"col-sm-6\">\n                  <div class=\"sales_year_choose\">\n                      <select class=\"select\">\n                        <option>2017</option>\n                        <option>2018</option>\n                      </select>\n                    </div>\n                <div class=\"salesgraph\"><img class=\"img-responsive\" src=\"assets/images/sales_graph.png\" alt=\"\" /></div>\n              </div>\n            </div>\n          </div>\n          <!--Total Sales Row Section End Here--> \n    \n           <!--Total Orders Over Time Sales Row Start Here-->\n           <div class=\"totalSeleswrap\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-6\">\n                  <div class=\"totalSelesinfobx sales_reports\">\n                    <h4>Total Orders Over time</h4>\n                    <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without \n                      revolutionary ROI.</div>\n                  </div>\n                </div>\n                <div class=\"col-sm-6\">\n                    <div class=\"sales_year_choose\">\n                        <select class=\"select\">\n                          <option>2017</option>\n                          <option>2018</option>\n                        </select>\n                      </div>\n                  <div class=\"salesgraph\"><img class=\"img-responsive\" src=\"assets/images/sales_graph.png\" alt=\"\" /></div>\n                </div>\n              </div>\n            </div>\n           <!--Total Orders Over Time Sales Row End Here-->\n    \n            <!--Profit Margin Row Start Here-->\n            <div class=\"totalSeleswrap\">\n                <div class=\"row clearfix\">\n                  <div class=\"col-sm-6\">\n                    <div class=\"totalSelesinfobx sales_reports\">\n                      <h4>Profit Margin</h4>\n                      <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without \n                        revolutionary ROI.</div>\n                    </div>\n                  </div>\n                  <div class=\"col-sm-6\">\n                      <div class=\"sales_year_choose\">\n                          <select class=\"select\">\n                            <option>2017</option>\n                            <option>2018</option>\n                          </select>\n                        </div>\n                    <div class=\"salesgraph\"><img class=\"img-responsive\" src=\"assets/images/sales_graph.png\" alt=\"\" /></div>\n                  </div>\n                </div>\n              </div>\n              <!--Profit Margin Row End Here-->\n    \n            <!--Sales Comparison Row Start Here-->\n            <div class=\"totalSeleswrap\">\n                <div class=\"row clearfix\">\n                  <div class=\"col-sm-6\">\n                    <div class=\"totalSelesinfobx sales_reports\">\n                      <h4>Sales Comparison</h4>\n                      <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks.</div>\n                      <div class=\"row clearfix\">\n                        <div class=\"col-sm-6\">\n                          <div class=\"dateselectboxrw\">\n                          <label>Start Date</label>\n                          </div>\n                        </div>\n                        <div class=\"col-sm-6\">\n                            <div class=\"dateselectboxrw\">\n                            <label>End Date</label>\n                            </div>\n                        </div>\n                      </div>\n                    </div>\n                  </div>\n                  <div class=\"col-sm-6\">\n                    <div class=\"salesgraph\"><img class=\"img-responsive\" src=\"assets/images/analytics-graph.jpg\" alt=\"\" /></div>\n                  </div>\n                </div>\n              </div>\n              <!--Sales Comparison Row End Here-->\n    </div>\n      <!--Sales Report Content Section End Here-->\n    \n\n\n\n\n  </div>"
+
+/***/ }),
+
+/***/ "./src/app/Components/sales-reports/sales-reports.component.ts":
+/*!*********************************************************************!*\
+  !*** ./src/app/Components/sales-reports/sales-reports.component.ts ***!
+  \*********************************************************************/
+/*! exports provided: SalesReportsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SalesReportsComponent", function() { return SalesReportsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var SalesReportsComponent = /** @class */ (function () {
+    function SalesReportsComponent() {
+    }
+    SalesReportsComponent.prototype.ngOnInit = function () {
+    };
+    SalesReportsComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-sales-reports',
+            template: __webpack_require__(/*! ./sales-reports.component.html */ "./src/app/Components/sales-reports/sales-reports.component.html"),
+            styles: [__webpack_require__(/*! ./sales-reports.component.css */ "./src/app/Components/sales-reports/sales-reports.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], SalesReportsComponent);
+    return SalesReportsComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Components/show-variants/show-variants.component.css":
 /*!**********************************************************************!*\
   !*** ./src/app/Components/show-variants/show-variants.component.css ***!
@@ -2481,7 +2919,7 @@ var ShowVariantsComponent = /** @class */ (function () {
         }
         else {
             console.log("requesr", temp);
-            this.service.postApi('vendor/updateVarianceStock', temp, 1).subscribe(function (response) {
+            this.service.postApi('admin/updateVarianceStock', temp, 1).subscribe(function (response) {
                 // console.log("response-======>>>",response)
                 if (response['statusCode'] == 200) {
                     _this.formgroup.reset();
@@ -2552,7 +2990,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = " <!-- Sidebar Start Here-->\n <div id=\"sidebar-wrapper\">\n  <div class=\"sidemenuwrap\">\n    <div class=\"userprofilebx clearfix\">\n      <div class=\"usercirbx\"> <img src=\"../../assets/images/user_img.jpg\" width=\"230\" height=\"222\" alt=\"\" /> </div>\n      <div class=\"userpnm\">\n        <h4>Johnathan Doe</h4>\n        <h5>Owner</h5>\n      </div>\n    </div>\n    <ul class=\"nav navbar-nav\">\n      <li class=\"active\"><a routerLink=\"/dashBoard\" routerLinkActive=\"active\" (click) = \"changeStatus('Dashboard')\">Dashboard</a></li>\n      <li class=\"orders dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Orders<span class=\"orders\">3</span></a>\n        <ul class=\"dropdown-menu\">\n          <li><a  routerLink=\"/orderlist\" routerLinkActive=\"active\" (click) = \"changeStatus('Orders List')\" >Orders List</a></li>\n          <li><a href=\"javascript:void(0);\">Abandoned Checkouts</a></li>\n          <li><a href=\"javascript:void(0);\">Cancelled Orders</a></li>\n        </ul>\n      </li>\n      <li class=\"products dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Products</a>\n        <ul class=\"dropdown-menu\">\n          <li><a routerLink=\"/allproducts\" routerLinkActive=\"active\" (click) = \"changeStatus('All Product')\" >All Products</a></li>\n          <li><a href=\"javascript:void(0);\" (click)=addProduct() (click) = \"changeStatus('Add Product')\" >Add Products</a></li>\n          <li><a routerLink=\"/inventory\" routerLinkActive=\"active\" (click) = \"changeStatus('Inventory')\">Inventory</a></li>\n        </ul>\n      </li>\n      <li><a href=\"javascript:void(0);\">Reports</a></li>\n      <li><a href=\"javascript:void(0);\">Sales & Offers<span class=\"salesoffers\">4</span></a></li>\n      <li><a href=\"javascript:void(0);\">My Earnings</a></li>\n      <li><a href=\"javascript:void(0);\">Notifications <span class=\"notification\">8</span></a></li>\n      <li><a href=\"javascript:void(0);\">Reviews & Feedbacks <span class=\"feedback\">8</span></a></li>\n    </ul>\n    <div class=\"settingsbx\">\n      <ul class=\"nav navbar-nav\">\n        <li><a href=\"javascript:void(0);\">My Account</a></li>\n        <li><a href=\"javascript:void(0);\">Settings</a></li>\n        <li><a href=\"javascript:void(0);\">Live Chat</a></li>\n        <li><a  (click)=logout()>Logout</a></li>\n      </ul>\n    </div>\n  </div>\n</div>\n<!--sidebar-End -->"
+module.exports = "<!-- Sidebar Start Here-->\n<div id=\"sidebar-wrapper\">\n  <div class=\"sidemenuwrap\">\n    <div class=\"userprofilebx clearfix\">\n      <div class=\"usercirbx\"> <img src=\"../../assets/images/user_img.jpg\" width=\"230\" height=\"222\" alt=\"\" /> </div>\n      <div class=\"userpnm\">\n        <h4>Johnathan Doe</h4>\n        <h5>Owner</h5>\n      </div>\n    </div>\n    <ul class=\"nav navbar-nav\">\n      <li class=\"active\"><a routerLink=\"/dashBoard\" routerLinkActive=\"active\" (click)=\"changeStatus('Dashboard')\">Dashboard</a></li>\n      <li class=\"orders dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Orders<span\n            class=\"orders\">3</span></a>\n        <ul class=\"dropdown-menu\">\n          <li><a routerLink=\"/orderlist\" routerLinkActive=\"active\" (click)=\"changeStatus('Orders List')\">Orders List</a></li>\n          <li><a href=\"javascript:void(0);\">Abandoned Checkouts</a></li>\n          <li><a href=\"javascript:void(0);\">Cancelled Orders</a></li>\n        </ul>\n      </li>\n      <li class=\"products dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Products</a>\n        <ul class=\"dropdown-menu\">\n          <li><a routerLink=\"/allproducts\" routerLinkActive=\"active\" (click)=\"changeStatus('All Product')\">All Products</a></li>\n          <li><a href=\"javascript:void(0);\" (click)=addProduct() (click)=\"changeStatus('Add Product')\">Add Products</a></li>\n          <li><a routerLink=\"/inventory\" routerLinkActive=\"active\" (click)=\"changeStatus('Inventory')\">Inventory</a></li>\n        </ul>\n      </li>\n\n\n\n      <li class=\"reports dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Reports <span class=\"reports\">3</span></a>\n        <ul class=\"dropdown-menu\">\n            <li><a routerLink=\"/analytics\" routerLinkActive=\"active\" >Analytics</a></li>\n            <li><a routerLink=\"/revenue\" routerLinkActive=\"active\" >Sales Reports</a></li>\n            <li><a routerLink=\"/live\" routerLinkActive=\"active\" >Live View</a></li>\n          </ul>\n      </li>\n      <li><a routerLink=\"/activeoffer\" routerLinkActive=\"active\" (click)=\"changeStatus('All Product')\">Sales & Offers<span\n            class=\"salesoffers\">4</span></a></li>\n      <li><a  routerLink=\"/revenue\" routerLinkActive=\"active\" (click)=\"changeStatus('Revenue')\">My Earnings</a></li>\n      <li><a href=\"javascript:void(0);\">Notifications <span class=\"notification\">8</span></a></li>\n      <li><a href=\"javascript:void(0);\">Reviews & Feedbacks <span class=\"feedback\">8</span></a></li>\n    </ul>\n    <div class=\"settingsbx\">\n      <ul class=\"nav navbar-nav\">\n        <li><a href=\"javascript:void(0);\">My Account</a></li>\n        <li><a href=\"javascript:void(0);\">Settings</a></li>\n        <li><a href=\"javascript:void(0);\">Live Chat</a></li>\n        <li><a (click)=logout()>Logout</a></li>\n      </ul>\n    </div>\n  </div>\n</div>\n<!--sidebar-End -->"
 
 /***/ }),
 
@@ -2585,8 +3023,13 @@ var SideBarComponent = /** @class */ (function () {
     function SideBarComponent(route, service) {
         this.route = route;
         this.service = service;
+        // this.getUser() 
     }
     SideBarComponent.prototype.ngOnInit = function () {
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
     };
     SideBarComponent.prototype.addProduct = function () {
         console.log("hgfdfghujhgfds");
@@ -2599,6 +3042,29 @@ var SideBarComponent = /** @class */ (function () {
     SideBarComponent.prototype.logout = function () {
         localStorage.clear();
         this.route.navigate(['/login']);
+    };
+    SideBarComponent.prototype.getUser = function () {
+        var _this = this;
+        this.service.getApi('user/getUserInfo', 1).subscribe(function (response) {
+            // console.log('-----------',response)
+            if (response['statusCode'] == 200) {
+                _this.userdata = response['result'];
+                console.log("@#$%$#@!@#$#", _this.userdata);
+            }
+            else {
+            }
+        }, function (error) {
+            console.log('error occur', error);
+            _this.service.showError('Server Error');
+        });
+    };
+    SideBarComponent.prototype.tabManag = function (event) {
+        console.log(event);
+        this.isActive = event;
+        var url = window.location.href.split('/');
+        var page = url[url.length - 1];
+        this.isActive = page;
+        this.route.navigate(['/' + event]);
     };
     SideBarComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -2827,7 +3293,7 @@ var WakiLoginComponent = /** @class */ (function () {
                 localStorage.setItem('token', _this.responseData.accessToken);
                 // localStorage.removeItem('email')
                 if (_this.responseData['result']['isBussinessAdded'] == false) {
-                    // this.route.navigate(['/business_details']);
+                    _this.route.navigate(['/business_details']);
                 }
                 else {
                     _this.route.navigate(['/dashBoard']);
@@ -2897,7 +3363,11 @@ var DataService = /** @class */ (function () {
         this.optionObs = this.optionSubject.asObservable();
         this.baseUrl = 'http://13.126.131.184:5050/'; //!live 
         this.title = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"]('DASHBOARD');
+        // console.log("#############333")
     }
+    // baseUrl = 'http://192.168.1.35:5050/'
+    // baseUrl = 'http://127.0.0.1:5050/'
+    // typeLogin: string;
     DataService.prototype.changeOption = function (msg) {
         this.optionSubject.next(msg);
     };
@@ -2922,6 +3392,9 @@ var DataService = /** @class */ (function () {
             };
             return this.http.post((this.baseUrl + url), data, httpOptions);
         }
+    };
+    DataService.prototype.getLatApi = function (address) {
+        return this.http.get("https://maps.google.com/maps/api/geocode/json?address=" + address + "&sensor=false&key=AIzaSyDxFPSj1Oh9PYbbsm35CLorLQk4vtrTvvk");
     };
     DataService.prototype.getApi = function (url, isHeader) {
         if (isHeader == 0) {
@@ -2999,6 +3472,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_inventory_listing_inventory_listing_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Components/inventory-listing/inventory-listing.component */ "./src/app/Components/inventory-listing/inventory-listing.component.ts");
 /* harmony import */ var _Components_show_variants_show_variants_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Components/show-variants/show-variants.component */ "./src/app/Components/show-variants/show-variants.component.ts");
 /* harmony import */ var _Components_order_list_order_list_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Components/order-list/order-list.component */ "./src/app/Components/order-list/order-list.component.ts");
+/* harmony import */ var _Components_analytics_analytics_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Components/analytics/analytics.component */ "./src/app/Components/analytics/analytics.component.ts");
+/* harmony import */ var _Components_active_offer_active_offer_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Components/active-offer/active-offer.component */ "./src/app/Components/active-offer/active-offer.component.ts");
+/* harmony import */ var _Components_create_offer_create_offer_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Components/create-offer/create-offer.component */ "./src/app/Components/create-offer/create-offer.component.ts");
+/* harmony import */ var _Components_live_view_live_view_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Components/live-view/live-view.component */ "./src/app/Components/live-view/live-view.component.ts");
+/* harmony import */ var _Components_revenue_revenue_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Components/revenue/revenue.component */ "./src/app/Components/revenue/revenue.component.ts");
+/* harmony import */ var _Components_sales_reports_sales_reports_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Components/sales-reports/sales-reports.component */ "./src/app/Components/sales-reports/sales-reports.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3022,6 +3501,13 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
+
+
+
+
+// import { RevenueComponent } from './Components/revenue/revenue.component';
 var routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: _Components_waki_login_waki_login_component__WEBPACK_IMPORTED_MODULE_2__["WakiLoginComponent"] },
@@ -3039,7 +3525,13 @@ var routes = [
     { path: 'productdetails', component: _Components_productdetail_productdetail_component__WEBPACK_IMPORTED_MODULE_13__["ProductdetailComponent"] },
     { path: 'inventory', component: _Components_inventory_listing_inventory_listing_component__WEBPACK_IMPORTED_MODULE_14__["InventoryListingComponent"] },
     { path: 'productvariant/:productId', component: _Components_show_variants_show_variants_component__WEBPACK_IMPORTED_MODULE_15__["ShowVariantsComponent"] },
-    { path: 'orderlist', component: _Components_order_list_order_list_component__WEBPACK_IMPORTED_MODULE_16__["OrderListComponent"] }
+    { path: 'orderlist', component: _Components_order_list_order_list_component__WEBPACK_IMPORTED_MODULE_16__["OrderListComponent"] },
+    { path: 'analytics', component: _Components_analytics_analytics_component__WEBPACK_IMPORTED_MODULE_17__["AnalyticsComponent"] },
+    { path: 'activeoffer', component: _Components_active_offer_active_offer_component__WEBPACK_IMPORTED_MODULE_18__["ActiveOfferComponent"] },
+    { path: 'createoffer', component: _Components_create_offer_create_offer_component__WEBPACK_IMPORTED_MODULE_19__["CreateOfferComponent"] },
+    { path: 'live', component: _Components_live_view_live_view_component__WEBPACK_IMPORTED_MODULE_20__["LiveViewComponent"] },
+    { path: 'revenue', component: _Components_revenue_revenue_component__WEBPACK_IMPORTED_MODULE_21__["RevenueComponent"] },
+    { path: 'sales-reports', component: _Components_sales_reports_sales_reports_component__WEBPACK_IMPORTED_MODULE_22__["SalesReportsComponent"] },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -3141,6 +3633,10 @@ var AppComponent = /** @class */ (function () {
             }
         });
         console.log('this.router.url', this.router.url);
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
     }
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -3184,35 +3680,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _google_places_directive__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./google-places.directive */ "./src/app/google-places.directive.ts");
 /* harmony import */ var _Components_waki_login_waki_login_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Components/waki-login/waki-login.component */ "./src/app/Components/waki-login/waki-login.component.ts");
-/* harmony import */ var _Components_side_bar_side_bar_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Components/side-bar/side-bar.component */ "./src/app/Components/side-bar/side-bar.component.ts");
-/* harmony import */ var _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Components/business-detail/business-detail.component */ "./src/app/Components/business-detail/business-detail.component.ts");
-/* harmony import */ var _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Components/home-page-vendor/home-page-vendor.component */ "./src/app/Components/home-page-vendor/home-page-vendor.component.ts");
-/* harmony import */ var _Components_header_header_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Components/header/header.component */ "./src/app/Components/header/header.component.ts");
-/* harmony import */ var _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Components/add-product/add-product.component */ "./src/app/Components/add-product/add-product.component.ts");
-/* harmony import */ var _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Components/add-product-screen/add-product-screen.component */ "./src/app/Components/add-product-screen/add-product-screen.component.ts");
-/* harmony import */ var ngx_image_uploader__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ngx-image-uploader */ "./node_modules/ngx-image-uploader/fesm5/ngx-image-uploader.js");
-/* harmony import */ var ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ng-multiselect-dropdown */ "./node_modules/ng-multiselect-dropdown/fesm5/ng-multiselect-dropdown.js");
-/* harmony import */ var ng_custom_select__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ng-custom-select */ "./node_modules/ng-custom-select/fesm5/ng-custom-select.js");
-/* harmony import */ var ngx_chips__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-chips */ "./node_modules/ngx-chips/esm5/ngx-chips.js");
-/* harmony import */ var _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./Components/editproduct/editproduct.component */ "./src/app/Components/editproduct/editproduct.component.ts");
-/* harmony import */ var ngx_dynamic_form__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ngx-dynamic-form */ "./node_modules/ngx-dynamic-form/fesm5/ngx-dynamic-form.js");
-/* harmony import */ var _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @swimlane/ngx-datatable */ "./node_modules/@swimlane/ngx-datatable/release/index.js");
-/* harmony import */ var _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_27__);
-/* harmony import */ var ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ng2-table/ng2-table */ "./node_modules/ng2-table/ng2-table.js");
-/* harmony import */ var ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_28___default = /*#__PURE__*/__webpack_require__.n(ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_28__);
-/* harmony import */ var _Components_child_child_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./Components/child/child.component */ "./src/app/Components/child/child.component.ts");
-/* harmony import */ var _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Components/test-sumit/test-sumit.component */ "./src/app/Components/test-sumit/test-sumit.component.ts");
-/* harmony import */ var _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Components/reset-password/reset-password.component */ "./src/app/Components/reset-password/reset-password.component.ts");
-/* harmony import */ var _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Components/not-found/not-found.component */ "./src/app/Components/not-found/not-found.component.ts");
-/* harmony import */ var _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Components/allproducts/allproducts.component */ "./src/app/Components/allproducts/allproducts.component.ts");
-/* harmony import */ var _Components_allorders_allorders_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./Components/allorders/allorders.component */ "./src/app/Components/allorders/allorders.component.ts");
-/* harmony import */ var _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./Components/password-changed/password-changed.component */ "./src/app/Components/password-changed/password-changed.component.ts");
-/* harmony import */ var ng_chat__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ng-chat */ "./node_modules/ng-chat/fesm5/ng-chat.js");
-/* harmony import */ var angularx_qrcode__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! angularx-qrcode */ "./node_modules/angularx-qrcode/dist/index.js");
-/* harmony import */ var _Components_productdetail_productdetail_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./Components/productdetail/productdetail.component */ "./src/app/Components/productdetail/productdetail.component.ts");
-/* harmony import */ var _Components_show_variants_show_variants_component__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./Components/show-variants/show-variants.component */ "./src/app/Components/show-variants/show-variants.component.ts");
-/* harmony import */ var _Components_inventory_listing_inventory_listing_component__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Components/inventory-listing/inventory-listing.component */ "./src/app/Components/inventory-listing/inventory-listing.component.ts");
-/* harmony import */ var _Components_order_list_order_list_component__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Components/order-list/order-list.component */ "./src/app/Components/order-list/order-list.component.ts");
+/* harmony import */ var _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Components/business-detail/business-detail.component */ "./src/app/Components/business-detail/business-detail.component.ts");
+/* harmony import */ var _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Components/home-page-vendor/home-page-vendor.component */ "./src/app/Components/home-page-vendor/home-page-vendor.component.ts");
+/* harmony import */ var _Components_header_header_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Components/header/header.component */ "./src/app/Components/header/header.component.ts");
+/* harmony import */ var _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Components/add-product/add-product.component */ "./src/app/Components/add-product/add-product.component.ts");
+/* harmony import */ var _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./Components/add-product-screen/add-product-screen.component */ "./src/app/Components/add-product-screen/add-product-screen.component.ts");
+/* harmony import */ var ngx_image_uploader__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ngx-image-uploader */ "./node_modules/ngx-image-uploader/fesm5/ngx-image-uploader.js");
+/* harmony import */ var ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ng-multiselect-dropdown */ "./node_modules/ng-multiselect-dropdown/fesm5/ng-multiselect-dropdown.js");
+/* harmony import */ var ng_custom_select__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ng-custom-select */ "./node_modules/ng-custom-select/fesm5/ng-custom-select.js");
+/* harmony import */ var ngx_chips__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ngx-chips */ "./node_modules/ngx-chips/esm5/ngx-chips.js");
+/* harmony import */ var _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./Components/editproduct/editproduct.component */ "./src/app/Components/editproduct/editproduct.component.ts");
+/* harmony import */ var ngx_dynamic_form__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ngx-dynamic-form */ "./node_modules/ngx-dynamic-form/fesm5/ngx-dynamic-form.js");
+/* harmony import */ var _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @swimlane/ngx-datatable */ "./node_modules/@swimlane/ngx-datatable/release/index.js");
+/* harmony import */ var _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ng2-table/ng2-table */ "./node_modules/ng2-table/ng2-table.js");
+/* harmony import */ var ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _Components_child_child_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./Components/child/child.component */ "./src/app/Components/child/child.component.ts");
+/* harmony import */ var _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./Components/test-sumit/test-sumit.component */ "./src/app/Components/test-sumit/test-sumit.component.ts");
+/* harmony import */ var _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./Components/reset-password/reset-password.component */ "./src/app/Components/reset-password/reset-password.component.ts");
+/* harmony import */ var _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Components/not-found/not-found.component */ "./src/app/Components/not-found/not-found.component.ts");
+/* harmony import */ var _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Components/allproducts/allproducts.component */ "./src/app/Components/allproducts/allproducts.component.ts");
+/* harmony import */ var _Components_allorders_allorders_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./Components/allorders/allorders.component */ "./src/app/Components/allorders/allorders.component.ts");
+/* harmony import */ var _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./Components/password-changed/password-changed.component */ "./src/app/Components/password-changed/password-changed.component.ts");
+/* harmony import */ var ng_chat__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ng-chat */ "./node_modules/ng-chat/fesm5/ng-chat.js");
+/* harmony import */ var angularx_qrcode__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! angularx-qrcode */ "./node_modules/angularx-qrcode/dist/index.js");
+/* harmony import */ var _Components_productdetail_productdetail_component__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./Components/productdetail/productdetail.component */ "./src/app/Components/productdetail/productdetail.component.ts");
+/* harmony import */ var _Components_show_variants_show_variants_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./Components/show-variants/show-variants.component */ "./src/app/Components/show-variants/show-variants.component.ts");
+/* harmony import */ var _Components_inventory_listing_inventory_listing_component__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./Components/inventory-listing/inventory-listing.component */ "./src/app/Components/inventory-listing/inventory-listing.component.ts");
+/* harmony import */ var _Components_order_list_order_list_component__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./Components/order-list/order-list.component */ "./src/app/Components/order-list/order-list.component.ts");
+/* harmony import */ var _Components_analytics_analytics_component__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./Components/analytics/analytics.component */ "./src/app/Components/analytics/analytics.component.ts");
+/* harmony import */ var _Components_active_offer_active_offer_component__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./Components/active-offer/active-offer.component */ "./src/app/Components/active-offer/active-offer.component.ts");
+/* harmony import */ var _Components_create_offer_create_offer_component__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(/*! ./Components/create-offer/create-offer.component */ "./src/app/Components/create-offer/create-offer.component.ts");
+/* harmony import */ var mydatepicker__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(/*! mydatepicker */ "./node_modules/mydatepicker/index.js");
+/* harmony import */ var _Components_live_view_live_view_component__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(/*! ./Components/live-view/live-view.component */ "./src/app/Components/live-view/live-view.component.ts");
+/* harmony import */ var _Components_revenue_revenue_component__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./Components/revenue/revenue.component */ "./src/app/Components/revenue/revenue.component.ts");
+/* harmony import */ var _Components_side_bar_side_bar_component__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./Components/side-bar/side-bar.component */ "./src/app/Components/side-bar/side-bar.component.ts");
+/* harmony import */ var _Components_sales_reports_sales_reports_component__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./Components/sales-reports/sales-reports.component */ "./src/app/Components/sales-reports/sales-reports.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3235,7 +3738,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 // import { HeaderFooterComponent } from './Common/header-footer/header-footer.component';
 // import { SocketService } from './Services/socket.service';
-
 
 
 
@@ -3268,6 +3770,15 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
+
+// import { NgDatepickerModule } from 'ng2-datepicker';
+
+
+
+
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -3278,26 +3789,31 @@ var AppModule = /** @class */ (function () {
                 // HeaderFooterComponent,
                 _google_places_directive__WEBPACK_IMPORTED_MODULE_13__["GooglePlacesDirective"],
                 _Components_waki_login_waki_login_component__WEBPACK_IMPORTED_MODULE_14__["WakiLoginComponent"],
-                _Components_side_bar_side_bar_component__WEBPACK_IMPORTED_MODULE_15__["SideBarComponent"],
-                _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_16__["BusinessDetailComponent"],
-                _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_17__["HomePageVendorComponent"],
-                _Components_header_header_component__WEBPACK_IMPORTED_MODULE_18__["HeaderComponent"],
-                _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_19__["AddProductComponent"],
-                _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_20__["AddProductScreenComponent"],
-                _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_25__["EditproductComponent"],
+                _Components_side_bar_side_bar_component__WEBPACK_IMPORTED_MODULE_47__["SideBarComponent"],
+                _Components_business_detail_business_detail_component__WEBPACK_IMPORTED_MODULE_15__["BusinessDetailComponent"],
+                _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_16__["HomePageVendorComponent"],
+                _Components_header_header_component__WEBPACK_IMPORTED_MODULE_17__["HeaderComponent"],
+                _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_18__["AddProductComponent"],
+                _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_19__["AddProductScreenComponent"],
+                _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_24__["EditproductComponent"],
                 // ChidComponent,
-                _Components_child_child_component__WEBPACK_IMPORTED_MODULE_29__["ChildComponent"],
-                _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_30__["TestSumitComponent"],
-                _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_31__["ResetPasswordComponent"],
-                _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_32__["NotFoundComponent"],
-                _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_33__["AllproductsComponent"],
-                _Components_allorders_allorders_component__WEBPACK_IMPORTED_MODULE_34__["AllordersComponent"],
-                _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_35__["PasswordChangedComponent"],
-                _Components_productdetail_productdetail_component__WEBPACK_IMPORTED_MODULE_38__["ProductdetailComponent"],
-                _Components_show_variants_show_variants_component__WEBPACK_IMPORTED_MODULE_39__["ShowVariantsComponent"],
-                _Components_inventory_listing_inventory_listing_component__WEBPACK_IMPORTED_MODULE_40__["InventoryListingComponent"],
-                _Components_order_list_order_list_component__WEBPACK_IMPORTED_MODULE_41__["OrderListComponent"]
-                // FancyImageUploaderModule
+                _Components_child_child_component__WEBPACK_IMPORTED_MODULE_28__["ChildComponent"],
+                _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_29__["TestSumitComponent"],
+                _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_30__["ResetPasswordComponent"],
+                _Components_not_found_not_found_component__WEBPACK_IMPORTED_MODULE_31__["NotFoundComponent"],
+                _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_32__["AllproductsComponent"],
+                _Components_allorders_allorders_component__WEBPACK_IMPORTED_MODULE_33__["AllordersComponent"],
+                _Components_password_changed_password_changed_component__WEBPACK_IMPORTED_MODULE_34__["PasswordChangedComponent"],
+                _Components_productdetail_productdetail_component__WEBPACK_IMPORTED_MODULE_37__["ProductdetailComponent"],
+                _Components_show_variants_show_variants_component__WEBPACK_IMPORTED_MODULE_38__["ShowVariantsComponent"],
+                _Components_inventory_listing_inventory_listing_component__WEBPACK_IMPORTED_MODULE_39__["InventoryListingComponent"],
+                _Components_order_list_order_list_component__WEBPACK_IMPORTED_MODULE_40__["OrderListComponent"],
+                _Components_analytics_analytics_component__WEBPACK_IMPORTED_MODULE_41__["AnalyticsComponent"],
+                _Components_active_offer_active_offer_component__WEBPACK_IMPORTED_MODULE_42__["ActiveOfferComponent"],
+                _Components_create_offer_create_offer_component__WEBPACK_IMPORTED_MODULE_43__["CreateOfferComponent"],
+                _Components_live_view_live_view_component__WEBPACK_IMPORTED_MODULE_45__["LiveViewComponent"],
+                _Components_revenue_revenue_component__WEBPACK_IMPORTED_MODULE_46__["RevenueComponent"],
+                _Components_sales_reports_sales_reports_component__WEBPACK_IMPORTED_MODULE_48__["SalesReportsComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -3311,18 +3827,20 @@ var AppModule = /** @class */ (function () {
                 ngx_pagination__WEBPACK_IMPORTED_MODULE_8__["NgxPaginationModule"],
                 ng2_ckeditor__WEBPACK_IMPORTED_MODULE_10__["CKEditorModule"],
                 ngx_tooltip__WEBPACK_IMPORTED_MODULE_9__["TooltipModule"],
-                ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_22__["NgMultiSelectDropDownModule"].forRoot(),
-                ng_custom_select__WEBPACK_IMPORTED_MODULE_23__["NgSelectModule"],
-                ngx_chips__WEBPACK_IMPORTED_MODULE_24__["TagInputModule"],
-                _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_27__["NgxDatatableModule"],
-                ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_28__["Ng2TableModule"],
-                ngx_image_uploader__WEBPACK_IMPORTED_MODULE_21__["ImageUploaderModule"],
-                ngx_dynamic_form__WEBPACK_IMPORTED_MODULE_26__["DynamicFormModule"],
-                ng_chat__WEBPACK_IMPORTED_MODULE_36__["NgChatModule"],
-                angularx_qrcode__WEBPACK_IMPORTED_MODULE_37__["QRCodeModule"]
+                ng_multiselect_dropdown__WEBPACK_IMPORTED_MODULE_21__["NgMultiSelectDropDownModule"].forRoot(),
+                ng_custom_select__WEBPACK_IMPORTED_MODULE_22__["NgSelectModule"],
+                ngx_chips__WEBPACK_IMPORTED_MODULE_23__["TagInputModule"],
+                _swimlane_ngx_datatable__WEBPACK_IMPORTED_MODULE_26__["NgxDatatableModule"],
+                ng2_table_ng2_table__WEBPACK_IMPORTED_MODULE_27__["Ng2TableModule"],
+                ngx_image_uploader__WEBPACK_IMPORTED_MODULE_20__["ImageUploaderModule"],
+                ngx_dynamic_form__WEBPACK_IMPORTED_MODULE_25__["DynamicFormModule"],
+                ng_chat__WEBPACK_IMPORTED_MODULE_35__["NgChatModule"],
+                angularx_qrcode__WEBPACK_IMPORTED_MODULE_36__["QRCodeModule"],
+                mydatepicker__WEBPACK_IMPORTED_MODULE_44__["MyDatePickerModule"]
+                // NgDatepickerModule
             ],
             entryComponents: [
-                _Components_child_child_component__WEBPACK_IMPORTED_MODULE_29__["ChildComponent"]
+                _Components_child_child_component__WEBPACK_IMPORTED_MODULE_28__["ChildComponent"]
             ],
             providers: [ngx_cookie_service__WEBPACK_IMPORTED_MODULE_7__["CookieService"],],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_12__["AppComponent"]]
@@ -3488,7 +4006,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/techugo/Downloads/wakiVendor/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/techugo/Desktop/gitbucket/angular vendor/waki_web/src/main.ts */"./src/main.ts");
 
 
 /***/ })

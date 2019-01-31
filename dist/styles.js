@@ -539,7 +539,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/techugo/Downloads/wakiVendor/src/styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! /home/techugo/Desktop/gitbucket/angular vendor/waki_web/src/styles.css */"./src/styles.css");
 
 
 /***/ })

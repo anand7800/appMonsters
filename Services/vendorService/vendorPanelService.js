@@ -273,18 +273,14 @@ getProductList = (data, headers, callback) => {
     })
     console.log("seller id", sellerId)
     brandDescriptionL4.find({ 'sellerId': sellerId }).populate({ path: 'brandId', select: { 'brandName': 1 } }).populate({ path: 'varianceId' }).exec((err, success) => {
-        // console.log(err,success)
         if (err) throw err
         else if (success.length > 0) {
             async.forEachOf(success, async (value, key, cb) => {
-                // if (value.productCategoryId) {
                 await async.parallel({
                     getProductCategoryName: async (cb) => {
-                        // console.log("#$$#$#", value.productCategoryId ? value.productCategoryId : null)
                         if (value.productCategoryId) {
-
                             await productCategoryModel.findById({ '_id': value.productCategoryId }).exec(async (err, productCategoryName) => {
-                                console.log("-----------------?>>>", productCategoryName)
+                                // console.log("-----------------?>>>", productCategoryName)
                                 if (err) cb(null)
                                 else {
                                     cb(null, productCategoryName.productcategoryName)
@@ -297,33 +293,23 @@ getProductList = (data, headers, callback) => {
                     }
 
                 }, (err, response) => {
-                    // console.log(err, response)
-                    success.forEach(element => {
-                        console.log("####", element)
                         temp = {
-                            _id: element._id,
-                            product: element.productName,
-                            brand: element.brandId.brandName,
-                            image: element.image[0],
-                            description: element.description,
-                            color: element.color,
-                            inventorySKU: element.varianceId ? element.varianceId.inventorySKU : '',
-                            status: element.status,
-                            price: element.price,
+                            _id: value._id,
+                            product: value.productName,
+                            brand: value.brandId.brandName,
+                            image: value.image[0],
+                            description: value.description,
+                            color: value.color,
+                            status: value.status,
+                            price: value.price,
                             getProductCategoryName: response.getProductCategoryName,
-                            InventorySKU: element.InventorySKU,
-                            quantity: element.quantity,
+                            inventorySKU: value.inventorySKU,
+                            quantity: value.quantity,
                             unitSold: "PENDING STATUS"
-                            // totolbrand:response.getBrandcount
                         }
                         result.push(temp)
-                    })
                     cb()
-
                 })
-
-                // }
-
             }, (err, response) => {
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
             })
@@ -625,7 +611,7 @@ getAllVariant = (data, callback) => {
                 var temp = {
                     _id: result._id,
                     productName: result.productName,
-                    inventorySKU: element.SKU,
+                    inventorySKU: element.varianceId==null?element.inventorySKU:element.varianceId.variants[0].SKU,
                     unitSold: "PENDING",
                     quantity: element.inventory,
                     image: element.image[0],

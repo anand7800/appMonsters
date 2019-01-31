@@ -79,6 +79,13 @@
 .recentOrderTable .table > thead > tr > th,.recentOrderTable .table > tbody > tr > td{
 	font-size: 13px;
 }
+.analyticsheading .productlisting .proimg{
+	width: 45px;
+	height: 45px;
+}
+.analyticsheading .productlisting .aboutproductwrap{
+	margin-left: 54px;
+}
 }
 @media only screen and (max-width: 1320px) {
 .aboutwakiCon .wakitextrow img, .business_detailswrap .businesstextrow img {
@@ -105,7 +112,7 @@
     padding: 15px;
 }
 .totalSeleswrap {
-    padding: 30px 20px;
+    padding: 20px;
 }
 .orderstatuswrap .orderstatus{
 	padding:20px;
@@ -166,6 +173,28 @@
 	padding: 12px 0;
 	margin-top: 15px;
 }
+.analyticsheading .productlisting .proimg {
+    width: 40px;
+    height: 40px;
+}
+.analyticsheading .productlisting .aboutproductwrap {
+    margin-left: 48px;
+}
+.productdetailswrap .aboutproductwrap .soldpro_sminfo{
+	font-size: 11px;
+}
+.productdetailswrap .aboutproductwrap .item_num_sold{
+	font-size: 13px;
+}
+.storesession .sessionwrap h4, .onlinestore .storeheadings h4, .analyticsheading .topproducts h4,.analyticsheading .sessionheading h4{
+	font-size: 15px;
+}
+.storesession .sessionwrap a, .onlinestore .storeheadings a{
+	font-size: 13px;
+}
+.analyticsheading .paddrw{
+	padding: 10px;
+}
 }
 @media only screen and (max-width: 1200px) {
 .dashboardConbx .digitbx.mnbtm,.dashboardConbx .welcomebx.mnbtm{
@@ -177,6 +206,12 @@
 }
 .recentorder_tablewrap{
 	padding:20px;
+}
+.create_new_offer .eqWrap{
+	display: block;
+}
+.productsviewrow.create_new_offer .texteditorwrap{
+	margin-bottom: 20px;
 }
 }
  @media only screen and (max-width: 1170px) {
@@ -203,6 +238,9 @@
 .imports_row .nav-tabs > li > a {
 	padding: 10px 5px;
     margin-right: 5px;
+}
+.totalSelesinfobx h3 {
+    font-size: 21px;
 }
 }
  @media only screen and (max-width: 1023px) {
@@ -234,7 +272,7 @@
 }
 @media(min-width:991px) {
 #wrapper {
-	padding-left: 360px;
+	padding-left: 300px;
 }
 #wrapper.toggled {
 	padding-left: 0px;
@@ -243,7 +281,7 @@
 	padding-left: 0px;
 }
 #sidebar-wrapper {
-	width: 360px;
+	width: 300px;
 }
 #wrapper.toggled #sidebar-wrapper {
 	width: 0px;
@@ -415,6 +453,70 @@
 }
 .recentOrderTable .table > thead > tr > th, .recentOrderTable .table > tbody > tr > td {
     font-size: 12px;
+}
+.analyticsheading .storesession, .analyticsheading .onlinestore, .analyticsheading .topproducts {
+	padding: 0px 10px;
+}
+.analyticsheading .paddrw {
+	margin-bottom: 10px;
+}
+.productsviewrow .eqWrap{
+	display: block;
+}
+.productsviewrow .texteditorwrap{
+	margin-bottom: 20px;
+}
+.addproductheadingrow h3{
+	font-size: 16px;
+	padding-right: 150px;
+}
+.addproductheadingrow .addproheadingbtn .btn-primary.addprobtn{
+	font-size: 13px;
+	padding: 7px 12px;
+}
+.addproductheadingrow .addproheadingbtn .btn-primary.addprobtn.cancel{
+	margin-right: 10px;
+}
+.addproductheadingrow{
+	padding: 20px 15px;
+}
+.pdr10wds,.pdlsunye{
+	padding: 0 10px;
+}
+.pdrightwd10{
+	padding-right: 15px;
+}
+.pdleftwd10{
+	padding-left: 15px;
+}
+.mnbt7{
+	margin-bottom: 20px;
+}
+.table-responsive.revenue{
+	border: 0;
+	margin-bottom: 0;
+}
+.totalSeleswrap{
+	padding: 15px;
+}
+.totalSelesinfobx h3,.totalSelesinfobx.sales_reports h4{
+    font-size: 18px;
+}
+.sales_year_choose span.select{
+	font-size: 16px;
+}
+.totalSelesinfobx.sales_reports .sminfo{
+	font-size: 14px;
+	line-height: 28px;
+}
+.live_view_headingsbx{
+	margin-bottom: 15px;
+}
+.live_view_headingsbx h3, .live_view_headingsbx h4{
+	font-size: 17px;
+}
+.live_view_headingsbx h4{
+	font-size: 12px;
 }
 }
 @media only screen and (max-width: 380px) {

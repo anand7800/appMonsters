@@ -1266,12 +1266,12 @@ productDetails = (data, callback) => {
                                         let temp = {
                                             _id: element._id,
                                             description: element.description,
-                                            price: element.varianceId.variants[0].price,
+                                            price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
                                             productName: element.productName,
                                             // sellerId: element.sellerId,
                                             brand: element.brandId.brandName,
                                             // specifications: element.specifications,
-                                            image: element.image,
+                                            image: element.varianceId == null ? element.image : element.varianceId.variants[0].image,
                                         }
                                         similarProduct.push(temp)
                                     }
@@ -1285,7 +1285,7 @@ productDetails = (data, callback) => {
                 }
 
             }, (err, response) => {
-                console.log('------------>>', err, response)
+                // console.log('------------>>', err, response)
                 if (response) {
                     // console.log("sadfsadfasfsadfdfasdf", response)
                     res = {}
@@ -1320,7 +1320,7 @@ productDetails = (data, callback) => {
                         var size = []
                         // var test2;
                         response.findProduct.varianceId.variants.forEach(test => {
-                            color.push(test.color)
+                            color.push(test.color1)
                             material.push(test.material)
                             size.push(test.size)
                             // console.log(test.color.toUpperCase())
@@ -1439,7 +1439,7 @@ getVariance = (data, callback) => {
                 if (err) throw err
                 productModel.find({
                     $or: [
-                        { brandId: result1.brandId },
+                        // { brandId: result1.brandId },
                         { productCategoryId: result1.productCategoryId },
 
                     ]
