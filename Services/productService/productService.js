@@ -1347,7 +1347,7 @@ productDetails = (data, callback) => {
                     sellerInfo = {
                         _id: response.findProduct.sellerId._id,
                         sellerName: response.findProduct.sellerId.firstName,
-                        selllerImage: response.findProduct.sellerId.image ? response.findProduct.image : "",
+                        selllerImage: response.findProduct.sellerId.image ? response.findProduct.sellerId.image : "",
                         selllerRating: "3"
                     }
                     res.sellerInfo = sellerInfo
