@@ -196,7 +196,7 @@ productRouter.post('/filter', (req, res) => {
 
 //! Add physical store 
 productRouter.post('/addPhysicalStore', (req, res) => {
-    productService.physicalStore(req.body,req.headers, (data) => {
+    productService.physicalStore(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
@@ -386,12 +386,30 @@ productRouter.get('/inActiveProductList', (req, res) => {
 
 //! addVendoroffer
 productRouter.post('/addVendoroffer', (req, res) => {
-    productService.addVendoroffer(req.body, (data) => {
+    productService.addVendoroffer(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
 productRouter.post('/combination', (req, res) => {
     productService.combination(req.body, (data) => {
+        res.send(data)
+    })
+})
+
+productRouter.get('/getProductInfo', (req, res) => {
+    productService.getProductInfo(req.query, (data) => {
+        res.send(data)
+    })
+})
+
+productRouter.get('/getVendorProductCategorylist', (req, res) => {
+    productService.getVendorProductCategorylist(req.query, req.headers, (data) => {
+        res.send(data)
+    })
+})
+
+productRouter.post('/editProduct', (req, res) => {
+    productService.editProduct(req.body, (data) => {
         res.send(data)
     })
 })

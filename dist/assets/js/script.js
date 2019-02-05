@@ -5,13 +5,13 @@ $(function() {
     //     $("#wrapper").toggleClass("toggled");
     // });
 	
-	 $('.dropdown').on('show.bs.dropdown', function() {
-       $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-    });
+// 	 $('.dropdown').on('show.bs.dropdown', function() {
+//        $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+//     });
 
-   $('.dropdown').on('hide.bs.dropdown', function() {
-     $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
-   });
+//    $('.dropdown').on('hide.bs.dropdown', function() {
+//      $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+//    });
    
 	$('.mybrand input').focus(function () {
 		$(this).parents('.mybrand').addClass('hastext');

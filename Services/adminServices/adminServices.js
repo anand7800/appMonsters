@@ -202,7 +202,7 @@ addBrand = (data, callback) => {
     console.log('add product')
     let query = {
         brandName: data.brandName,
-        status: "ACTIVE"
+        status: data.status ? data.status : "ACTIVE"
     }
     async.waterfall([
         (cb) => {
@@ -341,24 +341,24 @@ deleteBrand = (data, callback) => {
         }
     })
 }
-//!update brand
-updateBrand = (data, callback) => {
-    update = {
-        $set: {
-            brandName: data.brandName,
-            image: data.brandImage,
-            icon: data.brandIcon
-        }
-    }
-    brandListModel.findByIdAndUpdate({ _id: data.brandId }, update, { __v: 0, new: true }).exec((err, result) => {
-        if (err) {
-            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-        }
-        else {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
-        }
-    })
-}
+//update brand
+// updateBrand = (data, callback) => {
+//     update = {
+//         $set: {
+//             brandName: data.brandName,
+//             image: data.brandImage,
+//             icon: data.brandIcon
+//         }
+//     }
+//     brandListModel.findByIdAndUpdate({ _id: data.brandId }, update, { __v: 0, new: true }).exec((err, result) => {
+//         if (err) {
+//             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+//         }
+//         else {
+//             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
+//         }
+//     })
+// }
 //!vendor list for adminPanel
 getUserList = (data, callback) => {
     console.log("getVendorList")
@@ -379,6 +379,7 @@ getUserList = (data, callback) => {
 //!create vendor
 createVendor = (data, callback) => {
     // console.log('create  vendor', data)
+    data.email.toLowerCase()
     if (!data.image && !data.email) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
@@ -398,15 +399,13 @@ createVendor = (data, callback) => {
             cb(null, util.encryptData(password))
         },
         checkuser: (cb) => {
-            userModel.findOne({ $and: [{ email: data.email }, { status: 'block' }] }).exec((err, result) => {
+            userModel.findOne({ $and: [{ email: data.email }] }).exec((err, result) => {
                 console.log('===>', err, result)
-                if (err)
+                if (err || result == null)
                     cb(null)
-                else {
-                    userModel.findOneAndUpdate({ email: data.email }, { $set: { status: "active" } }).exec((err, result) => {
-                        console.log('@@@@@@@@@@@@@@', err, result)
-                        cb(null, result)
-                    })
+                else if (result) {
+                    callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
+                    return
                 }
             })
         }
@@ -422,14 +421,14 @@ createVendor = (data, callback) => {
             address: { addresses: data.address, lat: data.lat, lng: data.lng },
             image: response.uploadImage,
             storeType: data.storeType,
-            countryCode:data.countryCode,
+            countryCode: data.countryCode,
             status: data.status ? data.status : 'inactive'
 
         })
         user.save((err, save) => {
             console.log(err, save)
             if (err) {
-                callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
+                callback({ "statusCode": util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
             }
 
             else if (save) {
@@ -478,7 +477,7 @@ changeOrderStatus = (data, callback) => {
 
         })
 
-        callback(result)
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': result })
     })
 }
 //!getQrcode
@@ -602,7 +601,7 @@ getUserinfo = (data, callback) => {
 }
 //!getAllVariant
 getAllVariant = (data, callback) => {
-    console.log('data,headers', data)
+    console.log('data,heddddddddddddaders', data)
     var res = []
     brandDescriptionL4.findOne({ '_id': data.productId }).populate({ path: 'varianceId' }).exec((err, result) => {
         // console.log("=============>>>",err,result)
@@ -946,7 +945,7 @@ module.exports = {
     getProductList,
     getBrand,
     deleteBrand,
-    updateBrand,
+    // updateBrand,
     getUserList,
     createVendor,
     deleteVendor,

@@ -32,6 +32,9 @@
 	width: 125px;
 	height: 125px;
 }
+.business_detailswrap .businConbx .businessfrombx .sales_year_choose span.select{
+	font-size: 16px;
+}
 }
 @media only screen and (max-width: 1600px) {
 .uploadimgbx,.uploadimgbx .fileinput .thumbnail {
@@ -161,6 +164,15 @@
 .business_detailswrap .businConbx {
 	padding-top: 150px;
 }
+.business_detailswrap.vendor .businConbx {
+	padding-top: 110px;
+}
+.business_detailswrap .businesstextrow h1{
+	font-size: 24px;
+}
+.business_detailswrap.vendor .businConbx .businessfrombx{
+	margin-top: 30px;
+}
 .business_detailswrap .businConbx {
 	margin-left: 20px;
 }
@@ -241,6 +253,10 @@
 }
 .totalSelesinfobx h3 {
     font-size: 21px;
+}
+.business_detailswrap .businConbx .businessfrombx .sales_year_choose span.select{
+	height: 50px;
+	line-height: 50px;
 }
 }
  @media only screen and (max-width: 1023px) {

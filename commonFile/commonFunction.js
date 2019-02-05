@@ -16,8 +16,8 @@ var FCM = require('fcm-push');
 let transporter;
 cloudinary.config({
     cloud_name: "sumit9211",
-    api_key: "885582783668825",
-    api_secret: "0dT6FoxdcGb7UjTKtUGQbAVdOJI"
+    api_key: "868525178894725", /* 885582783668825 */
+    api_secret: "MM9hrN2Uvrz0oMfN5SwxaYOdaIc"   /* 0dT6FoxdcGb7UjTKtUGQbAVdOJI */
 });
 let secret = speakEasy.generateSecret({
     length: 20

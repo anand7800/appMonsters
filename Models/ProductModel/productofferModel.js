@@ -22,7 +22,7 @@ const varianceOffer = mongoose.Schema({
         default: null
     },
     value: {
-        type: String,
+        type: Number,
         default: null
     },
     minimumRequirement: {
@@ -31,9 +31,19 @@ const varianceOffer = mongoose.Schema({
     },
     applicableOn: {
         type: [],
+        default:null
+    },
+    applicableType: {
+        type: String,
         default: null
+    },
+    startDate: {
+        type: Date,
+        default: Date.now()
+    },
+    endDate: {
+        type: Date,
+        default: Date.now()
     }
-}, {
-        timestamps: true
-    })
+})
 module.exports = mongoose.model('productOffer', varianceOffer, 'productOffer')

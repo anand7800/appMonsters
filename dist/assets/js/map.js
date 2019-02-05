@@ -16,7 +16,7 @@ function initMap() {
 
     var marker;
 	var infowindow = new google.maps.InfoWindow();
-	var marker_image ='/assets/images/show_pin.png';
+	var marker_image ='assets/images/show_pin.png';
     var pinIcon = new google.maps.MarkerImage(marker_image,null,null, null,new google.maps.Size(21, 34));  
 	var marker = new google.maps.Marker({
 		icon: marker_image, 

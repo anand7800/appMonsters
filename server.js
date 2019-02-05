@@ -47,18 +47,16 @@ app.use(morgan("dev"))
 // app.use(express.static(__dirname + '/views'));
 // app.set('view engine', 'ejs');
 
-
-
-//!dotENV
 /* 
 var dotenv = require('dotenv/config');
-console.log("ssdsds",process.env.superKey) */
+console.log("ssdsds",process.env.superKey) 
+*/
 //!userRoutes
 var userRoutes = require('./Routes/userRoutes/userPanelRoutes')
-var vendorRoutes = require('./Routes/vendorRoutes/vendorpanelRoutes')
+var adminRoute = require('./Routes/adminRoute/adminRoutes')
 var productRoutes=require('./Routes/productRoute/productRoutes')
 app.use('/user', userRoutes)
-app.use('/admin', vendorRoutes)
+app.use('/admin', adminRoute)
 app.use('/vendor', productRoutes)
 
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -74,6 +72,7 @@ var io = require('socket.io')(server);
 
 var sockets = {};
 var onlineUsers = {};
+
 
 io.sockets.on('connection', function (socket) {
 

@@ -142,7 +142,7 @@ addSubCategory = (data, callback) => {
                         subCategoryName: data.subCategoryName,
                         icons: response.uploadIcons,
                         image: response.uploadImage,
-                        status: data.status
+                        status: data.status ? data.status : "ACTIVE"
                     }
 
                     subCategoryModelL2.create(query2, (err, update) => {
@@ -313,45 +313,7 @@ addProduct = (data, header, callback) => {
             }
 
         ], (err, response) => {
-            // console.log('waterfall', response)
-            // query = {
-            //     categoryModel: data.categoryId,
-            //     subCategory: data.subCategoryId,
-            //     productCategoryId: data.productCategoryId,
-            //     // brandDesc: {
-            //     brandId: data.brandId,
-            //     sellerId: sellerId,
-            //     productName: data.productName,
-            //     sellingPrice: data.sellingPrice,
-            //     summary: data.summary,
-            //     color: data.color,
-            //     size: data.size,
-            //     material: data.material,
-            //     description: data.description,
-            //     image: response.uploadImage,
-            //     specifications: data.specifications,
-            //     tag: data.tag,
-            //     productType: data.productType,
-            //     tryImage: null,
-            //     qrCode: data.qrCode,
-            //     inventorySKU: data.inventorySKU,
-            //     weight: data.weight,
-            //     quantity: data.quantity,
-            //     costItem: data.costItem,
-            //     status: data.status
-            // }
 
-            // // }
-
-            // var product = new productModel(query)
-            // product.save((err, result) => {
-            //     if (err) {
-            //         callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-            //     }
-            //     else if (!result) {
-            //         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
-
-            //     }
             if (response) {
                 var variance = []
                 async.forEachOf(data.variants, async (value, key, callback) => {
@@ -396,9 +358,92 @@ addProduct = (data, header, callback) => {
                 callback('wrong')
             }
         })
-        // }
     }
 }
+
+
+/************************************************************
+ ***********************************************************
+*****************editproduct*******************************
+ ***********************************************************
+ ***********************************************************
+ ************************************************************/
+
+editProduct = (data, callback) => {
+    // console.log('data is income', data)
+    if (!data.productId) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+    else {
+
+        async.parallel({
+
+            productDetail: (cb) => {
+                productModel.findById({ _id: data.productId }).
+                    populate('brandId categoryModel subCategory productCategoryId sellerId varianceId').exec((err, result) => {
+                        if (err || !result) {
+                            cb(null)
+                        }
+                        else cb(null, result)
+                    })
+            },
+            uploadCloud: (cb) => {
+                if (data.newImage) {
+                    commonFunction.uploadMultipleImages(data.newImage, (err, image) => {
+                        log(err, image)
+                        if (err) cb(null)
+                        else if (!image) cb(null)
+                        else {
+                            var image = data.image.concat(image)
+                            cb(null, image)
+                        }
+                    })
+                }
+                else {
+                    cb(null)
+                }
+            },
+
+
+        }, (err, response) => {
+            console.log('2222222222222222222', response.uploadCloud)
+            let query = { _id: data.productId }
+            let update = {
+                $set: {
+                    categoryModel: data.categoryId || response.productDetail.categoryModel._id,
+                    subCategory: data.subCategoryId || response.productDetail.subCategory._id,
+                    productCategoryId: data.productCategoryId || response.productDetail.productCategoryId._id,
+                    brandId: data.brandId || response.productDetail.brandId._id,
+                    sellerId: response.productDetail.sellerId._id,
+                    productName: data.productName || response.productDetail.productName,
+                    sellingPrice: data.sellingPrice || response.productDetail.sellingPrice,
+                    summary: data.summary || response.productDetail.summary,
+                    color: [],
+                    size: [],
+                    material: [],
+                    description: data.description || response.productDetail.description,
+                    image: response.uploadCloud || response.productDetail.image,
+                    specifications: response.productDetail.specifications,
+                    tag: data.tag || response.productDetail.tag,
+                    // productType: data.productType,
+                    tryImage: data.tryImage || response.productDetail.tryImage,
+                    qrCode: data.qrCode || response.productDetail.qrCode,
+                    inventorySKU: data.inventorySKU || response.productDetail.inventorySKU,
+                    weight: data.weight || response.productDetail.weight,
+                    quantity: data.quantity || response.productDetail.quantity,
+                    costItem: data.costItem || response.productDetail.costItem,
+                    status: response.productDetail.status
+                }
+            }
+            
+            callback(update)
+        })
+
+
+
+    }
+}
+
 /* *******************************************************************
 **************************addbrand************************************
 ***********************************************************************/
@@ -1323,7 +1368,7 @@ productDetails = (data, callback) => {
                             color.push(test.color)
                             material.push(test.material)
                             size.push(test.size)
-                            console.log('into the looop',test)
+                            console.log('into the looop', test)
                             data = {
                                 _id: response.findProduct._id,
                                 brand: response.findProduct.brandId.brandName,
@@ -2040,15 +2085,22 @@ inActiveProductList = (data, callback) => {
 /********************************************************************
 **************************addVendoroffer*************************
 ***********************************************************************/
-addVendoroffer = (data, callback) => {
+addVendoroffer = (data, header, callback) => {
+    // console.log('add vendor offer', data)
 
-    if (!data.offerName || !data.image || !data.description || !data.offerType || !data.value || !data.applicableOn) {
+    var userId
+    commonFunction.jwtDecode(header.accesstoken, (err, token) => {
+        if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        else userId = token
+    })
+    if (!data.offerName || !data.offerImage || !data.description || !data.offerType || !data.value || !data.applicableOn) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
     else {
         async.parallel({
             exist: (cb) => {
-                varianceOffer.findOne({ offerName: data.offerName })
+
+                productOffer.findOne({ offerName: data.offerName })
                     .exec((err, exist) => {
                         if (err) cb(null)
                         else if (!exist) cb(null)
@@ -2058,7 +2110,7 @@ addVendoroffer = (data, callback) => {
 
             uploadImage: (cb) => {
                 commonFunction.uploadMultipleImages(data.offerImage, (err, image) => {
-                    // log(err, image)
+                    log(err, image)
                     if (err) cb(null)
                     else if (!image) cb(null)
                     else cb(null, image)
@@ -2080,10 +2132,13 @@ addVendoroffer = (data, callback) => {
                     offerType: data.offerType,
                     image: response.uploadImage,
                     value: data.value,
-                    applicableOn: data.applicableOn
+                    applicableType: data.applicableType,
+                    applicableOn: data.applicableOn,
+                    startDate: data.startDate,
+                    endDate: data.endDate
                 }
-                let variance = new productOffer(query)
-                variance.create(query, (err, result) => {
+                let offer = new productOffer(query)
+                offer.save((err, result) => {
                     // log(err, result)
                     if (err)
                         callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
@@ -3553,6 +3608,46 @@ combination = async (data, callback) => {
     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': cartesian(final) })
 }
 
+//beforeEdit product
+getProductInfo = (data, callback) => {
+    console.log('incoming data', data)
+    productModel.findOne({ _id: data.productId }).
+        populate({ path: 'categoryModel' }).
+        populate({ path: 'subCategory' }).
+        populate({ path: 'productCategoryId' }).
+        populate({ path: 'brandId' }).
+        populate({ path: 'varianceId' })
+        .exec((err, result) => {
+            if (result)
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
+            else
+                callback({ "statusCode": util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang] })
+        })
+}
+
+//getvendorproductCategory
+
+getVendorProductCategorylist = (data, header, callback) => {
+    console.log('incoming data', data)
+    let decodeUserId
+    commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+        if (err) throw err
+        else {
+            decodeUserId = decodeId
+        }
+    })
+    productCategoryModelL3.find({ status: "ACTIVE" }).exec((err, result) => {
+        if (err || result == 0)
+            callback({ "statusCode": util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang] })
+        else
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
+
+    })
+}
+
+
+
+
 module.exports = {
     addCategory,
     addSubCategory,
@@ -3594,5 +3689,8 @@ module.exports = {
     getNotification,
     combination,
     physicalStore,
-    updateBrand
+    updateBrand,
+    getProductInfo,
+    getVendorProductCategorylist,
+    editProduct
 }

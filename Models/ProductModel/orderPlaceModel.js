@@ -54,7 +54,7 @@ var orderPlaced = mongoose.Schema({
         },
         orderStatus: {
             type: String,
-            enum: ["PENDING", "PLACED", "DISPATCH", "REJECTED", "INPROGRESS", "DELIVERED","ORDERSHIPPED,CANCELLED"],
+            enum: ["PENDING", "PLACED", "DISPATCH", "REJECTED", "INPROGRESS", "DELIVERED","ORDERSHIPPED","CANCELLED"],
             default: "PENDING",
             uppercase: true
         },

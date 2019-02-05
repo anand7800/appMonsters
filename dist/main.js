@@ -182,7 +182,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n  <!--Add Products Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\">\n\n      <div class=\"dashboardConbx\">\n        <!-- <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\" > -->\n        <div class=\"addproductheadingrow\">\n          <h3>Add your product</h3>\n          <div class=\"addproheadingbtn\">\n            <button type=\"button\" class=\"btn btn-primary addprobtn cancel\">Cancel</button>\n            <button (click)=\"saveProduct(myGroup.value)\" type=\"button\" [disabled]=\"!myGroup.valid\" class=\"btn btn-primary addprobtn\">Save</button>\n          </div>\n        </div>\n        <!-- <qrcode [qrdata]=\"myAngularxQrCode\" [size]=\"256\" [level]=\"'M'\"></qrcode> -->\n\n        <div class=\"productsviewrow\">\n          <div class=\"row eqWrap equalHMWrap clearfix\">\n            <!--Text Editor Section Start Here-->\n            <div class=\"col-sm-5 texteditorwrap\">\n              <div class=\"form-group\">\n                <label>Title</label>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Product Name Here\" [formControl]=\"myGroup.controls['title']\"\n                  ngDefaultControl />\n                  <p *ngIf=\"myGroup.controls['title'].hasError('required') && myGroup.controls['title'].dirty\"\n                  style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Description</label>\n                <div class=\"texteditorbox\"><img class=\"img-responsive\" width=\"606\" height=\"255\" />\n\n                  <ckeditor [(ngModel)]=\"ckeditorContent\" [formControl]=\"myGroup.controls['description']\"\n                    ngDefaultControl>\n                    <ckbutton [name]=\"'saveButton'\" [command]=\"'saveCmd'\" (click)=\"save($event)\" [icon]=\"'save.png'\"\n                      [label]=\"'Save Document'\" [toolbar]=\"'clipboard,1'\">\n                    </ckbutton>\n                  </ckeditor>\n                  <p *ngIf=\"myGroup.controls['description'].hasError('required') && myGroup.controls['description'].dirty\"\n                  style=\"color:red;font-size:14px;\">*required</p>\n                </div>\n              </div>\n            </div>\n            <!--Text Editor Section End Here-->\n            <!-- </form> -->\n            <!--Image Upload Section Start Here-->\n            <div class=\"col-sm-7 fileuploadbox\">\n              <label>Product Images</label>\n              <!-- <input type=\"file\" (change)='onFileChanged($event)' accept=\"image/jpeg,image/jpg,image/png\"> -->\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" id='fImage' data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image1']\" ngDefaultControl>\n                    </span> \n                    <p *ngIf=\"myGroup.controls['description'].hasError('required') && myGroup.controls['description'].dirty\"\n                    style=\"color:red;font-size:14px;\">*required</p>\n                  </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image2']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image3']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image4']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image5']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image6']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image7']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image8']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n            </div>\n            <!--Image Upload Section End Here-->\n          </div>\n        </div>\n\n        <div class=\"row productcategorywrap clearfix\">\n          <div class=\"col-sm-5 padwd10\">\n            <!--Product Category Section Start Here-->\n            <div class=\"productCategorybox\">\n              <div class=\"form-group\">\n                <label>Product Category</label>\n                <select class=\"form-control\" (change)=\"getCatgory($event.target.value)\" [formControl]=\"myGroup.controls['productcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select category</option>\n                  <option *ngFor=\"let c of category\" [value]=\"c._id\">{{c.categoryName}}</option>\n                </select>\n                <p *ngIf=\"myGroup.controls['productcategory'].hasError('required') && myGroup.controls['productcategory'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Subcategory</label>\n                <select class=\"form-control\" (change)=\"SubCatorydata($event.target.value)\" [formControl]=\"myGroup.controls['productsubcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select SubCategory</option>\n                  <option *ngFor=\"let c of getSubCatorydata\" [value]=\"c._id\">{{c.subCategoryName}}</option>\n                </select>\n                <p *ngIf=\"myGroup.controls['productsubcategory'].hasError('required') && myGroup.controls['productsubcategory'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Type</label>\n                <select class=\"form-control\" (change)=\"getProductCategoryId($event.target.value)\" [formControl]=\"myGroup.controls['producttype']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select Type</option>\n                  <option *ngFor=\"let c of productCategoryname\" [value]=\"c._id\">{{c.productcategoryName}}</option>\n                </select>\n                  \n\n              </div>\n              <div class=\"form-group\">\n                <label>Product Brand</label>\n                <select class=\"form-control\" (change)=\"getBrandId($event.target.value)\" [formControl]=\"myGroup.controls['productbrand']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select Brand</option>\n                  <option *ngFor=\"let c of getBrandList\" [value]=\"c._id\">{{c.brandName}}</option>\n                </select>\n              </div>\n              <!-- <div class=\"form-group mybrand clearfix\" [hidden]=\"true\">\n                <form [formGroup]='formgroup'>\n                <input type=\"text\" placeholder=\"My Brand\" [formControl]=\"myGroup.controls['addBrand']\" [(ngModel)]=\"brand\"/>\n                <button type=\"submit\" (click)=\"addBrand(myGroup.controls.addBrand.value)\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i></button>\n                </form>\n              </div> -->\n              <div class=\"form-group clearfix\">\n                <label>Product Tags</label>\n                <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"\n                  [formControl]=\"myGroup.controls['searchtag']\">\n                </tag-input>\n                <p *ngIf=\"myGroup.controls['searchtag'].hasError('required') && myGroup.controls['searchtag'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n                <!-- <tag-input [ngModel]=\"itemsAsObjects\" ></tag-input> -->\n              </div>\n            </div>\n            <!--Product Category Section End Here-->\n\n            <!--Modify Variants Table Section Start Here-->\n            <!-- <form [formGroup]='dynamicForm'> -->\n            <div class=\"modify_variants\" *ngIf=\"modification\">\n              <h4>Modify Variants</h4>\n              <table class=\"table mytable\" id=\"thisTable\">\n                <thead>\n                  <tr>\n                    <th align=\"left\" valign=\"middle\">Variant</th>\n                    <th>Price</th>\n                    <th>SKU</th>\n                    <th>Inventory</th>\n                    <th>Image1</th>\n                  </tr>\n                </thead>\n                <tbody>\n\n\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- <tr formArrayName=\"items\" *ngFor=\"let item of dynamicForm.get('items').controls;  let in = index\" >\n                      <td [formGroupName]=\"in\">\n                        <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id={{in}} />\n                          <label for={{in}}>&nbsp;</label>\n                        </span>\n                        <span class=\"sizenm\" >{{dataLoop[in]}}</span> <span class=\"colornm\"></span>\n                      </td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                    </tr> -->\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- {{dataLoop|json}} -->\n                  <tr formArrayName=\"variance\" *ngFor=\"let item of myGroup.get('variance').controls; let i = index;\"\n                    class=\"pickvalue\">\n                    <ng-container [formGroupName]=\"i\">\n                      <td>\n                        <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id={{i}} formControlName=\"checked\" />\n                          <label for={{i}}>&nbsp;</label>\n                        </span>\n                        <span class=\"sizenm\">{{item?.controls.size.value}}</span>&nbsp;\n                        <span class=\"sizenm\">{{item?.controls.material.value}}</span>&nbsp;\n                        <span class=\"colornm\">{{item?.controls.color.value}}</span>&nbsp;\n                        <!-- <span class=\"colornm\">{{item[2]}}</span>&nbsp; -->\n                      </td>\n                      <td id=\"variancePrice\"><input class=\"form-control variancePrice\" type=\"text\" placeholder=\"230\"\n                          formControlName=\"price\" /></td>\n                        \n                      <td><input class=\"form-control varianceSKU\" type=\"text\" placeholder=\"BHJ89\" formControlName=\"SKU\" />\n                        \n                        <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['price'].hasError('required') && this.myGroup.controls['variance']['controls'][0]['controls']['price'].dirty\"\n                          style=\"color:red;font-size:14px;\">*required</p>\n                        <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['price'].hasError('pattern') && this.myGroup.controls['variance']['controls'][0]['controls']['price'].dirty\"\n                          style=\"color:red;font-size:14px;\">*Please\n                          Enter number.</p>\n\n                      </td>\n\n                      <td><input class=\"form-control varianceInventory\" type=\"text\" placeholder=\"1234\" formControlName=\"quantity\" />\n                        <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].hasError('required') && this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].dirty\"\n                        style=\"color:red;font-size:14px;\">*required</p>\n                      <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].hasError('pattern') && this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].dirty\"\n                        style=\"color:red;font-size:14px;\">*Please\n                        Enter number.</p>\n\n                      </td>\n\n                      <td> <input id=\"input-22\" type=\"file\" name=\"...\" (change)='readThis($event, i)' accept=\".jpg,.gif,.png\"\n                          ngDefaultControl multiple></td>\n                    </ng-container>\n                  </tr>\n                  <!-- {{dynamicForm.value|json}} -->\n                  <!-- <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test2\" />\n                      <label for=\"test2\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Pink</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr>\n                <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test3\" />\n                      <label for=\"test3\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Blue</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr> -->\n                </tbody>\n              </table>\n            </div>\n            <!-- </form> -->\n            <!--Modify Variants Table Section End Here-->\n          </div>\n          <div class=\"col-sm-7 padwd10\">\n            <div class=\"row clearfix\">\n              <!--Selling Price Section Start Here-->\n              <div class=\"col-sm-6 pdrightwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Selling Price</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"499\" [(ngModel)]=\"SellingPrice\" [formControl]=\"myGroup.controls['sellingprice']\" />\n                    <p *ngIf=\"myGroup.controls['sellingprice'].hasError('required') && myGroup.controls['sellingprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['sellingprice'].hasError('pattern') && myGroup.controls['sellingprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Cost/Item</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"399\" [formControl]=\"myGroup.controls['costprice']\" />\n                    <p *ngIf=\"myGroup.controls['costprice'].hasError('required') && myGroup.controls['costprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['costprice'].hasError('pattern') && myGroup.controls['costprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Item Weight</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"0.5\" [formControl]=\"myGroup.controls['itemweight']\" />\n                    <p *ngIf=\"myGroup.controls['itemweight'].hasError('required') && myGroup.controls['itemweight'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['itemweight'].hasError('pattern') && myGroup.controls['itemweight'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n                  </div>\n                </div>\n                <!--Selling Price Section End Here-->\n              </div>\n              <!--Inventory Section Start Here-->\n              <div class=\"col-sm-6 pdleftwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Inventory SKU</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"BUI\" [formControl]=\"myGroup.controls['InventorySKU']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Quantity</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"50\" [formControl]=\"myGroup.controls['quantity']\" />\n                    <p *ngIf=\"myGroup.controls['quantity'].hasError('required') && myGroup.controls['quantity'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['quantity'].hasError('pattern') && myGroup.controls['quantity'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Product Type</label>\n                    <select class=\"form-control\" [formControl]=\"myGroup.controls['trialPack']\">\n                      <option value=\"Avaiable for try\">Avaiable for try</option>\n                      <option value=\"saab\">Saab</option>\n                      <option value=\"mercedes\">Mercedes</option>\n                      <option value=\"audi\">Audi</option>\n                    </select>\n                  </div>\n                </div>\n              </div>\n              <!--Inventory Section End Here-->\n            </div>\n\n            <!--Variants Section Start Here-->\n            <div class=\"row clearfix\" *ngIf='true'>\n              <div class=\"col-sm-12\">\n                <div class=\"productCategorybox\">\n                  <div class=\"variants\">\n                    <h4>Variants</h4>\n                    <div class=\"sminfo\">Swimming hundreds of feet beneath the ocean’s surface in many parts of the\n                      world\n                      are prolific aey construct one or more spacious houses” that can exceed three feet in length.\n                    </div>\n                    <div class=\"variantsoption\">\n                      <div class=\"row clearfix\">\n                        <div class=\"col-sm-3\">\n                          <label>Option name</label>\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <label>Option Values</label>\n                        </div>\n                        <div class=\"col-sm-3\">\n                          <label>&nbsp;</label>\n                        </div>\n                      </div>\n                      <div class=\"form-group\">\n                        <div class=\"row clearfix\">\n                          <!-- <div class=\"col-sm-3\">\n                          <input class=\"form-control\" type=\"text\" value=\"Color\" (change)='getOptionKey($event.target.value)' />\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"></tag-input>\n                        </div> -->\n                          <!-- <div class=\"col-sm-3\">\n                          <a (click)=\"createComponent()\">Add Option</a>\n                        </div> -->\n\n\n                          <!-- <button type=\"button\" (click)=\"createComponent()\">\n                          I am Parent, Create Child\n                        </button> -->\n\n                          <!-- //!asdfj -->\n                          <div>\n                            <form [formGroup]=\"myForm\" novalidate (ngSubmit)=\"saveVariants(myForm)\" ngDefaultControl>\n                              <div class=\"form-group\">\n                                <!-- <label>Front End</label> -->\n                                <!-- <input type=\"text\" class=\"form-control\" formControlName=\"front\"> -->\n                              </div>\n                              <div formArrayName=\"languages\">\n\n                                <div *ngFor=\"let language of myForm.controls.languages.controls; let i=index\" class=\"panel panel-default\">\n\n                                  <div class=\"panel-heading variantsoption\">\n                                    <span>Variant {{i + 1}}</span>\n                                    <span class=\"glyphicon glyphicon-remove pull-right\" *ngIf=\"myForm.controls.languages.controls.length > 1\"\n                                      (click)=\"removeLanguage(i)\"></span>\n                                  </div>\n                                  <div class=\"panel-body\" [formGroupName]=\"i\">\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Option</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"React\"></div> -->\n                                      <select class=\"form-control dropdown\" formControlName=\"varianceKey\" id='varianceValue'>\n                                        <option [hidden]=\"false\" value=\"color\" selected>Color</option>\n                                        <option value=\"size\">Size</option>\n                                        <option value=\"material\">Material</option>\n\n                                        <!-- <option  *ngFor=\"let c of varianceOption\" [value]=\"c\" selected>{{c}}</option> -->\n\n                                      </select>\n\n\n                                    </div>\n\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Value</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"Angular\"> -->\n                                      <tag-input formControlName=\"varianceValue\" [placeholder]=\"'Enter a Tags'\"\n                                        [onTextChangeDebounce]=\"500\"></tag-input>\n                                    </div>\n\n                                  </div>\n                                </div>\n                              </div>\n                              <!-- {{check}} {{count}} -->\n                              <div class=\"margin-20\" *ngIf=\"check\">\n\n                                <a (click)=\"addLanguage(i)\" type=\"button\" id=\"btn\" id=\"variantbutton\" style=\"cursor: default\">Add\n                                  another variants </a>\n                              </div>\n                              <div class=\"margin-20\">\n                                <button type=\"submit\" class=\"btn btn-primary pull-right\" [disabled]=\"!myForm.valid\">Submit</button></div>\n                              <div class=\"clearfix\"></div>\n                              <div class=\"margin-20\">\n                                <!-- <div>myForm details:-</div> -->\n                                <!-- <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre> -->\n                                <!-- <pre>form value: <br>{{myForm.value | json}}</pre> -->\n                                <!-- <p> {{dataLoop|json}}</p> -->\n                              </div>\n                            </form>\n                          </div>\n                          <!--//! asdfasdf -->\n                        </div>\n                      </div>\n                      <div>\n                        <ng-template #viewContainerRef></ng-template>\n                      </div>\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <!--Variants Section End Here-->\n\n          </div>\n        </div>\n      </div>\n\n    </form>\n  </div>\n  <!-- </form> -->\n  <!--Add Products Section End Here-->"
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n  <!--Add Products Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\">\n\n      <div class=\"dashboardConbx\">\n        <!-- <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\" > -->\n        <div class=\"addproductheadingrow\">\n          <h3>Add your product</h3>\n          <div class=\"addproheadingbtn\">\n            <button type=\"button\" class=\"btn btn-primary addprobtn cancel\">Cancel</button>\n            <button (click)=\"saveProduct(myGroup.value)\" type=\"button\" [disabled]=\"!myGroup.valid\" class=\"btn btn-primary addprobtn\">Save</button>\n          </div>\n        </div>\n        <!-- <qrcode [qrdata]=\"myAngularxQrCode\" [size]=\"256\" [level]=\"'M'\"></qrcode> -->\n\n        <div class=\"productsviewrow\">\n          <div class=\"row eqWrap equalHMWrap clearfix\">\n            <!--Text Editor Section Start Here-->\n            <div class=\"col-sm-5 texteditorwrap\">\n              <div class=\"form-group\">\n                <label>Title</label>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Product Name Here\" [formControl]=\"myGroup.controls['title']\"\n                  ngDefaultControl />\n                  <p *ngIf=\"myGroup.controls['title'].hasError('required') && myGroup.controls['title'].dirty\"\n                  style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Description</label>\n                <div class=\"texteditorbox\"><img class=\"img-responsive\" width=\"606\" height=\"255\" />\n\n                  <ckeditor [(ngModel)]=\"ckeditorContent\" [formControl]=\"myGroup.controls['description']\"\n                    ngDefaultControl>\n                    <ckbutton [name]=\"'saveButton'\" [command]=\"'saveCmd'\" (click)=\"save($event)\" [icon]=\"'save.png'\"\n                      [label]=\"'Save Document'\" [toolbar]=\"'clipboard,1'\">\n                    </ckbutton>\n                  </ckeditor>\n                  <p *ngIf=\"myGroup.controls['description'].hasError('required') && myGroup.controls['description'].dirty\"\n                  style=\"color:red;font-size:14px;\">*required</p>\n                </div>\n              </div>\n            </div>\n            <!--Text Editor Section End Here-->\n            <!-- </form> -->\n            <!--Image Upload Section Start Here-->\n            <div class=\"col-sm-7 fileuploadbox\">\n              <label>Product Images</label>\n              <!-- <input type=\"file\" (change)='onFileChanged($event)' accept=\"image/jpeg,image/jpg,image/png\"> -->\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" id='fImage' data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image1']\" ngDefaultControl>\n                    </span> \n                    <p *ngIf=\"myGroup.controls['description'].hasError('required') && myGroup.controls['description'].dirty\"\n                    style=\"color:red;font-size:14px;\">*required</p>\n                  </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image2']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image3']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image4']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image5']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image6']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image7']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n\n              <div class=\"uploadimgbx\">\n                <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                  <div> <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image8']\" ngDefaultControl>\n                    </span> </div>\n                </div>\n              </div>\n            </div>\n            <!--Image Upload Section End Here-->\n          </div>\n        </div>\n\n        <div class=\"row productcategorywrap clearfix\">\n          <div class=\"col-sm-5 padwd10\">\n            <!--Product Category Section Start Here-->\n            <div class=\"productCategorybox\">\n              <div class=\"form-group\">\n                <label>Product Category</label>\n                <select class=\"form-control\" (change)=\"getCatgory($event.target.value)\" [formControl]=\"myGroup.controls['productcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select category</option>\n                  <option *ngFor=\"let c of category\" [value]=\"c._id\">{{c.categoryName}}</option>\n                </select>\n                <p *ngIf=\"myGroup.controls['productcategory'].hasError('required') && myGroup.controls['productcategory'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Subcategory</label>\n                <select class=\"form-control\" (change)=\"SubCatorydata($event.target.value)\" [formControl]=\"myGroup.controls['productsubcategory']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select SubCategory</option>\n                  <option *ngFor=\"let c of getSubCatorydata\" [value]=\"c._id\">{{c.subCategoryName}}</option>\n                </select>\n                <p *ngIf=\"myGroup.controls['productsubcategory'].hasError('required') && myGroup.controls['productsubcategory'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Type</label>\n                <select class=\"form-control\" (change)=\"getProductCategoryId($event.target.value)\" [formControl]=\"myGroup.controls['producttype']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select Type</option>\n                  <option *ngFor=\"let c of productCategoryname\" [value]=\"c._id\">{{c.productcategoryName}}</option>\n                </select>\n                  \n\n              </div>\n              <div class=\"form-group\">\n                <label>Product Brand</label>\n                <select class=\"form-control\" (change)=\"getBrandId($event.target.value)\" [formControl]=\"myGroup.controls['productbrand']\"\n                  ngDefaultControl>\n                  <option value=\"\">Select Brand</option>\n                  <option *ngFor=\"let c of getBrandList\" [value]=\"c._id\">{{c.brandName}}</option>\n                </select>\n              </div>\n              <!-- <div class=\"form-group mybrand clearfix\" [hidden]=\"true\">\n                <form [formGroup]='formgroup'>\n                <input type=\"text\" placeholder=\"My Brand\" [formControl]=\"myGroup.controls['addBrand']\" [(ngModel)]=\"brand\"/>\n                <button type=\"submit\" (click)=\"addBrand(myGroup.controls.addBrand.value)\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i></button>\n                </form>\n              </div> -->\n              <div class=\"form-group clearfix\">\n                <label>Product Tags</label>\n                <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"\n                  [formControl]=\"myGroup.controls['searchtag']\">\n                </tag-input>\n                <p *ngIf=\"myGroup.controls['searchtag'].hasError('required') && myGroup.controls['searchtag'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n                <!-- <tag-input [ngModel]=\"itemsAsObjects\" ></tag-input> -->\n              </div>\n            </div>\n            <!--Product Category Section End Here-->\n\n            <!--Modify Variants Table Section Start Here-->\n            <!-- <form [formGroup]='dynamicForm'> -->\n            <div class=\"modify_variants\" *ngIf=\"modification\">\n              <h4>Modify Variants</h4>\n              <table class=\"table mytable\" id=\"thisTable\">\n                <thead>\n                  <tr>\n                    <th align=\"left\" valign=\"middle\">Variant</th>\n                    <th>Price</th>\n                    <th>SKU</th>\n                    <th>Inventory</th>\n                    <th>Image1</th>\n                  </tr>\n                </thead>\n                <tbody>\n\n\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- <tr formArrayName=\"items\" *ngFor=\"let item of dynamicForm.get('items').controls;  let in = index\" >\n                      <td [formGroupName]=\"in\">\n                        <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id={{in}} />\n                          <label for={{in}}>&nbsp;</label>\n                        </span>\n                        <span class=\"sizenm\" >{{dataLoop[in]}}</span> <span class=\"colornm\"></span>\n                      </td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                    </tr> -->\n                  <!-- ![(ngModel)]='combinationOfVariants' ngDefaultControl -->\n                  <!-- {{dataLoop|json}} -->\n                  <tr formArrayName=\"variance\" *ngFor=\"let item of myGroup.get('variance').controls; let i = index;\"\n                    class=\"pickvalue\">\n                    <ng-container [formGroupName]=\"i\">\n                      <td>\n                        <span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id={{i}} formControlName=\"checked\" />\n                          <label for={{i}}>&nbsp;</label>\n                        </span>\n                        <span class=\"sizenm\">{{item?.controls.size.value}}</span>&nbsp;\n                        <span class=\"sizenm\">{{item?.controls.material.value}}</span>&nbsp;\n                        <span class=\"colornm\">{{item?.controls.color.value}}</span>&nbsp;\n                        <!-- <span class=\"colornm\">{{item[2]}}</span>&nbsp; -->\n                      </td>\n                      <td id=\"variancePrice\"><input class=\"form-control variancePrice\" type=\"text\" placeholder=\"230\"\n                          formControlName=\"price\" /></td>\n                        \n                      <td><input class=\"form-control varianceSKU\" type=\"text\" placeholder=\"BHJ89\" formControlName=\"SKU\" />\n                        \n                        <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['price'].hasError('required') && this.myGroup.controls['variance']['controls'][0]['controls']['price'].dirty\"\n                          style=\"color:red;font-size:14px;\">*required</p>\n                        <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['price'].hasError('pattern') && this.myGroup.controls['variance']['controls'][0]['controls']['price'].dirty\"\n                          style=\"color:red;font-size:14px;\">*Please\n                          Enter number.</p>\n\n                      </td>\n\n                      <td><input class=\"form-control varianceInventory\" type=\"text\" placeholder=\"1234\" formControlName=\"quantity\" />\n                        <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].hasError('required') && this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].dirty\"\n                        style=\"color:red;font-size:14px;\">*required</p>\n                      <p *ngIf=\"this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].hasError('pattern') && this.myGroup.controls['variance']['controls'][0]['controls']['quantity'].dirty\"\n                        style=\"color:red;font-size:14px;\">*Please\n                        Enter number.</p>\n\n                      </td>\n\n                      <td> <input id=\"input-22\" type=\"file\" name=\"...\" (change)='readThis($event, i)' accept=\".jpg,.gif,.png\"\n                          ngDefaultControl multiple></td>\n                    </ng-container>\n                  </tr>\n                  <!-- {{dynamicForm.value|json}} -->\n                  <!-- <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test2\" />\n                      <label for=\"test2\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Pink</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr>\n                <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test3\" />\n                      <label for=\"test3\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Blue</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr> -->\n                </tbody>\n              </table>\n            </div>\n            <!-- </form> -->\n            <!--Modify Variants Table Section End Here-->\n          </div>\n          <div class=\"col-sm-7 padwd10\">\n            <div class=\"row clearfix\">\n              <!--Selling Price Section Start Here-->\n              <div class=\"col-sm-6 pdrightwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Selling Price</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"499\" [(ngModel)]=\"SellingPrice\" [formControl]=\"myGroup.controls['sellingprice']\" />\n                    <p *ngIf=\"myGroup.controls['sellingprice'].hasError('required') && myGroup.controls['sellingprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['sellingprice'].hasError('pattern') && myGroup.controls['sellingprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Cost/Item</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"399\" [formControl]=\"myGroup.controls['costprice']\" />\n                    <p *ngIf=\"myGroup.controls['costprice'].hasError('required') && myGroup.controls['costprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['costprice'].hasError('pattern') && myGroup.controls['costprice'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Item Weight</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"0.5\" [formControl]=\"myGroup.controls['itemweight']\" />\n                    <p *ngIf=\"myGroup.controls['itemweight'].hasError('required') && myGroup.controls['itemweight'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['itemweight'].hasError('pattern') && myGroup.controls['itemweight'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n                  </div>\n                </div>\n                <!--Selling Price Section End Here-->\n              </div>\n              <!--Inventory Section Start Here-->\n              <div class=\"col-sm-6 pdleftwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Inventory SKU</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"BUI\" [formControl]=\"myGroup.controls['InventorySKU']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Quantity</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"50\" [formControl]=\"myGroup.controls['quantity']\" />\n                    <p *ngIf=\"myGroup.controls['quantity'].hasError('required') && myGroup.controls['quantity'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                    <p *ngIf=\"myGroup.controls['quantity'].hasError('pattern') && myGroup.controls['quantity'].dirty\"\n                      style=\"color:red;font-size:14px;\">*Please\n                      Enter number.</p>\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Product Type</label>\n                    <select class=\"form-control\" [formControl]=\"myGroup.controls['trialPack']\">\n                      <option value=\"Avaiable for try\">Avaiable for try</option>\n                      <option value=\"saab\">Saab</option>\n                      <option value=\"mercedes\">Mercedes</option>\n                      <option value=\"audi\">Audi</option>\n                    </select>\n                  </div>\n                </div>\n              </div>\n              <!--Inventory Section End Here-->\n            </div>\n\n            <!--Variants Section Start Here-->\n            <div class=\"row clearfix\" *ngIf='true'>\n              <div class=\"col-sm-12\">\n                <div class=\"productCategorybox\">\n                  <div class=\"variants\">\n                    <h4>Variants</h4>\n                    <div class=\"sminfo\">Swimming hundreds of feet beneath the ocean’s surface in many parts of the\n                      world\n                      are prolific aey construct one or more spacious houses” that can exceed three feet in length.\n                    </div>\n                    <div class=\"variantsoption\">\n                      <div class=\"row clearfix\">\n                        <div class=\"col-sm-3\">\n                          <label>Option name</label>\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <label>Option Values</label>\n                        </div>\n                        <div class=\"col-sm-3\">\n                          <label>&nbsp;</label>\n                        </div>\n                      </div>\n                      <div class=\"form-group\">\n                        <div class=\"row clearfix\">\n                          <!-- <div class=\"col-sm-3\">\n                          <input class=\"form-control\" type=\"text\" value=\"Color\" (change)='getOptionKey($event.target.value)' />\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"></tag-input>\n                        </div> -->\n                          <!-- <div class=\"col-sm-3\">\n                          <a (click)=\"createComponent()\">Add Option</a>\n                        </div> -->\n\n\n                          <!-- <button type=\"button\" (click)=\"createComponent()\">\n                          I am Parent, Create Child\n                        </button> -->\n\n                          <!-- //!asdfj -->\n                          <div>\n                            <form [formGroup]=\"myForm\" novalidate (ngSubmit)=\"saveVariants(myForm)\" ngDefaultControl>\n                              <div class=\"form-group\">\n                                <!-- <label>Front End</label> -->\n                                <!-- <input type=\"text\" class=\"form-control\" formControlName=\"front\"> -->\n                              </div>\n                              <div formArrayName=\"languages\">\n\n                                <div *ngFor=\"let language of myForm.controls.languages.controls; let i=index\" class=\"panel panel-default\">\n\n                                  <div class=\"panel-heading variantsoption\">\n                                    <span>Variant {{i + 1}}</span>\n                                    <span class=\"glyphicon glyphicon-remove pull-right\" *ngIf=\"myForm.controls.languages.controls.length > 1\"\n                                      (click)=\"removeLanguage(i)\"></span>\n                                  </div>\n                                  <div class=\"panel-body\" [formGroupName]=\"i\">\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Option</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"React\"></div> -->\n                                      <select class=\"form-control dropdown\" formControlName=\"varianceKey\" id='varianceValue' (change)=\"disableEle($event.target.value,i)\">\n                                        <!-- <option [hidden]=\"false\" value=\"color\" selected>Color</option>\n                                        <option value=\"size\">Size</option>\n                                        <option value=\"material\">Material</option> -->\n                                        <option  value=\"color\" [disabled]=\"selectVal\" >Color</option>\n                                        <option value=\"size\" [disabled]=\"Size\">Size</option>\n                                        <option value=\"material\" [disabled]=\"Material\">Material</option>\n\n                                        <!-- <option  *ngFor=\"let c of varianceOption\" [value]=\"c\" selected>{{c}}</option> -->\n\n                                      </select>\n\n\n                                    </div>\n\n                                    <div class=\"form-group col-xs-6\">\n                                      <!-- <label>Value</label> -->\n                                      <!-- <input type=\"text\" class=\"form-control\" formControlName=\"Angular\"> -->\n                                      <tag-input formControlName=\"varianceValue\" [placeholder]=\"'Enter a Tags'\"\n                                        [onTextChangeDebounce]=\"500\"></tag-input>\n                                    </div>\n\n                                  </div>\n                                </div>\n                              </div>\n                              <!-- {{check}} {{count}} -->\n                              <div class=\"margin-20\" *ngIf=\"check\">\n\n                                <a (click)=\"addLanguage(i)\" type=\"button\" id=\"btn\" id=\"variantbutton\" style=\"cursor: default\">Add\n                                  another variants </a>\n                              </div>\n                              <div class=\"margin-20\">\n                                <button type=\"submit\" class=\"btn btn-primary pull-right\" [disabled]=\"!myForm.valid\">Submit</button></div>\n                              <div class=\"clearfix\"></div>\n                              <div class=\"margin-20\">\n                                <!-- <div>myForm details:-</div> -->\n                                <!-- <pre>Is myForm valid?: <br>{{myForm.valid | json}}</pre> -->\n                                <!-- <pre>form value: <br>{{myForm.value | json}}</pre> -->\n                                <!-- <p> {{dataLoop|json}}</p> -->\n                              </div>\n                            </form>\n                          </div>\n                          <!--//! asdfasdf -->\n                        </div>\n                      </div>\n                      <div>\n                        <ng-template #viewContainerRef></ng-template>\n                      </div>\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <!--Variants Section End Here-->\n\n          </div>\n        </div>\n      </div>\n\n    </form>\n  </div>\n  <!-- </form> -->\n  <!--Add Products Section End Here-->"
 
 /***/ }),
 
@@ -237,6 +237,7 @@ var AddProductComponent = /** @class */ (function () {
         this.myAngularxQrCode = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         this.count = 0;
         this.smartGlasses = [{}];
+        this.enabDisable = [];
         // this.formgroup = formBuilder.group({
         //   brand: ['']
         // });
@@ -300,11 +301,16 @@ var AddProductComponent = /** @class */ (function () {
     AddProductComponent.prototype.initlanguage = function () {
         // console.log("$$$$$$4", this.myForm)
         return this._fb.group({
-            varianceKey: [''],
-            varianceValue: ['']
+            varianceKey: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            varianceValue: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
         });
     };
     AddProductComponent.prototype.addLanguage = function (i) {
+        var test = this.myGroup.get('variance');
+        for (var index = 0; index < test.length; index++) {
+            test.controls.length = 0;
+            test.removeAt(index);
+        }
         // this.check = "true"
         this.modification = true;
         if (true) {
@@ -312,39 +318,62 @@ var AddProductComponent = /** @class */ (function () {
             control.push(this.initlanguage());
         }
         this.count++;
-        if (this.count == 3) {
+        if (this.count == 2) {
             this.check = false;
         }
-        console.log(this.check, "###", this.count);
-        $('#varianceValue option').on('click', function () {
-            console.log("tisss", $('this'));
-            $("this").attr('disabled', true);
-        });
-        $('#variantbutton').click(function () {
-            $('#varianceValue option:selected').remove();
-        });
+        if (this.enabDisable.indexOf('color') != -1) {
+            this.selectVal = true;
+        }
+        if (this.enabDisable.indexOf('size') != -1) {
+            this.Size = true;
+        }
+        if (this.enabDisable.indexOf('material') != -1) {
+            this.Material = true;
+        }
+        if (this.count == 3) {
+            this.langDisabled = true;
+        }
     };
     AddProductComponent.prototype.removeLanguage = function (i) {
+        var test = this.myGroup.get('variance');
+        for (var index = 0; index < test.length; index++) {
+            test.controls.length = 0;
+            test.removeAt(index);
+        }
         var control = this.myForm.controls['languages'];
+        console.log("remove at index", control);
         control.removeAt(i);
         this.count--;
         this.check = true;
-        console.log(this.count, this.check);
+        var temp = this.enabDisable.splice(i, 1);
+        if (temp[0] == 'color') {
+            this.selectVal = false;
+        }
+        if (temp[0] == 'size') {
+            this.Size = false;
+        }
+        if (temp[0] == 'material') {
+            this.Material = false;
+        }
     };
     //!save variants
     AddProductComponent.prototype.saveVariants = function (val) {
         var _this = this;
+        var test = this.myGroup.get('variance');
+        for (var index = 0; index < test.length; index++) {
+            test.controls.length = 0;
+            test.removeAt(index);
+        }
         this.modification = true;
-        console.log(JSON.stringify(val.value.languages));
         var temp = {
             push: val.value.languages
         };
         this.service.postApi('vendor/combination', temp, 0).subscribe(function (response) {
             if (response['statusCode'] == 200) {
-                // this.service.showSuccess('found')
                 _this.dataLoop = response['result'];
-                // console.log('-----------------', this.dataLoop)
-                _this.myGroup.get('variance').reset();
+                if (temp['push'][0]['varianceKey'] == '' && temp['push'][0]['varianceValue'] == '') {
+                    _this.dataLoop.length = 0;
+                }
                 for (var i = 0; i < _this.dataLoop.length; i++) {
                     _this.addItem(_this.dataLoop[i]);
                 }
@@ -358,6 +387,7 @@ var AddProductComponent = /** @class */ (function () {
         });
     };
     AddProductComponent.prototype.addItem = function (item) {
+        // debugger
         this.items = this.myGroup.get('variance');
         this.items.push(this.createItem(item));
     };
@@ -494,8 +524,6 @@ var AddProductComponent = /** @class */ (function () {
     };
     AddProductComponent.prototype.handleReaderLoaded = function (e) {
         this.imageData.push('data:image/png;base64,' + btoa(e.target.result));
-        // this.dataLoop[inde
-        // console.log('this is multiple image', this.imageData)
     };
     AddProductComponent.prototype.readThis = function (evt, i) {
         var _this = this;
@@ -556,8 +584,7 @@ var AddProductComponent = /** @class */ (function () {
             weight: val.itemweight,
             productType: val.trialPack
         };
-        // console.log("temp", JSON.stringify(temp))
-        // return
+        console.log("temp", JSON.stringify(temp));
         this.service.postApi('vendor/addProduct', temp, 1).subscribe(function (response) {
             _this.service.spinnerShow();
             if (response['statusCode'] == 200) {
@@ -577,6 +604,29 @@ var AddProductComponent = /** @class */ (function () {
             console.log('error occur', error);
             _this.service.showError('Server Error');
         });
+    };
+    AddProductComponent.prototype.disableEle = function (deviceValue, e) {
+        console.log(deviceValue);
+        if (this.enabDisable.indexOf(deviceValue) != -1) {
+            if (deviceValue == 'color') {
+                this.selectVal = true;
+            }
+            if (deviceValue == 'size') {
+                this.Size = true;
+            }
+            if (deviceValue == 'material') {
+                this.Material = true;
+            }
+        }
+        else {
+            this.enabDisable[e] = deviceValue;
+        }
+        if (this.enabDisable.length == 3) {
+            this.selectVal = true;
+            this.Size = true;
+            this.Material = true;
+        }
+        console.log(this.enabDisable);
     };
     AddProductComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -706,7 +756,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Dashboard Screen Start Here-->\n<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <!--All Products List Showing Start Here-->\n      <div class=\"allproductslistingwarp\">\n          <div class=\"products_alllist_numrow\">\n            <div class=\"row clearfix\" >\n              <div class=\"col-sm-4\">\n                <div class=\"pro_digitbx add_pro\">\n                  <h2>{{getProductCount}}</h2>\n                  <h3>Added Products</h3>\n                </div>\n              </div>\n              <div class=\"col-sm-4\">\n                <div class=\"pro_digitbx brands\">\n                  <h2>{{getbrandcount }}</h2>\n                  <h3>Brands</h3>\n                </div>\n              </div>\n              <div class=\"col-sm-4\">\n                <div class=\"pro_digitbx categories\">\n                  <h2>{{getCategoryCount}}</h2>\n                  <h3>Categories</h3>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"imports_row clearfix\">\n            <h3>Products</h3>\n            <div class=\"importsfile\"><span class=\"glyphicon glyphicon-download-alt\"></span> <span class=\"imports_text\">Import</span></div>\n          </div>\n        </div>\n      <!--All Products List Showing End Here-->\n\n   <div class=\"recentorder_tablewrap\" *ngIf=\"apiData;else notFound\">\n     <!--Filter Search Row Start Here-->\n      <div class=\"filter_search_row clearfix\">\n          <div class=\"filterbtnbx\">\n             <div class=\"dropdown\">\n                 <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter\n                 <span class=\"caret\"></span></button>\n                 <ul class=\"dropdown-menu\">\n                   <li><a href=\"#\">Edit</a></li>\n                   <li><a href=\"#\">Delete</a></li>\n                 </ul>\n               </div>\n          </div>\n          <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span><input class=\"form-control\" type=\"text\" placeholder=\"Search Products\" /></div>\n       </div>\n    <!--Filter Search Row End Here-->\n\n    <div class=\"recentOrderTable\">\n      <div class=\"table-responsive\">\n      <table class=\"table\">\n        <thead>\n          <tr>\n            <th align=\"left\" valign=\"middle\" width=\"40\">\n              <span class=\"checkboxbx\">\n                <input type=\"checkbox\" id=\"selectall\">\n                <label for=\"selectall\">&nbsp;</label>\n                </span></th>\n                  <th>Product</th>\n                  <th>Inventory</th>\n                  <th>Type/Category</th>\n                  <th>Brand</th>\n              </tr>\n        </thead>\n        <tbody>\n          \n          <tr *ngFor=\"let product of apiData;let i = index\">\n            <td align=\"left\" valign=\"middle\" width=\"40\">\n              <span class=\"checkboxbx\">\n                <input type=\"checkbox\" id={{i}}>\n                <label for={{i}}>&nbsp;</label>\n                </span></td>\n            <td class=\"lineH\" align=\"left\" valign=\"middle\" width=\"400\">\n              <div class=\"pro_img_wd\"><img class=\"pro_img\" src=\"{{product.image}}\" alt=\"\" /></div><div class=\"pro_info_rw\">{{product.product}}</div></td>\n            <td>{{product.inventorySKU}}</td>\n            <td>{{product.getProductCategoryName?product.getProductCategoryName:\"NULL\"}}</td>\n            <td>{{product.brand}}</td>\n          </tr>\n         </tbody>\n      </table>\n    </div>\n    </div>\n  </div>\n<!-- else condition -->\n  <ng-template #notFound>\n    <!-- <form [formGroup]='formgroup'> -->\n    NOT ADDED YET \n</ng-template>\n<!-- else condition -->\n\n  </div>\n   \n  </div>\n  </div>"
+module.exports = "<!--Dashboard Screen Start Here-->\n<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <!--All Products List Showing Start Here-->\n      <div class=\"allproductslistingwarp\">\n          <div class=\"products_alllist_numrow\">\n            <div class=\"row clearfix\" >\n              <div class=\"col-sm-4\">\n                <div class=\"pro_digitbx add_pro\">\n                  <h2>{{getProductCount}}</h2>\n                  <h3>Added Products</h3>\n                </div>\n              </div>\n              <div class=\"col-sm-4\">\n                <div class=\"pro_digitbx brands\">\n                  <h2>{{getbrandcount }}</h2>\n                  <h3>Brands</h3>\n                </div>\n              </div>\n              <div class=\"col-sm-4\">\n                <div class=\"pro_digitbx categories\">\n                  <h2>{{getCategoryCount}}</h2>\n                  <h3>Categories</h3>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"imports_row clearfix\">\n            <h3>Products</h3>\n            <div class=\"importsfile\"><span class=\"glyphicon glyphicon-download-alt\"></span> <span class=\"imports_text\">Import</span></div>\n          </div>\n        </div>\n      <!--All Products List Showing End Here-->\n\n   <div class=\"recentorder_tablewrap\" *ngIf=\"apiData;else notFound\">\n     <!--Filter Search Row Start Here-->\n      <div class=\"filter_search_row clearfix\">\n          <div class=\"filterbtnbx\">\n             <div class=\"dropdown\">\n                 <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Filter\n                 <span class=\"caret\"></span></button>\n                 <ul class=\"dropdown-menu\">\n                   <li><a href=\"#\">Edit</a></li>\n                   <li><a href=\"#\">Delete</a></li>\n                 </ul>\n               </div>\n          </div>\n          <div class=\"filter_search_inputbx\"><span class=\"glyphicon glyphicon-search\"></span><input class=\"form-control\" type=\"text\" placeholder=\"Search Products\" /></div>\n       </div>\n    <!--Filter Search Row End Here-->\n\n    <div class=\"recentOrderTable\">\n      <div class=\"table-responsive\">\n      <table class=\"table\">\n        <thead>\n          <tr>\n            <th align=\"left\" valign=\"middle\" width=\"40\">\n              <span class=\"checkboxbx\">\n                <input type=\"checkbox\" id=\"selectall\">\n                <label for=\"selectall\">&nbsp;</label>\n                </span></th>\n                  <th>Product</th>\n                  <th>Inventory</th>\n                  <th>Type/Category</th>\n                  <th>Brand</th>\n              </tr>\n        </thead>\n        <tbody>\n          \n          <tr *ngFor=\"let product of apiData;let i = index\">\n            <td align=\"left\" valign=\"middle\" width=\"40\">\n              <span class=\"checkboxbx\">\n                <input type=\"checkbox\" id={{i}}>\n                <label for={{i}}>&nbsp;</label>\n                </span></td>\n            <td class=\"lineH\" align=\"left\" valign=\"middle\" width=\"400\" (click)=\"editProduct(product._id)\">\n              <div class=\"pro_img_wd\"><img class=\"pro_img\" src=\"{{product.image}}\" alt=\"\" /></div><div class=\"pro_info_rw\">{{product.product}}</div></td>\n            <td>{{product.inventorySKU}}</td>\n            <td>{{product.getProductCategoryName?product.getProductCategoryName:\"NULL\"}}</td>\n            <td>{{product.brand}}</td>\n          </tr>\n         </tbody>\n      </table>\n    </div>\n    </div>\n  </div>\n<!-- else condition -->\n  <ng-template #notFound>\n    <!-- <form [formGroup]='formgroup'> -->\n    NOT ADDED YET \n</ng-template>\n<!-- else condition -->\n\n  </div>\n   \n  </div>\n  </div>"
 
 /***/ }),
 
@@ -722,6 +772,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AllproductsComponent", function() { return AllproductsComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -733,9 +784,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var AllproductsComponent = /** @class */ (function () {
-    function AllproductsComponent(service) {
+    function AllproductsComponent(service, route) {
         this.service = service;
+        this.route = route;
         this.rows = [];
         this.selected = [];
         this.getproductList();
@@ -820,13 +873,18 @@ var AllproductsComponent = /** @class */ (function () {
             _this.service.showError('Server Error');
         });
     };
+    AllproductsComponent.prototype.editProduct = function (productId) {
+        console.log(productId);
+        this.route.navigate(['editProduct/' + productId]);
+        this.service.setTitle('Edit Product');
+    };
     AllproductsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-allproducts',
             template: __webpack_require__(/*! ./allproducts.component.html */ "./src/app/Components/allproducts/allproducts.component.html"),
             styles: [__webpack_require__(/*! ./allproducts.component.css */ "./src/app/Components/allproducts/allproducts.component.css")]
         }),
-        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], AllproductsComponent);
     return AllproductsComponent;
 }());
@@ -993,32 +1051,20 @@ var BusinessDetailComponent = /** @class */ (function () {
         });
     }
     BusinessDetailComponent.prototype.ngOnInit = function () {
-        // this.dropdownList = [
-        //     { item_id: 1, item_text: 'Mumbai' },
-        //     { item_id: 2, item_text: 'Bangaluru' },
-        //     { item_id: 3, item_text: 'Pune' },
-        //     { item_id: 4, item_text: 'Navsari' },
-        //     { item_id: 5, item_text: 'New Delhi' }
-        // ];
         this.getCategoryList();
-        // $('#ex-search').picker({ search: false });
     };
     BusinessDetailComponent.prototype.getCategoryList = function () {
         var _this = this;
         var logindata = this.service.getApi('vendor/getCategoryList', 0).subscribe(function (response) {
             _this.responseData = response;
-            // console.log("WWWWWWWW", this.responseData['result'])
             if (response['statusCode'] == 200) {
                 _this.category = _this.responseData['result'];
                 _this.categoryList = _this.category;
-                // console.log(this.categoryList)
             }
             else {
                 _this.service.showError('Invalid Email');
-                // this.service.showError('Invalid email or password.')
             }
         }, function (error) {
-            // console.log('error occur', error)
             _this.service.showError('Server Error');
         });
     };
@@ -1186,7 +1232,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!-- Sidebar end Here-->\n  <!--Create New Offer Products Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n        <form class=\"form\" [formGroup]='Form'>\n      <div class=\"addproductheadingrow\">\n        <h3>Lorem Ipsum Heading</h3>\n        <div class=\"addproheadingbtn\">\n          <button type=\"button\" class=\"btn btn-primary addprobtn cancel\">Cancel</button>\n          <button type=\"button\" class=\"btn btn-primary addprobtn\">Save</button>\n        </div>\n      </div>\n      <div class=\"productsviewrow create_new_offer\">\n        <div class=\"row eqWrap equalHMWrap clearfix\"> \n          <!--Text Editor Section Start Here-->\n          <div class=\"col-lg-5 texteditorwrap\">\n            <div class=\"form-group\">\n              <label>Title</label>\n              <input class=\"form-control\" type=\"text\" placeholder=\"Black Typography Top\" />\n            </div>\n            <div class=\"form-group\">\n              <label>Description</label>\n              <div class=\"texteditorbox\"><img class=\"img-responsive\" src=\"assets/images/text_editor.jpg\" width=\"606\" height=\"255\" alt=\"\" /></div>\n            </div>\n          </div>\n          <!--Text Editor Section End Here--> \n          \n          <!--Image Upload Section Start Here-->\n          <div class=\"col-lg-7 fileuploadbox\">\n            <label>Product Images</label>\n            <div class=\"row clearfix\">\n                <div class=\"col-sm-5 pdr10wds\">\n                    <div class=\"uploadimgbx wd100\">\n                        <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                          <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                          <div> <span class=\"btn btn-default btn-file\">\n                            <input id=\"input-22\" type=\"file\" name=\"...\" accept=\".jpg,.gif,.png\">\n                            </span> </div>\n                        </div>\n                      </div>\n                </div>\n                <div class=\"col-sm-7 pdlsunye\">\n                    <div class=\"uploadimgbx wd100_landsscape\">\n                        <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                          <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                          <div> <span class=\"btn btn-default btn-file\">\n                            <input id=\"input-22\" type=\"file\" name=\"...\" accept=\".jpg,.gif,.png\">\n                            </span> </div>\n                        </div>\n                      </div>\n                      <div class=\"uploadimgbx wd100_landsscape\">\n                          <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                            <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                            <div> <span class=\"btn btn-default btn-file\">\n                              <input id=\"input-22\" type=\"file\" name=\"...\" accept=\".jpg,.gif,.png\">\n                              </span> </div>\n                          </div>\n                        </div>\n                </div>\n            </div>\n           \n          </div>\n          <!--Image Upload Section End Here--> \n        </div>\n      </div>\n\n      <div class=\"productsviewrow create_new_offer\">\n        <div class=\"row eqWrap equalHMWrap clearfix\"> \n          <div class=\"col-lg-5 texteditorwrap\">\n            <!--Product Category Section Start Here-->\n            <div class=\"form-group\">\n              <label>Offer Type</label>\n              <select class=\"form-control\">\n                <option value=\"volvo\">Volvo</option>\n                <option value=\"saab\">Saab</option>\n                <option value=\"mercedes\">Mercedes</option>\n                <option value=\"audi\">Audi</option>\n              </select>\n            </div>\n            <div class=\"form-group\">\n              <label>Value</label>\n              <input class=\"form-control\" type=\"text\" placeholder=\"50\" />\n            </div>\n            <div class=\"form-group\">\n              <label>Minimum Requirement</label>\n              <select class=\"form-control\">\n                <option value=\"volvo\">Volvo</option>\n                <option value=\"saab\">Saab</option>\n                <option value=\"mercedes\">Mercedes</option>\n                <option value=\"audi\">Audi</option>\n              </select>\n            </div>\n            <div class=\"form-group\">\n              <label>Applicable on</label>\n              <select class=\"form-control\">\n                <option value=\"volvo\">Volvo</option>\n                <option value=\"saab\">Saab</option>\n                <option value=\"mercedes\">Mercedes</option>\n                <option value=\"audi\">Audi</option>\n              </select>\n            </div>\n          <!--Product Category Section End Here--> \n          </div>\n         \n          \n          <!--Choose Date Section Start Here-->\n          <div class=\"col-lg-7 fileuploadbox\">\n            <div class=\"row clearfix\">\n              <div class=\"col-sm-6\">\n                  <label>Start Date</label>\n                  <form #myForm=\"ngForm\" novalidate>\n                    <my-date-picker name=\"mydate\" [options]=\"myDatePickerOptions\"\n                    [formControl]=\"Form.controls['StartDate']\" (dateChanged)=\"onDateChanged($event)\" required></my-date-picker>\n                </form>\n              </div>\n              <div class=\"col-sm-6\">\n                  <label>End Date</label>\n\n                  <my-date-picker name=\"mydate\" [options]=\"myDatePickerOptions2\"\n                  (dateChanged)=\"onDateChanged($event)\" required></my-date-picker>\n              </div>\n            </div>\n           \n          </div>\n           <!--Choose Date Section End Here-->\n        </div>\n      </div>\n </form>\n    </div>\n  </div>\n  <!--Create New Offer Products End Here--> \n\n\n  </div>"
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!-- Sidebar end Here-->\n  <!--Create New Offer Products Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <form class=\"form\" [formGroup]='Form'>\n        <div class=\"addproductheadingrow\">\n          <h3>Create Offer</h3>\n          <div class=\"addproheadingbtn\">\n            <button type=\"button\" class=\"btn btn-primary addprobtn cancel\">Cancel</button>\n            <button type=\"button\" class=\"btn btn-primary addprobtn\" [disabled]=\"!Form.valid\" (click)=\"saveOffer(Form.value)\">Save</button>\n          </div>\n        </div>\n        <div class=\"productsviewrow create_new_offer\">\n          <div class=\"row eqWrap equalHMWrap clearfix\">\n            <!--Text Editor Section Start Here-->\n            <div class=\"col-lg-5 texteditorwrap\">\n              <div class=\"form-group\">\n                <label>Title</label>\n                <input class=\"form-control\" type=\"text\" placeholder=\"Black Typography Top\" [formControl]=\"Form.controls['title']\" />\n                <p *ngIf=\"Form.controls['title'].hasError('required') && Form.controls['title'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Description</label>\n                <ckeditor [(ngModel)]=\"ckeditorContent\" [formControl]=\"Form.controls['description']\" ngDefaultControl>\n                  <ckbutton [name]=\"'saveButton'\" [command]=\"'saveCmd'\" (click)=\"save($event)\" [icon]=\"'save.png'\"\n                    [label]=\"'Save Document'\" [toolbar]=\"'clipboard,1'\">\n                  </ckbutton>\n                </ckeditor>\n                <p *ngIf=\"Form.controls['description'].hasError('required') && Form.controls['description'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n            </div>\n            <!--Text Editor Section End Here-->\n\n            <!--Image Upload Section Start Here-->\n            <div class=\"col-lg-7 fileuploadbox\">\n              <label>Product Images</label>\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-5 pdr10wds\">\n                  <div class=\"uploadimgbx wd100\">\n                    <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                      <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                      <div> <span class=\"btn btn-default btn-file\">\n                          <input id=\"input-22\" type=\"file\" name=\"...\" accept=\".jpg,.gif,.png\" (change)='onFileChanged($event)'>\n                        </span> </div><p *ngIf=\"Form.controls['description'].hasError('required') && Form.controls['title'].dirty\"\n                        style=\"color:red;font-size:14px;\">*required</p>\n                    </div>\n                  </div>\n                </div>\n                <div class=\"col-sm-7 pdlsunye\">\n                  <div class=\"uploadimgbx wd100_landsscape\">\n                    <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                      <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                      <div> <span class=\"btn btn-default btn-file\">\n                          <input id=\"input-22\" type=\"file\" name=\"...\" accept=\".jpg,.gif,.png\" (change)='onFileChanged($event)'>\n                        </span> </div>\n                    </div>\n                  </div>\n                  <div class=\"uploadimgbx wd100_landsscape\">\n                    <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                      <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n                      <div> <span class=\"btn btn-default btn-file\">\n                          <input id=\"input-22\" type=\"file\" name=\"...\" accept=\".jpg,.gif,.png\" (change)='onFileChanged($event)'>\n                        </span> </div>\n                    </div>\n                  </div>\n                </div>\n              </div>\n\n            </div>\n            <!--Image Upload Section End Here-->\n          </div>\n        </div>\n\n        <div class=\"productsviewrow create_new_offer\">\n          <div class=\"row eqWrap equalHMWrap clearfix\">\n            <div class=\"col-lg-5 texteditorwrap\">\n              <!--Product Category Section Start Here-->\n              <div class=\"form-group\">\n                <label>Offer Type</label>\n                <select class=\"form-control\" [formControl]=\"Form.controls['offerType']\">\n                  <option selected value=\"percent\">%age</option>\n                  <option value=\"price\">price</option>\n                </select>\n                <p *ngIf=\"Form.controls['offerType'].hasError('required') && Form.controls['offerType'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Value</label>\n                <input class=\"form-control\" type=\"text\" placeholder=\"50\" [formControl]=\"Form.controls['value']\" />\n              </div>\n              <div class=\"form-group\">\n                <label>Minimum Requirement</label>\n                <select class=\"form-control\" [formControl]=\"Form.controls['minimumRequirement']\">\n                  <option value=\"NAN\">NAN</option>\n                </select>\n                <p *ngIf=\"Form.controls['minimumRequirementi'].hasError('required') && Form.controls['minimumRequirementi'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div class=\"form-group\">\n                <label>Applicable on</label>\n                <select class=\"form-control\" [formControl]=\"Form.controls['applicableType']\" (change)=\"applicable($event.target.value)\">\n                  <option value=1>Specific Product</option>\n                  <option value=0>Product Category</option>\n                </select>\n                <p *ngIf=\"Form.controls['applicableType'].hasError('required') && Form.controls['applicableType'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <div>\n                <ng-multiselect-dropdown [placeholder]=\"'Select your category'\" [data]=\"productList\" [settings]=\"dropdownSettings\"\n                  [formControl]=\"Form.controls['applicableOn']\" ngDefaultControl>\n                </ng-multiselect-dropdown>\n                <p *ngIf=\"Form.controls['applicableOn'].hasError('required') && Form.controls['applicableOn'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n              <!--Product Category Section End Here-->\n            </div>\n\n\n            <!--Choose Date Section Start Here-->\n            <div class=\"col-lg-7 fileuploadbox\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-6\">\n                  <label>Start Date</label>\n                  <!-- <form #myForm=\"ngForm\" novalidate> -->\n                  <my-date-picker name=\"mydate\" [options]=\"myDatePickerOptions\" [formControl]=\"Form.controls['StartDate']\"\n                    (dateChanged)=\"onDateChanged($event)\" required></my-date-picker>\n                    <p *ngIf=\"Form.controls['StartDate'].hasError('required') && Form.controls['StartDate'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n                  <!-- </form> -->\n                </div>\n                <div class=\"col-sm-6\">\n                  <label>End Date</label>\n                  <my-date-picker name=\"mydate\" [options]=\"myDatePickerOptions2\" [formControl]=\"Form.controls['EndDate']\"\n                    (dateChanged)=\"onDateChanged($event)\" required></my-date-picker>\n                </div>\n                <p *ngIf=\"Form.controls['EndDate'].hasError('required') && Form.controls['EndDate'].dirty\"\n                style=\"color:red;font-size:14px;\">*required</p>\n              </div>\n\n            </div>\n            <!--Choose Date Section End Here-->\n          </div>\n        </div>\n      </form>\n    </div>\n  </div>\n  <!--Create New Offer Products End Here-->\n\n\n</div>"
 
 /***/ }),
 
@@ -1219,6 +1265,15 @@ var CreateOfferComponent = /** @class */ (function () {
     function CreateOfferComponent(service, formBuilder) {
         this.service = service;
         this.formBuilder = formBuilder;
+        this.dropdownSettings = {
+            singleSelection: false,
+            idField: '_id',
+            textField: 'product',
+            selectAllText: 'Select All',
+            unSelectAllText: 'UnSelect All',
+            itemsShowLimit: 100,
+            allowSearchFilter: true
+        };
         this.myDatePickerOptions = {
             dateFormat: 'yyyy-mm-dd',
             inline: false,
@@ -1231,13 +1286,20 @@ var CreateOfferComponent = /** @class */ (function () {
             showInputField: true,
             showTodayBtn: false,
         };
+        this.imageData = [];
+        this.getproductList();
         this.Form = this.formBuilder.group({
             title: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-            Description: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            description: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             StartDate: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             EndDate: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-            user: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-            file: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+            offerType: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            file: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            image: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            value: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            applicableType: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            applicableOn: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            minimumRequirement: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
         });
     }
     CreateOfferComponent.prototype.ngOnInit = function () {
@@ -1271,6 +1333,112 @@ var CreateOfferComponent = /** @class */ (function () {
     CreateOfferComponent.prototype.getCopyOfOptions = function () {
         return JSON.parse(JSON.stringify(this.myDatePickerOptions));
     };
+    CreateOfferComponent.prototype.getproductList = function () {
+        var _this = this;
+        this.service.getApi('admin/getProductList?lang=en', 1).subscribe(function (response) {
+            // console.log("response-======>>>",response)
+            if (response['statusCode'] == 200) {
+                console.log(response);
+                _this.productList = response['result'];
+                _this.dropdownSettings = {
+                    singleSelection: false,
+                    idField: '_id',
+                    textField: 'product',
+                    selectAllText: 'Select All',
+                    unSelectAllText: 'UnSelect All',
+                    itemsShowLimit: 100,
+                    allowSearchFilter: true
+                };
+            }
+            else {
+                _this.service.showError('NOT FOUND');
+            }
+        }, function (error) {
+            console.log('error occur', error);
+            _this.service.showError('Server Error');
+        });
+    };
+    CreateOfferComponent.prototype.applicable = function (val) {
+        var _this = this;
+        console.log('variable', val);
+        if (val == 0) {
+            this.service.getApi('vendor/getVendorProductCategorylist?lang=en', 1).subscribe(function (response) {
+                // console.log("response-======>>>",response)
+                if (response['statusCode'] == 200) {
+                    console.log(response);
+                    _this.productList = response['result'];
+                    _this.dropdownSettings = {
+                        singleSelection: false,
+                        idField: '_id',
+                        textField: 'productcategoryName',
+                        selectAllText: 'Select All',
+                        unSelectAllText: 'UnSelect All',
+                        itemsShowLimit: 100,
+                        allowSearchFilter: true
+                    };
+                }
+                else {
+                    _this.service.showError('NOT FOUND');
+                }
+            }, function (error) {
+                console.log('error occur', error);
+                _this.service.showError('Server Error');
+            });
+        }
+        else {
+            this.getproductList();
+        }
+    };
+    CreateOfferComponent.prototype.onFileChanged = function (evt) {
+        var file = evt.target.files[0];
+        if (file) {
+            console.log('2222', file);
+            var reader = new FileReader();
+            reader.onload = this.handleReaderLoaded.bind(this);
+            reader.readAsBinaryString(file);
+            // console.log(this.base64textString)
+        }
+    };
+    CreateOfferComponent.prototype.handleReaderLoaded = function (e) {
+        this.imageData.push('data:image/png;base64,' + btoa(e.target.result));
+    };
+    //save Offer
+    CreateOfferComponent.prototype.saveOffer = function (val) {
+        var _this = this;
+        var a = [];
+        for (var i in val.applicableOn) {
+            a.push(val.applicableOn[i]._id);
+        }
+        var temp = {
+            "userId": localStorage.getItem('token'),
+            "offerName": val.title,
+            "description": val.description,
+            "offerImage": this.imageData,
+            "offerType": val.offerType,
+            "value": val.value,
+            "applicableType": val.applicableType,
+            "applicableOn": a,
+            "startDate": new Date(val.StartDate.jsdate).toISOString(),
+            "endDate": new Date(val.EndDate.jsdate).toISOString(),
+            "lang": "en"
+        };
+        this.service.postApi('vendor/addVendoroffer', temp, 1).subscribe(function (response) {
+            _this.service.spinnerShow();
+            console.log("response-======>>>", response);
+            if (response['statusCode'] == 200) {
+                _this.service.showSuccess('Offer Added');
+                _this.service.spinnerHide();
+                _this.Form.reset();
+            }
+            else {
+                _this.Form.reset();
+                _this.service.showError('SOMETHING WENT TO WRONG');
+            }
+        }, function (error) {
+            console.log('error occur', error);
+            _this.service.showError('Server Error');
+        });
+    };
     CreateOfferComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-create-offer',
@@ -1280,6 +1448,208 @@ var CreateOfferComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])
     ], CreateOfferComponent);
     return CreateOfferComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/create-vendor/create-vendor.component.css":
+/*!**********************************************************************!*\
+  !*** ./src/app/Components/create-vendor/create-vendor.component.css ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "#map {\n    width: 100%;\n    border: 1px solid #dadada;\n    height: 300px;\n}\n\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/create-vendor/create-vendor.component.html":
+/*!***********************************************************************!*\
+  !*** ./src/app/Components/create-vendor/create-vendor.component.html ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"business_detailswrap vendor clearfix\">\n  <div class=\"businessrttopbg\"></div>\n  <div class=\"wakilogo\"></div>\n  <div class=\"businConbx\">\n    <form name=\"createVendorForm\" [formGroup]='createVendorForm' id=\"vendor\" data-parsley-validate class=\"form-horizontal form-label-left\">\n      <div class=\"businesstextrow\">\n        <h1>Create Vendor</h1>\n      </div>\n      <div class=\"sminfo\">Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>\n      <div class=\"businessfrombx\">\n        <div class=\"form-group text-center\">\n          <div class=\"uploadimgbx\">\n            <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n              <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\"></div>\n              <div> <span class=\"btn btn-default btn-file\">\n                  <input id=\"input-22\" type=\"file\" name=\"...\"  (change)=\"changeListener($event)\" accept=\".jpg,.gif,.png\"\n                    [formControl]=\"createVendorForm.controls['profilePic']\" ngDefaultControl>\n                </span> </div>\n\n              </div>\n            </div>\n          </div>\n          <div class=\"form-group\">\n            <input class=\"form-control\" type=\"text\" placeholder=\"First Name\" [formControl]=\"createVendorForm.controls['firstName']\" />\n            <div *ngIf=\"createVendorForm.controls['firstName'].invalid && (createVendorForm.controls['firstName'].dirty || createVendorForm.controls['firstName'].touched)\">\n              <div *ngIf=\"createVendorForm.controls['firstName'].errors.required\" class=\"class alert-danger\">\n                First Name is required.\n              </div>\n            </div>\n          </div>\n          <div class=\"form-group\">\n            <input class=\"form-control\" type=\"text\" placeholder=\"Last Name\" [formControl]=\"createVendorForm.controls['lastName']\" />\n            <div *ngIf=\"createVendorForm.controls['lastName'].invalid && (createVendorForm.controls['lastName'].dirty || createVendorForm.controls['lastName'].touched)\">\n              <div *ngIf=\"createVendorForm.controls['lastName'].errors.required\" class=\"alert alert-danger\">\n                Last Name is required.\n              </div>\n            </div>\n          </div>\n          <div class=\"form-group\">\n            <input class=\"form-control\" type=\"text\" placeholder=\"Email Address\" [formControl]=\"createVendorForm.controls['email']\" />\n\n            <div *ngIf=\"createVendorForm.controls['email'].invalid && (createVendorForm.controls['email'].dirty || createVendorForm.controls['email'].touched)\">\n              <div *ngIf=\"createVendorForm.controls['email'].errors.required\" class=\"alert alert-danger\">Email is\n                required</div>\n              <div *ngIf=\"createVendorForm.controls['email'].errors.email\" class=\"alert alert-danger\">Email must be\n                a valid email address</div>\n            </div>\n          </div>\n          <div class=\"form-group\">\n\n\n            <div class=\"sales_year_choose\">\n              <select class=\"form-control select2\" [formControl]=\"createVendorForm.controls['prefix']\">\n                <option value=''>Select country code</option>\n                <option *ngFor=\"let country of codeArray\" [value]=\"country.code\">{{country.code}} ( {{country.country}}\n                  )</option>\n              </select>\n              <div *ngIf=\"createVendorForm.controls['prefix'].invalid  && (createVendorForm.controls['prefix'].dirty || createVendorForm.controls['prefix'].touched)\"\n                [ngClass]=\"'error'\">\n                <div *ngIf=\"createVendorForm.controls['prefix'].errors.required\" class=\"alert alert-danger\">\n                  Country Code is required.\n                </div>\n                <div *ngIf=\"createVendorForm.get('prefix').hasError('pattern')\" class=\"alert alert-danger\">\n                  Select Country code.\n                </div>\n              </div>\n            </div>\n          </div>\n\n          <div class=\"form-group\">\n            <input class=\"form-control\" type=\"text\" placeholder=\"Enter Your Phone Number\" [formControl]=\"createVendorForm.controls['phone']\" />\n            <div *ngIf=\"createVendorForm.controls['phone'].invalid  && (createVendorForm.controls['phone'].dirty || createVendorForm.controls['phone'].touched)\"\n              [ngClass]=\"'error'\">\n              <div *ngIf=\"createVendorForm.controls['phone'].errors.required\" class=\"alert alert-danger\">\n                Phone number is required.\n              </div>\n              <div *ngIf=\"createVendorForm.get('phone').hasError('pattern')\" class=\"alert alert-danger\">\n                It is not a valid mobile number.\n              </div>\n            </div>\n\n          </div>\n          <div class=\"form-group\">\n            <input class=\"form-control\"  #address id=\"address\" type=\"text\" placeholder=\"Address\" [formControl]=\"createVendorForm.controls['address']\" />\n            <div *ngIf=\"createVendorForm.controls['address'].invalid  && (createVendorForm.controls['address'].dirty || createVendorForm.controls['address'].touched)\"\n              [ngClass]=\"'error'\">\n              <div *ngIf=\"createVendorForm.controls['address'].errors.required\" class=\"alert alert-danger\">\n                Address is required.\n              </div>\n            </div>\n          </div>\n          <div class=\"form-group\">\n            <div id=\"map\"></div>\n          </div>\n          <div class=\"form-group\">\n            <div class=\"sales_year_choose\">\n              <select class=\"form-control\" [formControl]=\"createVendorForm.controls['storeType']\">\n                <option value=\"\" selected>Select Store Type</option>\n                <option value=\"Physical Store\">Physical Store</option>\n                <option value=\"Virtual Store\">Virtual store</option>\n              </select>\n            </div>\n          </div>\n          <div class=\"form-group\">\n            <button type=\"submit\" class=\"btn btn-primary businessbtn\" [disabled]=\"!createVendorForm.valid\" (click)=createVendor(createVendorForm.value)>Submit</button>\n          </div>\n        </div>\n    </form>\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/Components/create-vendor/create-vendor.component.ts":
+/*!*********************************************************************!*\
+  !*** ./src/app/Components/create-vendor/create-vendor.component.ts ***!
+  \*********************************************************************/
+/*! exports provided: CreateVendorComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateVendorComponent", function() { return CreateVendorComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var CreateVendorComponent = /** @class */ (function () {
+    function CreateVendorComponent(formBuilder, service, route) {
+        this.formBuilder = formBuilder;
+        this.service = service;
+        this.route = route;
+        this.createVendorForm = formBuilder.group({
+            firstName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            lastName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            email: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].email]],
+            phone: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[6-9]\\d{9}')]],
+            address: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            profilePic: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            storeType: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+            prefix: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required],
+        });
+    }
+    CreateVendorComponent.prototype.ngOnInit = function () {
+        this.getCountryCodesList();
+        //Custom Select Option Start Here
+        $('.sales_year_choose select.select').each(function () {
+            var title = $(this).attr('title');
+            if ($('option:selected', this).val() != '')
+                title = $('option:selected', this).text();
+            $(this)
+                .css({ 'z-index': 10, 'opacity': 0, '-khtml-appearance': 'none' })
+                .after('<span class="select">' + title + '</span>')
+                .change(function () {
+                this.val = $('option:selected', this).text();
+                $(this).next().text(this.val);
+            });
+        });
+        //End
+    };
+    CreateVendorComponent.prototype._keyPress = function (event) {
+        var pattern = /[0-9]/;
+        var inputChar = String.fromCharCode(event.charCode);
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+        }
+    };
+    CreateVendorComponent.prototype.changeListener = function ($event) {
+        console.log($event);
+        this.readThis($event.target);
+        this.readUrl($event.target);
+    };
+    CreateVendorComponent.prototype.readThis = function (inputValue) {
+        var _this = this;
+        var file = inputValue.files[0];
+        var myReader = new FileReader();
+        myReader.onloadend = function (e) {
+            _this.image = myReader.result;
+        };
+        myReader.readAsDataURL(file);
+    };
+    CreateVendorComponent.prototype.readUrl = function (inputValue) {
+        var _this = this;
+        if (inputValue.files && inputValue.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                _this.url = reader.result;
+            };
+            console.log(this.url);
+            reader.readAsDataURL(inputValue.files[0]);
+        }
+    };
+    CreateVendorComponent.prototype.createVendor = function (val) {
+        var _this = this;
+        console.log(this.address.nativeElement.value);
+        console.log('console', val);
+        // return
+        this.service.getLatApi(val.address).subscribe(function (response1) {
+            _this.responseData = response1;
+            var latitude = _this.responseData['results'][0]['geometry']["location"]['lat'];
+            var longitude = _this.responseData['results'][0]['geometry']["location"]['lng'];
+            var sentData = {
+                firstName: val.firstName,
+                lastName: val.lastName,
+                email: val.email,
+                phone: val.phone,
+                address: _this.address.nativeElement.value,
+                profilePic: _this.image,
+                storeType: val.storeType,
+                lat: latitude,
+                countryCode: val.prefix,
+                lng: longitude,
+                lang: 'en',
+                status: 'inactive'
+            };
+            // })
+            // console.log("2222",sentData)
+            // return
+            // console.log("WWWWWWWW", this.sentData)
+            _this.service.postApi('admin/createVendor', sentData, 0).subscribe(function (response) {
+                _this.service.spinnerShow();
+                _this.responseData = response;
+                console.log(response);
+                if (_this.responseData['statusCode'] == 200) {
+                    _this.service.showSuccess(response['statusMessage']);
+                    _this.service.spinnerHide();
+                    _this.route.navigate(['/login']);
+                }
+                else if (_this.responseData['statusCode'] == 400 || _this.responseData['statusCode'] == 401) {
+                    // this.route.navigate(['/createvendor']);
+                    _this.service.showError(response['statusMessage']);
+                }
+            }, function (error) {
+                console.log('error occur', error);
+                _this.service.showBug("");
+                // this.service.showError('Server Error')
+            });
+        });
+    };
+    //
+    // onSelectCountry() {
+    //   console.log('selected country => ' + this.createVendorForm.controls['country'].value)
+    //   let selectedCountry = this.createVendorForm.controls['country'].value
+    //   this.statesArr = selectedCountry ?  this.codeArray.filter(x => x.country == selectedCountry)[0].states : []
+    //   console.log('selected country => ' , this.merchantForm.value)
+    // }
+    CreateVendorComponent.prototype.getCountryCodesList = function () {
+        var _this = this;
+        this.service.getCountryCodeJson().subscribe(function (response) {
+            _this.codeArray = response['countries'];
+        }, function (error) {
+            console.log("Error is " + JSON.stringify(error));
+        });
+    };
+    CreateVendorComponent.prototype.reset = function () {
+        this.createVendorForm.reset();
+    };
+    CreateVendorComponent.prototype.Cancel = function () {
+        this.createVendorForm.reset();
+        this.route.navigate(['/login']);
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('address'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], CreateVendorComponent.prototype, "address", void 0);
+    CreateVendorComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-create-vendor',
+            template: __webpack_require__(/*! ./create-vendor.component.html */ "./src/app/Components/create-vendor/create-vendor.component.html"),
+            styles: [__webpack_require__(/*! ./create-vendor.component.css */ "./src/app/Components/create-vendor/create-vendor.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"], src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_2__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    ], CreateVendorComponent);
+    return CreateVendorComponent;
 }());
 
 
@@ -1304,7 +1674,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n  <!--Add Products Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <div class=\"addproductheadingrow\">\n        <h3>Lorem Ipsum Heading</h3>\n        <div class=\"addproheadingbtn\">\n          <button type=\"button\" class=\"btn btn-primary addprobtn cancel\">Cancel</button>\n          <button (click)=\"saveProduct()\" type=\"button\" class=\"btn btn-primary addprobtn\">Save</button>\n        </div>\n      </div>\n      <div class=\"productsviewrow\">\n        <div class=\"row eqWrap equalHMWrap clearfix\">\n          <!--Text Editor Section Start Here-->\n          <div class=\"col-sm-5 texteditorwrap\">\n            <div class=\"form-group\">\n              <label>Title</label>\n              <input class=\"form-control\" value={{productDetail.product.productName}} type=\"text\" placeholder=\"Product Name Here\"\n                [(ngModel)]=\"Title\" />\n            </div>\n            <div class=\"form-group\">\n              <label>Description</label>\n              <div class=\"texteditorbox\"><img class=\"img-responsive\" width=\"606\" height=\"255\" />\n\n                <ckeditor [(ngModel)]=\"ckeditorContent\" value={{productDetail.product.description}}>\n                  <ckbutton [name]=\"'saveButton'\" [command]=\"'saveCmd'\" (click)=\"save($event)\" [icon]=\"'save.png'\"\n                    [label]=\"'Save Document'\" [toolbar]=\"'clipboard,1'\">\n                  </ckbutton>\n                </ckeditor>\n\n              </div>\n            </div>\n          </div>\n          <!--Text Editor Section End Here-->\n\n          <!--Image Upload Section Start Here-->\n          <div class=\"col-sm-7 fileuploadbox\">\n            <label>Product Images</label>\n            <!-- <input type=\"file\" (change)='onFileChanged($event)' accept=\"image/jpeg,image/jpg,image/png\"> -->\n            <div class=\"uploadimgbx\">\n              <div class=\"fileinput fileinput-new\" data-provides=\"fileinput\">\n                <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\">\n                  <img [src]=\"productDetail.product.image[0]\" />\n                </div>\n                <div> <span class=\"btn btn-default btn-file\">\n                    <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\">\n                  </span> </div>\n              </div>\n            </div>\n          </div>\n          <!--Image Upload Section End Here-->\n        </div>\n      </div>\n      <div class=\"row productcategorywrap clearfix\">\n        <div class=\"col-sm-5 padwd10\">\n          <!--Product Category Section Start Here-->\n          <div class=\"productCategorybox\">\n            <div class=\"form-group\">\n              <label>Product Category</label>\n\n              <select class=\"form-control\" (change)=\"getCatgory($event.target.value)\">\n                <option value=\"\">{{productDetail.product.brand}}</option>\n                <!-- <option *ngFor=\"let c of category\" [value]=\"c._id\">{{c.categoryName}}</option> -->\n              </select>\n\n            </div>\n            <div class=\"form-group\">\n              <label>Product Subcategory</label>\n              <select class=\"form-control\" (change)=\"SubCatorydata($event.target.value)\">\n                <option value=\"\">select SubCategory</option>\n                <!-- <option *ngFor=\"let c of getSubCatorydata\" [value]=\"c._id\">{{c.subCategoryName}}</option> -->\n              </select>\n            </div>\n            <div class=\"form-group\">\n              <label>Product Type</label>\n              <select class=\"form-control\" (change)=\"getProductCategoryId($event.target.value)\">\n                <option value=\"\">Select Type</option>\n                <!-- <option *ngFor=\"let c of productCategoryname\" [value]=\"c._id\">{{c.productcategoryName}}</option> -->\n              </select>\n            </div>\n            <div class=\"form-group\">\n              <label>Product Brand</label>\n              <select class=\"form-control\" (change)=\"getBrandId($event.target.value)\">\n                <option value=\"\">select Brand</option>\n                <!-- <option *ngFor=\"let c of getBrandList\"  [value]=\"c._id\">{{c.brandName}}</option> -->\n              </select>\n            </div>\n            <!--  <div class=\"form-group mybrand clearfix\">\n              <form [formGroup]='formgroup'>\n                <input type=\"text\" placeholder=\"My Brand\" [formControl]=\"formgroup.controls['brand']\" />\n                <button type=\"submit\" (click)=\"addBrand(formgroup.value)\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i></button>\n              </form>\n            </div> -->\n            <div class=\"form-group clearfix\">\n              <label>Product Tags</label>\n              <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"></tag-input>\n              <!-- <tag-input [ngModel]=\"itemsAsObjects\" ></tag-input> -->\n            </div>\n          </div>\n          <!--Product Category Section End Here-->\n\n          <!--Modify Variants Table Section Start Here-->\n          <div class=\"modify_variants\">\n            <h4>Modify Variants</h4>\n            <table class=\"table\">\n              <thead>\n                <tr>\n                  <th align=\"left\" valign=\"middle\">Variant</th>\n                  <th>Price</th>\n                  <th>SKU</th>\n                  <th>Inventory</th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test1\" />\n                      <label for=\"test1\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Red</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr>\n                <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test2\" />\n                      <label for=\"test2\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Pink</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr>\n                <tr>\n                  <td><span class=\"checkboxbx\">\n                      <input type=\"checkbox\" id=\"test3\" />\n                      <label for=\"test3\">&nbsp;</label>\n                    </span><span class=\"sizenm\">XS</span> <span class=\"colornm\">Blue</span></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" /></td>\n                  <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" /></td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n          <!--Modify Variants Table Section End Here-->\n\n        </div>\n        <div class=\"col-sm-7 padwd10\">\n          <div class=\"row clearfix\">\n            <!--Selling Price Section Start Here-->\n            <div class=\"col-sm-6 pdrightwd10\">\n              <div class=\"productCategorybox\">\n                <div class=\"form-group\">\n                  <label>Selling Price</label>\n                  <input class=\"form-control\" type=\"text\" placeholder=\"499\" [(ngModel)]=\"SellingPrice\" />\n                </div>\n                <div class=\"form-group\">\n                  <label>Cost/Item</label>\n                  <input class=\"form-control\" type=\"text\" placeholder=\"399\" />\n                </div>\n                <div class=\"form-group\">\n                  <label>Item Weight</label>\n                  <input class=\"form-control\" type=\"text\" placeholder=\"0.5\" />\n                </div>\n              </div>\n              <!--Selling Price Section End Here-->\n            </div>\n            <!--Inventory Section Start Here-->\n            <div class=\"col-sm-6 pdleftwd10\">\n              <div class=\"productCategorybox\">\n                <div class=\"form-group\">\n                  <label>Inventory SKU</label>\n                  <input class=\"form-control\" type=\"text\" placeholder=\"BUI\" />\n                </div>\n                <div class=\"form-group\">\n                  <label>Quantity</label>\n                  <input class=\"form-control\" type=\"text\" placeholder=\"50\" />\n                </div>\n                <div class=\"form-group\">\n                  <label>Product Type</label>\n                  <select class=\"form-control\">\n                    <option value=\"volvo\">Avaiable for try</option>\n                    <option value=\"saab\">Saab</option>\n                    <option value=\"mercedes\">Mercedes</option>\n                    <option value=\"audi\">Audi</option>\n                  </select>\n                </div>\n              </div>\n            </div>\n            <!--Inventory Section End Here-->\n          </div>\n\n          <!--Variants Section Start Here-->\n          <div class=\"row clearfix\">\n            <div class=\"col-sm-12\">\n              <div class=\"productCategorybox\">\n                <div class=\"variants\">\n                  <h4>Variants</h4>\n                  <div class=\"sminfo\">Swimming hundreds of feet beneath the ocean’s surface in many parts of the world\n                    are prolific aey construct one or more spacious houses” that can exceed three feet in length. </div>\n                  <div class=\"variantsoption\">\n                    <div class=\"form-group\">\n                      <div class=\"row clearfix\">\n                        <div class=\"col-sm-3\">\n                          <label>Option name</label>\n                          <input class=\"form-control\" type=\"text\" placeholder=\"Size\" />\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <label>Option Values</label>\n                          <input class=\"form-control\" type=\"text\" placeholder=\"XS\" />\n                        </div>\n                        <div class=\"col-sm-3\">\n                          <label>&nbsp;</label>\n                          <button type=\"button\" class=\"btn btn-primary removebtn\">Remove</button>\n                        </div>\n                      </div>\n                    </div>\n                    <div class=\"form-group\">\n                      <div class=\"row clearfix\">\n                        <div class=\"col-sm-3\">\n                          <input class=\"form-control\" type=\"text\" placeholder=\"Color\" />\n                        </div>\n                        <div class=\"col-sm-6\">\n                          <input class=\"form-control\" type=\"text\" placeholder=\"Red\" />\n                        </div>\n                        <div class=\"col-sm-3\">\n                          <button type=\"button\" class=\"btn btn-primary removebtn addoption\">Add Option</button>\n                        </div>\n                      </div>\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n          <!--Variants Section End Here-->\n\n        </div>\n      </div>\n    </div>\n\n  </div>\n  <!-- </form> -->\n  <!--Add Products Section End Here-->"
+module.exports = "<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n\n  <div id=\"page-content-wrapper\">\n    <form [formGroup]='myGroup' (ngSubmit)=\"onSubmit()\">\n      <div class=\"dashboardConbx\">\n        <div class=\"addproductheadingrow\">\n          <h3>Edit your product</h3>\n          <div class=\"addproheadingbtn\">\n            <button type=\"button\" class=\"btn btn-primary addprobtn cancel\">Cancel</button>\n            <button (click)=\"saveProduct(myGroup.value)\" type=\"button\" class=\"btn btn-primary addprobtn\">Save</button>\n          </div>\n        </div>\n        <div class=\"productsviewrow\">\n          <div class=\"row eqWrap equalHMWrap clearfix\">\n            <!--Text Editor Section Start Here-->\n            <div class=\"col-sm-5 texteditorwrap\">\n              <div class=\"form-group\">\n                <label>Title</label>\n                <input class=\"form-control\" [formControl]=\"myGroup.controls['title']\" type=\"text\" placeholder=\"Product Name Here\" />\n              </div>\n              <div class=\"form-group\">\n                <label>Description</label>\n                <div class=\"texteditorbox\"><img class=\"img-responsive\" width=\"606\" height=\"255\" />\n\n                  <ckeditor [(ngModel)]=\"ckeditorContent\" [formControl]=\"myGroup.controls['description']\"\n                    ngDefaultControl>\n                    <ckbutton [name]=\"'saveButton'\" [command]=\"'saveCmd'\" (click)=\"save($event)\" [icon]=\"'save.png'\"\n                      [label]=\"'Save Document'\" [toolbar]=\"'clipboard,1'\">\n                    </ckbutton>\n                  </ckeditor>\n\n                </div>\n              </div>\n            </div>\n            <!--Text Editor Section End Here-->\n            \n            <!--Image Upload Section Start Here-->\n            <div class=\"col-sm-7 fileuploadbox\">\n              <label>Product Images</label>\n              <!-- <input type=\"file\" (change)='onFileChanged($event)' accept=\"image/jpeg,image/jpg,image/png\"> -->\n              <div class=\"uploadimgbx\" *ngFor=\"let item of myGroup.get('imageArray').value; let i = index;\">\n                <!-- {{item}} -->\n                <div class=\"fileinput fileinput-new\" id='fImage' data-provides=\"fileinput\">\n                  <div class=\"fileinput-preview thumbnail\" data-trigger=\"fileinput\">\n                    <img src={{item}} />\n                  </div>\n                  <div>\n                    <span class=\"btn btn-default btn-file\">\n                      <input id=\"input-22\" type=\"file\" name=\"...\" (change)='onFileChanged($event)' accept=\".jpg,.gif,.png\"\n                        [formControl]=\"myGroup.controls['image1']\">\n                      <!-- <img src=\"http://res.cloudinary.com/sumit9211/image/upload/v1548842386/z7e961duuv6ktavs1fdg.jpg\"> -->\n                    </span>\n                    <p *ngIf=\"myGroup.controls['description'].hasError('required') && myGroup.controls['description'].dirty\"\n                      style=\"color:red;font-size:14px;\">*required</p>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <!--Image Upload Section End Here-->\n          </div>\n        </div>\n        <div class=\"row productcategorywrap clearfix\">\n          <div class=\"col-sm-5 padwd10\">\n            <!--Product Category Section Start Here-->\n            <div class=\"productCategorybox\">\n              <div class=\"form-group\">\n                <label>Product Category</label>\n                <!-- {{myGroup.controls['productcategory'].value}} -->\n                <select class=\"form-control\" (change)=\"getCatgory($event.target.value)\" [formControl]=\"myGroup.controls['productcategory']\"\n                  ngDefaultControl>\n\n                  <option selected value=\"categoryId._id\" disabled>{{ categoryId?.categoryName}}</option>\n                  <option *ngFor=\"let c of category\" [value]=\"c._id\">{{c?.categoryName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Subcategory</label>\n                <select class=\"form-control\" (change)=\"SubCatorydata($event.target.value)\" [formControl]=\"myGroup.controls['productsubcategory']\"\n                  ngDefaultControl>\n                  <option selected disabled value=\"productsubcategory._id\">{{ productsubcategory?.subCategoryName}}</option>\n                  <option *ngFor=\"let c of getSubCatorydata\" [value]=\"c._id\">{{c.subCategoryName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Type</label>\n                <select class=\"form-control\" (change)=\"getProductCategoryId($event.target.value)\" [formControl]=\"myGroup.controls['producttype']\"\n                  ngDefaultControl>\n                  <option selected disabled value=\"producttype._id\">{{producttype?.productcategoryName}}</option>\n                  <option *ngFor=\"let c of productCategoryname\" [value]=\"c._id\">{{c.productcategoryName}}</option>\n                </select>\n              </div>\n              <div class=\"form-group\">\n                <label>Product Brand</label>\n                <select class=\"form-control\" [formControl]=\"myGroup.controls['productbrand']\" ngDefaultControl>\n                  <option selected disabled value=\"branddata._id\">{{branddata?.brandName}}</option>\n                  <option *ngFor=\"let c of getBrandId\" [value]=\"c._id\">{{c.brandName}}</option>\n                </select>\n              </div>\n              <!--  <div class=\"form-group mybrand clearfix\">\n              <form [formGroup]='formgroup'>\n                <input type=\"text\" placeholder=\"My Brand\" [formControl]=\"formgroup.controls['brand']\" />\n                <button type=\"submit\" (click)=\"addBrand(formgroup.value)\"><i class=\"fa fa-check\" aria-hidden=\"true\"></i></button>\n              </form>\n            </div> -->\n              <div class=\"form-group clearfix\">\n                <label>Product Tags</label>\n                <tag-input [(ngModel)]='itemsAsObjects' [placeholder]=\"'Enter a Tags'\" [onTextChangeDebounce]=\"500\"\n                  [formControl]=\"myGroup.controls['searchtag']\"></tag-input>\n                <!-- <tag-input [ngModel]=\"itemsAsObjects\" ></tag-input> -->\n              </div>\n            </div>\n            <!--Product Category Section End Here-->\n\n            <!--Modify Variants Table Section Start Here-->\n            <div class=\"modify_variants\">\n              <h4>Modify Variants</h4>\n              <table class=\"table\">\n                <thead>\n                  <tr>\n                    <th align=\"left\" valign=\"middle\">Variant</th>\n                    <th>Price</th>\n                    <th>SKU</th>\n                    <th>Inventory</th>\n                    <th>Images</th>\n                  </tr>\n                </thead>\n                <tbody>\n                  <tr formArrayName=\"variance\" *ngFor=\"let item of myGroup.get('variance').controls; let i = index;\">\n                    <ng-container [formGroupName]=\"i\">\n                      <td><span class=\"checkboxbx\">\n                          <input type=\"checkbox\" id={{i}} formControlName='checked' />\n                          <label for={{i}}>&nbsp;</label>\n                        </span>\n                        <span class=\"sizenm\">{{item?.controls.size.value}}</span>&nbsp;\n                        <span class=\"sizenm\">{{item?.controls.material.value}}</span>&nbsp;\n                        <span class=\"colornm\">{{item?.controls.color.value}}</span>&nbsp;\n                      </td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"230\" formControlName=\"price\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"BHJ89\" formControlName=\"SKU\" /></td>\n                      <td><input class=\"form-control\" type=\"text\" placeholder=\"1234\" formControlName=\"quantity\" /></td>\n                      <td> <input id=\"input-22\" type=\"file\" name=\"...\" (change)='readThis($event, i)' accept=\".jpg,.gif,.png\" ngDefaultControl multiple></td>\n                    </ng-container>\n                  </tr>\n                </tbody>\n              </table>\n            </div>\n            <!--Modify Variants Table Section End Here-->\n\n          </div>\n          <div class=\"col-sm-7 padwd10\">\n            <div class=\"row clearfix\">\n              <!--Selling Price Section Start Here-->\n              <div class=\"col-sm-6 pdrightwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Selling Price</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"499\" [formControl]=\"myGroup.controls['sellingprice']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Cost/Item</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"399\" [formControl]=\"myGroup.controls['costprice']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Item Weight</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"0.5\" [formControl]=\"myGroup.controls['itemweight']\" />\n                  </div>\n                </div>\n                <!--Selling Price Section End Here-->\n              </div>\n              <!--Inventory Section Start Here-->\n              <div class=\"col-sm-6 pdleftwd10\">\n                <div class=\"productCategorybox\">\n                  <div class=\"form-group\">\n                    <label>Inventory SKU</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"BUI\" [formControl]=\"myGroup.controls['InventorySKU']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Quantity</label>\n                    <input class=\"form-control\" type=\"text\" placeholder=\"50\" [formControl]=\"myGroup.controls['quantity']\" />\n                  </div>\n                  <div class=\"form-group\">\n                    <label>Product Type</label>\n                    <select class=\"form-control\" [formControl]=\"myGroup.controls['trialPack']\">\n                      <option value=\"volvo\">Avaiable for try</option>\n                    </select>\n                  </div>\n                </div>\n              </div>\n              <!--Inventory Section End Here-->\n            </div>\n\n            <!--Variants Section Start Here-->\n            <!-- <div class=\"row clearfix\" hidden=true>\n              <div class=\"col-sm-12\">\n                <div class=\"productCategorybox\">\n                  <div class=\"variants\">\n                    <h4>Variants</h4>\n                    <div class=\"sminfo\">Swimming hundreds of feet beneath the ocean’s surface in many parts of the\n                      world\n                      are prolific aey construct one or more spacious houses” that can exceed three feet in length.\n                    </div>\n                    <div class=\"variantsoption\">\n                      <div class=\"form-group\">\n                        <div class=\"row clearfix\">\n                          <div class=\"col-sm-3\">\n                            <label>Option name</label>\n                            <input class=\"form-control\" type=\"text\" placeholder=\"Size\" />\n                          </div>\n                          <div class=\"col-sm-6\">\n                            <label>Option Values</label>\n                            <input class=\"form-control\" type=\"text\" placeholder=\"XS\" />\n                          </div>\n                          <div class=\"col-sm-3\">\n                            <label>&nbsp;</label>\n                            <button type=\"button\" class=\"btn btn-primary removebtn\">Remove</button>\n                          </div>\n                        </div>\n                      </div>\n                      <div class=\"form-group\">\n                        <div class=\"row clearfix\">\n                          <div class=\"col-sm-3\">\n                            <input class=\"form-control\" type=\"text\" placeholder=\"Color\" />\n                          </div>\n                          <div class=\"col-sm-6\">\n                            <input class=\"form-control\" type=\"text\" placeholder=\"Red\" />\n                          </div>\n                          <div class=\"col-sm-3\">\n                            <button type=\"button\" class=\"btn btn-primary removebtn addoption\">Add Option</button>\n                          </div>\n                        </div>\n                      </div>\n                    </div>\n                  </div>\n                </div>\n              </div>\n            </div> -->\n            <!--Variants Section End Here-->\n\n          </div>\n        </div>\n      </div>\n    </form>\n  </div>\n  <!-- </form> -->\n  <!--Add Products Section End Here-->"
 
 /***/ }),
 
@@ -1320,6 +1690,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditproductComponent", function() { return EditproductComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/Services/provider.service */ "./src/app/Services/provider.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1331,23 +1703,126 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var EditproductComponent = /** @class */ (function () {
-    function EditproductComponent(service) {
+    function EditproductComponent(service, activateRoute, formBuilder) {
         this.service = service;
+        this.activateRoute = activateRoute;
+        this.formBuilder = formBuilder;
+        this.imageData = [];
+        this.myGroup = formBuilder.group({
+            title: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            description: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            image1: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            image2: [''],
+            image3: [''],
+            image4: [''],
+            image5: [''],
+            image6: [''],
+            image7: [''],
+            image8: [''],
+            imageArray: this.formBuilder.array([]),
+            productcategory: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            productsubcategory: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            producttype: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            productbrand: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            // addBrand: [''],
+            searchtag: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            // combinationOfVariants: [''],
+            sellingprice: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('^[0-9]*$')])],
+            costprice: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('^[0-9]*$')])],
+            itemweight: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('^[0-9]*$')])],
+            InventorySKU: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            quantity: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('^[0-9]*$')])],
+            trialPack: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
+            // brand: [''],
+            variance: this.formBuilder.array([])
+        });
     }
     EditproductComponent.prototype.ngOnInit = function () {
         this.getProductDetail();
-        console.log("this.productDetail.product.description", this.productDetail.product.description);
-        this.ckeditorContent = this.productDetail.product.description;
+        this.service.setTitle('Edit Product');
+        this.getCategoryList();
+        console.log("this.productDetail.product.description", this.productDetail);
+        // this.ckeditorContent=this.productDetail.description
+    };
+    EditproductComponent.prototype.createItem = function (item) {
+        return this.formBuilder.group({
+            size: [item.size],
+            color: [item.color],
+            material: [item.material],
+            checked: [true],
+            price: [item.price, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('^[0-9]*$')])],
+            SKU: [item.SKU],
+            quantity: [item.quantity, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('^[0-9]*$')])],
+            varianceImage: [item.image, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]
+        });
+    };
+    EditproductComponent.prototype.createImageArray = function (item) {
+        return this.formBuilder.group({
+            size: [item.size],
+            color: [item.color],
+            material: [item.material],
+            checked: [true],
+            price: [item.price, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('^[0-9]*$')])],
+            SKU: [item.SKU],
+            quantity: [item.quantity, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].compose([_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('^[0-9]*$')])],
+            varianceImage: [item.image, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]
+        });
     };
     //!api called
     EditproductComponent.prototype.getProductDetail = function () {
         var _this = this;
-        this.service.getApi('vendor/productDetails?_id=5bfbeb833605496d97427ccd&lang=en', 0).subscribe(function (response) {
+        this.activateRoute.params.subscribe(function (params) {
+            _this._id = params['productId'];
+            // console.log(`vendor/productDetails?_id=${this._id}&lang=en`)
+        });
+        this.service.getApi("vendor/getProductInfo?productId=" + this._id + "&lang=en", 0).subscribe(function (response) {
+            // console.log(response)
             if (response['statusCode'] == 200) {
                 _this.service.showSuccess("get Product Detail");
                 _this.productDetail = response['result'];
-                console.log("response", _this.productDetail.product.image[0]);
+                console.log('8888888888888888888888888', _this.productDetail);
+                _this.categoryId = _this.productDetail.categoryModel;
+                _this.productsubcategory = _this.productDetail.subCategory;
+                _this.producttype = _this.productDetail.productCategoryId;
+                _this.branddata = _this.productDetail.brandId;
+                _this.myGroup.patchValue({
+                    title: _this.productDetail.productName,
+                    description: _this.productDetail.description,
+                    // image1:this.productDetail.image[0],
+                    productcategory: _this.productDetail.categoryModel._id,
+                    productsubcategory: _this.productDetail.subCategory._id,
+                    producttype: _this.productDetail.productCategoryId._id,
+                    productbrand: _this.productDetail.brandId._id,
+                    // addBrand: ,
+                    searchtag: _this.productDetail.tag,
+                    // combinationOfVariants: ,
+                    sellingprice: _this.productDetail.sellingPrice,
+                    costprice: _this.productDetail.costItem,
+                    itemweight: _this.productDetail.weight,
+                    InventorySKU: _this.productDetail.inventorySKU,
+                    quantity: _this.productDetail.quantity,
+                });
+                _this.getSubCatoryList(_this.categoryId._id);
+                _this.getProductName(_this.productsubcategory._id);
+                _this.getBrandListdata();
+                for (var i = 0; i < _this.productDetail.varianceId.variants.length; i++) {
+                    _this.addItem(_this.productDetail.varianceId.variants[i]);
+                }
+                for (var index = 0; index < _this.productDetail.image.length; index++) {
+                    console.log('------', _this.productDetail.image[index]);
+                    // console.log("this form group",this.myGroup.value.imageArray.push("asdf"))
+                    _this.myGroup.value.imageArray.push(_this.productDetail.image[index]);
+                    // let a =[]
+                    // a.push(this.productDetail.image[index])
+                    // const steps = <FormArray>this.myGroup.controls['imageArray'];
+                    // steps.push(new FormControl(this.myGroup.get('imageArray').setValue("sumit")))
+                    // this.myGroup.get('imageArray').setValue('22222')
+                    // this.myGroup.controls['variance'].controls[i].controls['varianceImage'].setValue(a)
+                    // steps.push(new FormControl()) 
+                }
             }
             else {
                 console.log(response['result']);
@@ -1359,13 +1834,160 @@ var EditproductComponent = /** @class */ (function () {
             _this.service.showError('Server Error');
         });
     };
+    // onFileChanged
+    EditproductComponent.prototype.onFileChanged = function (evt) {
+        var file = evt.target.files[0];
+        if (file) {
+            // console.log('2222', file);
+            var reader = new FileReader();
+            reader.onload = this.handleReaderLoaded.bind(this);
+            reader.readAsBinaryString(file);
+            // console.log(this.base64textString)
+        }
+    };
+    EditproductComponent.prototype.handleReaderLoaded = function (e) {
+        this.imageData.push('data:image/png;base64,' + btoa(e.target.result));
+    };
+    EditproductComponent.prototype.addItem = function (item) {
+        // debugger
+        this.items = this.myGroup.get('variance');
+        this.items.push(this.createItem(item));
+    };
+    //dropdown data 
+    EditproductComponent.prototype.getCatgory = function (categoryId) {
+        // console.log("Event-->", categoryId);
+        this.getSubCatoryList(categoryId);
+        this.getBrandListdata();
+    };
+    EditproductComponent.prototype.SubCatorydata = function (subcategoryId) {
+        // console.log("Event------------>", subcategoryId);
+        this.subCategoryID = subcategoryId;
+        this.getProductName(subcategoryId);
+        // console.log("data is binding-------->",this.itemsAsObjects)
+    };
+    EditproductComponent.prototype.getCategoryList = function () {
+        var _this = this;
+        this.service.getApi('vendor/getCategoryList', 0).subscribe(function (response) {
+            if (response['statusCode'] == 200) {
+                // this.service.showSuccess('found')
+                _this.category = response['result'];
+                // this.getSubCatoryList(this.categoryId._id)
+            }
+            else {
+                _this.service.showError('Invalid Email');
+                // this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            // console.log('error occur', error)
+            _this.service.showError('Server Error');
+        });
+    };
+    EditproductComponent.prototype.getSubCatoryList = function (categoryId) {
+        var _this = this;
+        // console.log("function called")
+        var postSubCatory = {
+            categoryModel: categoryId,
+            lang: "en"
+        };
+        this.service.postApi('vendor/getSubCategory', postSubCatory, 0).subscribe(function (response) {
+            if (response['statusCode'] == 200) {
+                // this.service.showSuccess('data is find')
+                _this.getSubCatorydata = response['result'];
+            }
+            else {
+                _this.service.showError('Invalid Email');
+                // this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            // console.log('error occur', error)
+            _this.service.showError('Server Error');
+        });
+    };
+    EditproductComponent.prototype.getProductName = function (subCatId) {
+        var _this = this;
+        var temp = {
+            subCategoryId: subCatId
+        };
+        this.service.postApi('vendor/getProductCategoryName', temp, 0).subscribe(function (response) {
+            if (response['statusCode'] == 200) {
+                _this.productCategoryname = response['result'];
+            }
+            else {
+                _this.service.showError('error');
+            }
+        }, function (error) {
+            _this.service.showError('Server Error');
+        });
+    };
+    EditproductComponent.prototype.getBrandListdata = function () {
+        var _this = this;
+        // console.log("function called")
+        this.service.getApi('admin/getBrandList', 0).subscribe(function (response) {
+            if (response['statusCode'] == 200) {
+                // this.service.showSuccess("get bandlist")
+                // console.log("asdfasdf", response)
+                _this.getBrandId = response['result'];
+            }
+            else {
+                _this.service.showError('Invalid Email');
+                // this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            // console.log('error occur', error)
+            _this.service.showError('Server Error');
+        });
+    };
+    EditproductComponent.prototype.getProductCategoryId = function (_ID) {
+        console.log("getProductlist enter", _ID);
+        // this.productCategoryname = _ID
+    };
+    EditproductComponent.prototype.saveProduct = function (val) {
+        var _this = this;
+        console.log('save product==>', val);
+        console.log("aw323451234513453245", this.imageData);
+        // return
+        var temp = {
+            productId: this._id,
+            categoryModel: val.productcategory,
+            subCategory: val.productsubcategory,
+            productCategoryId: val.producttype,
+            brandId: val.productbrand,
+            productName: val.title,
+            sellingPrice: val.sellingPrice,
+            description: val.description,
+            newImage: this.imageData,
+            image: val.image,
+            tag: val.searchtag,
+            tryImage: val.tryImage ? val.tryImage : null,
+            qrCode: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+            inventorySKU: val.InventorySKU,
+            weight: val.itemweight,
+            quantity: val.quantity,
+            costItem: val.costprice
+        };
+        console.log('temp------>>', temp);
+        this.service.postApi('vendor/editProduct', temp, 0).subscribe(function (response) {
+            console.log(response);
+            if (response['statusCode'] == 200) {
+                // this.service.showSuccess('found')
+                // this.getSubCatoryList(this.categoryId._id)
+            }
+            else {
+                _this.service.showError('Invalid Email');
+                // this.service.showError('Invalid email or password.')
+            }
+        }, function (error) {
+            // console.log('error occur', error)
+            _this.service.showError('Server Error');
+        });
+    };
     EditproductComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-editproduct',
             template: __webpack_require__(/*! ./editproduct.component.html */ "./src/app/Components/editproduct/editproduct.component.html"),
             styles: [__webpack_require__(/*! ./editproduct.component.css */ "./src/app/Components/editproduct/editproduct.component.css")]
         }),
-        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"]])
+        __metadata("design:paramtypes", [src_app_Services_provider_service__WEBPACK_IMPORTED_MODULE_1__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"]])
     ], EditproductComponent);
     return EditproductComponent;
 }());
@@ -1464,7 +2086,7 @@ module.exports = "/* body {\n    font-family: 'RobotoDraft', 'Roboto', 'Helvetic
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Dashboard Screen Start Here-->\n<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n\n  <!--Dashboard Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <!--Welcome Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"welcomerw clearfix\">\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Welcome to Waki Market Place</h3>\n                  <h4>Total Open Orders</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2>102</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Total Active Carts</h3>\n                  <h4>Abandoned Checkouts</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2 class=\"totalcharts\">325</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Welcome Rows End Here-->\n\n      <!--Digit Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"digitrow clearfix\">\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,163</h3>\n              <h4>Orders Pending</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,134</h3>\n              <h4>Orders to be prepared</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>1256</h3>\n              <h4>Orders Ready to ship</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>4567</h3>\n              <h4>Order Delivery awaited</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Digit Rows End Here-->\n\n      <!--Total Sales Section Start Here-->\n      <div class=\"totalSeleswrap\">\n        <div class=\"row clearfix\">\n          <div class=\"col-sm-5\">\n            <div class=\"totalSelesinfobx\">\n              <h3>TOTAL SALES</h3>\n              <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks.\n                Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer\n                directed convergence without\n                revolutionary ROI.</div>\n            </div>\n          </div>\n          <div class=\"col-sm-7\">\n            <div class=\"salesgraph\"><img class=\"img-responsive\" src=\"../../assets/images/sales_graph.png\" alt=\"\" /></div>\n          </div>\n        </div>\n      </div>\n      <!--Total Sales Section End Here-->\n\n      <!--Orders Status Section Start Here-->\n      <div class=\"orderstatuswrap\">\n        <div class=\"row eqWrap equalHMWrap clearfix\">\n          <div class=\"col-sm-4 orderstatus\">\n            <h4>ORDER STATUS</h4>\n            <div class=\"pieChartsbx\"><img src=\"../../assets/images/pie_chart.png\" width=\"267\" height=\"288\"></div>\n          </div>\n          <div class=\"col-sm-8 orderstatus\">\n            <h4 class=\"activities\">ACTIVITIES <span class=\"viewall\"><a href=\"javascript:void(0);\">View All</a></span></h4>\n            <div class=\"activitiesCon\">\n              <div class=\"activitiesrow recent clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">2 mins ago</div>\n                  <div class=\"activisminfo\">Template Builder Access (Video tutorial inside documentation)</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow recent1hours clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">1 hour ago</div>\n                  <div class=\"activisminfo\">Designed the wordpress theme lily created her account.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Orders Status Section End Here-->\n\n     <!--Recent Order Table Section Start Here-->\n     <div class=\"recentorder_tablewrap\">\n      <h4>RECENT ORDERS</h4>\n      <div class=\"recentOrderTable\">\n        <table class=\"table\">\n          <thead>\n            <tr>\n              <!-- <th align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkboxall\" value=\"checkboxAll\" /></th> -->\n              <th>Sr.No</th>\n              <th>Product</th>\n              <th>Customer</th>\n              <th>Location</th>\n              <th>Quantity</th>\n              <th>Status</th>\n            </tr>\n          </thead>\n          <tbody>\n\n            <!-- <div [hidden]=\"apiData.length==0\">\n              \n            </div> -->\n\n            <tr *ngFor=\"let product of apiData;let i = index\" >\n              <!-- <td align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkbox1\" value=\"checkbox1\"></td> -->\n              <td align=\"left\" valign=\"middle\">{{i+1}}</td>\n              <td align=\"left\" valign=\"middle\"><img class=\"pro_img\" src=\"{{product.productImage}}\" alt=\"\" />{{product.productDetail}}</td>\n              <td>{{product.customerName}}</td>\n              <td>{{product.customerAddress}}</td>\n              <td>{{product.quantity}}</td>\n              <td>{{product.status}}</td>\n            </tr>\n\n           </tbody>\n        </table>\n      </div>\n    </div>\n    <!--Recent Order Table Section End Here--> \n     \n    <!-- <ng-chat [adapter]=\"adapter\" [userId]=\"userId\"></ng-chat> -->\n    </div>\n  </div>\n  <!--Dashboard Content Section End Here-->\n\n</div>\n<!--Dashboard Screen End Here-->"
+module.exports = "<!--Dashboard Screen Start Here-->\n<div id=\"wrapper\">\n  <!--Header Start Here-->\n  <app-header></app-header>\n  <!--Header End Here-->\n\n  <!-- Sidebar Start Here-->\n  <app-side-bar></app-side-bar>\n  <!--sidebar-End -->\n\n  <!--Dashboard Content Section Start Here-->\n  <div id=\"page-content-wrapper\">\n    <div class=\"dashboardConbx\">\n      <!--Welcome Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"welcomerw clearfix\">\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Welcome to Waki Market Place</h3>\n                  <h4>Total Open Orders</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2>102</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"col-sm-6\">\n            <div class=\"welcomebx\">\n              <div class=\"row clearfix\">\n                <div class=\"col-sm-10\">\n                  <h3>Total Active Carts</h3>\n                  <h4>Abandoned Checkouts</h4>\n                </div>\n                <div class=\"col-sm-2\">\n                  <h2 class=\"totalcharts\">325</h2>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Welcome Rows End Here-->\n\n      <!--Digit Rows Start Here-->\n      <div class=\"row clearfix\">\n        <div class=\"digitrow clearfix\">\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,163</h3>\n              <h4>Orders Pending</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>66,134</h3>\n              <h4>Orders to be prepared</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>1256</h3>\n              <h4>Orders Ready to ship</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n          <div class=\"col-sm-3\">\n            <div class=\"digitbx\">\n              <h3>4567</h3>\n              <h4>Order Delivery awaited</h4>\n              <span class=\"bdrbtm\"></span>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Digit Rows End Here-->\n\n      <!--Total Sales Section Start Here-->\n      <div class=\"totalSeleswrap\">\n        <div class=\"row clearfix\">\n          <div class=\"col-sm-5\">\n            <div class=\"totalSelesinfobx\">\n              <h3>TOTAL SALES</h3>\n              <div class=\"sminfo\">Collaboratively administrate empowered markets via plug-and-play networks.\n                Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer\n                directed convergence without\n                revolutionary ROI.</div>\n            </div>\n          </div>\n          <div class=\"col-sm-7\">\n            <div class=\"salesgraph\"><img class=\"img-responsive\" src=\"../../assets/images/sales_graph.png\" alt=\"\" /></div>\n          </div>\n        </div>\n      </div>\n      <!--Total Sales Section End Here-->\n\n      <!--Orders Status Section Start Here-->\n      <div class=\"orderstatuswrap\">\n        <div class=\"row eqWrap equalHMWrap clearfix\">\n          <div class=\"col-sm-4 orderstatus\">\n            <h4>ORDER STATUS</h4>\n            <div class=\"pieChartsbx\"><img src=\"../../assets/images/pie_chart.png\" width=\"267\" height=\"288\"></div>\n          </div>\n          <div class=\"col-sm-8 orderstatus\">\n            <h4 class=\"activities\">ACTIVITIES <span class=\"viewall\"><a href=\"javascript:void(0);\">View All</a></span></h4>\n            <div class=\"activitiesCon\">\n              <div class=\"activitiesrow recent clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">2 mins ago</div>\n                  <div class=\"activisminfo\">Template Builder Access (Video tutorial inside documentation)</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow recent1hours clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">1 hour ago</div>\n                  <div class=\"activisminfo\">Designed the wordpress theme lily created her account.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n              <div class=\"activitiesrow clearfix\">\n                <div class=\"linebx\"><span class=\"highlightpoint\"></span></div>\n                <div class=\"actiinfoCon\">\n                  <div class=\"timerw\">4:30 p.m</div>\n                  <div class=\"activisminfo\">Your domain will expired in 13 days.</div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <!--Orders Status Section End Here-->\n\n      <!--  -->\n      <!--Recent Order Table Section Start Here-->\n      <!-- <div class=\"recentorder_tablewrap\">\n      <h4>RECENT ORDERS</h4>\n      <div class=\"recentOrderTable\">\n        <table class=\"table\">\n          <thead>\n            <tr>\n              <th align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkboxall\" value=\"checkboxAll\" /></th>\n              <th>Product</th>\n              <th>Customer</th>\n              <th>Location</th>\n              <th>Quantity</th>\n              <th>Status</th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr>\n              <td align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkbox1\" value=\"checkbox1\"></td>\n              <td align=\"left\" valign=\"middle\"><img class=\"pro_img\" src=\"assets/images/products_o1.jpg\" alt=\"\" />Leisure Suit Casual</td>\n              <td>Msaudur Rahman</td>\n              <td>Australia</td>\n              <td>2</td>\n              <td>Paid</td>\n            </tr>\n            <tr>\n              <td align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkbox1\" value=\"checkbox1\"></td>\n              <td align=\"left\" valign=\"middle\"><img class=\"pro_img\" src=\"assets/images/products_o1.jpg\" alt=\"\" />Leisure Suit Casual</td>\n              <td>Msaudur Rahman</td>\n              <td>Australia</td>\n              <td>2</td>\n              <td>Paid</td>\n            </tr>\n            <tr>\n              <td align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkbox1\" value=\"checkbox1\"></td>\n              <td align=\"left\" valign=\"middle\"><img class=\"pro_img\" src=\"assets/images/products_o1.jpg\" alt=\"\" />Leisure Suit Casual</td>\n              <td>Msaudur Rahman</td>\n              <td>Australia</td>\n              <td>2</td>\n              <td>Paid</td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n    </div> -->\n      <!--Recent Order Table Section End Here-->\n      <div class=\"recentorder_tablewrap\">\n        <h4>RECENT ORDERS</h4>\n        <div class=\"recentOrderTable\">\n          <table class=\"table\">\n            <thead>\n              <tr>\n                <!-- <th align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkboxall\" value=\"checkboxAll\" /></th> -->\n                <th>Sr.No</th>\n                <th>Product</th>\n                <th>Customer</th>\n                <th>Location</th>\n                <th>Quantity</th>\n                <th>Status</th>\n              </tr>\n            </thead>\n            <tbody>\n              <!-- <div [hidden]=\"apiData.length==0\">\n              </div> -->\n              <tr *ngFor=\"let product of apiData|slice:0:3;let i = index\">\n                <!-- <td align=\"left\" valign=\"middle\"><input type=\"checkbox\" name=\"checkbox1\" value=\"checkbox1\"></td> -->\n                <td align=\"left\" valign=\"middle\">{{i+1}}</td>\n                <td align=\"left\" valign=\"middle\"><img class=\"pro_img\" src=\"{{product.productImage}}\" alt=\"\" />{{product.productDetail}}</td>\n                <td>{{product.customerName}}</td>\n                <td>{{product.customerAddress}}</td>\n                <td>{{product.quantity}}</td>\n                <td>{{product.status}}</td>\n              </tr>\n\n            </tbody>\n          </table>\n        </div>\n      </div>\n\n\n      <!--  -->\n    </div>\n  </div>\n  <!--Dashboard Content Section End Here-->\n\n  <!--Recent Order Table Section End Here-->\n\n  <!-- <ng-chat [adapter]=\"adapter\" [userId]=\"userId\"></ng-chat> -->\n</div>"
 
 /***/ }),
 
@@ -1494,225 +2116,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 // import { ChatAdapter } from 'ng-chat';
 // import { MyAdapter } from 'my-adapter';
 var HomePageVendorComponent = /** @class */ (function () {
-    /* rows = [];
-    selected = [];
-    page = {
-        totalElement: 3,
-        pageNumber: 2
-    }
-    settings = {
-        columns: {
-            id: {
-                title: 'ID'
-            },
-            name: {
-                title: 'Full Name'
-            },
-            username: {
-                title: 'User Name'
-            },
-            email: {
-                title: 'Email'
-            }
-        }
-    };
-
-    data = [
-        {
-            id: 1,
-            name: "Leanne Graham",
-            username: "Bret",
-            email: "Sincere@april.biz"
-        },
-        // ... other rows here
-        {
-            id: 11,
-            name: "Nicholas DuBuque",
-            username: "Nicholas.Stanton",
-            email: "Rey.Padberg@rosamond.biz"
-        }
-    ]; */
-    /*   public rows:Array<any> = [];
-      public columns:Array<any> = [
-        {title: 'Name', name: 'name', filtering: {filterString: '', placeholder: 'Filter by name'}},
-        {
-          title: 'Position',
-          name: 'position',
-          sort: false,
-          filtering: {filterString: '', placeholder: 'Filter by position'}
-        },
-        {title: 'Office', className: ['office-header', 'text-success'], name: 'office', sort: 'asc'},
-        {title: 'Extn.', name: 'ext', sort: '', filtering: {filterString: '', placeholder: 'Filter by extn.'}},
-        {title: 'Start date', className: 'text-warning', name: 'startDate'},
-        {title: 'Salary ($)', name: 'salary'}
-      ];
-      public page:number = 1;
-      public itemsPerPage:number = 10;
-      public maxSize:number = 5;
-      public numPages:number = 1;
-      public length:number = 0;
-    
-      public config:any = {
-        paging: true,
-        sorting: {columns: this.columns},
-        filtering: {filterString: ''},
-        className: ['table-striped', 'table-bordered']
-      };
-    
-      private data:Array<any> = TableData; */
     function HomePageVendorComponent(service) {
-        // this.length = this.data.length;
         this.service = service;
-        // title = 'app';
-        // userId = 999;
         this.rows = [];
         this.selected = [];
         this.getproductList();
-        // this.rows = this.apiData
-        // this.temp = [...this.rows];
-        // console.log('---------->>>',this.rows),
-        // console.log('----------->>>',this.temp)
     }
-    // public adapter: ChatAdapter = new MyAdapter();
-    HomePageVendorComponent.prototype.onSelect = function (_a) {
-        var selected = _a.selected;
-        console.log('Select Event', selected, this.selected);
-        this.selected.splice(0, this.selected.length);
-        (_b = this.selected).push.apply(_b, selected);
-        var _b;
-    };
-    HomePageVendorComponent.prototype.onActivate = function (event) {
-        console.log('Activate Event', event);
-    };
-    HomePageVendorComponent.prototype.add = function () {
-        this.selected.push(this.rows[1], this.rows[3]);
-    };
-    HomePageVendorComponent.prototype.update = function () {
-        this.selected = [this.rows[1], this.rows[3]];
-    };
-    HomePageVendorComponent.prototype.remove = function () {
-        this.selected = [];
-    };
-    HomePageVendorComponent.prototype.displayCheck = function (row) {
-        return row.name !== 'Ethel Price';
-    };
-    HomePageVendorComponent.prototype.updateFilter = function (event) {
-        var val = event.target.value.toLowerCase();
-        console.log("------>", this.temp);
-        // // filter our data
-        var temp = this.temp.filter(function (d) {
-            //    var temp= d.price.toLowerCase().indexOf(val) !== -1 || !val;
-            var temp = d.product.toLowerCase().indexOf(val) !== -1 || !val;
-            return d.product.toLowerCase().indexOf(val) !== -1 || !val;
-        });
-        // // update the rows
-        this.rows = temp;
-        // Whenever the filter changes, always go back to the first page
-        // this.table.offset = 0;
-    };
-    HomePageVendorComponent.prototype.onPage = function (event) {
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(function () {
-            console.log('paged!', event);
-        }, 100);
-    };
     HomePageVendorComponent.prototype.ngOnInit = function () {
-        console.log("this.getproductList()", this.apiData);
-        console.log('---------->>>', this.rows);
-        // console.log('----------->>>',this.temp)
-        // this.onChangeTable(this.config);
     };
-    /* public changePage(page:any, data:Array<any> = this.data):Array<any> {
-        let start = (page.page - 1) * page.itemsPerPage;
-        let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
-        return data.slice(start, end);
-      }
-    
-      public changeSort(data:any, config:any):any {
-        if (!config.sorting) {
-          return data;
-        }
-    
-        let columns = this.config.sorting.columns || [];
-        let columnName:string = void 0;
-        let sort:string = void 0;
-    
-        for (let i = 0; i < columns.length; i++) {
-          if (columns[i].sort !== '' && columns[i].sort !== false) {
-            columnName = columns[i].name;
-            sort = columns[i].sort;
-          }
-        }
-    
-        if (!columnName) {
-          return data;
-        }
-    
-        // simple sorting
-        return data.sort((previous:any, current:any) => {
-          if (previous[columnName] > current[columnName]) {
-            return sort === 'desc' ? -1 : 1;
-          } else if (previous[columnName] < current[columnName]) {
-            return sort === 'asc' ? -1 : 1;
-          }
-          return 0;
-        });
-      }
-    
-      public changeFilter(data:any, config:any):any {
-        let filteredData:Array<any> = data;
-        this.columns.forEach((column:any) => {
-          if (column.filtering) {
-            filteredData = filteredData.filter((item:any) => {
-              return item[column.name].match(column.filtering.filterString);
-            });
-          }
-        });
-    
-        if (!config.filtering) {
-          return filteredData;
-        }
-    
-        if (config.filtering.columnName) {
-          return filteredData.filter((item:any) =>
-            item[config.filtering.columnName].match(this.config.filtering.filterString));
-        }
-    
-        let tempArray:Array<any> = [];
-        filteredData.forEach((item:any) => {
-          let flag = false;
-          this.columns.forEach((column:any) => {
-            if (item[column.name].toString().match(this.config.filtering.filterString)) {
-              flag = true;
-            }
-          });
-          if (flag) {
-            tempArray.push(item);
-          }
-        });
-        filteredData = tempArray;
-    
-        return filteredData;
-      }
-    
-      public onChangeTable(config:any, page:any = {page: this.page, itemsPerPage: this.itemsPerPage}):any {
-        if (config.filtering) {
-          Object.assign(this.config.filtering, config.filtering);
-        }
-    
-        if (config.sorting) {
-          Object.assign(this.config.sorting, config.sorting);
-        }
-    
-        let filteredData = this.changeFilter(this.data, this.config);
-        let sortedData = this.changeSort(filteredData, this.config);
-        this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-        this.length = sortedData.length;
-      }
-    
-      public onCellClick(data: any): any {
-        console.log(data);
-      } */
     HomePageVendorComponent.prototype.getproductList = function () {
         var _this = this;
         var temp = {
@@ -1721,21 +2132,15 @@ var HomePageVendorComponent = /** @class */ (function () {
         this.service.postApi('vendor/vendorOrderList', temp, 1).subscribe(function (response) {
             console.log("response--->>", response);
             if (response['statusCode'] == 200) {
-                // this.service.showSuccess("getProduct")
-                // console.log("asdfasdf", response['result'])
                 _this.apiData = response['result'];
                 _this.rows = response['result'];
                 _this.temp = response['result'].slice();
-                console.log('$$$$$$$sdfsdf$$$$$$$$$$$', _this.apiData);
                 if (_this.apiData.length < 0) {
                     _this.isVaild = false;
                 }
-                // this.getBrandListdata()
             }
             else {
-                // console.log(response['result'])
-                _this.service.showError('Invalid Email');
-                // this.service.showError('Invalid email or password.')
+                _this.service.showError(response['statusMessage']);
             }
         }, function (error) {
             console.log('error occur', error);
@@ -2990,7 +3395,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Sidebar Start Here-->\n<div id=\"sidebar-wrapper\">\n  <div class=\"sidemenuwrap\">\n    <div class=\"userprofilebx clearfix\">\n      <div class=\"usercirbx\"> <img src=\"../../assets/images/user_img.jpg\" width=\"230\" height=\"222\" alt=\"\" /> </div>\n      <div class=\"userpnm\">\n        <h4>Johnathan Doe</h4>\n        <h5>Owner</h5>\n      </div>\n    </div>\n    <ul class=\"nav navbar-nav\">\n      <li class=\"active\"><a routerLink=\"/dashBoard\" routerLinkActive=\"active\" (click)=\"changeStatus('Dashboard')\">Dashboard</a></li>\n      <li class=\"orders dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Orders<span\n            class=\"orders\">3</span></a>\n        <ul class=\"dropdown-menu\">\n          <li><a routerLink=\"/orderlist\" routerLinkActive=\"active\" (click)=\"changeStatus('Orders List')\">Orders List</a></li>\n          <li><a href=\"javascript:void(0);\">Abandoned Checkouts</a></li>\n          <li><a href=\"javascript:void(0);\">Cancelled Orders</a></li>\n        </ul>\n      </li>\n      <li class=\"products dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Products</a>\n        <ul class=\"dropdown-menu\">\n          <li><a routerLink=\"/allproducts\" routerLinkActive=\"active\" (click)=\"changeStatus('All Product')\">All Products</a></li>\n          <li><a href=\"javascript:void(0);\" (click)=addProduct() (click)=\"changeStatus('Add Product')\">Add Products</a></li>\n          <li><a routerLink=\"/inventory\" routerLinkActive=\"active\" (click)=\"changeStatus('Inventory')\">Inventory</a></li>\n        </ul>\n      </li>\n\n\n\n      <li class=\"reports dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Reports <span class=\"reports\">3</span></a>\n        <ul class=\"dropdown-menu\">\n            <li><a routerLink=\"/analytics\" routerLinkActive=\"active\" >Analytics</a></li>\n            <li><a routerLink=\"/revenue\" routerLinkActive=\"active\" >Sales Reports</a></li>\n            <li><a routerLink=\"/live\" routerLinkActive=\"active\" >Live View</a></li>\n          </ul>\n      </li>\n      <li><a routerLink=\"/activeoffer\" routerLinkActive=\"active\" (click)=\"changeStatus('All Product')\">Sales & Offers<span\n            class=\"salesoffers\">4</span></a></li>\n      <li><a  routerLink=\"/revenue\" routerLinkActive=\"active\" (click)=\"changeStatus('Revenue')\">My Earnings</a></li>\n      <li><a href=\"javascript:void(0);\">Notifications <span class=\"notification\">8</span></a></li>\n      <li><a href=\"javascript:void(0);\">Reviews & Feedbacks <span class=\"feedback\">8</span></a></li>\n    </ul>\n    <div class=\"settingsbx\">\n      <ul class=\"nav navbar-nav\">\n        <li><a href=\"javascript:void(0);\">My Account</a></li>\n        <li><a href=\"javascript:void(0);\">Settings</a></li>\n        <li><a href=\"javascript:void(0);\">Live Chat</a></li>\n        <li><a (click)=logout()>Logout</a></li>\n      </ul>\n    </div>\n  </div>\n</div>\n<!--sidebar-End -->"
+module.exports = "<!-- Sidebar Start Here-->\n<div id=\"sidebar-wrapper\">\n  <div class=\"sidemenuwrap\">\n    <div class=\"userprofilebx clearfix\">\n      <div class=\"usercirbx\"> <img src=\"{{userdata?.image}}\" width=\"230\" height=\"222\" alt=\"\" /> </div>\n      <div class=\"userpnm\">\n        <h4>{{userdata?.firstName}}</h4>\n        <h5>{{userdata?.userType}}</h5>\n      </div>\n    </div>\n    <ul class=\"nav navbar-nav\">\n      <li class=\"active\"><a routerLink=\"/dashBoard\" routerLinkActive=\"active\" (click)=\"changeStatus('Dashboard')\">Dashboard</a></li>\n      <li class=\"orders dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Orders<span\n            class=\"orders\">3</span></a>\n        <ul class=\"dropdown-menu\">\n\n          <li><a routerLink=\"/orderlist\" routerLinkActive=\"active\" (click)=\"changeStatus('Orders List')\">Orders List</a></li>\n          <li><a href=\"javascript:void(0);\">Abandoned Checkouts</a></li>\n          <li><a href=\"javascript:void(0);\">Cancelled Orders</a></li>\n        </ul>\n      </li>\n      <li class=\"products dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Products</a>\n        <ul class=\"dropdown-menu\">\n          <li><a routerLink=\"/allproducts\" routerLinkActive=\"active\" (click)=\"changeStatus('All Product')\">All Products</a></li>\n          <li><a href=\"javascript:void(0);\" (click)=addProduct() (click)=\"changeStatus('Add Product')\">Add Products</a></li>\n          <li><a routerLink=\"/inventory\" routerLinkActive=\"active\" (click)=\"changeStatus('Inventory')\">Inventory</a></li>\n        </ul>\n      </li>\n      <li class=\"reports dropdown\"><a href=\"javascript:void(0);\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Reports\n          <span class=\"reports\">3</span></a>\n        <ul class=\"dropdown-menu\">\n          <li><a routerLink=\"/analytics\" routerLinkActive=\"active\">Analytics</a></li>\n          <li><a routerLink=\"/revenue\" routerLinkActive=\"active\">Sales Reports</a></li>\n          <li><a routerLink=\"/live\" routerLinkActive=\"active\">Live View</a></li>\n        </ul>\n      </li>\n      <!-- <li><a routerLink=\"/activeoffer\" routerLinkActive=\"active\" (click)=\"changeStatus('All Product')\">Sales & Offers<span\n            class=\"salesoffers\">4</span></a></li> -->\n\n      <li class=\"sales_offer dropdown\"><a class=\"dropdown-toggle\" data-toggle=\"dropdown\">Sales & Offers<span class=\"salesoffers\">3</span></a>\n        <ul class=\"dropdown-menu\">\n          <li><a  routerLink=\"/activeoffer\" routerLinkActive=\"active\" (click)=\"changeStatus('Active eoffer')\"   >Active Offers</a></li>\n          <li><a  routerLink=\"/createoffer\" routerLinkActive=\"active\" (click)=\"changeStatus('Create Offer')\"  >Create New Offer</a></li>\n          <li><a    >All Offers & Sales</a></li>\n        </ul>\n      </li>\n\n      <li><a routerLink=\"/revenue\" routerLinkActive=\"active\" (click)=\"changeStatus('Revenue')\">My Earnings</a></li>\n      <li><a href=\"javascript:void(0);\">Notifications <span class=\"notification\">8</span></a></li>\n      <li><a href=\"javascript:void(0);\">Reviews & Feedbacks <span class=\"feedback\">8</span></a></li>\n    </ul>\n    <div class=\"settingsbx\">\n      <ul class=\"nav navbar-nav\">\n        <li><a href=\"javascript:void(0);\">My Account</a></li>\n        <li><a href=\"javascript:void(0);\">Settings</a></li>\n        <li><a href=\"javascript:void(0);\">Live Chat</a></li>\n        <li><a (click)=logout()>Logout</a></li>\n      </ul>\n    </div>\n  </div>\n</div>\n<!--sidebar-End -->"
 
 /***/ }),
 
@@ -3023,7 +3428,7 @@ var SideBarComponent = /** @class */ (function () {
     function SideBarComponent(route, service) {
         this.route = route;
         this.service = service;
-        // this.getUser() 
+        this.getUser();
     }
     SideBarComponent.prototype.ngOnInit = function () {
         $("#menu-toggle").click(function (e) {
@@ -3032,7 +3437,7 @@ var SideBarComponent = /** @class */ (function () {
         });
     };
     SideBarComponent.prototype.addProduct = function () {
-        console.log("hgfdfghujhgfds");
+        // console.log("hgfdfghujhgfds")
         this.route.navigate(['/addProductScreen']);
         this.service.setTitle('Add Product');
     };
@@ -3049,17 +3454,17 @@ var SideBarComponent = /** @class */ (function () {
             // console.log('-----------',response)
             if (response['statusCode'] == 200) {
                 _this.userdata = response['result'];
-                console.log("@#$%$#@!@#$#", _this.userdata);
+                // console.log("@#$%$#@!@#$#",this.userdata)
             }
             else {
             }
         }, function (error) {
-            console.log('error occur', error);
+            // console.log('error occur', error)
             _this.service.showError('Server Error');
         });
     };
     SideBarComponent.prototype.tabManag = function (event) {
-        console.log(event);
+        // console.log(event)
         this.isActive = event;
         var url = window.location.href.split('/');
         var page = url[url.length - 1];
@@ -3195,7 +3600,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"loginscreenwrap\" >\n  <div class=\"wakilogo\"></div>\n  <div class=\"aboutwakiCon\">.\n    <div class=\"wakitextrow\"><img src=\"../../assets/images/waki_market_place.png\"  /></div>\n    <div class=\"sminfo\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut\n      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore\n      eu tus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo\n      inventor</div>\n    <div class=\"emailrow\">\n        <form [formGroup]='formgroup'>\n\n        <div *ngIf=\"isValid;else password\">        \n        <!-- <ng-template #other_content>other content here...</ng-template> -->\n        <div class=\"form-group\">\n          <input class=\"form-control\" type=\"text\" [formControl]=\"formgroup.controls['email']\" placeholder=\"Enter your email address\" />\n          <button type=\"submit\" class=\"btn btn-primary loginbtn\"  (click)=\"login(formgroup.value)\">Submit</button>\n        </div>\n        <div class=\"error_box clearfix\">\n            <p *ngIf=\"formgroup.controls['email'].hasError('required') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Email is required</p>\n            <p *ngIf=\"formgroup.controls['email'].hasError('pattern') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Please enter valid email.</p>\n        </div>\n      <!-- </form> -->\n      </div>\n      <!-- //!password field -->\n      <ng-template #password>\n          <!-- <form [formGroup]='formgroup'> -->\n              <div class=\"form-group\">\n                <input class=\"form-control\" type=\"password\" [formControl]=\"formgroup.controls['pass']\" placeholder=\"Enter your Password\" />\n                <button type=\"submit\" class=\"btn btn-primary loginbtn\" (click)=\"enterpassword(formgroup.value)\">Submit</button>\n              </div>\n              <div class=\"error_box clearfix\">\n                  <p *ngIf=\"formgroup.controls['pass'].hasError('required') && formgroup.controls['pass'].dirty\" style=\"color:red;font-size:14px;\">*Password is required</p>\n                  <p *ngIf=\"formgroup.controls['pass'].hasError('pattern') && formgroup.controls['pass'].dirty\" style=\"color:red;font-size:14px;\">*Please enter valid Password.</p>\n              </div>\n      </ng-template>\n      <!-- //!password field -->\n    </form>\n\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"loginscreenwrap\">\n  <div class=\"wakilogo\"></div>\n  <div class=\"aboutwakiCon\">.\n    <div class=\"wakitextrow\"><img src=\"../../assets/images/waki_market_place.png\" /></div>\n    <div class=\"sminfo\">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut\n      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut\n      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore\n      eu tus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo\n      inventor</div>\n    <div class=\"emailrow\">\n      <form [formGroup]='formgroup'>\n\n        <div *ngIf=\"isValid;else password\">\n          <!-- <ng-template #other_content>other content here...</ng-template> -->\n          <div class=\"form-group\">\n            <input class=\"form-control\" type=\"text\" [formControl]=\"formgroup.controls['email']\" placeholder=\"Enter your email address\" />\n            <button type=\"submit\" class=\"btn btn-primary loginbtn\" (click)=\"login(formgroup.value)\">Submit</button>\n          </div>\n          <div>\n            If you don't have account <a routerLink=\"/createvendor\" routerLinkActive=\"active\">Register Here</a>\n          </div>\n          <div class=\"error_box clearfix\">\n            <p *ngIf=\"formgroup.controls['email'].hasError('required') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Email\n              is required</p>\n            <p *ngIf=\"formgroup.controls['email'].hasError('pattern') && formgroup.controls['email'].dirty\" style=\"color:red;font-size:14px;\">*Please\n              enter valid email.</p>\n          </div>\n          <!-- </form> -->\n        </div>\n        <!-- //!password field -->\n        <ng-template #password>\n          <!-- <form [formGroup]='formgroup'> -->\n          <div class=\"form-group\">\n            <input class=\"form-control\" type=\"password\" [formControl]=\"formgroup.controls['pass']\" placeholder=\"Enter your Password\" />\n            <button type=\"submit\" class=\"btn btn-primary loginbtn\" (click)=\"enterpassword(formgroup.value)\">Submit</button>\n          </div>\n          <div class=\"error_box clearfix\">\n            <p *ngIf=\"formgroup.controls['pass'].hasError('required') && formgroup.controls['pass'].dirty\" style=\"color:red;font-size:14px;\">*Password\n              is required</p>\n            <p *ngIf=\"formgroup.controls['pass'].hasError('pattern') && formgroup.controls['pass'].dirty\" style=\"color:red;font-size:14px;\">*Please\n              enter valid Password.</p>\n          </div>\n        </ng-template>\n        <!-- //!password field -->\n      </form>\n\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -3240,6 +3645,7 @@ var WakiLoginComponent = /** @class */ (function () {
         });
     }
     WakiLoginComponent.prototype.ngOnInit = function () {
+        // $.windowheight();
     };
     WakiLoginComponent.prototype.login = function (val) {
         var _this = this;
@@ -3366,7 +3772,7 @@ var DataService = /** @class */ (function () {
         // console.log("#############333")
     }
     // baseUrl = 'http://192.168.1.35:5050/'
-    // baseUrl = 'http://127.0.0.1:5050/'
+    // baseUrl = 'http://127.0.0.1:5050/' 
     // typeLogin: string;
     DataService.prototype.changeOption = function (msg) {
         this.optionSubject.next(msg);
@@ -3432,6 +3838,12 @@ var DataService = /** @class */ (function () {
     DataService.prototype.setTitle = function (title) {
         this.title.next(title);
     };
+    DataService.prototype.getCountryCodeJson = function () {
+        return this.http.get('assets/json/countryCodes.json');
+    };
+    DataService.prototype.getCountryCJson = function () {
+        return this.http.get('assets/json/countries.json');
+    };
     DataService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
@@ -3478,12 +3890,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_live_view_live_view_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Components/live-view/live-view.component */ "./src/app/Components/live-view/live-view.component.ts");
 /* harmony import */ var _Components_revenue_revenue_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Components/revenue/revenue.component */ "./src/app/Components/revenue/revenue.component.ts");
 /* harmony import */ var _Components_sales_reports_sales_reports_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Components/sales-reports/sales-reports.component */ "./src/app/Components/sales-reports/sales-reports.component.ts");
+/* harmony import */ var _Components_create_vendor_create_vendor_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Components/create-vendor/create-vendor.component */ "./src/app/Components/create-vendor/create-vendor.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -3515,7 +3929,7 @@ var routes = [
     { path: 'dashBoard', component: _Components_home_page_vendor_home_page_vendor_component__WEBPACK_IMPORTED_MODULE_4__["HomePageVendorComponent"] },
     { path: 'addProductScreen', component: _Components_add_product_screen_add_product_screen_component__WEBPACK_IMPORTED_MODULE_5__["AddProductScreenComponent"] },
     { path: 'addProduct', component: _Components_add_product_add_product_component__WEBPACK_IMPORTED_MODULE_6__["AddProductComponent"] },
-    { path: 'editProduct', component: _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_7__["EditproductComponent"] },
+    { path: 'editProduct/:productId', component: _Components_editproduct_editproduct_component__WEBPACK_IMPORTED_MODULE_7__["EditproductComponent"] },
     { path: 'allproducts', component: _Components_allproducts_allproducts_component__WEBPACK_IMPORTED_MODULE_11__["AllproductsComponent"] },
     { path: 'test', component: _Components_test_sumit_test_sumit_component__WEBPACK_IMPORTED_MODULE_8__["TestSumitComponent"] },
     { path: 'resetPassword', component: _Components_reset_password_reset_password_component__WEBPACK_IMPORTED_MODULE_9__["ResetPasswordComponent"] },
@@ -3532,6 +3946,7 @@ var routes = [
     { path: 'live', component: _Components_live_view_live_view_component__WEBPACK_IMPORTED_MODULE_20__["LiveViewComponent"] },
     { path: 'revenue', component: _Components_revenue_revenue_component__WEBPACK_IMPORTED_MODULE_21__["RevenueComponent"] },
     { path: 'sales-reports', component: _Components_sales_reports_sales_reports_component__WEBPACK_IMPORTED_MODULE_22__["SalesReportsComponent"] },
+    { path: 'createvendor', component: _Components_create_vendor_create_vendor_component__WEBPACK_IMPORTED_MODULE_23__["CreateVendorComponent"] },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -3614,6 +4029,8 @@ var AppComponent = /** @class */ (function () {
                         else if (currUrl_1 == 'productdetails') {
                             window.location.href = 'waki://other/parameter';
                         }
+                        else if (currUrl_1 == 'createvendor')
+                            _this.router.navigate(['/createvendor']);
                         else {
                             _this.router.navigate(['/login']);
                         }
@@ -3633,10 +4050,6 @@ var AppComponent = /** @class */ (function () {
             }
         });
         console.log('this.router.url', this.router.url);
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
     }
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -3716,6 +4129,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_revenue_revenue_component__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(/*! ./Components/revenue/revenue.component */ "./src/app/Components/revenue/revenue.component.ts");
 /* harmony import */ var _Components_side_bar_side_bar_component__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(/*! ./Components/side-bar/side-bar.component */ "./src/app/Components/side-bar/side-bar.component.ts");
 /* harmony import */ var _Components_sales_reports_sales_reports_component__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(/*! ./Components/sales-reports/sales-reports.component */ "./src/app/Components/sales-reports/sales-reports.component.ts");
+/* harmony import */ var _Components_create_vendor_create_vendor_component__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./Components/create-vendor/create-vendor.component */ "./src/app/Components/create-vendor/create-vendor.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3779,6 +4193,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -3814,6 +4229,7 @@ var AppModule = /** @class */ (function () {
                 _Components_live_view_live_view_component__WEBPACK_IMPORTED_MODULE_45__["LiveViewComponent"],
                 _Components_revenue_revenue_component__WEBPACK_IMPORTED_MODULE_46__["RevenueComponent"],
                 _Components_sales_reports_sales_reports_component__WEBPACK_IMPORTED_MODULE_48__["SalesReportsComponent"],
+                _Components_create_vendor_create_vendor_component__WEBPACK_IMPORTED_MODULE_49__["CreateVendorComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
