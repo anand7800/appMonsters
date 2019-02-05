@@ -438,9 +438,6 @@ editProduct = (data, callback) => {
             
             callback(update)
         })
-
-
-
     }
 }
 
