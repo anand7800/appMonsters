@@ -364,7 +364,7 @@ addProduct = (data, header, callback) => {
 
 /************************************************************
  ***********************************************************
-*****************editproduct*******************************
+ ****************editproduct*******************************
  ***********************************************************
  ***********************************************************
  ************************************************************/
@@ -435,8 +435,15 @@ editProduct = (data, callback) => {
                     status: response.productDetail.status
                 }
             }
-            
-            callback(update)
+            productModel.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
+                console.log("update record", err, result)
+                if (err || !result)
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY })
+                else {
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED, 'result': result })
+                }
+            })
+            // callback(update)
         })
     }
 }
@@ -1200,7 +1207,7 @@ getProductCategoryName = (data, callback) => {
     query = {
         subCategory: data.subCategoryId
     }
-    productCategoryModelL3.find(query).select({ '_id': 1, 'productcategoryName': 1 }).exec((error, success) => {
+    productCategoryModelL3.find(query).select({ '_id': 1, 'productcategoryName': 1 ,'image':1 }).exec((error, success) => {
         console.log(error, JSON.stringify(success))
         if (success.length > 0) {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": success })
