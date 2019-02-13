@@ -71,12 +71,12 @@ signup = (data, callback) => {
 }
 //!login
 login = (data, callback) => {
-    log("login api is hitted")
+    log("login api is hitted",data)
     obj = data
     var update = {
         lastLogin: Date.now()
     };
-    var query = { email: obj.email }
+    var query = { email: obj.email ,userType:data.userType }
     if (!data) {
         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
