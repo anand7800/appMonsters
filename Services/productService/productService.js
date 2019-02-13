@@ -188,7 +188,7 @@ getCategoryList = (data, callback) => {
                         "categoryName": item.categoryName,
                         "image": item.image,
                         "icons": item.icons,
-                        "subCategory":checkSubcategory
+                        "subCategory": checkSubcategory
                     }
                     temp.push(data)
                     callback();
@@ -1344,7 +1344,7 @@ productDetails = (data, callback) => {
                 // console.log('------------>>', err, response)
                 if (response) {
                     // console.log("sadfsadfasfsadfdfasdf", response)
-                    res = {}
+                    let res = {}
                     var ratingAndReview = []
                     // console.log(response.findProduct.brandDesc[0].varianceId)
                     if (response.findProduct.varianceId == null) {
@@ -1376,11 +1376,11 @@ productDetails = (data, callback) => {
                         var size = []
                         // var test2;
                         response.findProduct.varianceId.variants.forEach(test => {
-                            color.push(test.color)
-                            material.push(test.material)
-                            size.push(test.size)
+                            if (test.color != "") color.push(test.color)
+                            if (test.material != "") material.push(test.material)
+                            if (test.size != "") size.push(test.size)
                             console.log('into the looop', test)
-                            data = {
+                            let data = {
                                 _id: response.findProduct._id,
                                 brand: response.findProduct.brandId.brandName,
                                 productName: response.findProduct.productName,
@@ -1392,9 +1392,12 @@ productDetails = (data, callback) => {
                                 tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
                                 price: test.price ? test.price : '',
                                 image: test.image ? test.image : [],
-                                colors: [...new Set(color)].reverse().map(function (x) { return x.toUpperCase() }),
-                                material: [...new Set(material)].reverse().map(function (x) { return x.toUpperCase() }),
-                                size: [...new Set(size)].reverse().map(function (x) { return x.toUpperCase() })
+                                colors: color,
+                                material: material,
+                                size: size
+                                // colors: [...new Set(color)].reverse().map(function (x) { return x.toUpperCase() }),
+                                // material: [...new Set(material)].reverse().map(function (x) { return x.toUpperCase() }),
+                                // size: [...new Set(size)].reverse().map(function (x) { return x.toUpperCase() })
                             }
                             res.product = data
                             // })
