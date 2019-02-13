@@ -166,10 +166,9 @@ addSubCategory = (data, callback) => {
 
 /* ************************************
 *************getCategorylist***********************
-************************************ */
-
+*************************************/
 getCategoryList = (data, callback) => {
-    log(data.lang)
+    // log(data.lang)
     categoryModelL1.find({ 'status': "ACTIVE" }, null, { sort: { 'serialNumber': 1 } }).select({ 'categoryName': 1, '_id': 1, 'icons': 1, 'image': 1 }).exec((err, result) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
@@ -178,16 +177,22 @@ getCategoryList = (data, callback) => {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
         }
         else {
+
             temp = []
             async.forEachOf(result, function (item, key, callback) {
-                data = {
-                    "_id": item._id,
-                    "categoryName": item.categoryName,
-                    "image": item.image,
-                    "icons": item.icons,
-                }
-                temp.push(data)
-                callback();
+                subCategoryModelL2.findOne({ categoryModel: item._id }).count().exec((err, checkSubcategory) => {
+                    console.log('===>check', checkSubcategory)
+                    // })
+                    data = {
+                        "_id": item._id,
+                        "categoryName": item.categoryName,
+                        "image": item.image,
+                        "icons": item.icons,
+                        "subCategory":checkSubcategory
+                    }
+                    temp.push(data)
+                    callback();
+                })
             }, function (err) {
                 if (err) {
                     callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
@@ -700,12 +705,12 @@ homeScreenApi = (query, callback) => {
 OpenSubCategory = (data, callback) => {
     log('incoming data', data)
     var res = []
-    subCategoryModelL2.find({ categoryModel: data.categoryId, status: "ACTIVE" }).exec((err, succ) => {
-        // console.log(JSON.stringify(succ))
+    subCategoryModelL2.find({ categoryModel: data.categoryId, status: "ACTIVE" }).sort({ $natural: 1 }).exec((err, succ) => {
+        if (err) throw err
 
         async.forEachOf(succ, (value, key, callback) => {
-            console.log('value', value)
-            productCategoryModelL3.find({ subCategory: value._id, status: "ACTIVE" }).exec((err, findData) => {
+            console.log('value', value.subCategoryName)
+            productCategoryModelL3.find({ subCategory: value._id, status: "ACTIVE" }).sort({ natural: 1 }).exec((err, findData) => {
                 // console.log("&^%$#@", err, findData)
                 if (findData.length > 0) {
 
@@ -721,6 +726,7 @@ OpenSubCategory = (data, callback) => {
                         product.push(t)
                     })
                     let temp = {
+                        // key: key,
                         _id: value._id,
                         subCategoryName: value.subCategoryName,
                         productcategory: product
@@ -730,6 +736,7 @@ OpenSubCategory = (data, callback) => {
                 }
                 else {
                     let temp = {
+                        // key:key,
                         _id: value._id,
                         subCategoryName: value.subCategoryName,
                         productcategory: []
@@ -755,7 +762,7 @@ categoryProductList = (data, callback) => {
     var response = []
     var parkar = Object
     if (data.productListType == 'brand') {
-        productModel.find({ brandId: mongoose.Types.ObjectId(data.productCategoryId) }).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
+        productModel.find({ brandId: mongoose.Types.ObjectId(data.productCategoryId) }).sort({ _id: -1 }).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
 
             if (err) {
                 throw err
@@ -798,7 +805,7 @@ categoryProductList = (data, callback) => {
         })
     }
     else {
-        productModel.find({ productCategoryId: data.productCategoryId }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
+        productModel.find({ productCategoryId: data.productCategoryId }).sort({ _id: -1 }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
             console.log("err,product", err, productDetail)
             if (err) {
                 throw err
@@ -1207,7 +1214,7 @@ getProductCategoryName = (data, callback) => {
     query = {
         subCategory: data.subCategoryId
     }
-    productCategoryModelL3.find(query).select({ '_id': 1, 'productcategoryName': 1 ,'image':1 }).exec((error, success) => {
+    productCategoryModelL3.find(query).select({ '_id': 1, 'productcategoryName': 1, 'image': 1 }).exec((error, success) => {
         console.log(error, JSON.stringify(success))
         if (success.length > 0) {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": success })
