@@ -2019,7 +2019,7 @@ inActiveProductList = (data, callback) => {
         productModel.find({
             $and: [{ status: data.status.toUpperCase() }]
         }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
-            console.log(err, JSON.stringify(response))
+            // console.log(err, JSON.stringify(response))
             if (response.length > 0) {
                 var res = []
                 async.forEachOf(response, (value, key, callback) => {
