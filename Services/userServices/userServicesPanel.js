@@ -730,7 +730,7 @@ verifyLink = (data, callback) => {
 
 //! UPDATE IMAGE
 updateProfile = (data, headers, callback) => {
-    console.log("headers", headers, data)
+    console.log("api hitted ")
     var userId
     commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
         // console.log("^^^^", err, decodeId)
