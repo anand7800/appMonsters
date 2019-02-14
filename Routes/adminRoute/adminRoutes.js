@@ -34,7 +34,7 @@ adminRouter.get('/getBrandList', (req, res) => {
 
 
 //getProductList
-adminRouter.get('/getProductList', (req, res) => {
+adminRouter.get('/getProductList', authHandler.verifyToken,(req, res) => {
     adminHandler.getProductList(req.query,req.headers, (data) => {
         res.send(data)
     })
@@ -113,7 +113,7 @@ adminRouter.post('/editCategory', (req, res) => {
     })
 })
 //vendorOrderStatus
-adminRouter.post('/vendorOrderStatus', (req, res) => {
+adminRouter.post('/vendorOrderStatus',authHandler.verifyToken, (req, res) => {
     adminHandler.vendorOrderStatus(req.body,req.headers,(data) => {
         res.send(data)
     })

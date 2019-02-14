@@ -32,7 +32,6 @@ var User = require('./Models/userModel/chatUser.js');
 var urlMedia = require('./Models/userModel/chatUrl.js');
 
 // var io = require('socket.io')(http);
-
 // app.use(bodyParser.json());
 // app.use(express.static(__dirname + '/views'));
 // app.set('view engine', 'ejs');
@@ -69,7 +68,6 @@ app.get('*', (req, res) => {
 ***************************socket start *************************
 ***************************socket start ************************* */
 var io = require('socket.io')(server);
-
 var sockets = {};
 var onlineUsers = {};
 
@@ -733,7 +731,6 @@ io.sockets.on('connection', function (socket) {
 /* ***************************socket end *************************
 ***************************socket end *************************
 ***************************socket end ************************* */
-
 
 /* ***************************Helper Functions *************************
 ***************************Helper Functions *************************

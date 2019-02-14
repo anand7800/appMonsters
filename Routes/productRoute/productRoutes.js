@@ -28,7 +28,7 @@ productRouter.post('/addProductCategory', (req, res) => {
     })
 })
 //!addBrandDescription
-productRouter.post('/addProduct', (req, res) => {
+productRouter.post('/addProduct',authHandler.verifyToken, (req, res) => {
     productService.addProduct(req.body, req.headers, (data) => {
         res.send(data)
     })
@@ -58,27 +58,27 @@ productRouter.get('/productDetails', (req, res) => {
 //     })
 // }) */
 //!addReviewAndRating
-productRouter.post('/addReviewAndRating', (req, res) => {
+productRouter.post('/addReviewAndRating',authHandler.verifyToken, (req, res) => {
     productService.addReviewAndRating(req.headers, req.body, (data) => {
         res.send(data)
     })
 })
 //!addToCart  
-productRouter.post('/addToCart', (req, res) => {
+productRouter.post('/addToCart',authHandler.verifyToken, (req, res) => {
     productService.addToCart(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
 
 //!listOfAddCart  
-productRouter.get('/listOfAddCart', (req, res) => {
+productRouter.get('/listOfAddCart',authHandler.verifyToken, (req, res) => {
     productService.listOfAddCart(req.query, req.headers, (data) => {
         res.send(data)
     })
 })
 
 //!addTowishList  
-productRouter.post('/addToWishList', (req, res) => {
+productRouter.post('/addToWishList', authHandler.verifyToken, (req, res) => {
     productService.addToWishList(req.body, req.headers, (data) => {
         res.send(data)
     })
@@ -92,7 +92,7 @@ productRouter.post('/addToWishList', (req, res) => {
 // })
 
 // //!wishList  
-productRouter.get('/wishList', (req, res) => {
+productRouter.get('/wishList',authHandler.verifyToken, (req, res) => {
     productService.wishList(req.query, req.headers, (data) => {
         res.send(data)
     })
@@ -106,14 +106,14 @@ productRouter.get('/wishList', (req, res) => {
 // })
 
 //!deleteWishItem  
-productRouter.post('/deleteWishItem', (req, res) => {
+productRouter.post('/deleteWishItem',authHandler.verifyToken, (req, res) => {
     productService.deleteWishItem(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
 
 //!deleteCart  
-productRouter.post('/deleteCart', (req, res) => {
+productRouter.post('/deleteCart', authHandler.verifyToken,(req, res) => {
     productService.deleteCart(req.body, req.headers, (data) => {
         res.send(data)
     })
@@ -127,14 +127,14 @@ productRouter.post('/deleteCart', (req, res) => {
 // })
 
 //!placeOrder  
-productRouter.post('/placeOrder', (req, res) => {
+productRouter.post('/placeOrder', authHandler.verifyToken, (req, res) => {
     productService.placeOrder(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
 
 //!orderList  
-productRouter.get('/orderList', (req, res) => {
+productRouter.get('/orderList',authHandler.verifyToken, (req, res) => {
     productService.orderList(req.query, req.headers, (data) => {
         res.send(data)
     })
@@ -168,7 +168,7 @@ productRouter.post('/search', (req, res) => {
 })
 
 //!checkoutOrder
-productRouter.post('/checkoutOrder', (req, res) => {
+productRouter.post('/checkoutOrder', authHandler.verifyToken, (req, res) => {
     productService.checkoutOrder(req.body, req.headers, (data) => {
         res.send(data)
     })
@@ -195,7 +195,7 @@ productRouter.post('/filter', (req, res) => {
 })
 
 //! Add physical store 
-productRouter.post('/addPhysicalStore', (req, res) => {
+productRouter.post('/addPhysicalStore', authHandler.verifyToken, (req, res) => {
     productService.physicalStore(req.body, req.headers, (data) => {
         res.send(data)
     })
@@ -274,7 +274,7 @@ productRouter.post('/updateBrand', (req, res) => {
 // })
 
 //!get vendorOrder list
-productRouter.post('/vendorOrderList', (req, res) => {
+productRouter.post('/vendorOrderList', authHandler.verifyToken,(req, res) => {
     productService.vendorOrderList(req.headers, (data) => {
         res.send(data)
     })
@@ -321,7 +321,7 @@ productRouter.post('/compareProduct', (req, res) => {
 })
 
 //!getNotification
-productRouter.get('/getNotification', (req, res) => {
+productRouter.get('/getNotification',authHandler.verifyToken, (req, res) => {
     productService.getNotification(req.query, req.headers, (data) => {
         res.send(data)
     })
@@ -371,7 +371,7 @@ productRouter.get('/getAllVariant/:productId', (req, res) => {
 //     })
 // })
 //!searchVendorOrder
-productRouter.post('/searchVendorOrder', (req, res) => {
+productRouter.post('/searchVendorOrder',authHandler.verifyToken, (req, res) => {
     productService.searchVendorOrder(req.body, req.headers, (data) => {
         res.send(data)
     })
@@ -385,7 +385,7 @@ productRouter.get('/inActiveProductList', (req, res) => {
 })
 
 //! addVendoroffer
-productRouter.post('/addVendoroffer', (req, res) => {
+productRouter.post('/addVendoroffer', authHandler.verifyToken, (req, res) => {
     productService.addVendoroffer(req.body, req.headers, (data) => {
         res.send(data)
     })
@@ -402,7 +402,7 @@ productRouter.get('/getProductInfo', (req, res) => {
     })
 })
 
-productRouter.get('/getVendorProductCategorylist', (req, res) => {
+productRouter.get('/getVendorProductCategorylist', authHandler.verifyToken, (req, res) => {
     productService.getVendorProductCategorylist(req.query, req.headers, (data) => {
         res.send(data)
     })

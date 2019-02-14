@@ -125,13 +125,13 @@ userRouter.post('/checkEmail', (req, res) => {
     })
 })
 //!checkEmail
-userRouter.post('/changePassword', (req, res) => {
+userRouter.post('/changePassword',authHandler.verifyToken, (req, res) => {
     userHandler.changePassword(req.body,req.headers, (data) => {
         res.send(data) 
     })
 })   
 //!editProfile
-userRouter.post('/editProfile', (req, res) => {
+userRouter.post('/editProfile',authHandler.verifyToken, (req, res) => {
     userHandler.editProfile(req.body,req.headers, (data) => {
         res.send(data) 
     })
@@ -150,14 +150,14 @@ userRouter.post('/verifyLink',(req,res)=>{
 })
 
 //!updateImage
-userRouter.post('/updateProfile',(req,res)=>{
+userRouter.post('/updateProfile',authHandler.verifyToken,(req,res)=>{
     userHandler.updateProfile(req.body,req.headers,(data)=>{
         res.send(data)
     })
 })
 
 //!getUserInfo
-userRouter.get('/getUserInfo',(req,res)=>{
+userRouter.get('/getUserInfo',authHandler.verifyToken,(req,res)=>{
     userHandler.getUserInfo(req.query,req.headers,(data)=>{
         res.send(data)
     })
