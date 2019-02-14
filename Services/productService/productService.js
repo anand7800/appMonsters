@@ -526,7 +526,7 @@ homeScreenApi = (query, callback) => {
                 var random = Math.floor(Math.random() * count);
                 productCategoryModelL3.find().skip(random).limit(10).exec(
                     function (err, result) {
-                        console.log('#######33', err, result)
+                        // console.log('#######33', err, result)
                         if (err) {
                             cb(null)
                         }
@@ -542,10 +542,13 @@ homeScreenApi = (query, callback) => {
                 // console.log("@@@@@@@@@@@2", result)
                 if (result) {
                     async.forEachOf(result, (element, key, callback) => {
-                        productModel.findOne({ categoryModel: element._id }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).lean().exec((err, result2) => {
+                        productModel.find({ categoryModel: element._id ,status:"ACTIVE"}).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).lean().exec((err, result2) => {
                             // log("trending", err, JSON.stringify(result2))
                             if (result2)
-                                trending.push(result2)
+                                result2.forEach(element => {
+                                    trending.push(element)
+                                })
+
                             // cb(null, result2)
                             callback()
                         })

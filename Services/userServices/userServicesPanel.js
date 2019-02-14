@@ -770,6 +770,8 @@ updateProfile = (data, headers, callback) => {
                 image: response.uploadImage ? response.uploadImage : response.getUser.image,
                 firstName: data.firstName ? data.firstName : response.getuser.firstName
 
+
+
             }
         }
         console.log('@@@@@@@@@@@@@@@2', query, update)
@@ -830,8 +832,6 @@ getUserInfo = (data, headers, callback) => {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
         else
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response })
-
-
     })
 }
 module.exports = {

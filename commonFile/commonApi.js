@@ -239,7 +239,7 @@ trending = async (cb) => {
 offers = async (cb) => {
     topOffersL6.find({ 'topOffers.status': "ACTIVE" }).select({ 'topOffers.topOfferName': 1, '_id': 1, 'topOffers.offerImage': 1, 'topOffers.description': 1 }).exec((err, result) => {
 
-        console.log("@#$%&^%$#$", err, result)
+        // console.log("@#$%&^%$#$", err, result)
         if (err) {
             cb(null)
         }
