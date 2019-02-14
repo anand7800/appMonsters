@@ -13,9 +13,9 @@ let serverURLs = {
         "CRON_PATTERN": '1 * * * * *',
     },
     "staging": {
-        "NODE_SERVER": "http://13.126.131.184",
-        "NODE_SERVER_PORT": "5050",
-        "MONGO_DB": "mongodb://admin:oursport_admin@13.126.131.184:27017/waki?authSource=admin",
+        "NODE_SERVER": "http://35.165.140.114",
+        "NODE_SERVER_PORT": "6262",
+        "MONGO_DB": "mongodb://35.165.140.114:27017/waki?authSource=admin",
         "EMAIL_USER": 'toothfairysanjeet@gmail.com',
         "EMAIL_PASS": 'Sanj1234A',
         "EMAIL_HOST": 'smtp.gmail.com',

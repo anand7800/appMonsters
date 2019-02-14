@@ -71,12 +71,12 @@ signup = (data, callback) => {
 }
 //!login
 login = (data, callback) => {
-    log("login api is hitted",data)
+    log("login api is hitted", data)
     obj = data
     var update = {
         lastLogin: Date.now()
     };
-    var query = { email: obj.email ,userType:data.userType }
+    var query = { email: obj.email, userType: data.userType }
     if (!data) {
         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
@@ -84,7 +84,7 @@ login = (data, callback) => {
     else {
         userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod isBussinessAdded countryCode').exec((err, succ) => {
             // console.log(err, succ)
-            console.log('2222222222222222222',succ)
+            console.log('2222222222222222222', succ)
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                 return
@@ -104,7 +104,7 @@ login = (data, callback) => {
                         "image": succ.image,
                         "addressAdded": succ.isAddressAdded,
                         "phone": succ.phone,
-                        "countryCode": succ.countryCode?succ.countryCode:"",
+                        "countryCode": succ.countryCode ? succ.countryCode : "",
                         "paymentAdded": succ.paymentAdded,
                         "address": succ.address,
                         "paymentMethod": succ.paymentMethod,
@@ -729,11 +729,11 @@ verifyLink = (data, callback) => {
 }
 
 //! UPDATE IMAGE
-updateImage = (data, headers, callback) => {
-    console.log("headers", headers, data)
+updateProfile = (data, headers, callback) => {
+    // console.log("headers", headers, data)
     var userId
     commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
-        console.log("^^^^", err, decodeId)
+        // console.log("^^^^", err, decodeId)
         if (err) throw err
         else {
             userId = decodeId
@@ -748,15 +748,28 @@ updateImage = (data, headers, callback) => {
                 else if (!image) cb(null)
                 else cb(null, image)
             })
+        },
+        getUser: (cb) => {
+            userModel.findOne({ _id: userId }).exec((err, userinfo) => {
+                // console.log(err, userinfo)
+                if (err) cb(null)
+                else if (!userinfo) cb(null)
+                else cb(null, userinfo)
+            })
         }
     }, (err, response) => {
         console.log("######", err, response)
+        if (response.uploadImage) {
+            console.log('33')
+        }
         query = {
             _id: userId
         }
         update = {
             $set: {
-                image: response.uploadImage
+                image: response.uploadImage ? response.uploadImage : response.getUser.image,
+                firstName: data.firstName ? data.firstName : response.getuser.firstName
+
             }
         }
         console.log('@@@@@@@@@@@@@@@2', query, update)
@@ -803,22 +816,22 @@ getUserInfo = (data, headers, callback) => {
         },
         function (decodeId, cb) {
 
-            userModel.findOne({ _id: decodeId }).exec((err,success)=>{
-                if(err || !success)
-                cb(null)
-                else 
-                cb(null,success)
+            userModel.findOne({ _id: decodeId }).exec((err, success) => {
+                if (err || !success)
+                    cb(null)
+                else
+                    cb(null, success)
             })
         }
 
-    ],(err,response)=>{
+    ], (err, response) => {
 
-        if(err)
-        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+        if (err)
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
         else
-        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],'result':response })
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response })
 
-        
+
     })
 }
 module.exports = {
@@ -841,6 +854,6 @@ module.exports = {
     //! this is for angular 
     reset,
     verifyLink,
-    updateImage,
+    updateProfile,
     getUserInfo
 }

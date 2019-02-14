@@ -150,8 +150,8 @@ userRouter.post('/verifyLink',(req,res)=>{
 })
 
 //!updateImage
-userRouter.post('/updateImage',(req,res)=>{
-    userHandler.updateImage(req.body,req.headers,(data)=>{
+userRouter.post('/updateProfile',(req,res)=>{
+    userHandler.updateProfile(req.body,req.headers,(data)=>{
         res.send(data)
     })
 })
