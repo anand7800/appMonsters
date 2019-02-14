@@ -96,7 +96,6 @@ login = (data, callback) => {
             else {
                 var hash = util.encryptData(data.password)
                 if (succ.password == hash) {
-
                     result = {
                         "_id": succ._id,
                         "firstName": succ.firstName,
