@@ -178,4 +178,9 @@ adminRouter.get('/getSubcategoryById', (req, res) => {
         res.send(data)
     })
 })
+adminRouter.get('/getSubcategoryById', (req, res) => {
+    adminHandler.getSubcategoryById(req.query,(data) => {
+        res.send(data)
+    })
+})
 module.exports = adminRouter

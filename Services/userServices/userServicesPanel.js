@@ -575,11 +575,11 @@ resetPassword = (query, body, callback) => {
 //!email exist 
 checkEmail = (data, callback) => {
     console.log("api is called", data)
-    userModel.find({ email: data.email, userType: 'vendor' }, (err, found) => {
+    userModel.findOne({ email: data.email, userType:data.userType }, (err, found) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
         }
-        else if (!found.length > 0) {
+        else if (!found) {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
         }
         else {
