@@ -16,11 +16,13 @@ const auth = {
                 res.send({ "statusCode": "501", "statusMessage": "access token related error", "error": err })
             } else {
                 userModel.findOne({ _id: decoded }).exec((err, result) => {
-                    if (err || !result)
+                    console.log(err, result)
+                    if (err || !result) { 
                         res.send({ 'statusCode': util.statusCode.WENT_WRONG, 'statusMessage': util.statusMessage.LOGOUT[req.body.lang] })
-                        else{
-                            next()
-                        }
+                     }
+                    else {
+                        next()
+                    }
                 })
                 // next();
             }
