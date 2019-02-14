@@ -742,13 +742,12 @@ updateProfile = (data, headers, callback) => {
 
     async.parallel({
         uploadImage: (cb) => {
-
-            commonFunction.uploadImg(data.image, (err, image) => {
-                console.log(err, image)
-                if (err) cb(null)
-                else if (!image) cb(null)
-                else cb(null, image)
-            })
+                commonFunction.uploadImg(data.image, (err, image) => {
+                    console.log(err, image)
+                    if (err) cb(null)
+                    else if (!image) cb(null)
+                    else cb(null, image)
+                })
         },
         getUser: (cb) => {
             userModel.findOne({ _id: userId }).exec((err, userinfo) => {
@@ -763,23 +762,20 @@ updateProfile = (data, headers, callback) => {
         if (response.uploadImage) {
             console.log('33')
         }
-        query = {
+        let query = {
             _id: userId
         }
-        update = {
+        let update = {
             $set: {
                 image: response.uploadImage ? response.uploadImage : response.getUser.image,
                 firstName: data.firstName ? data.firstName : response.getuser.firstName
-
-
-
             }
         }
         console.log('@@@@@@@@@@@@@@@2', query, update)
         userModel.findOneAndUpdate(query, update, { new: true }).exec((err, success) => {
 
             console.log(err, success)
-           
+
             if (success) {
                 result = {
                     "_id": success._id,

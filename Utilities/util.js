@@ -375,9 +375,10 @@ let statusMessage = {
         ar: ""
     },
     PROFILE_UPDATE: {
-        en: "Profile Picture Upload successfully",
+        en: "Profile details Upload successfully",
         ar: ""
     },
+
     TITLE: {
 
         PLACED: {
