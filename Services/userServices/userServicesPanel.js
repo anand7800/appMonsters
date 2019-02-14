@@ -801,8 +801,7 @@ updateProfile = (data, headers, callback) => {
 }
 
 getUserInfo = (data, headers, callback) => {
-    console.log("incoming data", data)
-
+    console.log("incoming data", data.firstName)
     async.waterfall([
 
         function (cb) {
