@@ -730,7 +730,7 @@ verifyLink = (data, callback) => {
 
 //! UPDATE IMAGE
 updateProfile = (data, headers, callback) => {
-    // console.log("headers", headers, data)
+    console.log("headers", headers, data)
     var userId
     commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
         // console.log("^^^^", err, decodeId)
@@ -742,6 +742,7 @@ updateProfile = (data, headers, callback) => {
 
     async.parallel({
         uploadImage: (cb) => {
+
             commonFunction.uploadImg(data.image, (err, image) => {
                 console.log(err, image)
                 if (err) cb(null)
@@ -776,26 +777,27 @@ updateProfile = (data, headers, callback) => {
         }
         console.log('@@@@@@@@@@@@@@@2', query, update)
         userModel.findOneAndUpdate(query, update, { new: true }).exec((err, success) => {
+
             console.log(err, success)
-            result = {
-                "_id": success._id,
-                "firstName": success.firstName,
-                "lastName": success.lastName,
-                "email": success.email,
-                "image": success.image,
-                "addressAdded": success.isAddressAdded,
-                "phone": success.phone,
-                "countryCode": success.countryCode,
-                "paymentAdded": success.paymentAdded,
-                "address": success.address,
-                "paymentMethod": success.paymentMethod,
-                "countryCode": success.countryCode,
-                "isBussinessAdded": success.isBussinessAdded
-            }
+           
             if (success) {
+                result = {
+                    "_id": success._id,
+                    "firstName": success.firstName,
+                    "lastName": success.lastName,
+                    "email": success.email,
+                    "image": success.image,
+                    "addressAdded": success.isAddressAdded,
+                    "phone": success.phone,
+                    "countryCode": success.countryCode,
+                    "paymentAdded": success.paymentAdded,
+                    "address": success.address,
+                    "paymentMethod": success.paymentMethod,
+                    "countryCode": success.countryCode,
+                    "isBussinessAdded": success.isBussinessAdded
+                }
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PROFILE_UPDATE[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(success._id) })
             } else {
-
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
             }
         })
