@@ -3,7 +3,7 @@ let environment = require('./environment').environment;
 let serverURLs = {
     "dev": {
         "NODE_SERVER": "http://localhost",
-        "NODE_SERVER_PORT": "6262",
+        "NODE_SERVER_PORT": "5050",
         "MONGO_DB": "mongodb://admin:oursport_admin@13.126.131.184:27017/WAKINEW?authSource=admin",
         "EMAIL_USER": 'toothfairysanjeet@gmail.com',
         "EMAIL_PASS": 'Sanj1234A',
