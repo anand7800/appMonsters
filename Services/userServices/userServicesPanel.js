@@ -201,7 +201,7 @@ checkSocialProfile = (obj, callback) => {
         return
     }
     else {
-        query = {
+       let query = {
             "social.socialId": obj.socialId
         }
         userModel.findOne(query, (err, succ) => {

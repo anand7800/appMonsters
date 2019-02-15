@@ -254,7 +254,8 @@ addBrand = (data, callback) => {
 }
 //!get brand list
 getBrandList = (callback) => {
-    brandListModel.find({ status: "ACTIVE" }, { status: 0 }).exec((err, succ) => {
+    // console.log('dasdf  ')
+    brandListModel.find({ status: "ACTIVE" }, { status: 0 }).exec(async (err, succ) => {
 
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": "brand list", "result": succ })
 
@@ -379,7 +380,7 @@ getUserList = (data, callback) => {
 //!create vendor
 createVendor = (data, callback) => {
     // console.log('create  vendor', data)
-    data.email.toLowerCase()
+    // data.email.toLowerCase()
     if (!data.image && !data.email) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
@@ -399,7 +400,7 @@ createVendor = (data, callback) => {
             cb(null, util.encryptData(password))
         },
         checkuser: (cb) => {
-            userModel.findOne({ $and: [{ email: data.email }] }).exec((err, result) => {
+            userModel.findOne({ $and: [{ email: data.email.toLowerCase() }] }).exec((err, result) => {
                 console.log('===>', err, result)
                 if (err || result == null)
                     cb(null)
@@ -764,7 +765,33 @@ deleteSubCategory = (data, callback) => {
         }
     })
 }
-
+//deleteSubCategory
+deleteProductCategory = (data, callback) => {
+    console.log("data", data)
+    if (data.productCategoryId || data.status) {
+        query = {
+            _id: data.productCategoryId
+        }
+        update = {
+            $set: {
+                status: data.status.toUpperCase()
+            }
+        }
+        productCategoryModel.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
+            console.log("err,result", err, result)
+            if (err) {
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+            }
+            else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
+            }
+        })
+    }
+    else {
+        console.log("asdfasfdasfadf")
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+}
 changeProductStatus = (data, callback) => {
     console.log("data is ", data)
     if (!data.productId || !data.status) {
@@ -860,7 +887,7 @@ countProduct = (data, callback) => {
 }
 
 
-//!editcategory
+//editcategory
 editSubCategory = (data, callback) => {
     console.log('incoming data', data)
     if (!data.subCategoryId || !data.categoryId) {
@@ -936,6 +963,87 @@ getSubcategoryById = (data, callback) => {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
 }
+
+getProductCategoryList = (data, callback) => {
+    if (data.status) {
+        productCategoryModel.find({ status: data.status }).populate('subCategory').populate('categoryModel').exec((err, result) => {
+            if (err || !result)
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+            else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
+            }
+        })
+    }
+    else {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+}
+
+//getcategorybyId
+getProductCategoryById = (data, callback) => {
+    if (data.productCategoryId) {
+        productCategoryModel.findById({ _id: data.productCategoryId }).exec((err, result) => {
+            if (err || !result)
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], 'result': result })
+            else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
+
+            }
+        })
+    }
+    else {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+}
+
+//editcategory
+editProductCategory = (data, callback) => {
+    console.log('incoming data', data)
+    if (!data.productCategoryId || !data.subCategoryId || data.status) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+    else {
+        async.parallel({
+            uploadImage: (cb) => {
+                commonFunction.uploadImg(data.image, (err, image) => {
+                    log(err, image)
+                    if (err) cb(null)
+                    else if (!image) cb(null)
+                    else cb(null, image)
+                })
+            },
+            getCategory: (cb) => {
+                subCategoryModelL2.findOne({ _id: data.subCategoryId }).exec((err, result) => {
+                    log(err, result)
+                    if (err) cb(null)
+                    else if (!result) cb(null)
+                    else cb(null, result)
+                })
+            }
+        }, (err, response) => {
+            console.log('response ==>', response)
+            let query = {
+                _id: data.productCategoryId
+            }
+            let update = {
+                $set: {
+                    subCategory: data.subCategoryId,
+                    categoryModel: response.getCategory.categoryModel,
+                    productcategoryName: data.productCategoryName,
+                    image: response.uploadImage,
+                    status: data.status.toUpperCase()
+                }
+            }
+            productCategoryModel.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
+                console.log(err, result)
+                if (err) throw err
+                else {
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': result })
+                }
+            })
+        })
+    }
+}
 module.exports = {
     addTopOffers,
     uploadImage,
@@ -964,5 +1072,9 @@ module.exports = {
     editSubCategory,
     getCategoryById,
     getBrandById,
-    getSubcategoryById
+    getSubcategoryById,
+    getProductCategoryList,
+    deleteProductCategory,
+    getProductCategoryById,
+    editProductCategory
 }

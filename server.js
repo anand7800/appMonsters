@@ -70,8 +70,6 @@ app.get('*', (req, res) => {
 var io = require('socket.io')(server);
 var sockets = {};
 var onlineUsers = {};
-
-
 io.sockets.on('connection', function (socket) {
 
     console.log("\x1b[31m", "Congratulation connection has been established");

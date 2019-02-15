@@ -178,12 +178,12 @@ getCategoryList = (data, callback) => {
         }
         else {
 
-            temp = []
+            let temp = []
             async.forEachOf(result, function (item, key, callback) {
                 subCategoryModelL2.findOne({ categoryModel: item._id }).count().exec((err, checkSubcategory) => {
                     console.log('===>check', checkSubcategory)
                     // })
-                    data = {
+                     let data = {
                         "_id": item._id,
                         "categoryName": item.categoryName,
                         "image": item.image,
@@ -209,8 +209,8 @@ getCategoryList = (data, callback) => {
 *************addProductCategory***********************
 ************************************ */
 addProductCategory = (data, callback) => {
-    log("api is hitted of addProduct")
-    if (!data && !data.subCategoryId && !data.categoryModel) {
+    log("api is hitted of addProduct", data)
+    if (!data || !data.subategoryId) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
     }
@@ -223,18 +223,30 @@ addProductCategory = (data, callback) => {
                     else if (!image) cb(null)
                     else cb(null, image)
                 })
+            },
+            getCategory: (cb) => {
+                subCategoryModelL2.findOne({ _id: data.subCategoryId }).exec((err, result) => {
+                    log(err, result)
+                    if (err) cb(null)
+                    else if (!result) cb(null)
+                    else cb(null, result)
+                })
             }
+
+
         }, (err, response) => {
-            log(err, response.uploadImage)
+            log(err, response)
+            // return
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
             }
             else {
                 query = {
                     subCategory: data.subCategoryId,
-                    categoryModel: data.categoryModel,
-                    productcategoryName: data.productcategoryName,
+                    categoryModel: response.getCategory.categoryModel,
+                    productcategoryName: data.productCategoryName,
                     image: response.uploadImage,
+                    status: data.status.toUpperCase()
                 }
                 productCategoryModelL3.create(query, (err, result) => {
                     if (err) {
@@ -542,7 +554,7 @@ homeScreenApi = (query, callback) => {
                 // console.log("@@@@@@@@@@@2", result)
                 if (result) {
                     async.forEachOf(result, (element, key, callback) => {
-                        productModel.find({ categoryModel: element._id ,status:"ACTIVE"}).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).lean().exec((err, result2) => {
+                        productModel.find({ categoryModel: element._id, status: "ACTIVE" }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).lean().exec((err, result2) => {
                             // log("trending", err, JSON.stringify(result2))
                             if (result2)
                                 result2.forEach(element => {
@@ -1680,7 +1692,8 @@ deleteBrand = (data, callback) => {
 **************************updateBrand***********************
 ***********************************************************************/
 updateBrand = (data, callback) => {
-    if (!data.brandId || !data.brandName || data.brandImage) {
+    console.log("data", data)
+    if (!data.brandId || !data.brandName) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
     else {
@@ -1692,13 +1705,20 @@ updateBrand = (data, callback) => {
                     else cb(null, image)
                 })
             },
+            getBrand: (cb) => {
+                brandModel.findById({ _id: data.brandId }).exec((err, getBrandInfo) => {
+                    if (err) cb(null)
+                    else if (!getBrandInfo) cb(null)
+                    else cb(null, getBrandInfo)
+                })
+            }
         }, (err, response) => {
-
+            console.log('response----->', response)
             let update = {
                 $set: {
                     brandName: data.brandName,
-                    image: response.uploadImage ? response.uploadImage : "",
-                    icon: response.uploadImage ? response.uploadImage : ""
+                    image: response.uploadImage ? response.uploadImage : response.getBrand.icon,
+                    icon: response.uploadImage ? response.uploadImage : response.getBrand.icon
                 }
             }
             brandModel.findByIdAndUpdate({ _id: data.brandId }, update, { __v: 0, new: true }).exec((err, result) => {
@@ -3661,6 +3681,7 @@ getVendorProductCategorylist = (data, header, callback) => {
 
     })
 }
+
 
 
 

@@ -135,6 +135,11 @@ adminRouter.post('/deleteSubCategory', (req, res) => {
     })
 })
 
+adminRouter.post('/deleteProductCategory', (req, res) => {
+    adminHandler.deleteProductCategory(req.body,(data) => {
+        res.send(data)
+    })
+})
 adminRouter.post('/changeProductStatus', (req, res) => {
     adminHandler.changeProductStatus(req.body,(data) => {
         res.send(data)
@@ -178,8 +183,20 @@ adminRouter.get('/getSubcategoryById', (req, res) => {
         res.send(data)
     })
 })
-adminRouter.get('/getSubcategoryById', (req, res) => {
-    adminHandler.getSubcategoryById(req.query,(data) => {
+adminRouter.get('/getProductCategoryList', (req, res) => {
+    adminHandler.getProductCategoryList(req.query,(data) => {
+        res.send(data)
+    })
+})
+
+adminRouter.get('/getProductCategoryById', (req, res) => {
+    adminHandler.getProductCategoryById(req.query,(data) => {
+        res.send(data)
+    })
+})
+
+adminRouter.post('/editProductCategory', (req, res) => {
+    adminHandler.editProductCategory(req.body,(data) => {
         res.send(data)
     })
 })
