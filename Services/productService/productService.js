@@ -183,7 +183,7 @@ getCategoryList = (data, callback) => {
                 subCategoryModelL2.findOne({ categoryModel: item._id }).count().exec((err, checkSubcategory) => {
                     console.log('===>check', checkSubcategory)
                     // })
-                     let data = {
+                    let data = {
                         "_id": item._id,
                         "categoryName": item.categoryName,
                         "image": item.image,
@@ -210,7 +210,7 @@ getCategoryList = (data, callback) => {
 ************************************ */
 addProductCategory = (data, callback) => {
     log("api is hitted of addProduct", data)
-    if (!data || !data.subategoryId) {
+    if (!data || !data.subCategoryId) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
     }
@@ -241,7 +241,7 @@ addProductCategory = (data, callback) => {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
             }
             else {
-                query = {
+                let query = {
                     subCategory: data.subCategoryId,
                     categoryModel: response.getCategory.categoryModel,
                     productcategoryName: data.productCategoryName,
@@ -927,7 +927,7 @@ searchProduct = (data, callback) => {
         var productDetail = []
         // console.log("#################3", JSON.stringify(result))
         result.forEach(element => {
-            // console.log('*************',result)
+            console.log('*************',element)
             let temp = {
                 _id: element._id,
                 productName: element.productName,
@@ -939,7 +939,7 @@ searchProduct = (data, callback) => {
                 description: element.description,
                 // price: element.varianceId.variants[0].price,
                 price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
-                image: element.variants == null ? element.image : element.varianceId.variants[0].image,
+                image: element.varianceId == null ? element.image : element.varianceId.variants[0].image,
                 specifications: element.specifications
             }
             productDetail.push(temp)
@@ -964,7 +964,7 @@ searchProduct = (data, callback) => {
         async.forEachOf(result, (value, key, cb) => {
             // console.log(value)
             subCategoryModelL2.findOne({ '_id': value.subCategory }, (err, categoryResult) => {
-                console.log(err, "------------>>", err, categoryResult)
+                // console.log(err, "------------>>", err, categoryResult)
                 subData = {
                     subCategoryName: categoryResult.subCategoryName,
                     _id: categoryResult._id

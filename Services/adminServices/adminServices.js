@@ -999,7 +999,7 @@ getProductCategoryById = (data, callback) => {
 //editcategory
 editProductCategory = (data, callback) => {
     console.log('incoming data', data)
-    if (!data.productCategoryId || !data.subCategoryId || data.status) {
+    if (!data) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
     else {
@@ -1019,6 +1019,14 @@ editProductCategory = (data, callback) => {
                     else if (!result) cb(null)
                     else cb(null, result)
                 })
+            },
+            getProductCategory: (cb) => {
+                productCategoryModel.findOne({ _id: data.productCategoryId }).exec((err, result) => {
+                    log(err, result)
+                    if (err) cb(null)
+                    else if (!result) cb(null)
+                    else cb(null, result)
+                })
             }
         }, (err, response) => {
             console.log('response ==>', response)
@@ -1027,11 +1035,11 @@ editProductCategory = (data, callback) => {
             }
             let update = {
                 $set: {
-                    subCategory: data.subCategoryId,
-                    categoryModel: response.getCategory.categoryModel,
-                    productcategoryName: data.productCategoryName,
-                    image: response.uploadImage,
-                    status: data.status.toUpperCase()
+                    subCategory: data.subCategoryId ? data.subCategoryId : response.getProductCategory.subCategory,
+                    categoryModel: response.getProductCategory.categoryModel,
+                    productcategoryName: data.productCategoryName ? data.productCategoryName : response.getProductCategory.productcategoryName,
+                    image: response.uploadImage ? response.uploadImage : response.getProductCategory.image,
+                    status: data.status ? data.status :response.getProductCategory.status
                 }
             }
             productCategoryModel.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
