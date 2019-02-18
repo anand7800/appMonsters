@@ -29,7 +29,7 @@ var login = mongoose.Schema({
         type: String,
         enum: ['user', 'vendor', "admin"],
         default: 'user',
-        upperCase: true
+        lowercase: true
     },
     phone: {
         type: Number,

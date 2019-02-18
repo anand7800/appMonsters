@@ -28,7 +28,7 @@ productRouter.post('/addProductCategory', (req, res) => {
     })
 })
 //!addBrandDescription
-productRouter.post('/addProduct',authHandler.verifyToken, (req, res) => {
+productRouter.post('/addProduct', authHandler.verifyToken, (req, res) => {
     productService.addProduct(req.body, req.headers, (data) => {
         res.send(data)
     })
@@ -58,20 +58,20 @@ productRouter.get('/productDetails', (req, res) => {
 //     })
 // }) */
 //!addReviewAndRating
-productRouter.post('/addReviewAndRating',authHandler.verifyToken, (req, res) => {
+productRouter.post('/addReviewAndRating', authHandler.verifyToken, (req, res) => {
     productService.addReviewAndRating(req.headers, req.body, (data) => {
         res.send(data)
     })
 })
 //!addToCart  
-productRouter.post('/addToCart',authHandler.verifyToken, (req, res) => {
+productRouter.post('/addToCart', authHandler.verifyToken, (req, res) => {
     productService.addToCart(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
 
 //!listOfAddCart  
-productRouter.get('/listOfAddCart',authHandler.verifyToken, (req, res) => {
+productRouter.get('/listOfAddCart', authHandler.verifyToken, (req, res) => {
     productService.listOfAddCart(req.query, req.headers, (data) => {
         res.send(data)
     })
@@ -92,7 +92,7 @@ productRouter.post('/addToWishList', authHandler.verifyToken, (req, res) => {
 // })
 
 // //!wishList  
-productRouter.get('/wishList',authHandler.verifyToken, (req, res) => {
+productRouter.get('/wishList', authHandler.verifyToken, (req, res) => {
     productService.wishList(req.query, req.headers, (data) => {
         res.send(data)
     })
@@ -106,14 +106,14 @@ productRouter.get('/wishList',authHandler.verifyToken, (req, res) => {
 // })
 
 //!deleteWishItem  
-productRouter.post('/deleteWishItem',authHandler.verifyToken, (req, res) => {
+productRouter.post('/deleteWishItem', authHandler.verifyToken, (req, res) => {
     productService.deleteWishItem(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
 
 //!deleteCart  
-productRouter.post('/deleteCart', authHandler.verifyToken,(req, res) => {
+productRouter.post('/deleteCart', authHandler.verifyToken, (req, res) => {
     productService.deleteCart(req.body, req.headers, (data) => {
         res.send(data)
     })
@@ -134,7 +134,7 @@ productRouter.post('/placeOrder', authHandler.verifyToken, (req, res) => {
 })
 
 //!orderList  
-productRouter.get('/orderList',authHandler.verifyToken, (req, res) => {
+productRouter.get('/orderList', authHandler.verifyToken, (req, res) => {
     productService.orderList(req.query, req.headers, (data) => {
         res.send(data)
     })
@@ -274,7 +274,7 @@ productRouter.post('/updateBrand', (req, res) => {
 // })
 
 //!get vendorOrder list
-productRouter.post('/vendorOrderList', authHandler.verifyToken,(req, res) => {
+productRouter.post('/vendorOrderList', authHandler.verifyToken, (req, res) => {
     productService.vendorOrderList(req.headers, (data) => {
         res.send(data)
     })
@@ -321,7 +321,7 @@ productRouter.post('/compareProduct', (req, res) => {
 })
 
 //!getNotification
-productRouter.get('/getNotification',authHandler.verifyToken, (req, res) => {
+productRouter.get('/getNotification', authHandler.verifyToken, (req, res) => {
     productService.getNotification(req.query, req.headers, (data) => {
         res.send(data)
     })
@@ -371,7 +371,7 @@ productRouter.get('/getAllVariant/:productId', (req, res) => {
 //     })
 // })
 //!searchVendorOrder
-productRouter.post('/searchVendorOrder',authHandler.verifyToken, (req, res) => {
+productRouter.post('/searchVendorOrder', authHandler.verifyToken, (req, res) => {
     productService.searchVendorOrder(req.body, req.headers, (data) => {
         res.send(data)
     })
@@ -410,6 +410,11 @@ productRouter.get('/getVendorProductCategorylist', authHandler.verifyToken, (req
 
 productRouter.post('/editProduct', (req, res) => {
     productService.editProduct(req.body, (data) => {
+        res.send(data)
+    })
+})
+productRouter.get('/dashBoardForVendor', authHandler.verifyToken, (req, res) => {
+    productService.dashBoardForVendor(req.query, req.headers, (data) => {
         res.send(data)
     })
 })

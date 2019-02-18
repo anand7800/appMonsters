@@ -690,7 +690,7 @@ vendorOrderStatus = (data, header, callback) => {
         }
     }
     ], (err, result) => {
-        console.log(err, result)
+        // console.log(err, result)
         if (result.length == 0) {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
         }

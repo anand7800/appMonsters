@@ -927,7 +927,7 @@ searchProduct = (data, callback) => {
         var productDetail = []
         // console.log("#################3", JSON.stringify(result))
         result.forEach(element => {
-            console.log('*************',element)
+            console.log('*************', element)
             let temp = {
                 _id: element._id,
                 productName: element.productName,
@@ -1406,7 +1406,7 @@ productDetails = (data, callback) => {
                                 inStock: test.quantity > 0 ? true : false,
                                 tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
                                 price: test.price ? test.price : '',
-                                image:  response.findProduct.varianceId.variants[0].image?response.findProduct.varianceId.variants[0].image:[],
+                                image: response.findProduct.varianceId.variants[0].image ? response.findProduct.varianceId.variants[0].image : [],
                                 colors: color,
                                 material: material,
                                 size: size
@@ -1739,19 +1739,18 @@ updateBrand = (data, callback) => {
 **************************vendorOrderList***********************
 ***********************************************************************/
 vendorOrderList = (header, callback) => {
-    console.log("vendororderList", header)
+    // console.log("vendororderList", header)
     var userId
     commonFunction.jwtDecode(header.accesstoken, (err, result) => {
         userId = result
     })
-    //!
     orderPlaced.aggregate([{
         $unwind: '$orderPlacedDescription'
     }, {
         $match: {
             // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
             $or: [
-                { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) },
+                { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) }
             ]
         },
         // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
@@ -1761,9 +1760,9 @@ vendorOrderList = (header, callback) => {
         var demo = []
         async.forEachOf(result, (value, key, cb) => {
             productModel.findOne({ '_id': mongoose.Types.ObjectId(value.orderPlacedDescription.productId) }).populate({ path: 'brandId' }).exec((err, productDetail) => {
-                console.log('############', err, productDetail)
+                // console.log('############', err, productDetail)
                 userModel.findById({ _id: value.userId }, { firstName: 1, address: 1 }).exec((err, userInfo) => {
-                    console.log("---------->>", err, userInfo.firstName)
+                    // console.log("---------->>", err, userInfo.firstName)
                     let temp = {
                         customerName: userInfo.firstName,
                         customerAddress: "delhi",
@@ -1777,12 +1776,12 @@ vendorOrderList = (header, callback) => {
                         totalAmountPaid: value.orderPlacedDescription.totalAmountPaid + value.orderPlacedDescription.deliveryCharges + value.orderPlacedDescription.estimateTax
                     }
                     demo.push(temp)
-                    console.log(demo)
+                    // console.log(demo)
                     cb()
                 })
             })
         }, (err, response) => {
-            console.log('@@@@@@@@@@@2', demo)
+            // console.log('@@@@@@@@@@@2', demo)
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY.en, 'result': demo })
         })
         // callback(result)
@@ -3682,7 +3681,153 @@ getVendorProductCategorylist = (data, header, callback) => {
     })
 }
 
+//dashBoard api for vendor panel
 
+//!DashBoard api
+dashBoardForVendor = (data, header, callback) => {
+    // console.log("#####################" + data)
+    let userId
+    commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+        if (err) throw err
+        else {
+            userId = decodeId
+        }
+    })
+        async.auto({
+        openOrder: (cb) => {
+            orderPlaced.aggregate([{
+                $unwind: '$orderPlacedDescription'
+            }, {
+                $match: {
+                    // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
+                    $and: [
+                        { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) },
+                        { 'orderPlacedDescription.orderStatus': "PLACED" },
+
+                    ]
+                },
+                // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
+            }
+            ], (err, result) => {
+                if (err || !result.length < 0)
+                    cb(null)
+                else
+                    cb(null, result.length)
+            })
+        },
+        abandonedCheckouts: (cb) => {
+            cb(null, 0)
+        },
+        pendingOrder: (cb) => {
+            orderPlaced.aggregate([{
+                $unwind: '$orderPlacedDescription'
+            }, {
+                $match: {
+                    // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
+                    $and: [
+                        { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) },
+                        { 'orderPlacedDescription.orderStatus': "PENDING" },
+
+                    ]
+                },
+                // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
+            }
+            ], (err, result) => {
+                console.log(err, result.length)
+                if (err || !result.length > 0) {
+                    console.log("e")
+                    cb(null, 0)
+                }
+                else {
+                    console.log("e333333")
+
+                    cb(null, result.length)
+                }
+            })
+
+        },
+        toBePrepared: (cb) => {
+            orderPlaced.aggregate([{
+                $unwind: '$orderPlacedDescription'
+            }, {
+                $match: {
+                    // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
+                    $and: [
+                        { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) },
+                        { 'orderPlacedDescription.orderStatus': "INPROGRESS" },
+
+                    ]
+                },
+                // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
+            }
+            ], (err, result) => {
+                // console.log(err, result.length)
+                if (err || !result.length > 0) {
+                    // console.log("e")
+                    cb(null, 0)
+                }
+                else {
+                    // console.log("e333333")
+
+                    cb(null, result.length)
+                }
+            })
+
+        },
+        orderShipped: (cb) => {
+            orderPlaced.aggregate([{
+                $unwind: '$orderPlacedDescription'
+            }, {
+                $match: {
+                    // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
+                    $and: [
+                        { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) },
+                        { 'orderPlacedDescription.orderStatus': "ORDERSHIPPED" },
+                    ]
+                },
+            }
+            ], (err, result) => {
+                if (err || !result.length > 0) {
+                    cb(null, 0)
+                }
+                else {
+                    cb(null, result.length)
+                }
+            })
+        },
+        dispatch: (cb) => {
+            orderPlaced.aggregate([{
+                $unwind: '$orderPlacedDescription'
+            }, {
+                $match: {
+                    // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
+                    $and: [
+                        { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) },
+                        { 'orderPlacedDescription.orderStatus': "DISPATCH" },
+                    ]
+                },
+            }
+            ], (err, result) => {
+                if (err || !result.length > 0) {
+                    cb(null, 0)
+                }
+                else {
+                    cb(null, result.length)
+                }
+            })
+        },
+    }, (err, response) => {
+        let res = {}
+        console.log(err, response)
+        if (err) {
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+
+        }
+        else{
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response })
+        }
+    })
+}
 
 
 
@@ -3730,5 +3875,6 @@ module.exports = {
     updateBrand,
     getProductInfo,
     getVendorProductCategorylist,
-    editProduct
+    editProduct,
+    dashBoardForVendor
 }

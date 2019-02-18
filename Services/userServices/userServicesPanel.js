@@ -130,6 +130,7 @@ login = (data, callback) => {
 
 //!social login
 socialLogin = (data, callback) => {
+    console.log('request',data)
     obj = data
     query = {
         'social.socialId': data.socialId,
@@ -161,9 +162,9 @@ socialLogin = (data, callback) => {
             else {
                 var user = new userModel(query)
                 user.save((err, succ) => {
-                    log(succ)
+                    log(err,succ)
                     if (err) {
-                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[obj.lang] })
+                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[obj.lang],result:err })
                         return
                     }
                     else if (!succ) {
@@ -801,7 +802,7 @@ updateProfile = (data, headers, callback) => {
 }
 
 getUserInfo = (data, headers, callback) => {
-    console.log("incoming data", data.firstName)
+    // console.log("incoming data", data.firstName)
     async.waterfall([
 
         function (cb) {
