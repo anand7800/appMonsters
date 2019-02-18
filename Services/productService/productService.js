@@ -1406,7 +1406,7 @@ productDetails = (data, callback) => {
                                 inStock: test.quantity > 0 ? true : false,
                                 tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
                                 price: test.price ? test.price : '',
-                                image: test.image ? test.image : [],
+                                image:  response.findProduct.varianceId.variants[0].image?response.findProduct.varianceId.variants[0].image:[],
                                 colors: color,
                                 material: material,
                                 size: size
