@@ -1939,27 +1939,27 @@ getAllVariant = (data, callback) => {
 searchVendorOrder = (data, header, callback) => {
     // console.log("vendororderList", data, header)
 
-    console.log('---------------?>>>', data.searchKeyword.trim())
+    console.log('---------------?>>>', data)
     var value = new RegExp(data.searchKeyword.trim(), 'i');
     var key = new RegExp(data.searchKeyword.trim(), 'i')
     var userId
     commonFunction.jwtDecode(header.accesstoken, (err, result) => {
         userId = result
     })
-    console.log("##################################", value)
+    // console.log("##################################", value)
     orderPlaced.aggregate([{
         $unwind: '$orderPlacedDescription'
     }, {
         $match: {
             $and: [
                 { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) },
+                { 'orderPlacedDescription.orderStatus':data.orderStatus?data.orderStatus:"DISPATCH"  },
                 {
                     $or: [
                         { 'orderPlacedDescription.orderId': { $regex: key } },
                         { 'orderPlacedDescription.totalAmountPaid': { $regex: value } },
                         // { 'brandDesc.tag': { $in: [value] } },
                         // { 'brandDesc.brandId': mongoose.Types.ObjectId(brandId._id) },
-
                     ]
                 }]
         }
@@ -3693,7 +3693,7 @@ dashBoardForVendor = (data, header, callback) => {
             userId = decodeId
         }
     })
-        async.auto({
+    async.auto({
         openOrder: (cb) => {
             orderPlaced.aggregate([{
                 $unwind: '$orderPlacedDescription'
@@ -3823,7 +3823,7 @@ dashBoardForVendor = (data, header, callback) => {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
 
         }
-        else{
+        else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response })
         }
     })

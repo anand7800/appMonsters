@@ -272,53 +272,88 @@ getProductList = (data, headers, callback) => {
             sellerId = decodeSellerId
         }
     })
-    console.log("seller id", sellerId)
-    brandDescriptionL4.find({ 'sellerId': sellerId }).populate({ path: 'brandId', select: { 'brandName': 1 } }).populate({ path: 'varianceId' }).exec((err, success) => {
-        if (err) throw err
-        else if (success.length > 0) {
-            async.forEachOf(success, async (value, key, cb) => {
-                await async.parallel({
-                    getProductCategoryName: async (cb) => {
-                        if (value.productCategoryId) {
-                            await productCategoryModel.findById({ '_id': value.productCategoryId }).exec(async (err, productCategoryName) => {
-                                // console.log("-----------------?>>>", productCategoryName)
-                                if (err) cb(null)
-                                else {
-                                    cb(null, productCategoryName.productcategoryName)
-                                }
-                            })
-                        }
-                        else {
-                            cb(null, "")
-                        }
-                    }
+    // console.log("seller id", sellerId)
 
-                }, (err, response) => {
-                    temp = {
-                        _id: value._id,
-                        product: value.productName,
-                        brand: value.brandId.brandName,
-                        image: value.image[0],
-                        description: value.description,
-                        color: value.color,
-                        status: value.status,
-                        price: value.price,
-                        getProductCategoryName: response.getProductCategoryName,
-                        inventorySKU: value.inventorySKU,
-                        quantity: value.quantity,
-                        unitSold: "PENDING STATUS"
-                    }
-                    result.push(temp)
-                    cb()
-                })
-            }, (err, response) => {
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
+    async.parallel({
+        getProduct: (cb) => {
+            brandDescriptionL4.find({ 'sellerId': sellerId }).populate({ path: 'brandId', select: { 'brandName': 1 } }).populate({ path: 'varianceId' }).exec((err, success) => {
+                if (err) cb(null)
+                else if (success.length > 0) {
+                    async.forEachOf(success, async (value, key, cb) => {
+                        await async.parallel({
+                            getProductCategoryName: async (cb) => {
+                                if (value.productCategoryId) {
+                                    await productCategoryModel.findById({ '_id': value.productCategoryId }).exec(async (err, productCategoryName) => {
+                                        // console.log("-----------------?>>>", productCategoryName)
+                                        if (err) cb(null)
+                                        else {
+                                            cb(null, productCategoryName.productcategoryName)
+                                        }
+                                    })
+                                }
+                                else {
+                                    cb(null, "")
+                                }
+                            }
+
+                        }, (err, response) => {
+                            temp = {
+                                _id: value._id,
+                                product: value.productName,
+                                brand: value.brandId.brandName,
+                                image: value.image[0],
+                                description: value.description,
+                                color: value.color,
+                                status: value.status,
+                                price: value.price,
+                                getProductCategoryName: response.getProductCategoryName,
+                                inventorySKU: value.inventorySKU,
+                                quantity: value.quantity,
+                                unitSold: "PENDING STATUS"
+                            }
+                            result.push(temp)
+                            cb()
+                        })
+                    }, (err, response) => {
+                        cb(null, result)
+                    })
+                }
+                else {
+                    cb(null)
+                }
+            })
+        },
+        getBrandofVendor: (cb) => {
+            brandDescriptionL4.find({ 'sellerId': sellerId }).distinct('brandId').exec((err, result) => {
+                if (err) cb(null)
+                else cb(null, result)
+            })
+        },
+
+        getcategoryofVendor: (cb) => {
+            brandDescriptionL4.find({ 'sellerId': sellerId }).distinct('productCategoryId').exec((err, result) => {
+                if (err) cb(null)
+                else cb(null, result)
             })
         }
-        else {
-            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
-        }
+
+
+
+
+
+
+
+    }, (err, response) => {
+        // console.log(err, response)
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response })
     })
+
+
+
+
+
+
+
 }
 //!getBrand
 getBrand = (data, callback) => {
@@ -1039,7 +1074,7 @@ editProductCategory = (data, callback) => {
                     categoryModel: response.getProductCategory.categoryModel,
                     productcategoryName: data.productCategoryName ? data.productCategoryName : response.getProductCategory.productcategoryName,
                     image: response.uploadImage ? response.uploadImage : response.getProductCategory.image,
-                    status: data.status ? data.status :response.getProductCategory.status
+                    status: data.status ? data.status : response.getProductCategory.status
                 }
             }
             productCategoryModel.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
