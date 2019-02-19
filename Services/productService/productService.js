@@ -419,11 +419,9 @@ editProduct = (data, callback) => {
                 else {
                     cb(null)
                 }
-            },
-
-
+            }
         }, (err, response) => {
-            console.log('2222222222222222222', response.uploadCloud)
+            // console.log('2222222222222222222', response.uploadCloud)
             let query = { _id: data.productId }
             let update = {
                 $set: {
@@ -453,10 +451,13 @@ editProduct = (data, callback) => {
                 }
             }
             productModel.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
-                console.log("update record", err, result)
+                console.log("update record", err, JSON.stringify(result))
                 if (err || !result)
                     callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY })
                 else {
+                    varianceModel.findByIdAndUpdate({ _id: result.varianceId }, { variants: data.variants }, { new: true }).exec((err, update) => {
+                        console.log("====================================>>>", err, JSON.stringify(update))
+                    })
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED, 'result': result })
                 }
             })
@@ -1394,7 +1395,8 @@ productDetails = (data, callback) => {
                             if (test.color != "") color.push(test.color)
                             if (test.material != "") material.push(test.material)
                             if (test.size != "") size.push(test.size)
-                            console.log('into the looop', test)
+                            console.log('---------->',_.uniq(size))
+                            // console.log('into the looop', test)
                             let data = {
                                 _id: response.findProduct._id,
                                 brand: response.findProduct.brandId.brandName,
@@ -1407,9 +1409,9 @@ productDetails = (data, callback) => {
                                 tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
                                 price: test.price ? test.price : '',
                                 image: response.findProduct.varianceId.variants[0].image ? response.findProduct.varianceId.variants[0].image : [],
-                                colors: color,
-                                material: material,
-                                size: size
+                                colors: _.uniq(color),
+                                material: _.uniq(material),
+                                size: _.uniq(size)
                                 // colors: [...new Set(color)].reverse().map(function (x) { return x.toUpperCase() }),
                                 // material: [...new Set(material)].reverse().map(function (x) { return x.toUpperCase() }),
                                 // size: [...new Set(size)].reverse().map(function (x) { return x.toUpperCase() })
@@ -1427,7 +1429,7 @@ productDetails = (data, callback) => {
                     res.sellerInfo = sellerInfo
                     res.reviewAndRating = response.reviewAndRating
                     res.similarProduct = response.getSimilarProduct
-                    console.log(res)
+                    // console.log(res)
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
                 }
                 else {
@@ -1953,7 +1955,7 @@ searchVendorOrder = (data, header, callback) => {
         $match: {
             $and: [
                 { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) },
-                { 'orderPlacedDescription.orderStatus':data.orderStatus?data.orderStatus:"DISPATCH"  },
+                { 'orderPlacedDescription.orderStatus': data.orderStatus ? data.orderStatus : "DISPATCH" },
                 {
                     $or: [
                         { 'orderPlacedDescription.orderId': { $regex: key } },
