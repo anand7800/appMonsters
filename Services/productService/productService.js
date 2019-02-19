@@ -1646,10 +1646,11 @@ getVariance = (data, callback) => {
                     material: _.uniq(material)
                 }
                 res.product = temp
+                console.log("======>",response.varianceDetail)
                 res.sellerInfo = {
                     _id: response.varianceDetail.sellerId._id,
                     sellerName: response.varianceDetail.sellerId.firstName,
-                    selllerImage: response.varianceDetail.sellerId.image ? response.findProduct.image : "",
+                    selllerImage: response.varianceDetail.sellerId.image ? response.varianceDetail.sellerId.image : "",
                     selllerRating: "3"
                 }
                 res.reviewAndRating = response.reviewAndRating
