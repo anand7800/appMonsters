@@ -1609,11 +1609,14 @@ getVariance = (data, callback) => {
         varianceModel.findById({ _id: response.varianceDetail._id }).exec((err, combination) => {
             if (err || !combination) throw err
             else {
-                combination.variants.forEach(element => {
+                combination.variants.forEach(test => {
                     // console.log('====>', element)
-                    color.push(element.color.toUpperCase())
-                    material.push(element.material.toUpperCase())
-                    size.push(element.size.toUpperCase())
+                    // color.push(element.color.toUpperCase())
+                    // material.push(element.material.toUpperCase())
+                    // size.push(element.size.toUpperCase())
+                    if (test.color != "") color.push(test.color)
+                    if (test.material != "") material.push(test.material)
+                    if (test.size != "") size.push(test.size)
 
                 })
 
