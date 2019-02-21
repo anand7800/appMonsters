@@ -840,7 +840,6 @@ getUserInfo = (data, headers, callback) => {
 editPaymentMethod = (data, headers, callback) => {
     // console.log('------->', data)
     // let userId = '5c657188f7f89745e14fda4a'
-
     if (!data.paymentId || !headers.accessoken) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
         return
@@ -895,7 +894,78 @@ editPaymentMethod = (data, headers, callback) => {
 
     ], (err, response) => {
         // console.log("resposne ", err, response)
-        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.EDIT_PAYMENT[data.lang], 'result': response })
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.EDIT_PAYMENT[data.lang]})
+    })
+}
+
+
+deletePayment = (data, headers, callback) => {
+    console.log(data)
+    
+    if (!data.paymentId || !headers.accessoken) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
+        return
+    }
+
+    // var userId='5c657188f7f89745e14fda4a'
+    let userId
+
+    commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
+        if (err) throw err
+        else {
+            userId = decodeId
+        }
+    })
+    let query = {
+        $and: [ 
+            { _id: userId, },
+            { 'paymentMethod._id': data.paymentId }
+        ]
+
+    }
+
+
+    async.waterfall([
+
+        function (cb) {
+            userModel.findOne({ _id: userId, 'paymentMethod._id': data.paymentId }, { 'paymentMethod.$': 1 }).exec((err, result) => {
+                // console.log(err, result)
+                if (err || !result) cb(null)
+                else cb(null, result)
+            })
+        },
+        function (result, cb) {
+            console.log('===>>>', result.paymentMethod[0].expireDate)
+            let update = {
+                $set: {
+                    'paymentMethod.$.status': data.status ? data.status : result.paymentMethod[0].status
+                }
+            }
+            userModel.findOneAndUpdate(query, update, { new: true }).exec((err, update) => {
+                // console.log(err, update)
+                if (err || !update) cb(null)
+                else cb(null, update)
+
+            })
+        }
+
+    ], (err, succ) => {
+        // console.log("resposne ", err, response)
+
+        result = {
+            "_id": succ._id,
+            "firstName": succ.firstName,
+            "lastName": succ.lastName,
+            "email": succ.email,
+            "image": succ.image,
+            "addressAdded": succ.isAddressAdded,
+            "phone": succ.phone,
+            "paymentAdded": succ.paymentAdded,
+            "address": succ.address,
+            "paymentMethod": succ.paymentMethod,
+            "countryCode": succ.countryCode
+        }
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DELET_PAYMENT[data.lang],'result':result })
     })
 
 
@@ -922,5 +992,6 @@ module.exports = {
     verifyLink,
     updateProfile,
     getUserInfo,
-    editPaymentMethod
+    editPaymentMethod,
+    deletePayment
 }

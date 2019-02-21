@@ -382,6 +382,10 @@ let statusMessage = {
         en:"Your payment card update",
         ar:""
     },
+    DELET_PAYMENT:{
+        en:"Your payment card Remove",
+        ar:""
+    },
     TITLE: {
 
         PLACED: {
