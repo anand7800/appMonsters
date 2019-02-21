@@ -1,4 +1,9 @@
 let app = require('express')(),
+    fs=require('fs'),
+    options = {
+        key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
+        cert: fs.readFileSync('/home/ec2-user/waki.csr').toString()
+    },
     // server = require('https').Server(app),
     bodyParser = require('body-parser'),
     express = require('express'),
@@ -15,7 +20,6 @@ let app = require('express')(),
     commonfunction = require('./commonFile/commonFunction'),
     _ = require('lodash');
 
-let fs = require("fs");
 // var optionsa = {
 //     key: fs.readFileSync(path.join(__dirname, 'certificate') + '/mobenture.key').toString(),
 //     cert: fs.readFileSync(path.join(__dirname, 'certificate') + '/mobenture.crt').toString()
@@ -24,7 +28,9 @@ let fs = require("fs");
 //     key: fs.readFileSync('/var/www/html/visionpro/certi/mobenture.key').toString(),
 //     cert: fs.readFileSync('/var/www/html/visionpro/certi/mobenture.crt').toString(),
 // }
-var server = require('http').Server(app)
+// var server = require('http').Server(app)
+var server = require('https').Server(options, app);
+
 
 var chatHistory = require('./Models/userModel/chatHistory');
 var Room = require('./Models/userModel/room.js');
@@ -53,7 +59,7 @@ console.log("ssdsds",process.env.superKey)
 //!userRoutes
 var userRoutes = require('./Routes/userRoutes/userPanelRoutes')
 var adminRoute = require('./Routes/adminRoute/adminRoutes')
-var productRoutes=require('./Routes/productRoute/productRoutes')
+var productRoutes = require('./Routes/productRoute/productRoutes')
 app.use('/user', userRoutes)
 app.use('/admin', adminRoute)
 app.use('/vendor', productRoutes)
