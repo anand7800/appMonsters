@@ -20,16 +20,16 @@ let app = require('express')(),
     commonfunction = require('./commonFile/commonFunction'),
     _ = require('lodash');
 
-// var optionsa = {
-//     key: fs.readFileSync(path.join(__dirname, 'certificate') + '/mobenture.key').toString(),
-//     cert: fs.readFileSync(path.join(__dirname, 'certificate') + '/mobenture.crt').toString()
-// };
+var options = {
+    key: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.key').toString(),
+    cert: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.csr').toString()
+};
 // options = {
 //     key: fs.readFileSync('/var/www/html/visionpro/certi/mobenture.key').toString(),
 //     cert: fs.readFileSync('/var/www/html/visionpro/certi/mobenture.crt').toString(),
 // }
-var server = require('http').Server(app)
-// var server = require('https').Server(options, app);
+// var server = require('http').Server(app)
+var server = require('https').Server(options, app);
 
 
 var chatHistory = require('./Models/userModel/chatHistory');
