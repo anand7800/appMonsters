@@ -3198,12 +3198,17 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var ProductdetailComponent = /** @class */ (function () {
-    function ProductdetailComponent(router, query) {
+    function ProductdetailComponent(router, activateRoute) {
+        var _this = this;
         this.router = router;
-        this.query = query;
+        this.activateRoute = activateRoute;
         console.log("type script is called");
         // $('a[data-applink]').applink();
-        window.location.href = 'waki://other/parameter';
+        this.activateRoute.queryParams.subscribe(function (params) {
+            _this.faqId = params['productId'];
+        });
+        // window.location.href='waki://other/par'
+        window.location.href = "waki://productId=" + this.faqId;
     }
     ProductdetailComponent.prototype.ngOnInit = function () {
         console.log("@@@@@", this.router.url);
@@ -4358,7 +4363,8 @@ var AppComponent = /** @class */ (function () {
                         }
                         else if (currUrl_1 == 'productdetails') {
                             console.log("compenent of hitted");
-                            window.location.href = 'waki://other/parameter';
+                            // window.location.href = 'waki://other/parameter'
+                            _this.router.navigate(['/productdetails']);
                         }
                         else if (currUrl_1 == 'createvendor')
                             _this.router.navigate(['/createvendor']);
