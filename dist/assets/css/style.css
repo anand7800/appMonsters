@@ -1846,3 +1846,20 @@ span.checkboxbx [type="checkbox"]:checked + label:after {
 	border-radius: 4px;
 	margin-top: 15px;
 }
+.closebox{
+	position: absolute;
+	top:0;
+	right: 0;
+	font-size: 14px;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	color: #fff;
+	text-align: center;
+	text-decoration: none;
+	background-color: #000;
+}
+.closebox:hover{
+	color: #fff;
+	text-decoration: none;
+}
