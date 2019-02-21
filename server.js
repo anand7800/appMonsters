@@ -1,9 +1,9 @@
 let app = require('express')(),
     fs=require('fs'),
-    // options = {
-    //     key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
-    //     cert: fs.readFileSync('/home/ec2-user/waki.csr').toString(),
-    // },
+    options = {
+        key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
+        cert: fs.readFileSync('/home/ec2-user/waki.csr').toString(),
+    },
     // server = require('https').Server(app),
     bodyParser = require('body-parser'),
     express = require('express'),
@@ -20,10 +20,10 @@ let app = require('express')(),
     commonfunction = require('./commonFile/commonFunction'),
     _ = require('lodash');
 
-var options = {
-    key: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.key').toString(),
-    cert: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.csr').toString()
-};
+// var options = {
+//     key: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.key').toString(),
+//     cert: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.csr').toString()
+// };
 // options = {
 //     key: fs.readFileSync('/var/www/html/visionpro/certi/mobenture.key').toString(),
 //     cert: fs.readFileSync('/var/www/html/visionpro/certi/mobenture.crt').toString(),
