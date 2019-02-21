@@ -1,5 +1,9 @@
 let app = require('express')(),
     fs=require('fs'),
+    env=require('./Utilities/environment').environment
+
+
+    // if()
     options = {
         key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
         cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
