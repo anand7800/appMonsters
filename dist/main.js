@@ -3201,8 +3201,9 @@ var ProductdetailComponent = /** @class */ (function () {
     function ProductdetailComponent(router, query) {
         this.router = router;
         this.query = query;
+        console.log("type script is called");
         // $('a[data-applink]').applink();
-        window.location.href = 'http://other/parameter';
+        window.location.href = 'waki://other/parameter';
     }
     ProductdetailComponent.prototype.ngOnInit = function () {
         console.log("@@@@@", this.router.url);
@@ -4356,6 +4357,7 @@ var AppComponent = /** @class */ (function () {
                             _this.router.navigate(['/resetPassword']);
                         }
                         else if (currUrl_1 == 'productdetails') {
+                            console.log("compenent of hitted");
                             window.location.href = 'waki://other/parameter';
                         }
                         else if (currUrl_1 == 'createvendor')
