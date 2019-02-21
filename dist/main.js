@@ -3202,7 +3202,7 @@ var ProductdetailComponent = /** @class */ (function () {
         this.router = router;
         this.query = query;
         // $('a[data-applink]').applink();
-        window.location.href = 'waki://other/parameter';
+        window.location.href = 'http://other/parameter';
     }
     ProductdetailComponent.prototype.ngOnInit = function () {
         console.log("@@@@@", this.router.url);
@@ -4096,7 +4096,7 @@ var DataService = /** @class */ (function () {
         //  baseUrl='http://13.126.131.184:5050/' //techugo 
         // baseUrl = 'http://192.168.1.35:5050/'  // mysystemip
         // baseUrl = 'http://127.0.0.1:5050/' 
-        this.baseUrl = 'http://35.165.140.114:6262/';
+        this.baseUrl = 'https://waki.store:6262/';
         this.title = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"]('DASHBOARD');
         // console.log("#############333")
     }
