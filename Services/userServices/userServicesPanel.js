@@ -845,7 +845,7 @@ editPaymentMethod = (data, headers, callback) => {
         return
     }
 
-    var userId
+    let userId
     commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
         // console.log("^^^^", err, decodeId)
         if (err) throw err
@@ -894,14 +894,14 @@ editPaymentMethod = (data, headers, callback) => {
 
     ], (err, response) => {
         // console.log("resposne ", err, response)
-        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.EDIT_PAYMENT[data.lang]})
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.EDIT_PAYMENT[data.lang] })
     })
 }
 
 
 deletePayment = (data, headers, callback) => {
     console.log(data)
-    
+
     if (!data.paymentId || !headers.accessoken) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
         return
@@ -917,7 +917,7 @@ deletePayment = (data, headers, callback) => {
         }
     })
     let query = {
-        $and: [ 
+        $and: [
             { _id: userId, },
             { 'paymentMethod._id': data.paymentId }
         ]
@@ -965,11 +965,162 @@ deletePayment = (data, headers, callback) => {
             "paymentMethod": succ.paymentMethod,
             "countryCode": succ.countryCode
         }
-        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DELET_PAYMENT[data.lang],'result':result })
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DELET_PAYMENT[data.lang], 'result': result })
     })
-
-
 }
+
+
+
+editAddress = (data, headers, callback) => {
+    // console.log('------->', data)
+    // let userId = '5c657188f7f89745e14fda4a'
+    if (!data.paymentId || !headers.accessoken) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
+        return
+    }
+
+    let userId
+    commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
+        // console.log("^^^^", err, decodeId)
+        if (err) throw err
+        else {
+            userId = decodeId
+        }
+    })
+    let query = {
+        $and: [
+            { _id: userId, },
+            { 'address._id': data.addressId }
+        ]
+
+    }
+
+
+    async.waterfall([
+
+        function (cb) {
+            userModel.findOne({ _id: userId, 'address._id': data.addressId }, { 'address.$': 1 }).exec((err, result) => {
+                // console.log(err, result)
+                if (err || !result) cb(null)
+                else cb(null, result)
+            })
+        },
+        function (result, cb) {
+            console.log('===>>>', result.address[0])
+            let update = {
+                $set: {
+                    'address.$.status': data.status ? data.status : result.address[0].status,
+                    'address.$.lng': data.lng ? data.lng : result.address[0].lng,
+                    'address.$.lat': data.lat ? data.lat : result.address[0].lat,
+                    'address.$.houseNo': data.houseNo ? data.houseNo : result.address[0].houseNo,
+                    'address.$.fullName': data.fullName ? data.fullName : result.address[0].fullName,
+                    'address.$.contactNumber': data.contactNumber ? data.contactNumber : result.address[0].contactNumber,
+                    'address.$.addressType': data.addressType ? data.addressType : result.address[0].addressType,
+                    'address.$.countryCode': data.countryCode ? data.countryCode : result.address[0].countryCode,
+                }
+            }
+            userModel.findOneAndUpdate(query, update, { new: true }).exec((err, update) => {
+                // console.log(err, update)
+                if (err || !update) cb(null)
+                else cb(null, update)
+
+            })
+        }
+
+    ], (err, succ) => {
+        // console.log("resposne ", err, response)
+        let result = {
+            "_id": succ._id,
+            "firstName": succ.firstName,
+            "lastName": succ.lastName,
+            "email": succ.email,
+            "image": succ.image,
+            "addressAdded": succ.isAddressAdded,
+            "phone": succ.phone,
+            "paymentAdded": succ.paymentAdded,
+            "address": succ.address,
+            "paymentMethod": succ.paymentMethod,
+            "countryCode": succ.countryCode
+        }
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADDRESS_ADD[data.lang], "result": result })
+    })
+}
+
+
+
+
+
+deleteAddress = (data, headers, callback) => {
+    console.log(data)
+
+    // if (!data.paymentId || !headers.accessoken) {
+    //     callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
+    //     return
+    // }
+
+    var userId='5c657188f7f89745e14fda4a'
+    // let userId
+
+    // commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
+    //     if (err) throw err
+    //     else {
+    //         userId = decodeId
+    //     }
+    // })
+    let query = {
+        $and: [
+            { _id: userId, },
+            { 'address._id': data.addressId }
+        ]
+
+    }
+
+
+    async.waterfall([
+
+        function (cb) {
+            userModel.findOne({ _id: userId, 'address._id': data.addressId }, { 'address.$': 1 }).exec((err, result) => {
+                // console.log(err, result)
+                if (err || !result) cb(null)
+                else cb(null, result)
+            })
+        },
+        function (result, cb) {
+            // console.log('===>>>', result.paymentMethod[0].expireDate)
+            let update = {
+                $set: {
+                    'address.$.status': data.status ? data.status : result.address[0].status
+                }
+            }
+            userModel.findOneAndUpdate(query, update, { new: true }).exec((err, update) => {
+                // console.log(err, update)
+                if (err || !update) cb(null)
+                else cb(null, update)
+
+            })
+        }
+
+    ], (err, succ) => {
+        // console.log("resposne ", err, response)
+
+        result = {
+            "_id": succ._id,
+            "firstName": succ.firstName,
+            "lastName": succ.lastName,
+            "email": succ.email,
+            "image": succ.image,
+            "addressAdded": succ.isAddressAdded,
+            "phone": succ.phone,
+            "paymentAdded": succ.paymentAdded,
+            "address": succ.address,
+            "paymentMethod": succ.paymentMethod,
+            "countryCode": succ.countryCode
+        }
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DELET_PAYMENT[data.lang], 'result': result })
+    })
+}
+
+
 module.exports = {
     signup,
     login,
@@ -993,5 +1144,7 @@ module.exports = {
     updateProfile,
     getUserInfo,
     editPaymentMethod,
-    deletePayment
+    deletePayment,
+    editAddress,
+    deleteAddress
 }

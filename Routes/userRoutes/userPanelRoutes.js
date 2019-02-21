@@ -174,4 +174,16 @@ userRouter.post('/deletePayment', (req, res) => {
         res.send(data)
     })
 })
+
+userRouter.post('/editAddress', (req, res) => {
+    userHandler.editAddress(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
+
+userRouter.post('/deleteAddress', (req, res) => {
+    userHandler.deleteAddress(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
 module.exports = userRouter

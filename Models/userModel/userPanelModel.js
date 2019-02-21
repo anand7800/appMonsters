@@ -71,6 +71,12 @@ var login = mongoose.Schema({
             type: String,
             default: "+91"
         },
+        status: {
+            type: String,
+            enum: ['ACTIVE', "INACTIVE"],
+            default: 'ACTIVE',
+            uppercase: true,
+        }
     }],
     paymentMethod: [{
         cardHolderName: String,
