@@ -378,7 +378,10 @@ let statusMessage = {
         en: "Profile details Upload successfully",
         ar: ""
     },
-
+    EDIT_PAYMENT:{
+        en:"Your payment card update",
+        ar:""
+    },
     TITLE: {
 
         PLACED: {

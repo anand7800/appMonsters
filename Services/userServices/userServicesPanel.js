@@ -838,42 +838,55 @@ getUserInfo = (data, headers, callback) => {
 ******************************************/
 
 editPaymentMethod = (data, headers, callback) => {
-    console.log('------->', data)
-    let userId = '5c657188f7f89745e14fda4a'
+    // console.log('------->', data)
+    // let userId = '5c657188f7f89745e14fda4a'
 
+    if (!data.paymentId || !headers.accessoken) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
+        return
+    }
+
+    var userId
+    commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
+        // console.log("^^^^", err, decodeId)
+        if (err) throw err
+        else {
+            userId = decodeId
+        }
+    })
     let query = {
         $and: [
             { _id: userId, },
-            { 'paymentMethod._id': '5c657267f7f89745e14fda4c' }
+            { 'paymentMethod._id': data.paymentId }
         ]
 
     }
-    let update = {
-        $set: {
-            'paymentMethod.$.status': data.status ? data.status : "ACTIVE",
-            'paymentMethod.$.expireDate': data.status ? data.status : "ACTIVE",
-            'paymentMethod.$.cvv': data.status ? data.status : "ACTIVE",
-            'paymentMethod.$.cardType': data.status ? data.status : "ACTIVE",
-            'paymentMethod.$.cardNumber': data.status ? data.status : "ACTIVE",
-            'paymentMethod.$.cardHolderName': data.status ? data.status : "ACTIVE",
 
-        }
-    }
 
     async.waterfall([
 
         function (cb) {
-            userModel.findOne({ _id: userId, 'paymentMethod._id': '5c657267f7f89745e14fda4c' }, { 'paymentMethod.$': 1 }).exec((err, result) => {
-                console.log(err, result)
+            userModel.findOne({ _id: userId, 'paymentMethod._id': data.paymentId }, { 'paymentMethod.$': 1 }).exec((err, result) => {
+                // console.log(err, result)
                 if (err || !result) cb(null)
                 else cb(null, result)
             })
         },
         function (result, cb) {
-            console.log('===>>>', result)
+            console.log('===>>>', result.paymentMethod[0].expireDate)
+            let update = {
+                $set: {
+                    'paymentMethod.$.status': data.status ? data.status : result.paymentMethod[0].status,
+                    'paymentMethod.$.expireDate': data.expireDate ? data.expireDate : result.paymentMethod[0].expireDate,
+                    'paymentMethod.$.cvv': data.cvv ? data.cvv : result.paymentMethod[0].cvv,
+                    'paymentMethod.$.cardType': data.cardType ? data.cardType : result.paymentMethod[0].cardType,
+                    'paymentMethod.$.cardNumber': data.cardNumber ? data.cardNumber : result.paymentMethod[0].cardNumber,
+                    'paymentMethod.$.cardHolderName': data.cardHolderName ? data.cardHolderName : result.paymentMethod[0].cardHolderName,
 
+                }
+            }
             userModel.findOneAndUpdate(query, update, { new: true }).exec((err, update) => {
-                console.log(err, update)
+                // console.log(err, update)
                 if (err || !update) cb(null)
                 else cb(null, update)
 
@@ -881,8 +894,8 @@ editPaymentMethod = (data, headers, callback) => {
         }
 
     ], (err, response) => {
-        console.log("resposne ", err, response)
-        callback(response)
+        // console.log("resposne ", err, response)
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.EDIT_PAYMENT[data.lang], 'result': response })
     })
 
 
