@@ -2,7 +2,7 @@ let app = require('express')(),
     fs=require('fs'),
     options = {
         key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
-        cert: fs.readFileSync('/home/ec2-user/ssl/gd_bundle-g2-g1.crt').toString(),
+        cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
     },
     // server = require('https').Server(app),
     bodyParser = require('body-parser'),
