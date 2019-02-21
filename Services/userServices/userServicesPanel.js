@@ -130,7 +130,7 @@ login = (data, callback) => {
 
 //!social login
 socialLogin = (data, callback) => {
-    console.log('request',data)
+    console.log('request', data)
     obj = data
     query = {
         'social.socialId': data.socialId,
@@ -162,9 +162,9 @@ socialLogin = (data, callback) => {
             else {
                 var user = new userModel(query)
                 user.save((err, succ) => {
-                    log(err,succ)
+                    log(err, succ)
                     if (err) {
-                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[obj.lang],result:err })
+                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[obj.lang], result: err })
                         return
                     }
                     else if (!succ) {
@@ -202,7 +202,7 @@ checkSocialProfile = (obj, callback) => {
         return
     }
     else {
-       let query = {
+        let query = {
             "social.socialId": obj.socialId
         }
         userModel.findOne(query, (err, succ) => {
@@ -576,7 +576,7 @@ resetPassword = (query, body, callback) => {
 //!email exist 
 checkEmail = (data, callback) => {
     console.log("api is called", data)
-    userModel.findOne({ email: data.email, userType:data.userType }, (err, found) => {
+    userModel.findOne({ email: data.email, userType: data.userType }, (err, found) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
         }
@@ -743,12 +743,12 @@ updateProfile = (data, headers, callback) => {
 
     async.parallel({
         uploadImage: (cb) => {
-                commonFunction.uploadImg(data.image, (err, image) => {
-                    console.log(err, image)
-                    if (err) cb(null)
-                    else if (!image) cb(null)
-                    else cb(null, image)
-                })
+            commonFunction.uploadImg(data.image, (err, image) => {
+                console.log(err, image)
+                if (err) cb(null)
+                else if (!image) cb(null)
+                else cb(null, image)
+            })
         },
         getUser: (cb) => {
             userModel.findOne({ _id: userId }).exec((err, userinfo) => {
@@ -804,7 +804,6 @@ updateProfile = (data, headers, callback) => {
 getUserInfo = (data, headers, callback) => {
     // console.log("incoming data", data.firstName)
     async.waterfall([
-
         function (cb) {
             commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
                 if (err || !decodeId)
@@ -832,6 +831,62 @@ getUserInfo = (data, headers, callback) => {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response })
     })
 }
+
+/* ***************************************
+******************************************
+*****************editpaymentmethod********
+******************************************/
+
+editPaymentMethod = (data, headers, callback) => {
+    console.log('------->', data)
+    let userId = '5c657188f7f89745e14fda4a'
+
+    let query = {
+        $and: [
+            { _id: userId, },
+            { 'paymentMethod._id': '5c657267f7f89745e14fda4c' }
+        ]
+
+    }
+    let update = {
+        $set: {
+            'paymentMethod.$.status': data.status ? data.status : "ACTIVE",
+            'paymentMethod.$.expireDate': data.status ? data.status : "ACTIVE",
+            'paymentMethod.$.cvv': data.status ? data.status : "ACTIVE",
+            'paymentMethod.$.cardType': data.status ? data.status : "ACTIVE",
+            'paymentMethod.$.cardNumber': data.status ? data.status : "ACTIVE",
+            'paymentMethod.$.cardHolderName': data.status ? data.status : "ACTIVE",
+
+        }
+    }
+
+    async.waterfall([
+
+        function (cb) {
+            userModel.findOne({ _id: userId, 'paymentMethod._id': '5c657267f7f89745e14fda4c' }, { 'paymentMethod.$': 1 }).exec((err, result) => {
+                console.log(err, result)
+                if (err || !result) cb(null)
+                else cb(null, result)
+            })
+        },
+        function (result, cb) {
+            console.log('===>>>', result)
+
+            userModel.findOneAndUpdate(query, update, { new: true }).exec((err, update) => {
+                console.log(err, update)
+                if (err || !update) cb(null)
+                else cb(null, update)
+
+            })
+        }
+
+    ], (err, response) => {
+        console.log("resposne ", err, response)
+        callback(response)
+    })
+
+
+}
 module.exports = {
     signup,
     login,
@@ -853,5 +908,6 @@ module.exports = {
     reset,
     verifyLink,
     updateProfile,
-    getUserInfo
+    getUserInfo,
+    editPaymentMethod
 }

@@ -63,21 +63,22 @@ userRouter.post('/forgotPassword', (req, res) => {
 //! verifyForgotLink
 userRouter.get('/verifyForgotLink', (req, res) => {
     userHandler.verifyForgotLink(req.query, (data) => {
-        if(data.statusCode==200){
+        if (data.statusCode == 200) {
             console.log(data.statusCode)
             var userData = {
-              status : "success",
-              msg : "Please update your password here.",
-              email : data.email          
+                status: "success",
+                msg: "Please update your password here.",
+                email: data.email
             }
-          }
-          else{
+        }
+        else {
             var userData = {
-              status : "failure",
-              msg : data.statusMessage
+                status: "failure",
+                msg: data.statusMessage
             }
-          }
-          res.render('forgot_password',userData);    })
+        }
+        res.render('forgot_password', userData);
+    })
 })
 
 //!addPayment
@@ -102,17 +103,17 @@ userRouter.get('/getPaymentMethodList', authHandler.verifyToken, (req, res) => {
 })
 //!resetPassword
 userRouter.post('/resetPassword', (req, res) => {
-    userHandler.resetPassword(req.query,req.body, (data) => {
+    userHandler.resetPassword(req.query, req.body, (data) => {
         res.send(data)
     })
 })
 
 //!addPayment
-userRouter.post('/updateForgotPassword',  (req, res) => {
+userRouter.post('/updateForgotPassword', (req, res) => {
     userHandler.updateForgotPassword(req.body, req.headers, (data) => {
-        if(data.statusCode==200){
+        if (data.statusCode == 200) {
             res.end("200");
-        }else if(data.statusCode==404){
+        } else if (data.statusCode == 404) {
             res.end("404");
         }
     })
@@ -120,45 +121,51 @@ userRouter.post('/updateForgotPassword',  (req, res) => {
 
 //!checkEmail
 userRouter.post('/checkEmail', (req, res) => {
-    userHandler.checkEmail(req.body, (data) => {  
-        res.send(data)  
+    userHandler.checkEmail(req.body, (data) => {
+        res.send(data)
     })
 })
 //!checkEmail
-userRouter.post('/changePassword',authHandler.verifyToken, (req, res) => {
-    userHandler.changePassword(req.body,req.headers, (data) => {
-        res.send(data) 
+userRouter.post('/changePassword', authHandler.verifyToken, (req, res) => {
+    userHandler.changePassword(req.body, req.headers, (data) => {
+        res.send(data)
     })
-})   
+})
 //!editProfile
-userRouter.post('/editProfile',authHandler.verifyToken, (req, res) => {
-    userHandler.editProfile(req.body,req.headers, (data) => {
-        res.send(data) 
+userRouter.post('/editProfile', authHandler.verifyToken, (req, res) => {
+    userHandler.editProfile(req.body, req.headers, (data) => {
+        res.send(data)
     })
-})   
+})
 //!reset
-userRouter.post('/reset',(req,res)=>{
-    userHandler.reset(req.body,(data)=>{
+userRouter.post('/reset', (req, res) => {
+    userHandler.reset(req.body, (data) => {
         res.send(data)
     })
 })
 //!verifyLink
-userRouter.post('/verifyLink',(req,res)=>{
-    userHandler.verifyLink(req.body,(data)=>{
+userRouter.post('/verifyLink', (req, res) => {
+    userHandler.verifyLink(req.body, (data) => {
         res.send(data)
     })
 })
 
 //!updateImage
-userRouter.post('/updateProfile',authHandler.verifyToken,(req,res)=>{
-    userHandler.updateProfile(req.body,req.headers,(data)=>{
+userRouter.post('/updateProfile', authHandler.verifyToken, (req, res) => {
+    userHandler.updateProfile(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
 
 //!getUserInfo
-userRouter.get('/getUserInfo',authHandler.verifyToken,(req,res)=>{
-    userHandler.getUserInfo(req.query,req.headers,(data)=>{
+userRouter.get('/getUserInfo', authHandler.verifyToken, (req, res) => {
+    userHandler.getUserInfo(req.query, req.headers, (data) => {
+        res.send(data)
+    })
+})
+
+userRouter.post('/editPaymentMethod', (req, res) => {
+    userHandler.editPaymentMethod(req.body, req.headers, (data) => {
         res.send(data)
     })
 })

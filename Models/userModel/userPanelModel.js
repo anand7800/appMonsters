@@ -78,6 +78,12 @@ var login = mongoose.Schema({
         cardType: String,
         cvv: String,
         expireDate: String,
+        status: {
+            type: String,
+            enum: ['ACTIVE', "INACTIVE"],
+            default: 'ACTIVE',
+            uppercase: true,
+        }
     }],
     social: {
         socialId: String,
@@ -105,13 +111,13 @@ var login = mongoose.Schema({
         default: 'active',
         uppercase: false,
     },
-    isBussinessAdded:{
-        type:Boolean,
-        default:false
+    isBussinessAdded: {
+        type: Boolean,
+        default: false
     },
-    storeType:{
-        type:String,
-        default:null
+    storeType: {
+        type: String,
+        default: null
     }
 }, {
         timestamps: true

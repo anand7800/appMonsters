@@ -1395,7 +1395,7 @@ productDetails = (data, callback) => {
                             if (test.color != "") color.push(test.color)
                             if (test.material != "") material.push(test.material)
                             if (test.size != "") size.push(test.size)
-                            console.log('---------->',_.uniq(size))
+                            console.log('---------->', _.uniq(size))
                             // console.log('into the looop', test)
                             let data = {
                                 _id: response.findProduct._id,
@@ -1601,11 +1601,6 @@ getVariance = (data, callback) => {
     }, (err, response) => {
         res = {}
         var color = [data.color], material = [data.material], size = [data.size]
-        // console.log('@@@@@@@@@@@@2', err, response.varianceDetail)
-        // callback(response.varianceDetail)
-
-
-
         varianceModel.findById({ _id: response.varianceDetail._id }).exec((err, combination) => {
             if (err || !combination) throw err
             else {
@@ -1649,7 +1644,7 @@ getVariance = (data, callback) => {
                     material: _.uniq(material)
                 }
                 res.product = temp
-                console.log("======>",response.varianceDetail)
+                console.log("======>", response.varianceDetail)
                 res.sellerInfo = {
                     _id: response.varianceDetail.sellerId._id,
                     sellerName: response.varianceDetail.sellerId.firstName,
