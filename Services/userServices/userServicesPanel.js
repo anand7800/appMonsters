@@ -584,7 +584,7 @@ checkEmail = (data, callback) => {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
         }
         else {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_EXISTS[data.lang] })
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_EXISTS[data.lang],"result":commonFunction.jwtEncode(found.parentId_id) })
         }
     })
 }

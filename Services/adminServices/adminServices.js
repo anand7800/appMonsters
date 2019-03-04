@@ -1087,6 +1087,85 @@ editProductCategory = (data, callback) => {
         })
     }
 }
+
+
+//createVendor
+
+createStaff = (data, headers, callback) => {
+
+    let userId;
+    if (!headers.accesstoken) {
+        console.log("asdfasfa")
+        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        return
+    }
+    else {
+        commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
+            console.log(token)
+            if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            else userId = token
+        })
+    }
+    if (!data.image && !data.email) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        return
+    }
+    var password = commonFunction.generatePassword();
+    async.parallel({
+        uploadImage: (cb) => {
+            commonFunction.uploadImg(data.profilePic, (err, image) => {
+                log(err, image)
+                if (err) cb(null)
+                else if (!image) cb(null)
+                else cb(null, image)
+            })
+        },
+        password: (cb) => {
+
+            cb(null, util.encryptData(password))
+        },
+        checkuser: (cb) => {
+            userModel.findOne({ $and: [{ email: data.email.toLowerCase() }] }).exec((err, result) => {
+                console.log('===>', err, result)
+                if (err || result == null)
+                    cb(null)
+                else if (result) {
+                    callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
+                    return
+                }
+            })
+        }
+
+    }, (err, response) => {
+        let user = new userModel({
+            email: data.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            password: response.password,
+            userType: data.userType ? data.userType : 'staff',
+            phone: data.phone,
+            address: { addresses: data.address, lat: data.lat, lng: data.lng },
+            image: response.uploadImage,
+            storeType: data.storeType,
+            countryCode: data.countryCode,
+            status: data.status ? data.status : 'inactive',
+            parentId:userId
+
+        })
+        user.save((err, save) => {
+            console.log(err, save)
+            if (err) {
+                callback({ "statusCode": util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "err": err })
+            }
+            else if (save) {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.EMAIL_SENT[data.lang], 'result': save })
+                commonFunction.sendMailTest(data.email, "WAKI CREATE PASSWORD", password, (err, mailsent) => {
+                    console.log(err, mailsent)
+                })
+            }
+        })
+    })
+}
 module.exports = {
     addTopOffers,
     uploadImage,
@@ -1119,5 +1198,6 @@ module.exports = {
     getProductCategoryList,
     deleteProductCategory,
     getProductCategoryById,
-    editProductCategory
+    editProductCategory,
+    createStaff
 }

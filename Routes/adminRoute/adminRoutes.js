@@ -195,9 +195,11 @@ adminRouter.get('/getProductCategoryById', (req, res) => {
     })
 })
 
-adminRouter.post('/editProductCategory', (req, res) => {
-    adminHandler.editProductCategory(req.body,(data) => {
+adminRouter.post('/createStaff', (req, res) => {
+    adminHandler.createStaff(req.body,req.headers,(data) => {
         res.send(data)
     })
 })
+
+
 module.exports = adminRouter

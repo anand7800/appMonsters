@@ -61,22 +61,22 @@ var dotenv = require('dotenv/config');
 console.log("ssdsds",process.env.superKey) 
 */
 //!userRoutes
-var userRoutes = require('./Routes/userRoutes/userPanelRoutes')
-var adminRoute = require('./Routes/adminRoute/adminRoutes')
-var productRoutes = require('./Routes/productRoute/productRoutes')
+let userRoutes = require('./Routes/userRoutes/userPanelRoutes')
+let adminRoute = require('./Routes/adminRoute/adminRoutes')
+let productRoutes = require('./Routes/productRoute/productRoutes')
+// let webRoutes=require('./Routes/webRoutes/webRoutes')
 app.use('/user', userRoutes)
 app.use('/admin', adminRoute)
 app.use('/vendor', productRoutes)
-
+// app.use('/web',webRoutes)
 app.use(express.static(path.join(__dirname, 'dist')));
 app.get('*', (req, res) => {
     res.sendFile(__dirname + '/dist/index.html')
 });
 
-
-/* ***************************socket start *************************
-***************************socket start *************************
-***************************socket start ************************* */
+/****************************socket start***********************
+***************************socket start*************************
+***************************socket start************************/
 var io = require('socket.io')(server);
 var sockets = {};
 var onlineUsers = {};
