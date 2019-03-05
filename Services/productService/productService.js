@@ -588,9 +588,66 @@ homeScreenApi = (query, callback) => {
             commonAPI.promotedDeals((err, response) => {
                 cb(null, response)
             })
+        },
+        treadingOnWaki: (cb) => {
+            let productId=[];
+            let results=[];
+
+            async.waterfall([
+                function (cb) {
+                    orderPlaced.find({}).select({ 'orderPlacedDescription.productId': 1 }).exec((err, result) => {
+                        if (err || result < 0)
+                            cb(null)
+                        else {
+                            result.forEach(element => {
+                                element.orderPlacedDescription.forEach(p1 => {
+                                    productId.push(p1.productId)
+                                })
+                            })
+                            productId = commonFunction.find_duplicate_in_array(productId)
+                            cb(null, productId)
+                        }
+                    })
+
+                },
+                function (productId, cb) {
+                    // console.log(productId)
+
+                    productModel.find({ _id: { $in: productId }, status: "ACTIVE" }).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, result) => {
+                        if (err || result < 0)
+                            cb(null)
+                        else {
+                            result.forEach(element => {
+
+                                let temp = {
+                                    _id: element._id,
+                                    description: element.description,
+                                    price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
+                                    productName: element.productName,
+                                    // sellerId: element.sellerId,
+                                    brand: element.brandId.brandName,
+                                    // specifications: element.specifications,
+                                    image: element.varianceId == null ? element.image : element.varianceId.variants[0].image
+                                }
+                                results.push(temp)
+                            })
+                            cb(null, results)
+                        }
+
+                    })
+                }
+
+
+            ], (err, response) => {
+
+
+                cb(null, response)
+
+            })
         }
+
     }, (err, response) => {
-        console.log('$$$$$$$$$$$$$$$4', response.trendingFashion)
+        // console.log('$$$$$$$$$$$$$$$4', response.trendingFashion)
         let res1 = {};
         topPicksInMobile = [];
         brand = [];
@@ -706,8 +763,10 @@ homeScreenApi = (query, callback) => {
         res1['Category'] = categories;//!done
 
         res1['Top Picks in Mobile'] = topPicksInMobile; //!done
+        res1['Trending On waki']=response.treadingOnWaki;
         res1['Brand'] = brand;//!done
-        orderedKey = ['Top Deals', 'Top Promoted Deals', 'Category', 'Top Picks in Mobile', 'Brand', 'Top Picks in Fashion']
+      
+        orderedKey = ['Top Deals', 'Top Promoted Deals', 'Category', 'Top Picks in Mobile','Trending On waki', 'Brand', 'Top Picks in Fashion']
         res1['Top Picks in Fashion'] = trendingFashion;//!done
         // log(query)
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.HOMESCREEN_API[query.lang], "result": res1, 'orderedKey': orderedKey });
@@ -3867,8 +3926,6 @@ treadingOnWaki = (data, callback) => {
     var productId = [];
     var results = [];
     async.waterfall([
-
-
         function (cb) {
             orderPlaced.find({}).select({ 'orderPlacedDescription.productId': 1 }).exec((err, result) => {
                 if (err || result < 0)
@@ -3888,7 +3945,7 @@ treadingOnWaki = (data, callback) => {
         function (productId, cb) {
             // console.log(productId)
 
-            productModel.find({ _id: { $in: productId } ,status:"ACTIVE"}).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, result) => {
+            productModel.find({ _id: { $in: productId }, status: "ACTIVE" }).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, result) => {
                 if (err || result < 0)
                     cb(null)
                 else {
@@ -3918,7 +3975,7 @@ treadingOnWaki = (data, callback) => {
         if (err || !response || response < 0) {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
         }
-        else{
+        else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response })
         }
 
