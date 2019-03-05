@@ -535,9 +535,9 @@ homeScreenApi = (query, callback) => {
             })
         },
         category: (cb) => {
-            productCategoryModelL3.count().exec(function (err, count) {
+            productCategoryModelL3.count({status:'ACTIVE'}).exec(function (err, count) {
                 var random = Math.floor(Math.random() * count);
-                productCategoryModelL3.find().skip(random).limit(10).exec(
+                productCategoryModelL3.find({status:'ACTIVE'}).skip(random).limit(10).exec(
                     function (err, result) {
                         // console.log('#######33', err, result)
                         if (err) {
