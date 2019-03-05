@@ -551,12 +551,13 @@ homeScreenApi = (query, callback) => {
         },
         trendingFashion: (cb) => {
             var trending = []
-            categoryModelL1.find({ $or: [{ 'categoryName': "Men Fashion" }, { 'categoryName': "Women Fashion" }] }).exec((err, result) => {
-                // console.log("@@@@@@@@@@@2", result)
+            categoryModelL1.find({ $or: [{ 'categoryName': "Men Fashions" }] }).exec((err, result) => {
+                console.log("@@@@@@@@@@@2", result)
                 if (result) {
                     async.forEachOf(result, (element, key, callback) => {
-                        productModel.find({ categoryModel: element._id, status: "ACTIVE" }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).lean().exec((err, result2) => {
-                            // log("trending", err, JSON.stringify(result2))
+                        console.log("element",element)
+                        productModel.find({ categoryModel: element._id,status:'ACTIVE' }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).lean().exec((err, result2) => {
+                            console.log("trending", err, JSON.stringify(result2))
                             if (result2)
                                 result2.forEach(element => {
                                     trending.push(element)
@@ -589,7 +590,7 @@ homeScreenApi = (query, callback) => {
             })
         }
     }, (err, response) => {
-        // console.log('$$$$$$$$$$$$$$$4', response.trendingFashion)
+        console.log('$$$$$$$$$$$$$$$4', response.trendingFashion)
         let res1 = {};
         topPicksInMobile = [];
         brand = [];

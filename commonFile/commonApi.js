@@ -469,14 +469,15 @@ reviewAndRating = async (_id, cb) => {
         //     // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
         // }
     ])/* reviewAndRatingL5.find({reviewAndRating: {$elemMatch: {productId: _id } } }).populate({path: 'reviewAndRating.userId',select:'firstName lastName image'}) */.exec((err, result) => {
-        console.log("result",err, JSON.stringify(result))
+        // console.log("result",err, JSON.stringify(result))
         if (err || result.length < 0) cb(null)
         else cb(null, result)
     })
     // })
 }
-//!getReview user
 
+
+//getReview user
 getUsername = async (user, cb) => {
     userModel.findOne({ _id: user }, { firstName: 1, lastName: 1, image: 1 }).exec((err, result) => {
         // console.log("%#$%#$%#$%#$%#$%$%%#%#%#$%#$",result)
@@ -486,7 +487,7 @@ getUsername = async (user, cb) => {
     })
 
 }
-//!getUserDetail
+//getUserDetail
 getUserDetail = async (userId, cb) => {
     userModel.findOne({ _id: userId }).exec((err, result) => {
         // console.log("%#$%#$%#$%#$%#$%$%%#%#%#$%#$",result)
@@ -494,7 +495,7 @@ getUserDetail = async (userId, cb) => {
         else cb(null, result)
     })
 }
-//!send notification
+//send notification
 notify = (data, userId, cb) => {
 
 
@@ -551,7 +552,7 @@ notify = (data, userId, cb) => {
 
 }
 
-//!change statue notifcaition
+//change statue notifcaition
 changeNotification = (data, callback) => {
     console.log("data", data)
 
