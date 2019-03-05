@@ -723,6 +723,7 @@ OpenSubCategory = (data, callback) => {
     log('incoming data', data)
     var res = []
     subCategoryModelL2.find({ categoryModel: data.categoryId, status: "ACTIVE" }).sort({ $natural: 1 }).exec((err, succ) => {
+
         if (err) throw err
 
         async.forEachOf(succ, (value, key, callback) => {
@@ -764,9 +765,13 @@ OpenSubCategory = (data, callback) => {
             })
 
         }, (err, success) => {
+            categoryModelL1.findOne({_id:data.categoryId}).exec((err,result)=>{
 
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang],"categoryImage":result.image, "result": res })
 
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "result": res })
+            })
+
+         
         })
     })
 }
