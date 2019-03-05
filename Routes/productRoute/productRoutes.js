@@ -425,4 +425,11 @@ productRouter.post('/reviewFeedBack', (req, res) => {
         res.send(data)
     })
 })
+
+// treadingOnWaki
+productRouter.get('/treadingOnWaki', (req, res) => {
+    productService.treadingOnWaki(req.query, (data) => {
+        res.send(data)
+    })
+})
 module.exports = productRouter

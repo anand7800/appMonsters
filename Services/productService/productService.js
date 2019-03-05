@@ -555,8 +555,8 @@ homeScreenApi = (query, callback) => {
                 console.log("@@@@@@@@@@@2", result)
                 if (result) {
                     async.forEachOf(result, (element, key, callback) => {
-                        console.log("element",element)
-                        productModel.find({ categoryModel: element._id,status:'ACTIVE' }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).lean().exec((err, result2) => {
+                        console.log("element", element)
+                        productModel.find({ categoryModel: element._id, status: 'ACTIVE' }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).lean().exec((err, result2) => {
                             console.log("trending", err, JSON.stringify(result2))
                             if (result2)
                                 result2.forEach(element => {
@@ -765,13 +765,11 @@ OpenSubCategory = (data, callback) => {
             })
 
         }, (err, success) => {
-            categoryModelL1.findOne({_id:data.categoryId}).exec((err,result)=>{
+            categoryModelL1.findOne({ _id: data.categoryId }).exec((err, result) => {
 
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang],"categoryImage":result.image, "result": res })
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "categoryImage": result.image, "result": res })
 
             })
-
-         
         })
     })
 }
@@ -3864,8 +3862,69 @@ reviewFeedBack = (data, header, callback) => {
     })
 }
 
+//treding on waki
+treadingOnWaki = (data, callback) => {
+    var productId = [];
+    var results = [];
+    async.waterfall([
 
 
+        function (cb) {
+            orderPlaced.find({}).select({ 'orderPlacedDescription.productId': 1 }).exec((err, result) => {
+                if (err || result < 0)
+                    cb(null)
+                else {
+                    result.forEach(element => {
+                        element.orderPlacedDescription.forEach(p1 => {
+                            productId.push(p1.productId)
+                        })
+                    })
+                    productId = commonFunction.find_duplicate_in_array(productId)
+                    cb(null, productId)
+                }
+            })
+
+        },
+        function (productId, cb) {
+            // console.log(productId)
+
+            productModel.find({ _id: { $in: productId } ,status:"ACTIVE"}).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, result) => {
+                if (err || result < 0)
+                    cb(null)
+                else {
+                    result.forEach(element => {
+
+                        let temp = {
+                            _id: element._id,
+                            description: element.description,
+                            price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
+                            productName: element.productName,
+                            // sellerId: element.sellerId,
+                            brand: element.brandId.brandName,
+                            // specifications: element.specifications,
+                            image: element.varianceId == null ? element.image : element.varianceId.variants[0].image
+                        }
+                        results.push(temp)
+                    })
+                    cb(null, results)
+                }
+
+            })
+        }
+
+
+    ], (err, response) => {
+        console.log(err, response)
+        if (err || !response || response < 0) {
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+        }
+        else{
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response })
+        }
+
+    })
+
+}
 
 module.exports = {
     addCategory,
@@ -3913,5 +3972,6 @@ module.exports = {
     getVendorProductCategorylist,
     editProduct,
     dashBoardForVendor,
-    reviewFeedBack
+    reviewFeedBack,
+    treadingOnWaki
 }
