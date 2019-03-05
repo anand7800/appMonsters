@@ -590,8 +590,8 @@ homeScreenApi = (query, callback) => {
             })
         },
         treadingOnWaki: (cb) => {
-            let productId=[];
-            let results=[];
+            let productId = [];
+            let results = [];
 
             async.waterfall([
                 function (cb) {
@@ -627,7 +627,8 @@ homeScreenApi = (query, callback) => {
                                     // sellerId: element.sellerId,
                                     brand: element.brandId.brandName,
                                     // specifications: element.specifications,
-                                    image: element.varianceId == null ? element.image : element.varianceId.variants[0].image
+                                    image: element.varianceId == null ? element.image[0] : element.varianceId.variants[0].image[0],
+                                    type:'trending'
                                 }
                                 results.push(temp)
                             })
@@ -763,10 +764,10 @@ homeScreenApi = (query, callback) => {
         res1['Category'] = categories;//!done
 
         res1['Top Picks in Mobile'] = topPicksInMobile; //!done
-        res1['Trending On waki']=response.treadingOnWaki;
+        res1['Trending On waki'] = response.treadingOnWaki;
         res1['Brand'] = brand;//!done
-      
-        orderedKey = ['Top Deals', 'Top Promoted Deals', 'Category', 'Top Picks in Mobile','Trending On waki', 'Brand', 'Top Picks in Fashion']
+
+        orderedKey = ['Top Deals', 'Top Promoted Deals', 'Category', 'Top Picks in Mobile', 'Trending On waki', 'Brand', 'Top Picks in Fashion']
         res1['Top Picks in Fashion'] = trendingFashion;//!done
         // log(query)
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.HOMESCREEN_API[query.lang], "result": res1, 'orderedKey': orderedKey });
@@ -3978,9 +3979,7 @@ treadingOnWaki = (data, callback) => {
         else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response })
         }
-
     })
-
 }
 
 module.exports = {
