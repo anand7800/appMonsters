@@ -755,7 +755,7 @@ homeScreenApi = (query, callback) => {
             }
             topOffer.push(data)
         }, (err, result) => {
-            // log(err, result)
+            // log(err, result) 
         })
         res1['Top Deals'] = topOffer;
         res1['Top Promoted Deals'] = topPromotedDeals;
