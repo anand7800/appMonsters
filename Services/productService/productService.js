@@ -1745,17 +1745,18 @@ vendorOrderList = (header, callback) => {
     commonFunction.jwtDecode(header.accesstoken, (err, result) => {
         userId = result
     })
-    orderPlaced.aggregate([{
-        $unwind: '$orderPlacedDescription'
-    }, {
-        $match: {
-            // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
-            $or: [
-                { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) }
-            ]
-        },
-        // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
-    }
+    orderPlaced.aggregate([
+        {
+            $unwind: '$orderPlacedDescription'
+        }, {
+            $match: {
+                // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
+                $or: [
+                    { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) }
+                ]
+            },
+            // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
+        }
     ], (err, result) => {
         // console.log(err, result)
         var demo = []
@@ -3829,6 +3830,34 @@ dashBoardForVendor = (data, header, callback) => {
         }
     })
 }
+//review and feedback vendor panel
+
+
+reviewFeedBack = (data, header, callback) => {
+    let userId = "5c46c2d1070fa144119a1cd5"
+    // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+    //     if (err) throw err
+    //     else {
+    //         userId = decodeId
+    //     }
+    // })
+
+
+    async.parallel({
+
+        getProductDetail: (cb) => {
+
+            productModel.find({ sellerId: userId }, { _id: 1 }).exec((err, result) => {
+
+                console.log("this is ", err)
+                // callback(result)
+
+
+            })
+        }
+    })
+}
+
 
 
 
@@ -3877,5 +3906,6 @@ module.exports = {
     getProductInfo,
     getVendorProductCategorylist,
     editProduct,
-    dashBoardForVendor
+    dashBoardForVendor,
+    reviewFeedBack
 }

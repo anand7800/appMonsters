@@ -436,7 +436,7 @@ reviewAndRating = async (_id, cb) => {
     // brandDescriptionL4.findOne({ "brandDesc._id": _id }, { "brandDesc.$": 1 }, (err, result) => {
     //     // log(result.brandDesc[0]._id)
     // productId = result.brandDesc[0]._id
-    var a = _id.toString()
+    // var a = _id.toString()
     reviewAndRatingL5.aggregate([
         {
             $project: {
@@ -446,7 +446,7 @@ reviewAndRating = async (_id, cb) => {
                         as: "item",
                         cond: {
                             $and: [
-                                { $eq: ["$$item.productId", _id.toString()] },
+                                { $eq: ["$$item.productId", mongoose.Types.ObjectId(_id)] },
                                 { $eq: ["$$item.status", "ACTIVE"] }
                             ]
                         }
@@ -454,8 +454,22 @@ reviewAndRating = async (_id, cb) => {
                 }
             }
         }
+
+
+        // {
+        //     $unwind: '$reviewAndRating'
+        // }, {
+        //     $match: {
+        //         // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
+        //         $or: [
+        //             { 'reviewAndRating.productId': mongoose.Types.ObjectId(_id) },
+        //             { 'reviewAndRating.status': "ACTIVE"}
+        //         ]
+        //     },
+        //     // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
+        // }
     ])/* reviewAndRatingL5.find({reviewAndRating: {$elemMatch: {productId: _id } } }).populate({path: 'reviewAndRating.userId',select:'firstName lastName image'}) */.exec((err, result) => {
-        // console.log("result",err, JSON.stringify(result))
+        console.log("result",err, JSON.stringify(result))
         if (err || result.length < 0) cb(null)
         else cb(null, result)
     })

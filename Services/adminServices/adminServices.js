@@ -1090,7 +1090,6 @@ editProductCategory = (data, callback) => {
 
 
 //createVendor
-
 createStaff = (data, headers, callback) => {
 
     let userId;
@@ -1144,11 +1143,11 @@ createStaff = (data, headers, callback) => {
             password: response.password,
             userType: data.userType ? data.userType : 'staff',
             phone: data.phone,
-            address: { addresses: data.address, lat: data.lat, lng: data.lng },
-            image: response.uploadImage,
-            storeType: data.storeType,
+            // address: { addresses: data.address, lat: data.lat, lng: data.lng },
+            // image: response.uploadImage,
+            // storeType: data.storeType,
             countryCode: data.countryCode,
-            status: data.status ? data.status : 'inactive',
+            status: data.status ? data.status : 'active',
             parentId:userId
 
         })
@@ -1159,7 +1158,7 @@ createStaff = (data, headers, callback) => {
             }
             else if (save) {
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.EMAIL_SENT[data.lang], 'result': save })
-                commonFunction.sendMailTest(data.email, "WAKI CREATE PASSWORD", password, (err, mailsent) => {
+                commonFunction.sendMailTest(data.email, "WAKI STORE", password, (err, mailsent) => {
                     console.log(err, mailsent)
                 })
             }

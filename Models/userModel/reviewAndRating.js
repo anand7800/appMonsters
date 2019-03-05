@@ -11,7 +11,8 @@ var reviewAndRating = mongoose.Schema({
             ref: 'login'
         },
         productId: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref:'productDescription'
         },
         rating: {
             type: String,
@@ -23,7 +24,7 @@ var reviewAndRating = mongoose.Schema({
         status: {
             type: String,
             enum: ['ACTIVE', 'INACTIVE'],
-            uppercase:true,
+            uppercase: true,
             default: 'ACTIVE'
         },
         createAt: {

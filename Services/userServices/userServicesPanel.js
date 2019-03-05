@@ -1119,6 +1119,9 @@ deleteAddress = (data, headers, callback) => {
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DELET_PAYMENT[data.lang], 'result': result })
     })
 }
+//add staff
+
+
 
 
 module.exports = {

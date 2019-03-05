@@ -418,4 +418,11 @@ productRouter.get('/dashBoardForVendor', authHandler.verifyToken, (req, res) => 
         res.send(data)
     })
 })
+
+// reviewFeedBack
+productRouter.post('/reviewFeedBack', (req, res) => {
+    productService.reviewFeedBack(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
 module.exports = productRouter
