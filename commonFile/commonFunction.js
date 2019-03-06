@@ -473,8 +473,16 @@ module.exports = {
 
         return result;
 
+    },
+    remove_duplicate_value: (names) => {
+        let unique = {};
+        names.forEach(function (i) {
+            if (!unique[i]) {
+                unique[i] = true;
+            }
+        });
+        return Object.keys(unique);
     }
-
     // console.log(find_duplicate_in_array([1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 71, 3, 6]));
 
 }

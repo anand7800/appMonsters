@@ -1119,10 +1119,6 @@ deleteAddress = (data, headers, callback) => {
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DELET_PAYMENT[data.lang], 'result': result })
     })
 }
-//add staff
-
-
-
 
 module.exports = {
     signup,
@@ -1141,7 +1137,6 @@ module.exports = {
     checkEmail,
     changePassword,
     editProfile,
-    //! this is for angular 
     reset,
     verifyLink,
     updateProfile,

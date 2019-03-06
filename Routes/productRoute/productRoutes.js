@@ -432,4 +432,11 @@ productRouter.get('/treadingOnWaki', (req, res) => {
         res.send(data)
     })
 })
+
+// liveView
+productRouter.get('/liveView', (req, res) => {
+    productService.liveView(req.query,req.headers, (data) => {
+        res.send(data)
+    })
+})
 module.exports = productRouter

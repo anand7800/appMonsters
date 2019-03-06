@@ -535,9 +535,10 @@ homeScreenApi = (query, callback) => {
             })
         },
         category: (cb) => {
-            productCategoryModelL3.count({status:'ACTIVE'}).exec(function (err, count) {
+            productCategoryModelL3.count({ status: 'ACTIVE' }).exec(function (err, count) {
                 var random = Math.floor(Math.random() * count);
-                productCategoryModelL3.find({status:'ACTIVE'}).skip(random).limit(10).exec(
+                // console.log('------------------------------------------>>>>>>', random, count)
+                productCategoryModelL3.find({ status: 'ACTIVE' }).skip(random).limit(10).exec(
                     function (err, result) {
                         // console.log('#######33', err, result)
                         if (err) {
@@ -608,7 +609,6 @@ homeScreenApi = (query, callback) => {
                             cb(null, productId)
                         }
                     })
-
                 },
                 function (productId, cb) {
                     // console.log(productId)
@@ -628,7 +628,7 @@ homeScreenApi = (query, callback) => {
                                     brand: element.brandId.brandName,
                                     // specifications: element.specifications,
                                     image: element.varianceId == null ? element.image[0] : element.varianceId.variants[0].image[0],
-                                    type:'trending'
+                                    type: 'trending'
                                 }
                                 results.push(temp)
                             })
@@ -637,8 +637,6 @@ homeScreenApi = (query, callback) => {
 
                     })
                 }
-
-
             ], (err, response) => {
 
 
@@ -3982,6 +3980,68 @@ treadingOnWaki = (data, callback) => {
     })
 }
 
+//live view
+liveView = (data, header, callback) => {
+    let userId = '5c46c2d1070fa144119a1cd5';
+    let addressId = [];
+    let address = []
+    // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+    //     if (err) throw err
+    //     else {
+    //         userId = decodeId
+    //     }
+    // })
+
+    async.waterfall([
+        function (cb) {
+            // {'local.rooms': {$elemMatch: {name: req.body.username}}}
+            // { 'orderPlacedDescription.sellerId': userId }
+            orderPlaced.find({
+                'orderPlacedDescription': { $elemMatch: { sellerId: userId } }
+            }, { 'orderPlacedDescription.$': 1 }).exec((err, result) => {
+
+                if (err) cb(null)
+                else {
+                    result.forEach(e1 => {
+                        e1.orderPlacedDescription.forEach(e2 => {
+                            // console.log(e2.addressId)
+                            addressId.push(e2.addressId)
+                        })
+                    })
+
+                    addressId = commonFunction.remove_duplicate_value(addressId);
+
+                    cb(null, addressId)
+                }
+            })
+
+        },
+        function (addressId, cb) {
+
+            // return
+            console.log("2222222222222222", addressId)
+
+            userModel.find({ 'address._id': { $in: addressId } }, { 'address.$': 1 }).exec((err, result) => {
+                console.log(err, result)
+                result.forEach(e1 => {
+                    address.push(e1.address[0])
+                });
+                cb(null, address)
+            })
+        }
+    ], (err, response) => {
+        let res = {}
+        if (err) throw err
+
+        else {
+            
+            res['userAddress'] = response
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
+        }
+    })
+
+
+}
 module.exports = {
     addCategory,
     addSubCategory,
@@ -4029,5 +4089,6 @@ module.exports = {
     editProduct,
     dashBoardForVendor,
     reviewFeedBack,
-    treadingOnWaki
+    treadingOnWaki,
+    liveView
 }
