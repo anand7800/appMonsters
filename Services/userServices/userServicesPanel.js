@@ -82,7 +82,7 @@ login = (data, callback) => {
         return
     }
     else {
-        userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod isBussinessAdded countryCode').exec((err, succ) => {
+        userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod isBussinessAdded countryCode status userType').exec((err, succ) => {
             // console.log(err, succ)
             console.log('2222222222222222222', succ)
             if (err) {
@@ -109,9 +109,11 @@ login = (data, callback) => {
                         "address": succ.address,
                         "paymentMethod": succ.paymentMethod,
                         // "countryCode": succ.countryCode,
-                        "isBussinessAdded": succ.isBussinessAdded
+                        "isBussinessAdded": succ.userType=="staff"?true:succ.isBussinessAdded,
+                        'status':succ.status,
+                        'userType':succ.userType
                     }
-                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ.userType == "staff" ? succ.parentId : succ._id) })
                     // commonFunction.android_notification("fdUDE4j000M:APA91bEkgqRGHyIqHEYhhpbYA3n2mxYohNh1RIOEUvQRlBFp1SCYUS6cwOTtAdNZ2RbwwgL4CcYyzLDCz0Geh6iVjeOEioKKq0JgRgKJB9GAEilLX5pLAo1NUly8ofZnIVQYMBuIwXcR", "msg", "chatType", "title", "sendorId", "senderName", "type")
                     if (succ.deviceType == 2) {
                         commonFunction.IOS_NOTIFICATION(succ.deviceToken, "Login Successfully", "Login", "WAKI", "sendorId", "senderName", "Login")
@@ -576,7 +578,7 @@ resetPassword = (query, body, callback) => {
 //!email exist 
 checkEmail = (data, callback) => {
     console.log("api is called", data)
-    userModel.findOne({ email: data.email,status:'active' }, (err, found) => {
+    userModel.findOne({ email: data.email, status: 'active' }, (err, found) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
         }
@@ -584,7 +586,8 @@ checkEmail = (data, callback) => {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
         }
         else {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "userType": found.userType, "token": commonFunction.jwtEncode(found.parentId_id) })
+            console.log("----------------------->>", found)
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "userType": found.userType, "token": commonFunction.jwtEncode(found.userType == "stafff" ? found.parentId : found._id) })
         }
     })
 }
