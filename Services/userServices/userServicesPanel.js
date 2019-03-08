@@ -82,7 +82,7 @@ login = (data, callback) => {
         return
     }
     else {
-        userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod isBussinessAdded countryCode status userType').exec((err, succ) => {
+        userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod isBussinessAdded countryCode status userType parentId').exec((err, succ) => {
             // console.log(err, succ)
             // console.log('2222222222222222222', succ)
             if (err) {
@@ -109,12 +109,12 @@ login = (data, callback) => {
                         "address": succ.address,
                         "paymentMethod": succ.paymentMethod,
                         // "countryCode": succ.countryCode,
-                        "isBussinessAdded": succ.userType=="staff"?true:succ.isBussinessAdded,
-                        'status':succ.status,
-                        'userType':succ.userType
+                        "isBussinessAdded": succ.userType == "staff" ? true : succ.isBussinessAdded,
+                        'status': succ.status,
+                        'userType': succ.userType
                     }
-                    console.log(succ.userType)
-                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ.userType == "staff" ? succ.parentId : succ._id) })
+                    // console.log(succ.userType == "staff" ? succ.parentId : false)
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ.userType == "staff" ? succ.parentId : succ._id)})
                     // commonFunction.android_notification("fdUDE4j000M:APA91bEkgqRGHyIqHEYhhpbYA3n2mxYohNh1RIOEUvQRlBFp1SCYUS6cwOTtAdNZ2RbwwgL4CcYyzLDCz0Geh6iVjeOEioKKq0JgRgKJB9GAEilLX5pLAo1NUly8ofZnIVQYMBuIwXcR", "msg", "chatType", "title", "sendorId", "senderName", "type")
                     if (succ.deviceType == 2) {
                         commonFunction.IOS_NOTIFICATION(succ.deviceToken, "Login Successfully", "Login", "WAKI", "sendorId", "senderName", "Login")
@@ -1123,10 +1123,10 @@ deleteAddress = (data, headers, callback) => {
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DELET_PAYMENT[data.lang], 'result': result })
     })
 }
-decodeToken=(data,callback)=>{
-    console.log("data",data)
-    commonFunction.jwtDecode(data.token,(err,decode)=>{
-        console.log(err,decode)
+decodeToken = (data, callback) => {
+    console.log("data", data)
+    commonFunction.jwtDecode(data.token, (err, decode) => {
+        console.log(err, decode)
         callback(decode)
     })
 }
