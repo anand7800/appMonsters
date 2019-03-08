@@ -808,18 +808,18 @@ updateProfile = (data, headers, callback) => {
 getUserInfo = (data, headers, callback) => {
     // console.log("incoming data", data.firstName)
     async.waterfall([
+        // function (cb) {
+        //     commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
+        //         if (err || !decodeId)
+        //             cb(null)
+        //         else
+        //             cb(null, decodeId)
+
+        //     })
+        // },
         function (cb) {
-            commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
-                if (err || !decodeId)
-                    cb(null)
-                else
-                    cb(null, decodeId)
 
-            })
-        },
-        function (decodeId, cb) {
-
-            userModel.findOne({ _id: decodeId }).exec((err, success) => {
+            userModel.findOne({ _id: data.userId },{'password':0}).exec((err, success) => {
                 if (err || !success)
                     cb(null)
                 else

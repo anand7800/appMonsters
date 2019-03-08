@@ -158,8 +158,8 @@ userRouter.post('/updateProfile', authHandler.verifyToken, (req, res) => {
 })
 
 //!getUserInfo
-userRouter.get('/getUserInfo', authHandler.verifyToken, (req, res) => {
-    userHandler.getUserInfo(req.query, req.headers, (data) => {
+userRouter.post('/getUserInfo', authHandler.verifyToken, (req, res) => {
+    userHandler.getUserInfo(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
