@@ -576,7 +576,7 @@ resetPassword = (query, body, callback) => {
 //!email exist 
 checkEmail = (data, callback) => {
     console.log("api is called", data)
-    userModel.findOne({ email: data.email, userType: data.userType }, (err, found) => {
+    userModel.findOne({ email: data.email,status:'active' }, (err, found) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
         }
@@ -584,7 +584,7 @@ checkEmail = (data, callback) => {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
         }
         else {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_EXISTS[data.lang],"result":commonFunction.jwtEncode(found.parentId_id) })
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "userType": found.userType, "token": commonFunction.jwtEncode(found.parentId_id) })
         }
     })
 }
@@ -1058,7 +1058,7 @@ deleteAddress = (data, headers, callback) => {
     //     return
     // }
 
-    var userId='5c657188f7f89745e14fda4a'
+    var userId = '5c657188f7f89745e14fda4a'
     // let userId
 
     // commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
