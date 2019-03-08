@@ -84,7 +84,7 @@ login = (data, callback) => {
     else {
         userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod isBussinessAdded countryCode status userType').exec((err, succ) => {
             // console.log(err, succ)
-            console.log('2222222222222222222', succ)
+            // console.log('2222222222222222222', succ)
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                 return
@@ -113,6 +113,7 @@ login = (data, callback) => {
                         'status':succ.status,
                         'userType':succ.userType
                     }
+                    console.log(succ.userType)
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ.userType == "staff" ? succ.parentId : succ._id) })
                     // commonFunction.android_notification("fdUDE4j000M:APA91bEkgqRGHyIqHEYhhpbYA3n2mxYohNh1RIOEUvQRlBFp1SCYUS6cwOTtAdNZ2RbwwgL4CcYyzLDCz0Geh6iVjeOEioKKq0JgRgKJB9GAEilLX5pLAo1NUly8ofZnIVQYMBuIwXcR", "msg", "chatType", "title", "sendorId", "senderName", "type")
                     if (succ.deviceType == 2) {
@@ -1061,15 +1062,15 @@ deleteAddress = (data, headers, callback) => {
     //     return
     // }
 
-    var userId = '5c657188f7f89745e14fda4a'
-    // let userId
+    // var userId = '5c657188f7f89745e14fda4a'
+    let userId
 
-    // commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
-    //     if (err) throw err
-    //     else {
-    //         userId = decodeId
-    //     }
-    // })
+    commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
+        if (err) throw err
+        else {
+            userId = decodeId
+        }
+    })
     let query = {
         $and: [
             { _id: userId, },
@@ -1122,7 +1123,13 @@ deleteAddress = (data, headers, callback) => {
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DELET_PAYMENT[data.lang], 'result': result })
     })
 }
-
+decodeToken=(data,callback)=>{
+    console.log("data",data)
+    commonFunction.jwtDecode(data.token,(err,decode)=>{
+        console.log(err,decode)
+        callback(decode)
+    })
+}
 module.exports = {
     signup,
     login,
@@ -1147,5 +1154,6 @@ module.exports = {
     editPaymentMethod,
     deletePayment,
     editAddress,
-    deleteAddress
+    deleteAddress,
+    decodeToken
 }

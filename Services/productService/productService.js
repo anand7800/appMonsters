@@ -3982,15 +3982,15 @@ treadingOnWaki = (data, callback) => {
 
 //live view
 liveView = (data, header, callback) => {
-    let userId = '5c46c2d1070fa144119a1cd5';
+    // let userId = '5c46c2d1070fa144119a1cd5';
     let addressId = [];
     let address = []
-    // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-    //     if (err) throw err
-    //     else {
-    //         userId = decodeId
-    //     }
-    // })
+    commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+        if (err) throw err
+        else {
+            userId = decodeId
+        }
+    })
 
     async.waterfall([
         function (cb) {
@@ -4034,39 +4034,39 @@ liveView = (data, header, callback) => {
         if (err) throw err
 
         else {
-            async.parallel({
+            // async.parallel({
 
-                getVisitor: (cb) => {
-                    orderPlaced.aggregate([
-                        {
-                            "$match": {
-                                "name": "Hello",
-                                "values.date": { "$gt": start, "$lt": end }
-                            }
-                        },
-                        {
-                            "$project": {
-                                "name": 1,
-                                "values": {
-                                    "$filter": {
-                                        "input": "$values",
-                                        "as": "value",
-                                        "cond": {
-                                            "$and": [
-                                                { "$gt": ["$$value.date", start] },
-                                                { "$lt": ["$$value.date", end] }
-                                            ]
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    ])
-                }
+            //     getVisitor: (cb) => {
+            //         orderPlaced.aggregate([
+            //             {
+            //                 "$match": {
+            //                     "name": "Hello",
+            //                     "values.date": { "$gt": start, "$lt": end }
+            //                 }
+            //             },
+            //             {
+            //                 "$project": {
+            //                     "name": 1,
+            //                     "values": {
+            //                         "$filter": {
+            //                             "input": "$values",
+            //                             "as": "value",
+            //                             "cond": {
+            //                                 "$and": [
+            //                                     { "$gt": ["$$value.date", start] },
+            //                                     { "$lt": ["$$value.date", end] }
+            //                                 ]
+            //                             }
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         ])
+            //     }
 
 
 
-            })
+            // })
             res['userAddress'] = response
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
         }

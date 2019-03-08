@@ -186,4 +186,10 @@ userRouter.post('/deleteAddress', (req, res) => {
         res.send(data)
     })
 })
+// decodeToken
+userRouter.post('/decodeToken', (req, res) => {
+    userHandler.decodeToken(req.body, (data) => {
+        res.send(data)
+    })
+})
 module.exports = userRouter
