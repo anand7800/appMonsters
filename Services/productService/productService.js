@@ -3996,7 +3996,7 @@ liveView = (data, header, callback) => {
 
     async.waterfall([
         function (cb) {
-            
+
             // console.log(today)
             // {'local.rooms': {$elemMatch:  {name: req.body.username}}}
             // { 'orderPlacedDescription.sellerId': userId }
@@ -4041,12 +4041,13 @@ liveView = (data, header, callback) => {
 
             console.log(today.toDate())
             console.log(moment(today).endOf('day').toDate())
-            let start=today.toDate(),end=moment(today).endOf('day').toDate();
-            console.log("===>>>>>",start,end)
-            return
+            let start = today.toDate(), end = moment(today).endOf('day').toDate();
+            // console.log("===>>>>>",start,end,new Date().toISOString())
+
+            // return
             async.parallel({
-               
-                getVisitor: (cb) => {
+
+                TodayTotalVisitor: (cb) => {
                     orderPlaced.aggregate([
                         {
                             "$match": {
@@ -4065,20 +4066,33 @@ liveView = (data, header, callback) => {
                                             "$and": [
                                                 { "$gt": ["$$value.createdAt", start] },
                                                 { "$lt": ["$$value.createdAt", end] }
-                                            ]
+                                            ],
+
+
                                         }
                                     }
                                 }
                             }
                         }
-                    ],(err,result)=>{
-                        console.log("----------------->>>",err,result)
+                    ], (err, result) => {
+                        if (err) {
+                            cb(err)
+
+                        }
+                        else if (result) {
+                            // console.log("=------>>", result)
+
+                            result.forEach(e1 => {
+                                console.log(e1.orderPlacedDescription.length)
+                            })
+                        }
                     })
                 }
 
             })
             res['userAddress'] = response
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res
+            callback({
+                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res
             })
         }
     })
