@@ -14,6 +14,7 @@ const orderPlaced = require('../../Models/ProductModel/orderPlaceModel')
 const physicalStores = require('../../Models/userModel/addPhysicalStore')
 const reviewAndRatingL5 = require('../../Models/userModel/reviewAndRating')
 const notificationModel = require('../../Models/userModel/userNotification')
+const moment = require('moment')
 
 const async = require('async')
 let util = require('../../Utilities/util')
@@ -23,6 +24,7 @@ const mongoose = require('mongoose')
 const waterfall = require('async-waterfall');
 const _ = require('lodash');
 var qr = require('qr-image');
+const today = moment().startOf('day')
 
 /* ************************************
 *************add category***********************
@@ -3982,19 +3984,21 @@ treadingOnWaki = (data, callback) => {
 
 //live view
 liveView = (data, header, callback) => {
-    // let userId = '5c46c2d1070fa144119a1cd5';
+    let userId = '5c46c2d1070fa144119a1cd5';
     let addressId = [];
     let address = []
-    commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-        if (err) throw err
-        else {
-            userId = decodeId
-        }
-    })
+    // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+    //     if (err) throw err
+    //     else {
+    //         userId = decodeId
+    //     }
+    // })
 
     async.waterfall([
         function (cb) {
-            // {'local.rooms': {$elemMatch: {name: req.body.username}}}
+            
+            // console.log(today)
+            // {'local.rooms': {$elemMatch:  {name: req.body.username}}}
             // { 'orderPlacedDescription.sellerId': userId }
             orderPlaced.find({
                 'orderPlacedDescription': { $elemMatch: { sellerId: userId } }
@@ -4019,10 +4023,10 @@ liveView = (data, header, callback) => {
         function (addressId, cb) {
 
             // return
-            console.log("2222222222222222", addressId)
+            // console.log("2222222222222222", addressId)
 
             userModel.find({ 'address._id': { $in: addressId } }, { 'address.$': 1 }).exec((err, result) => {
-                console.log(err, result)
+                // console.log(err, result)
                 result.forEach(e1 => {
                     address.push(e1.address[0])
                 });
@@ -4034,41 +4038,48 @@ liveView = (data, header, callback) => {
         if (err) throw err
 
         else {
-            // async.parallel({
 
-            //     getVisitor: (cb) => {
-            //         orderPlaced.aggregate([
-            //             {
-            //                 "$match": {
-            //                     "name": "Hello",
-            //                     "values.date": { "$gt": start, "$lt": end }
-            //                 }
-            //             },
-            //             {
-            //                 "$project": {
-            //                     "name": 1,
-            //                     "values": {
-            //                         "$filter": {
-            //                             "input": "$values",
-            //                             "as": "value",
-            //                             "cond": {
-            //                                 "$and": [
-            //                                     { "$gt": ["$$value.date", start] },
-            //                                     { "$lt": ["$$value.date", end] }
-            //                                 ]
-            //                             }
-            //                         }
-            //                     }
-            //                 }
-            //             }
-            //         ])
-            //     }
+            console.log(today.toDate())
+            console.log(moment(today).endOf('day').toDate())
+            let start=today.toDate(),end=moment(today).endOf('day').toDate();
+            console.log("===>>>>>",start,end)
+            return
+            async.parallel({
+               
+                getVisitor: (cb) => {
+                    orderPlaced.aggregate([
+                        {
+                            "$match": {
+                                // "name": "Hello",
+                                "orderPlacedDescription.createdAt": { "$gt": start, "$lt": end }
+                            }
+                        },
+                        {
+                            "$project": {
+                                // "name": 1,
+                                "orderPlacedDescription": {
+                                    "$filter": {
+                                        "input": "$orderPlacedDescription",
+                                        "as": "value",
+                                        "cond": {
+                                            "$and": [
+                                                { "$gt": ["$$value.createdAt", start] },
+                                                { "$lt": ["$$value.createdAt", end] }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ],(err,result)=>{
+                        console.log("----------------->>>",err,result)
+                    })
+                }
 
-
-
-            // })
+            })
             res['userAddress'] = response
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res
+            })
         }
     })
 

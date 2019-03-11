@@ -1079,7 +1079,6 @@ deleteAddress = (data, headers, callback) => {
 
     }
 
-
     async.waterfall([
 
         function (cb) {
