@@ -3984,15 +3984,17 @@ treadingOnWaki = (data, callback) => {
 
 //live view
 liveView = (data, header, callback) => {
-    let userId = '5c46c2d1070fa144119a1cd5';
+    let userId;
+    // let userId = '5c46c2d1070fa144119a1cd5';
+
     let addressId = [];
-    let address = []
-    // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-    //     if (err) throw err
-    //     else {
-    //         userId = decodeId
-    //     }
-    // })
+    let address = [];
+    commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+        if (err) throw err
+        else {
+            userId = decodeId
+        }
+    })
 
     async.waterfall([
         function (cb) {
@@ -4038,20 +4040,19 @@ liveView = (data, header, callback) => {
         if (err) throw err
 
         else {
-
-            console.log(today.toDate())
-            console.log(moment(today).endOf('day').toDate())
             let start = today.toDate(), end = moment(today).endOf('day').toDate();
-            // console.log("===>>>>>",start,end,new Date().toISOString())
+            // console.log('==>>>>', new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString())
+            // console.log("===>>>>>", start, end)
 
             // return
             async.parallel({
 
                 TodayTotalVisitor: (cb) => {
+
                     orderPlaced.aggregate([
                         {
                             "$match": {
-                                // "name": "Hello",
+                                "orderPlacedDescription.sellerId": mongoose.Types.ObjectId(userId),
                                 "orderPlacedDescription.createdAt": { "$gt": start, "$lt": end }
                             }
                         },
@@ -4081,18 +4082,77 @@ liveView = (data, header, callback) => {
                         }
                         else if (result) {
                             // console.log("=------>>", result)
-
+                            let TodayTotalVisitor = 0
                             result.forEach(e1 => {
                                 console.log(e1.orderPlacedDescription.length)
+                                TodayTotalVisitor = TodayTotalVisitor + e1.orderPlacedDescription.length
                             })
+                            cb(null, TodayTotalVisitor)
+                        }
+
+                    })
+                },
+
+                VisitorRightNow: (cb) => {
+
+                    orderPlaced.aggregate([
+                        {
+                            "$match": {
+                                "orderPlacedDescription.sellerId": mongoose.Types.ObjectId(userId),
+                                "orderPlacedDescription.createdAt": { "$gt": new Date(Date.now() - 5 * 60 * 60 * 1000) }
+                            }
+                        },
+                        {
+                            "$project": {
+                                // "name": 1,
+                                "orderPlacedDescription": {
+                                    "$filter": {
+                                        "input": "$orderPlacedDescription",
+                                        "as": "value",
+                                        "cond": {
+                                            // "$and": [
+                                            "$gt": ["$$value.createdAt", new Date(Date.now() - 5 * 60 * 60 * 1000)],
+                                            // { "$lt": ["$$value.createdAt", end] }
+                                            // ],
+
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ], (err, result) => {
+                        if (err) {
+                            cb(err)
+
+                        }
+                        else if (result) {
+                            // console.log("=------>>", result)
+                            let VisitorRightNow = 0;
+                            result.forEach(e1 => {
+                                console.log(e1.orderPlacedDescription.length)
+                                VisitorRightNow = VisitorRightNow + e1.orderPlacedDescription.length
+                            })
+                            cb(null, VisitorRightNow)
                         }
                     })
                 }
 
-            })
-            res['userAddress'] = response
-            callback({
-                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res
+
+            }, (err, getSuccess) => {
+                console.log(err, getSuccess)
+                // })
+
+                res['orderDetail'] = {
+                    totalOrder: response.length,
+                    TodayTotalVisitor: getSuccess.TodayTotalVisitor,
+                    VisitorRightNow: getSuccess.VisitorRightNow
+                    // getSuccess: getSuccess
+                };
+                res['userAddress'] = response;
+                callback({
+                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res
+                })
             })
         }
     })
