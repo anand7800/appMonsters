@@ -3910,23 +3910,27 @@ reviewFeedBack = (data, header, callback) => {
     async.waterfall([
 
         function (cb) {
-            orderPlaced.find({ 'orderPlacedDescription.sellerId': userId }).exec((err, result) => {
+            orderPlaced.find({ 'orderPlacedDescription.sellerId': userId }).populate({ path: 'orderPlacedDescription.productId', select: 'productName' }).populate({ path: 'userId' }).exec((err, result) => {
                 if (err || result < 0 || result.length < 0) {
                     cb(null)
                 }
                 else {
-                    console.log(JSON.stringify(result))
-                    // let succ = []
-                    // result.forEach(e1 => {
-                    //     succ.push(e1._id)
-                    // })
-                    // cb(null, succ)
+                    cb(null, result)
                 }
             })
         },
         function (result, cb) {
+            // return
+            // console.log(result)
+            async.forEachOf(result, (value, key, callback) => {
+                value.orderPlacedDescription.forEach(e1 => {
+                    console.log('=======================>>', e1.productId._id)
+                    reviewAndRatingL5.findOne({ 'reviewAndRating.productId': e1.productId._id }, { 'reviewAndRating.$': 1 }).exec((err,result)=>{
+                        console.log('====review=>',err,result)
+                    })
+                })
+            })
             return
-            console.log(result)
             // return
             // reviewAndRatingL5.aggregate([
             //     {
