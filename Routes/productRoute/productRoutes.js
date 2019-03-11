@@ -420,8 +420,8 @@ productRouter.get('/dashBoardForVendor', authHandler.verifyToken, (req, res) => 
 })
 
 // reviewFeedBack
-productRouter.post('/reviewFeedBack', (req, res) => {
-    productService.reviewFeedBack(req.body, req.headers, (data) => {
+productRouter.get('/reviewFeedBack', (req, res) => {
+    productService.reviewFeedBack(req.query, req.headers, (data) => {
         res.send(data)
     })
 })

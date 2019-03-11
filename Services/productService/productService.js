@@ -3894,10 +3894,12 @@ dashBoardForVendor = (data, header, callback) => {
         }
     })
 }
+
+
+
 //review and feedback vendor panel
-
-
 reviewFeedBack = (data, header, callback) => {
+    console.log("data", data)
     let userId = "5c46c2d1070fa144119a1cd5"
     // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
     //     if (err) throw err
@@ -3905,20 +3907,67 @@ reviewFeedBack = (data, header, callback) => {
     //         userId = decodeId
     //     }
     // })
+    async.waterfall([
+
+        function (cb) {
+            orderPlaced.find({ 'orderPlacedDescription.sellerId': userId }).exec((err, result) => {
+                if (err || result < 0 || result.length < 0) {
+                    cb(null)
+                }
+                else {
+                    console.log(JSON.stringify(result))
+                    // let succ = []
+                    // result.forEach(e1 => {
+                    //     succ.push(e1._id)
+                    // })
+                    // cb(null, succ)
+                }
+            })
+        },
+        function (result, cb) {
+            return
+            console.log(result)
+            // return
+            // reviewAndRatingL5.aggregate([
+            //     {
+            //         "$match": {
+            //             "reviewAndRating.productId": { $in: result }
+            //         }
+            //     },
+
+            //     {
+            //         "$lookup": {
+            //           "localField": "id",
+            //           "from": "categorys",
+            //           "foreignField": "parentId",
+            //           "as": "child"
+            //         }
+            //       },
+            //     {
+            //         "$project": {
+            //             // "name": 1,
+            //             "reviewAndRating": {
+            //                 "$filter": {
+            //                     "input": "$reviewAndRating",
+            //                     "as": "value",
+            //                     "cond": {
 
 
-    async.parallel({
 
-        getProductDetail: (cb) => {
-
-            productModel.find({ sellerId: userId }, { _id: 1 }).exec((err, result) => {
-
-                console.log("this is ", err)
-                // callback(result)
-
-
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // ],
+            reviewAndRatingL5.find({
+                'reviewAndRating.productId': result
+            }).exec((err, response) => {
+                console.log(err, JSON.stringify(response))
             })
         }
+    ], (err, result) => {
+        console.log("err,result", err, result)
     })
 }
 
@@ -3998,7 +4047,6 @@ liveView = (data, header, callback) => {
 
     async.waterfall([
         function (cb) {
-
             // console.log(today)
             // {'local.rooms': {$elemMatch:  {name: req.body.username}}}
             // { 'orderPlacedDescription.sellerId': userId }
@@ -4014,13 +4062,11 @@ liveView = (data, header, callback) => {
                             addressId.push(e2.addressId)
                         })
                     })
-
                     addressId = commonFunction.remove_duplicate_value(addressId);
 
                     cb(null, addressId)
                 }
             })
-
         },
         function (addressId, cb) {
 
@@ -4156,8 +4202,6 @@ liveView = (data, header, callback) => {
             })
         }
     })
-
-
 }
 module.exports = {
     addCategory,

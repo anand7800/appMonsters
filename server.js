@@ -4,10 +4,10 @@ let app = require('express')(),
 
 
     // if()
-    // options = {
-    //     key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
-    //     cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
-    // },
+    options = {
+        key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
+        cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
+    },
     // server = require('https').Server(app),
     bodyParser = require('body-parser'),
     express = require('express'),
@@ -32,8 +32,8 @@ let app = require('express')(),
 //     key: fs.readFileSync('/var/www/html/visionpro/certi/mobenture.key').toString(),
 //     cert: fs.readFileSync('/var/www/html/visionpro/certi/mobenture.crt').toString(),
 // }
-var server = require('http').Server(app);
-// var server = require('https').Server(options, app);
+// var server = require('http').Server(app);
+var server = require('https').Server(options, app);
 
 
 var chatHistory = require('./Models/userModel/chatHistory');
