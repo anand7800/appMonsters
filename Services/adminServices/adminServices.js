@@ -15,6 +15,8 @@ const topOffersL6 = require('../../Models/ProductModel/productofferModel')
 
 
 const reviewAndRatingL5 = require('../../Models/userModel/reviewAndRating')
+//!newModel
+const reviewRatingModel=require('../../Models/ProductModel/reviewRatingModel')
 // const orderModel = require('../../Models/userModel/userOrder')
 const orderModel = require('../../Models/ProductModel/bagModel')
 
@@ -854,6 +856,34 @@ changeReviewStatus = (data, callback) => {
     else {
         let query = {
             $or: [
+                { '_id': data.reviewId }
+
+            ]
+        }
+        let update = {
+            $set: {
+                'status': data.status.toUpperCase()
+            }
+        }
+        reviewRatingModel.update(query, update, { new: true }).exec((err, success) => {
+            if (err) throw err
+            else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': success })
+            }
+        })
+        // )
+    }
+}
+/* 
+
+changeReviewStatus = (data, callback) => {
+    console.log("incoming data ", data)
+    if (!data.reviewId) {
+        return
+    }
+    else {
+        let query = {
+            $or: [
                 { 'reviewAndRating._id': data.reviewId }
 
             ]
@@ -871,7 +901,7 @@ changeReviewStatus = (data, callback) => {
         })
         // )
     }
-}
+} */
 //allProduct count
 countProduct = (data, callback) => {
     console.log('count api ', data)

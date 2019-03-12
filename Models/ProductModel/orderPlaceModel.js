@@ -18,6 +18,10 @@ var orderPlaced = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'productvariance'
         },
+        reviewRatingId:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'userReviewAndRating'
+        },
         orderId: {
             type: String,
             default: null,
@@ -62,6 +66,7 @@ var orderPlaced = mongoose.Schema({
             type: Boolean,
             default: false
         },
+        
         color:{
             type:String,
             default:"",

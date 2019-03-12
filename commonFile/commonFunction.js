@@ -482,6 +482,10 @@ module.exports = {
             }
         });
         return Object.keys(unique);
+    },
+
+    getSum: (total, num) => {
+        return total + num;
     }
     // console.log(find_duplicate_in_array([1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 71, 3, 6]));
 

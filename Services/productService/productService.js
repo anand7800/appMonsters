@@ -13,6 +13,8 @@ const wishModel = require('../../Models/ProductModel/wishModel')
 const orderPlaced = require('../../Models/ProductModel/orderPlaceModel')
 const physicalStores = require('../../Models/userModel/addPhysicalStore')
 const reviewAndRatingL5 = require('../../Models/userModel/reviewAndRating')
+//!newModel
+const reviewRatingModel = require('../../Models/ProductModel/reviewRatingModel')
 const notificationModel = require('../../Models/userModel/userNotification')
 const moment = require('moment')
 
@@ -1346,36 +1348,19 @@ productDetails = (data, callback) => {
                             rating = [];
                             // console.log("start")
                             result.forEach(element => {
-                                // console.log("check review and rating", element.reviewAndRating)
-                                if (element.reviewAndRating.length > 0) {
-                                    async.forEachOf(element.reviewAndRating, async (value, key, back) => {
-                                        await commonAPI.getUsername(value.userId, async (err, userDetail) => {
-
-                                            if (await userDetail) {
-                                                // await console.log(userDetail)
-                                                console.log("middle")
-                                                temp = {
-                                                    reviewId: value._id,
-                                                    firstName: userDetail.firstName,
-                                                    lastName: userDetail.lastName,
-                                                    image: userDetail.image,
-                                                    review: value.review,
-                                                    rating: value.rating
-                                                }
-                                                await rating.push(temp)
-                                            }
-
-                                            back()
-                                        })
-                                        console.log("ASFDFFFFFF")
-
-                                    }, (err, result) => {
-                                        // console.log(rating)
-                                        // cb(null, rating)
-
-                                    })
+                                console.log("check review and rating", element)
+                                if (element) {
+                                    console.log("middle")
+                                    temp = {
+                                        reviewId: element._id,
+                                        firstName: element.userId.firstName,
+                                        lastName: element.userId.lastName,
+                                        image: element.userId.image,
+                                        review: element.review,
+                                        rating: element.rating
+                                    }
+                                    rating.push(temp)
                                 }
-                                // cb(null,rating)
                             })
                             console.log("end")
                             cb(null, rating)
@@ -1624,36 +1609,19 @@ getVariance = (data, callback) => {
                     rating = [];
                     // console.log("start")
                     result.forEach(element => {
-                        console.log("check review and rating", element.reviewAndRating)
-                        if (element.reviewAndRating.length > 0) {
-                            async.forEachOf(element.reviewAndRating, async (value, key, back) => {
-                                await commonAPI.getUsername(value.userId, async (err, userDetail) => {
-
-                                    if (await userDetail) {
-                                        // await console.log(userDetail)
-                                        console.log("middle")
-
-                                        temp = {
-                                            firstName: userDetail.firstName,
-                                            lastName: userDetail.lastName,
-                                            image: userDetail.image,
-                                            review: value.review,
-                                            rating: value.rating
-                                        }
-                                        await rating.push(temp)
-                                    }
-
-                                    back()
-                                })
-                                console.log("ASFDFFFFFF")
-
-                            }, (err, result) => {
-                                console.log(rating)
-                                // cb(null, rating)
-
-                            })
+                        console.log("check review and rating", element)
+                        if (element) {
+                            console.log("middle")
+                            temp = {
+                                reviewId: element._id,
+                                firstName: element.userId.firstName,
+                                lastName: element.userId.lastName,
+                                image: element.userId.image,
+                                review: element.review,
+                                rating: element.rating
+                            }
+                            rating.push(temp)
                         }
-                        // cb(null,rating)
                     })
                     console.log("end")
                     cb(null, rating)
@@ -2437,7 +2405,7 @@ addToWishList = (data, headers, callback) => {
 addReviewAndRating = (header, data, callback) => {
     log('addReviewAndRating', data)
     var userId
-    if (!data.productId) {
+    if (!data.productId || !data.orderId) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
     }
@@ -2446,48 +2414,30 @@ addReviewAndRating = (header, data, callback) => {
             if (err) throw err
             else {
                 userId = userId1
+                console.log("useid", userId)
             }
         })
-        update = {
-            $push: {
-                reviewAndRating: {
-                    productId: data.productId,
-                    rating: data.rating,
-                    review: data.review,
-                    userId: userId
-                }
-            }
+        let query = {
+            userId: userId,
+            // reviewAndRating: {
+            productId: data.productId,
+            rating: data.rating,
+            review: data.review,
+            userId: userId
+            // }
         }
-        reviewAndRatingL5.find({ userId: userId }).exec((err, result) => {
-            // console.log("adjdadjaskld", err, result)
-            if (err) throw err
-            else if (result.length > 0) {
-
-                reviewAndRatingL5.findOneAndUpdate({ userId: userId }, update, { new: true }, (err, result) => {
-                    // log(err, result)
-                    if (err) throw err
-                    else {
-                        commonAPI.changeFeedBackStatus(data.orderId, data.productId)
-                        callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.Review_saved_successfully[data.lang], 'result': result })
-                    }
-                })
+        reviewRatingModel.findOne({ userId: userId, productId: data.productId }).exec((err, check) => {
+            if (err || check) {
+                callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
+                return
             }
-            else {
-                commonAPI.changeFeedBackStatus(data.orderId, data.productId)
-                let query = {
-                    userId: userId,
-                    reviewAndRating: {
-                        productId: data.productId,
-                        rating: data.rating,
-                        review: data.review,
-                        userId: userId
-                    }
-                }
+            // })
+            reviewRatingModel.create(query, (err, succ) => {
+                commonAPI.changeFeedBackStatus(data.orderId, data.productId, succ._id)
 
-                reviewAndRatingL5.create(query, (err, succ) => {
-                    callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.Review_saved_successfully[data.lang], 'result': succ })
-                })
-            }
+                callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.Review_saved_successfully[data.lang], 'result': succ })
+            })
+            // }
         })
     }
 }
@@ -2705,63 +2655,63 @@ placeOrder = (data, headers, callback) => {
 /********************************************************************
 **************************addReviewAndRating*************************
 ***********************************************************************/
-addReviewAndRating = (header, data, callback) => {
-    log('addReviewAndRating', data)
-    var userId;
-    if (!data.productId) {
-        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    }
-    else {
-        commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
-            if (err) throw err
-            else {
-                userId = userId1
-            }
-        })
-        update = {
-            $push: {
-                reviewAndRating: {
-                    productId: data.productId,
-                    rating: data.rating,
-                    review: data.review,
-                    userId: userId
-                }
-            }
-        }
-        reviewAndRatingL5.find({ userId: userId }).exec((err, result) => {
-            // console.log("adjdadjaskld", err, result)
-            if (err) throw err
-            else if (result.length > 0) {
+// addReviewAndRating = (header, data, callback) => {
+//     log('addReviewAndRating', data)
+//     var userId;
+//     if (!data.productId) {
+//         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+//         return
+//     }
+//     else {
+//         commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
+//             if (err) throw err
+//             else {
+//                 userId = userId1
+//             }
+//         })
+//         update = {
+//             $push: {
+//                 reviewAndRating: {
+//                     productId: data.productId,
+//                     rating: data.rating,
+//                     review: data.review,
+//                     userId: userId
+//                 }
+//             }
+//         }
+//         reviewAndRatingL5.find({ userId: userId }).exec((err, result) => {
+//             // console.log("adjdadjaskld", err, result)
+//             if (err) throw err
+//             else if (result.length > 0) {
 
-                reviewAndRatingL5.findOneAndUpdate({ userId: userId }, update, { new: true }, (err, result) => {
-                    // log(err, result)
-                    if (err) throw err
-                    else {
-                        commonAPI.changeFeedBackStatus(data.orderId, data.productId)
-                        callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.Review_saved_successfully[data.lang], 'result': result })
-                    }
-                })
-            }
-            else {
-                commonAPI.changeFeedBackStatus(data.orderId, data.productId)
-                let query = {
-                    userId: userId,
-                    reviewAndRating: {
-                        productId: data.productId,
-                        rating: data.rating,
-                        review: data.review,
-                        userId: userId
-                    }
-                }
+//                 reviewAndRatingL5.findOneAndUpdate({ userId: userId }, update, { new: true }, (err, result) => {
+//                     // log(err, result)
+//                     if (err) throw err
+//                     else {
+//                         commonAPI.changeFeedBackStatus(data.orderId, data.productId)
+//                         callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.Review_saved_successfully[data.lang], 'result': result })
+//                     }
+//                 })
+//             }
+//             else {
+//                 commonAPI.changeFeedBackStatus(data.orderId, data.productId)
+//                 let query = {
+//                     userId: userId,
+//                     reviewAndRating: {
+//                         productId: data.productId,
+//                         rating: data.rating,
+//                         review: data.review,
+//                         userId: userId
+//                     }
+//                 }
 
-                reviewAndRatingL5.create(query, (err, succ) => {
-                    callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.Review_saved_successfully[data.lang], 'result': succ })
-                })
-            }
-        })
-    }
-}
+//                 reviewAndRatingL5.create(query, (err, succ) => {
+//                     callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.Review_saved_successfully[data.lang], 'result': succ })
+//                 })
+//             }
+//         })
+//     }
+// }
 /********************************************************************
 **************************applyFilter*************************
 ***********************************************************************/
@@ -3022,7 +2972,7 @@ compareProduct = (data, callback) => {
         },
         reviewAndRating1: (cb) => {
             commonAPI.reviewAndRating(data.productId1, async (err, result) => {
-                console.log("%5555555555555555", err, (result))
+                // console.log("%5555555555555555", err, (result))
                 if (err && !result.length > 0) {
                     cb(null)
                 }
@@ -3031,26 +2981,19 @@ compareProduct = (data, callback) => {
                     let rating = []
                     result.forEach(openArray => {
                         // if(openArray.reviewAndRating)
-                        openArray.reviewAndRating.forEach(innerArray => {
-
-                            rating.push(parseInt(innerArray.rating))
-                        })
+                        rating.push(parseInt(openArray.rating))
+                        // openArray.forEach(innerArray => {                            
+                        // })
                     })
-                    // console.log(rating)
-                    let sum = 0
-                    rating.forEach(element => {
-                        sum = sum + element
-                    })
-                    console.log(sum / rating.length)
-                    sum = sum / rating.length
 
-                    cb(null, sum.toString())
+
+                    cb(null, (rating.reduce(commonFunction.getSum) / rating.length).toString())
                 }
             })
         },
         reviewAndRating2: (cb) => {
             commonAPI.reviewAndRating(data.productId2, async (err, result) => {
-                console.log("%5555555555555555", err, (result))
+                // console.log("%5555555555555555", err, (result))
                 if (err && !result.length > 0) {
                     cb(null)
                 }
@@ -3059,20 +3002,11 @@ compareProduct = (data, callback) => {
                     let rating = []
                     result.forEach(openArray => {
                         // if(openArray.reviewAndRating)
-                        openArray.reviewAndRating.forEach(innerArray => {
-
-                            rating.push(parseInt(innerArray.rating))
-                        })
+                        rating.push(parseInt(openArray.rating))
+                        // openArray.forEach(innerArray => {                            
+                        // })
                     })
-                    // console.log(rating)
-                    let sum = 0
-                    rating.forEach(element => {
-                        sum = sum + element
-                    })
-                    // console.log(sum / rating.length)
-                    sum = sum / rating.length
-
-                    cb(null, sum.toString())
+                    cb(null, (rating.reduce(commonFunction.getSum) / rating.length).toString())
                 }
             })
         },
@@ -3900,17 +3834,20 @@ dashBoardForVendor = (data, header, callback) => {
 //review and feedback vendor panel
 reviewFeedBack = (data, header, callback) => {
     console.log("data", data)
-    let userId = "5c46c2d1070fa144119a1cd5"
-    // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-    //     if (err) throw err
-    //     else {
-    //         userId = decodeId
-    //     }
-    // })
+
+    // let userId = "5c46c2d1070fa144119a1cd5"
+    let userId
+    commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+        if (err) throw err
+        else {
+            userId = decodeId
+        }
+    })
+
     async.waterfall([
 
         function (cb) {
-            orderPlaced.find({ 'orderPlacedDescription.sellerId': userId }).populate({ path: 'orderPlacedDescription.productId', select: 'productName' }).populate({ path: 'userId' }).exec((err, result) => {
+            orderPlaced.find({ 'orderPlacedDescription.sellerId': userId }).populate({ path: 'orderPlacedDescription.productId', select: 'productName image' }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.reviewRatingId' }).sort('orderPlacedDescription.createdAt').exec((err, result) => {
                 if (err || result < 0 || result.length < 0) {
                     cb(null)
                 }
@@ -3918,60 +3855,37 @@ reviewFeedBack = (data, header, callback) => {
                     cb(null, result)
                 }
             })
-        },
-        function (result, cb) {
-            // return
-            // console.log(result)
+        }
+    ], async (err, result) => {
+
+        let mainArray = [];
+        // console.log("---------------------->>", err, JSON.stringify(result))
+        if (result.length > 0) {
             async.forEachOf(result, (value, key, callback) => {
-                value.orderPlacedDescription.forEach(e1 => {
-                    console.log('=======================>>', e1.productId._id)
-                    reviewAndRatingL5.findOne({ 'reviewAndRating.productId': e1.productId._id }, { 'reviewAndRating.$': 1 }).exec((err,result)=>{
-                        console.log('====review=>',err,result)
-                    })
+                value.orderPlacedDescription.forEach(element => {
+                    if (element.reviewRatingId) {
+                        let temp = {
+                            productId: element.productId._id,
+                            productName: element.productId.productName,
+                            productImage: element.productId.image[0],
+                            reviewerId: element.reviewRatingId._id,
+                            reviewerName: value.userId.firstName,
+                            orderId: element.orderId,
+                            rating: element.reviewRatingId.rating,
+                            review: element.reviewRatingId.review,
+                            reviewRatingId: element.reviewRatingId._id
+                        }
+                        mainArray.push(temp)
+                    }
                 })
-            })
-            return
-            // return
-            // reviewAndRatingL5.aggregate([
-            //     {
-            //         "$match": {
-            //             "reviewAndRating.productId": { $in: result }
-            //         }
-            //     },
-
-            //     {
-            //         "$lookup": {
-            //           "localField": "id",
-            //           "from": "categorys",
-            //           "foreignField": "parentId",
-            //           "as": "child"
-            //         }
-            //       },
-            //     {
-            //         "$project": {
-            //             // "name": 1,
-            //             "reviewAndRating": {
-            //                 "$filter": {
-            //                     "input": "$reviewAndRating",
-            //                     "as": "value",
-            //                     "cond": {
-
-
-
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }
-            // ],
-            reviewAndRatingL5.find({
-                'reviewAndRating.productId': result
-            }).exec((err, response) => {
-                console.log(err, JSON.stringify(response))
+                callback()
+            }, (err, result) => {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': mainArray })
             })
         }
-    ], (err, result) => {
-        console.log("err,result", err, result)
+        else {
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+        }
     })
 }
 
@@ -4039,7 +3953,6 @@ treadingOnWaki = (data, callback) => {
 liveView = (data, header, callback) => {
     let userId;
     // let userId = '5c46c2d1070fa144119a1cd5';
-
     let addressId = [];
     let address = [];
     commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
@@ -4048,7 +3961,6 @@ liveView = (data, header, callback) => {
             userId = decodeId
         }
     })
-
     async.waterfall([
         function (cb) {
             // console.log(today)
@@ -4257,3 +4169,10 @@ module.exports = {
     treadingOnWaki,
     liveView
 }
+
+
+// async function getUser(id) {
+//     if (id) {
+//         return await reviewAndRatingL5.findOne({ 'reviewAndRating.productId': id }, { 'reviewAndRating.$': 1 }).populate('userId')
+//     }
+// }

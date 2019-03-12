@@ -11,6 +11,8 @@ const categoryModelL1 = require('../Models/ProductModel/categoryModel')
 const topOffersL6 = require('../Models/userModel/topOffers')
 const subCategoryModelL2 = require('../Models/ProductModel/subcategoryModel')
 const reviewAndRatingL5 = require('../Models/userModel/reviewAndRating')
+//!newModel
+const reviewRatingModel = require('../Models/ProductModel/reviewRatingModel')
 var brandListModel = require('../Models/ProductModel/allBrandModel')
 const userModel = require('../Models/userModel/userPanelModel')
 const commonFunction = require('../commonFile/commonFunction')
@@ -72,30 +74,7 @@ findBrand = async (_id, cb) => {
 }
 
 
-// //!reviewAndRating
-// reviewAndRating = (_id, cb) => {
-//     brandDescriptionL4.findOne({ "brandDesc._id": _id }, { "brandDesc.$": 1 }, (err, result) => {
-//         // log(result.brandDesc[0]._id)
-//         productId = result.brandDesc[0]._id
-//         reviewAndRatingL5.aggregate([
-//             {
-//                 $project: {
-//                     reviewAndRating: {
-//                         $filter: {
-//                             input: "$reviewAndRating",
-//                             as: "item",
-//                             cond: { $eq: ["$$item.productId", productId.toString()] }
-//                         }
-//                     }
-//                 }
-//             }
-//         ]).exec((err, result) => {
-//             // console.log("result",result)
-//             if (err) cb(null)
-//             else cb(null, result)
-//         })
-//     })
-// },
+
 //!orderPlace populate
 populateAddress = async (data, cb) => {
     placeOrderModel.findById(data, { userId: 1 }).populate({ 'path': 'userId', 'select': 'address' }).exec((err, result) => {
@@ -421,10 +400,11 @@ productCategory = async (callback) => {
 //!change status for place order 
 
 
-changeFeedBackStatus = async (orderId, productId) => {
+changeFeedBackStatus = async (orderId, productId, reviewId) => {
+    console.log("============>>", reviewId)
     var order = orderId.replace("ORD", "")
     let query = { $and: [{ 'orderPlacedDescription.orderId': order }, { 'orderPlacedDescription.productId': productId }] }
-    var update = { $set: { 'orderPlacedDescription.$.feedbackAdded': true } }
+    var update = { $set: { 'orderPlacedDescription.$.feedbackAdded': true, 'orderPlacedDescription.$.reviewRatingId': reviewId } }
     placeOrderModel.findOneAndUpdate(query, update, { new: true }).lean().exec((err, succ) => {
         if (err) throw err
         else return succ
@@ -432,50 +412,65 @@ changeFeedBackStatus = async (orderId, productId) => {
 }
 
 //!reviewAndRating
+// reviewAndRating = async (_id, cb) => {
+//     // brandDescriptionL4.findOne({ "brandDesc._id": _id }, { "brandDesc.$": 1 }, (err, result) => {
+//     //     // log(result.brandDesc[0]._id)
+//     // productId = result.brandDesc[0]._id
+//     // var a = _id.toString()
+//     reviewAndRatingL5.aggregate([
+//         {
+//             $project: {
+//                 reviewAndRating: {
+//                     $filter: {
+//                         input: "$reviewAndRating",
+//                         as: "item",
+//                         cond: {
+//                             $and: [
+//                                 { $eq: ["$$item.productId", mongoose.Types.ObjectId(_id)] },
+//                                 { $eq: ["$$item.status", "ACTIVE"] }
+//                             ]
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+
+
+//         // {
+//         //     $unwind: '$reviewAndRating'
+//         // }, {
+//         //     $match: {
+//         //         // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
+//         //         $or: [
+//         //             { 'reviewAndRating.productId': mongoose.Types.ObjectId(_id) },
+//         //             { 'reviewAndRating.status': "ACTIVE"}
+//         //         ]
+//         //     },
+//         //     // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
+//         // }
+//     ])/* reviewAndRatingL5.find({reviewAndRating: {$elemMatch: {productId: _id } } }).populate({path: 'reviewAndRating.userId',select:'firstName lastName image'}) */.exec((err, result) => {
+
+//         console.log("result",err, JSON.stringify(result))
+//         if (err || result.length < 0) cb(null)
+//         else cb(null, result)
+//     })
+//     // })
+// }
+
 reviewAndRating = async (_id, cb) => {
+    console.log("adfasfasdfasdf", _id)
     // brandDescriptionL4.findOne({ "brandDesc._id": _id }, { "brandDesc.$": 1 }, (err, result) => {
     //     // log(result.brandDesc[0]._id)
     // productId = result.brandDesc[0]._id
     // var a = _id.toString()
-    reviewAndRatingL5.aggregate([
-        {
-            $project: {
-                reviewAndRating: {
-                    $filter: {
-                        input: "$reviewAndRating",
-                        as: "item",
-                        cond: {
-                            $and: [
-                                { $eq: ["$$item.productId", mongoose.Types.ObjectId(_id)] },
-                                { $eq: ["$$item.status", "ACTIVE"] }
-                            ]
-                        }
-                    }
-                }
-            }
-        }
+    reviewRatingModel.find({ productId: mongoose.Types.ObjectId(_id) }).populate({ path: 'userId', select: 'firstName lastName image' }).exec((err, result) => {
 
-
-        // {
-        //     $unwind: '$reviewAndRating'
-        // }, {
-        //     $match: {
-        //         // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
-        //         $or: [
-        //             { 'reviewAndRating.productId': mongoose.Types.ObjectId(_id) },
-        //             { 'reviewAndRating.status': "ACTIVE"}
-        //         ]
-        //     },
-        //     // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
-        // }
-    ])/* reviewAndRatingL5.find({reviewAndRating: {$elemMatch: {productId: _id } } }).populate({path: 'reviewAndRating.userId',select:'firstName lastName image'}) */.exec((err, result) => {
-        // console.log("result",err, JSON.stringify(result))
-        if (err || result.length < 0) cb(null)
+        // console.log("result", err, JSON.stringify(result))
+        if (err || !result) cb(null)
         else cb(null, result)
     })
     // })
 }
-
 
 //getReview user
 getUsername = async (user, cb) => {

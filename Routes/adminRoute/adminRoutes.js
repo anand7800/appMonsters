@@ -146,7 +146,7 @@ adminRouter.post('/changeProductStatus', (req, res) => {
     })
 })
 
-// countProduct
+// changeReviewStatus
 adminRouter.post('/changeReviewStatus', (req, res) => {
     adminHandler.changeReviewStatus(req.body,(data) => {
         res.send(data)
