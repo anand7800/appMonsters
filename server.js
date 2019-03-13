@@ -245,14 +245,14 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('sendmessage', function (data) {
         console.log("data entry is ==============================>", data);
-        let senderId
-        commonfunction.jwtDecode(data.senderId, async (err, decodeSenderID) => {
-            // console.log(err, decodeSenderID)
-            if (err) throw err
-            else {
-                senderId = decodeSenderID
-            }
-        })
+        let senderId = "5c85f5a08002bf0796117d43"
+        // commonfunction.jwtDecode(data.senderId, async (err, decodeSenderID) => {
+        //     // console.log(err, decodeSenderID)
+        //     if (err) throw err
+        //     else {
+        //         senderId = decodeSenderID
+        //     }
+        // })
         // console.log('senderidsenderidsenderidsenderid', senderId)
         var receiveImage = "";
         var timeStamp = new Date().getTime();
@@ -266,30 +266,34 @@ io.sockets.on('connection', function (socket) {
         }
         waterfall([
             function (callback) {
-                User.findOne({
-                    userId: data.receiverId
-                }, (err, user) => {
-                    //console.log("new user", user)
-                    if (!user == null) {
-                        new User({
-                            userId: data.receiverId,
-                            userName: data.receiverName,
-                            profilePic: data.receiverProfilePic,
-                            profilePicFull: data.recieverprofilePicFull,
-                            blockedUsers: []
-                        }).save((err, success) => {
-                            //console.log("user saved", success, err)
-                            callback()
-                        })
-                    }
-                    else
-                        callback()
-                })
+                // User.findOne({
+                //     userId: data.receiverId
+                // }, (err, user) => {
+                //     console.log("new user", user)
+                //     // return
+                //     if (!user == null) {
+
+                //         new User({
+                //             userId: data.receiverId,
+                //             userName: data.receiverName,
+                //             profilePic: data.receiverProfilePic,
+                //             profilePicFull: data.recieverprofilePicFull,
+                //             blockedUsers: []
+                //         }).save((err, success) => {
+                //             console.log("user saved", success, err)
+                //             callback()
+                //         })
+                //     }
+                //     else
+                //         callback()
+                // })
+                callback()
             },
             function (callback) {
                 Room.findOne(query, function (err, result) {
                     // console.log("active user====>>" + JSON.stringify(result))
                     if (result == null || result == "" || result == undefined) {
+                        // console.log('this isss==================>>>')
                         var addParticipents = []
 
                         for (var i = 0; i < participants.length; i++) {
@@ -330,21 +334,24 @@ io.sockets.on('connection', function (socket) {
                     //console.log("data", result[0].blockedUsers.indexOf(data.senderId), result[1].blockedUsers.indexOf(data.receiverId),result[0].userId,data.receiverId)
                     if (result[0].userId == data.receiverId) {
                         if (result[0].blockedUsers.indexOf(senderId) >= 0 || result[1].blockedUsers.indexOf(data.receiverId) >= 0) { } else {
-
-                            var roomId = roomId1
+                           
+                            var roomId = roomId1    
                             //console.log("======>>>Room id is",roomId);
                             //console.log("data for chat history1111111111111>>>", data)
                             if (onlineUsers[senderId] && onlineUsers[data.receiverId]) {
                                 if (onlineUsers[senderId].receiverId == data.receiverId && onlineUsers[data.receiverId].receiverId == senderId)
                                     data.status = "READ";
                             }
-
+                            console.log("dataaaaa", data)
                             // uploadImage1(data.media, (err, result) => {
                             //   data.media = result;
                             // receiveImage = result;
+
                             var saveChat = new chatHistory(data);
                             saveChat.roomId = roomId,
-                                saveChat.senderId = senderId
+                                saveChat.senderId = senderId,
+                                
+
                             // console.log("SAVE CHAT IS============>", saveChat);
                             // User.findOneAndUpdate({$in:})
                             //pull functionality
@@ -374,6 +381,7 @@ io.sockets.on('connection', function (socket) {
                             callback(null, roomId)
                         }
                     } else {
+
                         // if (result[1].blockedUsers.indexOf(data.senderId) >= 0 || result[0].blockedUsers.indexOf(data.receiverId) >= 0) { } else {
 
                         var roomId = roomId1
@@ -386,9 +394,11 @@ io.sockets.on('connection', function (socket) {
                         // uploadImage1(data.media, (err, result) => {
                         //   data.media = result;
                         // receiveImage = result;
+                        console.log("asdfasdfasdfdsfsdfasdfasd",new Date().getTime())
                         var saveChat = new chatHistory(data);
                         saveChat.roomId = roomId
                         saveChat.senderId = senderId
+                        saveChat.timeStamp=new Date().getTime()
 
                         // console.log("SAVE CHAT IS============>", saveChat);
                         User.findOneAndUpdate({ userId: senderId }, { $pull: { deletedUsers: data.receiverId } }, { new: true }, (error, res) => {
@@ -1071,7 +1081,7 @@ app.post('/userConversationList', function (req, res) {
                         })
                         // console.log("final result", usersIds)
                         User.find({ $or: [{ userName: { $regex: req.body.pattern, $options: 'i' } }, { userId: { $in: usersIds } }] }).sort({ userId: -1 }).exec(async (err, result) => {
-                            console.log("result====>>>",err,result)
+                            console.log("result====>>>", err, result)
                             // return
 
                             if (err)
