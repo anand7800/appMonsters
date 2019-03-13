@@ -27,7 +27,7 @@ const waterfall = require('async-waterfall');
 const _ = require('lodash');
 var qr = require('qr-image');
 const today = moment().startOf('day')
-
+var Promise = require('promise');
 /* ************************************
 *************add category***********************
 ************************************ */
@@ -3834,15 +3834,17 @@ dashBoardForVendor = (data, header, callback) => {
 //review and feedback vendor panel
 reviewFeedBack = (data, header, callback) => {
     console.log("data", data)
-
-    // let userId = "5c46c2d1070fa144119a1cd5"
-    let userId
-    commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-        if (err) throw err
-        else {
-            userId = decodeId
-        }
-    })
+    let userId = "5c46c2d1070fa144119a1cd5"
+    var we, func;
+    var mainArray = [];
+    var data_res;
+    // let userId
+    // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+    //     if (err) throw err
+    //     else {
+    //         userId = decodeId
+    //     }
+    // })
 
     async.waterfall([
 
@@ -3858,13 +3860,24 @@ reviewFeedBack = (data, header, callback) => {
         }
     ], async (err, result) => {
 
-        let mainArray = [];
-        // console.log("---------------------->>", err, JSON.stringify(result))
+
+
         if (result.length > 0) {
-            async.forEachOf(result, (value, key, callback) => {
-                value.orderPlacedDescription.forEach(element => {
+            async.forEachOf(result, async (value, key, callback) => {
+
+                value.orderPlacedDescription.forEach(async (element) => {
+                    // return new Promise(function (resolve, reject) {
+
+                    //     reviewRatingModel.find({ productId: element.productId }).count().exec((err, count) => {
+                    //         console.log(err, count)
+                    //     })
+
+                    // })})
+
+
                     if (element.reviewRatingId) {
-                        let temp = {
+
+                        var temp = {
                             productId: element.productId._id,
                             productName: element.productId.productName,
                             productImage: element.productId.image[0],
@@ -3879,8 +3892,33 @@ reviewFeedBack = (data, header, callback) => {
                     }
                 })
                 callback()
-            }, (err, result) => {
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': mainArray })
+
+            }, async (err, result) => {
+                var newArray = [];
+                async.forEachOf(mainArray, (value, key, back) => {
+
+                    reviewRatingModel.find({ productId: value.productId }).count().exec((err, count) => {
+                        if (count) {
+                            let temp = {
+                                productId: value.productId,
+                                productName: value.productName,
+                                productImage: value.productImage,
+                                reviewerId: value.reviewerId,
+                                reviewerName: value.reviewerName,
+                                orderId: value.orderId,
+                                rating: value.rating,
+                                review: value.review,
+                                reviewRatingId: value.reviewRatingId,
+                                overallReview: count
+                            }
+                            newArray.push(temp)
+
+                        }
+                        back()
+                    })
+                }, (err, response) => {
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': newArray })
+                })
             })
         }
         else {
@@ -4173,6 +4211,25 @@ module.exports = {
 
 // async function getUser(id) {
 //     if (id) {
-//         return await reviewAndRatingL5.findOne({ 'reviewAndRating.productId': id }, { 'reviewAndRating.$': 1 }).populate('userId')
+//         return await reviewAndRatingL5.findOne({ 'reviewAndRating.productId': id }, { 'reviewAndRating.$': 1 }).populate('userId'){
 //     }
 // }
+
+async function data_func(data) {
+    // console.log("affsafsafsaf", data)
+    return new Promise(function (resolve, reject) {
+
+        reviewAndRatingL5.find({ 'reviewAndRating.productId': data.productId }).count().exec((err, result) => {
+            // log('this is rresult ofquery', err, result)
+            if (err) {
+                reject(err)
+            }
+            else {
+                data.totalReviews = result
+                resolve(data)
+            }
+
+        })
+
+    })
+}
