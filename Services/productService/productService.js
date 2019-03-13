@@ -4176,8 +4176,11 @@ orderChat = (data, header) => {
         }
 
 
-    })
+    }, (err, result) => {
 
+        console.log(err, result)
+
+    })
 }
 module.exports = {
     addCategory,

@@ -454,8 +454,7 @@ io.sockets.on('connection', function (socket) {
                     //         //console.log("body is "+JSON.stringify(body));
                     //         callback1(null, body.unreadCount)
                     //     });
-                    // }
-
+                    // }              
                 ],
                     // optional callback
                     function (err, results) {
@@ -1072,8 +1071,8 @@ app.post('/userConversationList', function (req, res) {
                         })
                         // console.log("final result", usersIds)
                         User.find({ $or: [{ userName: { $regex: req.body.pattern, $options: 'i' } }, { userId: { $in: usersIds } }] }).sort({ userId: -1 }).exec(async (err, result) => {
-                            // console.log("result====>>>",err,result)
-
+                            console.log("result====>>>",err,result)
+                            // return
 
                             if (err)
                                 console.log(err)
@@ -1113,9 +1112,9 @@ app.post('/userConversationList', function (req, res) {
                                             ]
                                         };
                                         chatHistory.findOne(query).sort({
-                                            time: -1
+                                            time: +1
                                         }).exec(async function (err, chatResult) {
-                                            console.log("chat result", chatResult)
+                                            // console.log("chat result", chatResult)
                                             if (err) {
                                                 res.send({
                                                     responseCode: 401,

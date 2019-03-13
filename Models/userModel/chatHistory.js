@@ -39,7 +39,7 @@ var chatSchema = new Schema({
 
     timeStamp: {
         type:String,
-        default: new Date().getTime()
+        default: new Date().toISOString()
     },
     status: {
         type: String,
