@@ -334,7 +334,7 @@ io.sockets.on('connection', function (socket) {
                     //console.log("data", result[0].blockedUsers.indexOf(data.senderId), result[1].blockedUsers.indexOf(data.receiverId),result[0].userId,data.receiverId)
                     if (result[0].userId == data.receiverId) {
                         if (result[0].blockedUsers.indexOf(senderId) >= 0 || result[1].blockedUsers.indexOf(data.receiverId) >= 0) { } else {
-                           
+                            
                             var roomId = roomId1    
                             //console.log("======>>>Room id is",roomId);
                             //console.log("data for chat history1111111111111>>>", data)
@@ -350,7 +350,7 @@ io.sockets.on('connection', function (socket) {
                             var saveChat = new chatHistory(data);
                             saveChat.roomId = roomId,
                                 saveChat.senderId = senderId,
-                                
+                                saveChat.timeStamp=new Date().getTime()
 
                             // console.log("SAVE CHAT IS============>", saveChat);
                             // User.findOneAndUpdate({$in:})
