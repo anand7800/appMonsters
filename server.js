@@ -245,15 +245,15 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('sendmessage', function (data) {
         console.log("data entry is ==============================>", data);
-        let senderId = "5c85f5a08002bf0796117d43"
-        // commonfunction.jwtDecode(data.senderId, async (err, decodeSenderID) => {
-        //     // console.log(err, decodeSenderID)
-        //     if (err) throw err
-        //     else {
-        //         senderId = decodeSenderID
-        //     }
-        // })
-        // console.log('senderidsenderidsenderidsenderid', senderId)
+        let senderId;
+        commonfunction.jwtDecode(data.senderId, async (err, decodeSenderID) => {
+            // console.log(err, decodeSenderID)
+            if (err) throw err
+            else {
+                senderId = decodeSenderID
+            }
+        })
+        console.log('senderidsenderidsenderidsenderid', senderId)
         var receiveImage = "";
         var timeStamp = new Date().getTime();
         var utcDate = new Date().getTime();
@@ -1122,7 +1122,7 @@ app.post('/userConversationList', function (req, res) {
                                             ]
                                         };
                                         chatHistory.findOne(query).sort({
-                                            time: +1
+                                            timeStamp: -1
                                         }).exec(async function (err, chatResult) {
                                             // console.log("chat result", chatResult)
                                             if (err) {
