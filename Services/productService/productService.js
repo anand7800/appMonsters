@@ -3864,15 +3864,6 @@ reviewFeedBack = (data, header, callback) => {
             async.forEachOf(result, async (value, key, callback) => {
 
                 value.orderPlacedDescription.forEach(async (element) => {
-                    // return new Promise(function (resolve, reject) {
-
-                    //     reviewRatingModel.find({ productId: element.productId }).count().exec((err, count) => {
-                    //         console.log(err, count)
-                    //     })
-
-                    // })})
-
-
                     if (element.reviewRatingId) {
 
                         var temp = {
@@ -4159,7 +4150,35 @@ liveView = (data, header, callback) => {
 
 
 
-orderChat=(data,header)
+orderChat = (data, header) => {
+    console.log("data", data)
+    // let userId
+    let userId = "5c46c2d1070fa144119a1cd5"
+    // var mainArray = [];
+    // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+    //     if (err) throw err
+    //     else {
+    //         userId = decodeId
+    //     }
+    // })
+    async.parallel({
+
+        getOrderDetails: (cb) => {
+            orderPlaced.find({ 'orderPlacedDescription.sellerId': userId }).populate({ path: 'orderPlacedDescription.productId', select: 'productName image' }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.reviewRatingId' }).sort('orderPlacedDescription.createdAt').exec((err, result) => {
+                if (err || result < 0 || result.length < 0) {
+                    cb(null)
+                }
+                else {
+                    cb(null, result)
+                }
+            })
+
+        }
+
+
+    })
+
+}
 module.exports = {
     addCategory,
     addSubCategory,
