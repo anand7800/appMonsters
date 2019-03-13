@@ -3834,17 +3834,15 @@ dashBoardForVendor = (data, header, callback) => {
 //review and feedback vendor panel
 reviewFeedBack = (data, header, callback) => {
     console.log("data", data)
-    let userId = "5c46c2d1070fa144119a1cd5"
-    var we, func;
+    let userId
+    // let userId = "5c46c2d1070fa144119a1cd5"
     var mainArray = [];
-    var data_res;
-    // let userId
-    // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-    //     if (err) throw err
-    //     else {
-    //         userId = decodeId
-    //     }
-    // })
+    commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+        if (err) throw err
+        else {
+            userId = decodeId
+        }
+    })
 
     async.waterfall([
 
@@ -4157,6 +4155,11 @@ liveView = (data, header, callback) => {
         }
     })
 }
+//orderchat
+
+
+
+orderChat=(data,header)
 module.exports = {
     addCategory,
     addSubCategory,
@@ -4206,30 +4209,4 @@ module.exports = {
     reviewFeedBack,
     treadingOnWaki,
     liveView
-}
-
-
-// async function getUser(id) {
-//     if (id) {
-//         return await reviewAndRatingL5.findOne({ 'reviewAndRating.productId': id }, { 'reviewAndRating.$': 1 }).populate('userId'){
-//     }
-// }
-
-async function data_func(data) {
-    // console.log("affsafsafsaf", data)
-    return new Promise(function (resolve, reject) {
-
-        reviewAndRatingL5.find({ 'reviewAndRating.productId': data.productId }).count().exec((err, result) => {
-            // log('this is rresult ofquery', err, result)
-            if (err) {
-                reject(err)
-            }
-            else {
-                data.totalReviews = result
-                resolve(data)
-            }
-
-        })
-
-    })
 }
