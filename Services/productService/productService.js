@@ -4199,12 +4199,10 @@ myAccount = (data, header, callback) => {
     else {
 
         callback({
-            "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': { 'vendor': vendor, 'staff': staff }
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
         return
     }
-
-
     async.waterfall([
         function (cb) {
             let query = {
@@ -4213,7 +4211,7 @@ myAccount = (data, header, callback) => {
                     { parentId: mongoose.Types.ObjectId(userId) }
                 ]
             }
-            userModel.find(query).exec((err, res) => {
+            userModel.find(query, { password: 0 }).exec((err, res) => {
                 if (err || !res)
                     cb(null)
                 else
