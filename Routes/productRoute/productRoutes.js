@@ -435,7 +435,13 @@ productRouter.get('/treadingOnWaki', (req, res) => {
 
 // liveView
 productRouter.get('/liveView', (req, res) => {
-    productService.liveView(req.query,req.headers, (data) => {
+    productService.liveView(req.query, req.headers, (data) => {
+        res.send(data)
+    })
+})
+// myAccount
+productRouter.get('/myAccount', (req, res) => {
+    productService.myAccount(req.query, req.headers, (data) => {
         res.send(data)
     })
 })

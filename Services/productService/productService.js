@@ -4149,7 +4149,7 @@ liveView = (data, header, callback) => {
 //orderchat
 
 
-
+//!pending
 orderChat = (data, header) => {
     console.log("data", data)
     // let userId
@@ -4174,13 +4174,71 @@ orderChat = (data, header) => {
             })
 
         }
-
-
     }, (err, result) => {
-
         console.log(err, result)
 
     })
+}
+
+
+myAccount = (data, header, callback) => {
+    console.log("myaccount ---->>>>>>>>", data)
+    // let userId = "5c46c2d1070fa144119a1cd5"
+    let userId;
+    let vendor = {}, staff = [];
+
+    if (header.accesstoken) {
+
+        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+            if (err) throw err
+            else {
+                userId = decodeId
+            }
+        })
+    }
+    else {
+
+        callback({
+            "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': { 'vendor': vendor, 'staff': staff }
+        })
+        return
+    }
+
+
+    async.waterfall([
+        function (cb) {
+            let query = {
+                $or: [
+                    { _id: userId },
+                    { parentId: mongoose.Types.ObjectId(userId) }
+                ]
+            }
+            userModel.find(query).exec((err, res) => {
+                if (err || !res)
+                    cb(null)
+                else
+                    cb(null, res)
+            })
+        },
+        function (userDetail, cb) {
+
+            userDetail.forEach(element => {
+                if (element.userType == 'vendor')
+                    vendor = element
+                else
+                    staff.push(element)
+            })
+            cb()
+        }
+    ], (err, response) => {
+
+
+        callback({
+            "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': { 'vendor': vendor, 'staff': staff }
+        })
+
+    })
+
 }
 module.exports = {
     addCategory,
@@ -4230,5 +4288,6 @@ module.exports = {
     dashBoardForVendor,
     reviewFeedBack,
     treadingOnWaki,
-    liveView
+    liveView,
+    myAccount
 }
