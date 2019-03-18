@@ -4222,7 +4222,7 @@ myAccount = (data, header, callback) => {
             userDetail.forEach(element => {
                 if (element.userType == 'vendor')
                     vendor = element
-                else
+                else if (element.userType == "staff" && element.status == "inactive")
                     staff.push(element)
             })
             cb()
@@ -4276,13 +4276,40 @@ getVendorOffer = (data, header, callback) => {
                 callback()
             }, (err, response) => {
                 callback({
-                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],'result':res
+                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res
                 })
             })
         }
     })
-
 }
+
+deleteStaff = (data, header,callback) => {
+    let userId, res = [];
+    if (header.accesstoken) {
+
+        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+            if (err) throw err
+            else {
+                userId = decodeId
+            }
+        })
+    }
+    else {
+        callback({
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+        })
+        return
+    }
+    userModel.findByIdAndUpdate({ _id: data.staffId }, { $set: { status: "inactive" } }, { new: true }).exec((err, result) => {
+        if (err)
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+        else
+            callback({
+                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang]
+            })
+    })
+}
+
 module.exports = {
     addCategory,
     addSubCategory,
@@ -4333,5 +4360,6 @@ module.exports = {
     treadingOnWaki,
     liveView,
     myAccount,
-    getVendorOffer
+    getVendorOffer,
+    deleteStaff
 }

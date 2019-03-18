@@ -452,4 +452,12 @@ productRouter.get('/getVendorOffer', (req, res) => {
         res.send(data)
     })
 })
+
+// deleteStaff
+productRouter.post('/deleteStaff', (req, res) => {
+    productService.deleteStaff(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
+
 module.exports = productRouter

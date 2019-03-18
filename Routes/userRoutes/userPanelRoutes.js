@@ -1,7 +1,7 @@
-const userRouter = require('express').Router()
-const userHandler = require('../../Services/userServices/userServicesPanel')
-const commonFuntion = require('../../commonFile/commonFunction')
-const authHandler = require('../../middleware/verifyToken')
+const userRouter = require('express').Router();
+const userHandler = require('../../Services/userServices/userServicesPanel');
+const commonFuntion = require('../../commonFile/commonFunction');
+const authHandler = require('../../middleware/verifyToken');
 
 
 //!signUp
