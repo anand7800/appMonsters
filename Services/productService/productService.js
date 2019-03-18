@@ -385,7 +385,7 @@ addProduct = (data, header, callback) => {
 
 /************************************************************
  ***********************************************************
- ****************editproduct*******************************
+ **************editproduct******************************
  ***********************************************************
  ***********************************************************
  ************************************************************/
@@ -2157,7 +2157,6 @@ inActiveProductList = (data, callback) => {
 ***********************************************************************/
 addVendoroffer = (data, header, callback) => {
     // console.log('add vendor offer', data)
-
     var userId
     commonFunction.jwtDecode(header.accesstoken, (err, token) => {
         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
@@ -2177,7 +2176,6 @@ addVendoroffer = (data, header, callback) => {
                         else cb(null, exist)
                     })
             },
-
             uploadImage: (cb) => {
                 commonFunction.uploadMultipleImages(data.offerImage, (err, image) => {
                     log(err, image)
@@ -2202,8 +2200,8 @@ addVendoroffer = (data, header, callback) => {
                     offerType: data.offerType,
                     image: response.uploadImage,
                     value: data.value,
-                    applicableType: data.applicableType,
-                    applicableOn: data.applicableOn,
+                    applicableType: data.applicableType, /*product and category */
+                    applicableOnProduct: data.applicableOn,
                     startDate: data.startDate,
                     endDate: data.endDate
                 }
@@ -4182,6 +4180,8 @@ orderChat = (data, header) => {
 
 
 myAccount = (data, header, callback) => {
+
+
     console.log("myaccount ---->>>>>>>>", data)
     // let userId = "5c46c2d1070fa144119a1cd5"
     let userId;
@@ -4197,7 +4197,6 @@ myAccount = (data, header, callback) => {
         })
     }
     else {
-
         callback({
             "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
@@ -4229,12 +4228,58 @@ myAccount = (data, header, callback) => {
             cb()
         }
     ], (err, response) => {
-
-
         callback({
             "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': { 'vendor': vendor, 'staff': staff }
         })
 
+    })
+}
+
+
+// getvendorOffer
+
+getVendorOffer = (data, header, callback) => {
+    let userId, res = [];
+    if (header.accesstoken) {
+
+        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+            if (err) throw err
+            else {
+                userId = decodeId
+            }
+        })
+    }
+    else {
+        callback({
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+        })
+        return
+    }
+
+    productOffer.find({ userId: userId }).populate('applicableOnProduct').exec((err, result) => {
+        if (err) {
+            callback({
+                "statusCode": util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang]
+            })
+        }
+        else if (result) {
+            async.forEachOf(result, (value, key, callback) => {
+                let temp = {
+                    offerName: value.offerName,
+                    startDate: value.startDate,
+                    endDate: value.endDate,
+                    offerType: value.offerType,
+                    users: 0
+
+                }
+                res.push(temp)
+                callback()
+            }, (err, response) => {
+                callback({
+                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],'result':res
+                })
+            })
+        }
     })
 
 }
@@ -4287,5 +4332,6 @@ module.exports = {
     reviewFeedBack,
     treadingOnWaki,
     liveView,
-    myAccount
+    myAccount,
+    getVendorOffer
 }

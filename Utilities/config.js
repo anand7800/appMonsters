@@ -23,7 +23,7 @@ let serverURLs = {
         "EMAIL_SECURE": true,
         "CRON_PATTERN": '1 * * * * *',
     },
-    
+
 }
 let config = {
     "OTP_SMS_CONFIG": {

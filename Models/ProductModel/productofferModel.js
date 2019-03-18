@@ -29,14 +29,19 @@ const varianceOffer = mongoose.Schema({
         type: String,
         default: null
     },
-    applicableOn: {
-        type: [],
-        default: null
-    },
     applicableType: {
         type: String,
         default: null
     },
+    applicableOnProduct: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'productDescription' }],
+        default: null
+    },
+    applicableOnProductCategory: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'productDescription' }],
+        default: null
+    },
+
     startDate: {
         type: Date,
         default: Date.now()
@@ -49,7 +54,7 @@ const varianceOffer = mongoose.Schema({
         type: String,
         enum: ['ACTIVE', 'INACTIVE'],
         uppercase: true,
-        default:'ACTIVE'
+        default: 'ACTIVE'
     }
 })
 module.exports = mongoose.model('productOffer', varianceOffer, 'productOffer')

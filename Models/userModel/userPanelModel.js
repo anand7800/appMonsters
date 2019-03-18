@@ -2,12 +2,12 @@ var mongoose = require('mongoose')
 var mongoosePaginate = require('mongoose-paginate');
 var util = require('../../Utilities/util')
 var login = mongoose.Schema({
-    
-    parentId:{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'login'  
+
+    parentId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'login'
     },
-    
+
     email: {
         type: String,
         require: true,
@@ -33,7 +33,7 @@ var login = mongoose.Schema({
     },
     userType: {
         type: String,
-        enum: ['user', 'vendor', "admin","staff"],
+        enum: ['user', 'vendor', "admin", "staff"],
         default: 'user',
         lowercase: true
     },
@@ -117,7 +117,7 @@ var login = mongoose.Schema({
         type: Number,
         default: 0
     },
-    
+
     status: {
         type: String,
         enum: ['block', 'active', "inactive"],

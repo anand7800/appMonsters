@@ -16,7 +16,7 @@ const topOffersL6 = require('../../Models/ProductModel/productofferModel')
 
 const reviewAndRatingL5 = require('../../Models/userModel/reviewAndRating')
 //!newModel
-const reviewRatingModel=require('../../Models/ProductModel/reviewRatingModel')
+const reviewRatingModel = require('../../Models/ProductModel/reviewRatingModel')
 // const orderModel = require('../../Models/userModel/userOrder')
 const orderModel = require('../../Models/ProductModel/bagModel')
 
@@ -106,8 +106,8 @@ uploadImage = (data, callback) => {
 }
 //! business Details
 businessDetails = (data, headers, callback) => {
-    log("addCategory")
-    if (!data) {
+    log("businessDetails")
+    if (!data || !headers.accesstoken) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
     }
@@ -130,13 +130,13 @@ businessDetails = (data, headers, callback) => {
                 callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
             }
             else {
-                var userId = {}
+                var userId
                 commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
                     log(err, result)
-                    userId = { _id: result }
+                    userId = result
                 })
                 // console.log(userId, "lkod")
-                query = {
+                let query = {
                     'userId': userId,
                     'businessName': data.businessName,
                     'phone': data.phone,
@@ -1178,7 +1178,7 @@ createStaff = (data, headers, callback) => {
             // storeType: data.storeType,
             countryCode: data.countryCode,
             status: data.status ? data.status : 'active',
-            parentId:userId
+            parentId: userId
 
         })
         user.save((err, save) => {

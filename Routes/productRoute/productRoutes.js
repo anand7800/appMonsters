@@ -445,4 +445,11 @@ productRouter.get('/myAccount', (req, res) => {
         res.send(data)
     })
 })
+
+// getVendorOffer
+productRouter.get('/getVendorOffer', (req, res) => {
+    productService.getVendorOffer(req.query, req.headers, (data) => {
+        res.send(data)
+    })
+})
 module.exports = productRouter
