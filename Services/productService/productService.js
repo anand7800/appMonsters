@@ -1987,7 +1987,7 @@ searchVendorOrder = (data, header, callback) => {
         $match: {
             $and: [
                 { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) },
-                { 'orderPlacedDescription.orderStatus': data.orderStatus ? data.orderStatus : "DISPATCH" },
+                // { 'orderPlacedDescription.orderStatus': data.orderStatus ? data.orderStatus : "DISPATCH" },
                 {
                     $or: [
                         { 'orderPlacedDescription.orderId': { $regex: key } },
@@ -4281,9 +4281,9 @@ getVendorOffer = (data, header, callback) => {
     })
 }
 
-deleteStaff = (data, header,callback) => {
-    console.log('-----------data--->>>>>>',data)
-    console.log('---------header----->>>>>>',header)
+deleteStaff = (data, header, callback) => {
+    console.log('-----------data--->>>>>>', data)
+    console.log('---------header----->>>>>>', header)
 
     // let userId, res = [];
     // if (header.accesstoken) {
