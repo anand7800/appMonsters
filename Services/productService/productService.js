@@ -4222,7 +4222,7 @@ myAccount = (data, header, callback) => {
             userDetail.forEach(element => {
                 if (element.userType == 'vendor')
                     vendor = element
-                else if (element.userType == "staff" && element.status == "inactive")
+                else if (element.userType == "staff" && element.status == "active")
                     staff.push(element)
             })
             cb()
@@ -4235,9 +4235,7 @@ myAccount = (data, header, callback) => {
     })
 }
 
-
 // getvendorOffer
-
 getVendorOffer = (data, header, callback) => {
     let userId, res = [];
     if (header.accesstoken) {
@@ -4284,22 +4282,25 @@ getVendorOffer = (data, header, callback) => {
 }
 
 deleteStaff = (data, header,callback) => {
-    let userId, res = [];
-    if (header.accesstoken) {
+    console.log('-----------data--->>>>>>',data)
+    console.log('---------header----->>>>>>',header)
 
-        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-            if (err) throw err
-            else {
-                userId = decodeId
-            }
-        })
-    }
-    else {
-        callback({
-            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
-        })
-        return
-    }
+    // let userId, res = [];
+    // if (header.accesstoken) {
+
+    //     commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+    //         if (err) throw err
+    //         else {
+    //             userId = decodeId
+    //         }
+    //     })
+    // }
+    // else {
+    //     callback({
+    //         "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+    //     })
+    //     return
+    // }
     userModel.findByIdAndUpdate({ _id: data.staffId }, { $set: { status: "inactive" } }, { new: true }).exec((err, result) => {
         if (err)
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
