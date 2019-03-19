@@ -4180,8 +4180,6 @@ orderChat = (data, header) => {
 
 
 myAccount = (data, header, callback) => {
-
-
     console.log("myaccount ---->>>>>>>>", data)
     // let userId = "5c46c2d1070fa144119a1cd5"
     let userId;
@@ -4280,27 +4278,8 @@ getVendorOffer = (data, header, callback) => {
         }
     })
 }
-
+// deleteStaff
 deleteStaff = (data, header, callback) => {
-    console.log('-----------data--->>>>>>', data)
-    console.log('---------header----->>>>>>', header)
-
-    // let userId, res = [];
-    // if (header.accesstoken) {
-
-    //     commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-    //         if (err) throw err
-    //         else {
-    //             userId = decodeId
-    //         }
-    //     })
-    // }
-    // else {
-    //     callback({
-    //         "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
-    //     })
-    //     return
-    // }
     userModel.findByIdAndUpdate({ _id: data.staffId }, { $set: { status: "inactive" } }, { new: true }).exec((err, result) => {
         if (err)
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
@@ -4311,6 +4290,61 @@ deleteStaff = (data, header, callback) => {
     })
 }
 
+
+VendorSearchProduct = (data, header, callback) => {
+    var value = new RegExp(data.searchKeyword.trim(), 'i');
+    let userId, mainResult = []
+    if (header.accesstoken) {
+        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+            if (err) throw err
+            else {
+                userId = decodeId
+            }
+        })
+    }
+    else {
+        callback({
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+        })
+        return
+    }
+    let query = {
+        $and: [
+            { sellerId: mongoose.Types.ObjectId(userId) },
+            { productName: { $regex: value } }
+        ]
+    }
+    productModel.find(query).populate('brandId varianceId productCategoryId').exec((err, result) => {
+        console.log(err, result)
+        if (err || result.length < 0) {
+            callback({
+                "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang]
+            })
+        }
+        else {
+            result.forEach(value => {
+                let temp = {
+                    _id: value._id,
+                    product: value.productName,
+                    brand: value.brandId.brandName,
+                    image: value.image[0],
+                    description: value.description,
+                    // color: value.color,
+                    status: value.status,
+                    price: value.price,
+                    getProductCategoryName: value.productCategoryId.productcategoryName,
+                    inventorySKU: value.inventorySKU,
+                    quantity: value.quantity,
+                    unitSold: "PENDING STATUS"
+                }
+                mainResult.push(temp)
+            })
+            callback({
+                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': mainResult
+            })
+        }
+    })
+}
 module.exports = {
     addCategory,
     addSubCategory,
@@ -4362,5 +4396,6 @@ module.exports = {
     liveView,
     myAccount,
     getVendorOffer,
-    deleteStaff
+    deleteStaff,
+    VendorSearchProduct
 }

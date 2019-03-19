@@ -460,4 +460,11 @@ productRouter.post('/deleteStaff', (req, res) => {
     })
 })
 
+// VendorSearchProduct
+productRouter.post('/VendorSearchProduct', (req, res) => {
+    productService.VendorSearchProduct(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
+
 module.exports = productRouter
