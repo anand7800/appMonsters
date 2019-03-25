@@ -3841,7 +3841,7 @@ reviewFeedBack = (data, header, callback) => {
             userId = decodeId
         }
     })
-
+    console.log('----->>', userId)
     async.waterfall([
 
         function (cb) {
@@ -3868,7 +3868,7 @@ reviewFeedBack = (data, header, callback) => {
                             productId: element.productId._id,
                             productName: element.productId.productName,
                             productImage: element.productId.image[0],
-                            reviewerId: element.reviewRatingId._id,
+                            reviewerId: value.userId._id,
                             reviewerName: value.userId.firstName,
                             orderId: element.orderId,
                             rating: element.reviewRatingId.rating,
@@ -4345,6 +4345,81 @@ VendorSearchProduct = (data, header, callback) => {
         }
     })
 }
+
+// analyticsProduct //!pending
+analyticsProduct = (data, header, callback) => {
+    console.log("--------------analyticsProduct---")
+    async.parallel({
+        getProductOrder: (cb) => {
+            orderPlaced.aggregate([
+
+
+            ], (err, result) => {
+                console.log(err, result)
+                callback(result)
+            })
+        }
+    })
+}
+
+AllProductReviewFeedback = (data, header, callback) => {
+
+    let userId, mainArray = [];
+    if (header.accesstoken) {
+        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+            if (err) throw err
+            else {
+                userId = decodeId
+            }
+        })
+    }
+    else {
+        callback({
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+        })
+        return
+    }
+
+
+    async.parallel({
+
+        getProductDetail: (cb) => {
+            reviewRatingModel.find({ productId: data.productId }).populate('productId userId').lean(true).exec((error, response) => {
+                if (error || !response)
+                    cb(null)
+                else {
+                    response.forEach(e1 => {
+                        let temp = {
+                            userId: e1.userId._id,
+                            userName: e1.userId.firstName,
+                            rating: e1.rating,
+                            review: e1.review
+                        }
+                        mainArray.push(temp)
+                    })
+                    console.log(mainArray)
+                    cb(null, mainArray)
+                }
+            })
+        }
+
+    }, (err, response) => {
+        console.log(err, response)
+        if (response || response.getProductDetail) {
+            callback({
+                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response.getProductDetail
+            })
+            return
+        }
+        else{
+            callback({
+                "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang]
+            })
+        }
+    })
+}
+
+
 module.exports = {
     addCategory,
     addSubCategory,
@@ -4397,5 +4472,7 @@ module.exports = {
     myAccount,
     getVendorOffer,
     deleteStaff,
-    VendorSearchProduct
+    VendorSearchProduct,
+    analyticsProduct,
+    AllProductReviewFeedback
 }

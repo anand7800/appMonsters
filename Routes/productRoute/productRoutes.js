@@ -467,4 +467,17 @@ productRouter.post('/VendorSearchProduct', (req, res) => {
     })
 })
 
+// analyticsProduct
+productRouter.post('/analyticsProduct', (req, res) => {
+    productService.analyticsProduct(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
+
+// analyticsProduct
+productRouter.post('/AllProductReviewFeedback', (req, res) => {
+    productService.AllProductReviewFeedback(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
 module.exports = productRouter
