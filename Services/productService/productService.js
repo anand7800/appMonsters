@@ -4394,6 +4394,7 @@ AllProductReviewFeedback = (data, header, callback) => {
                             userName: e1.userId.firstName,
                             rating: e1.rating,
                             review: e1.review,
+                            productName:e1.productId.productName,
                             orderId: "qwertyu"
                         }
                         mainArray.push(temp)
