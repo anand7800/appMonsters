@@ -4373,7 +4373,7 @@ AllProductReviewFeedback = (data, header, callback) => {
             }
         })
     }
-    else {
+    if (!data.productId) {
         callback({
             "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
@@ -4394,7 +4394,7 @@ AllProductReviewFeedback = (data, header, callback) => {
                             userName: e1.userId.firstName,
                             rating: e1.rating,
                             review: e1.review,
-                            orderId:"qwertyu"
+                            orderId: "qwertyu"
                         }
                         mainArray.push(temp)
                     })
@@ -4412,14 +4412,63 @@ AllProductReviewFeedback = (data, header, callback) => {
             })
             return
         }
-        else{
+        else {
             callback({
                 "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang]
             })
         }
     })
 }
+//search offer
 
+vendorSearchOffer = (data, header, callback) => {
+    var value = new RegExp(data.searchKeyword.trim(), 'i');
+    let userId, mainArray = [];
+    if (header.accesstoken) {
+        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+            if (err) throw err
+            else {
+                userId = decodeId
+            }
+        })
+    }
+    else {
+        callback({
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+        })
+        return
+    }
+
+    async.auto({
+        searchOffer: (cb) => {
+            let query = {
+                $or: [
+                    { offerName: { $regex: value } }
+                ]
+            }
+            productOffer.find(query,{'offerName':1,'startDate':1,'endDate':1,'offerType':1}).exec((err, response) => {
+                if (err || !response)
+                    cb(null)
+                else {
+                    cb(null, response)
+                }
+            })
+        }
+    }, (err, response) => {
+        if (err || !response) {
+            callback({
+                "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+            })
+            return
+        }
+        else{
+            callback({
+                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],'result':response.searchOffer
+            })
+            return
+        }
+    })
+}
 
 module.exports = {
     addCategory,
@@ -4475,5 +4524,7 @@ module.exports = {
     deleteStaff,
     VendorSearchProduct,
     analyticsProduct,
-    AllProductReviewFeedback
+    AllProductReviewFeedback,
+    vendorSearchOffer
+
 }

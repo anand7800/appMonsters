@@ -480,4 +480,11 @@ productRouter.post('/AllProductReviewFeedback', (req, res) => {
         res.send(data)
     })
 })
+
+// vendorSearchOffer
+productRouter.post('/vendorSearchOffer', (req, res) => {
+    productService.vendorSearchOffer(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
 module.exports = productRouter
