@@ -69,18 +69,21 @@ app.use('/user', userRoutes)
 app.use('/admin', adminRoute)
 app.use('/vendor', productRoutes)
 // app.use('/web',webRoutes)
-app.use(express.static(path.join(__dirname, 'dist')));
+// app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'vendorDist')))
+// app.get('*', (req, res) => {
+//     res.sendFile(__dirname + '/dist/index.html')
+// });
 app.get('*', (req, res) => {
-    res.sendFile(__dirname + '/dist/index.html')
+    res.sendFile(__dirname + '/vendorDist/index.html')
 });
-
 
 /****************************socket start***********************
 ***************************socket start*************************
 ***************************socket start************************/
 var io = require('socket.io')(server);
 var sockets = {};
-var onlineUsers = {};
+global.onlineUsers = {};
 io.sockets.on('connection', function (socket) {
 
     console.log("\x1b[31m", "Congratulation connection has been established");
@@ -334,8 +337,8 @@ io.sockets.on('connection', function (socket) {
                     //console.log("data", result[0].blockedUsers.indexOf(data.senderId), result[1].blockedUsers.indexOf(data.receiverId),result[0].userId,data.receiverId)
                     if (result[0].userId == data.receiverId) {
                         if (result[0].blockedUsers.indexOf(senderId) >= 0 || result[1].blockedUsers.indexOf(data.receiverId) >= 0) { } else {
-                            
-                            var roomId = roomId1    
+
+                            var roomId = roomId1
                             //console.log("======>>>Room id is",roomId);
                             //console.log("data for chat history1111111111111>>>", data)
                             if (onlineUsers[senderId] && onlineUsers[data.receiverId]) {
@@ -350,7 +353,7 @@ io.sockets.on('connection', function (socket) {
                             var saveChat = new chatHistory(data);
                             saveChat.roomId = roomId,
                                 saveChat.senderId = senderId,
-                                saveChat.timeStamp=new Date().getTime()
+                                saveChat.timeStamp = new Date().getTime()
 
                             // console.log("SAVE CHAT IS============>", saveChat);
                             // User.findOneAndUpdate({$in:})
@@ -394,11 +397,11 @@ io.sockets.on('connection', function (socket) {
                         // uploadImage1(data.media, (err, result) => {
                         //   data.media = result;
                         // receiveImage = result;
-                        console.log("asdfasdfasdfdsfsdfasdfasd",new Date().getTime())
+                        console.log("asdfasdfasdfdsfsdfasdfasd", new Date().getTime())
                         var saveChat = new chatHistory(data);
                         saveChat.roomId = roomId
                         saveChat.senderId = senderId
-                        saveChat.timeStamp=new Date().getTime()
+                        saveChat.timeStamp = new Date().getTime()
 
                         // console.log("SAVE CHAT IS============>", saveChat);
                         User.findOneAndUpdate({ userId: senderId }, { $pull: { deletedUsers: data.receiverId } }, { new: true }, (error, res) => {

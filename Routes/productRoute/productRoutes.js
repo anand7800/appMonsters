@@ -487,4 +487,11 @@ productRouter.post('/vendorSearchOffer', (req, res) => {
         res.send(data)
     })
 })
+
+// userConversationList
+productRouter.post('/userConversationList', (req, res) => {
+    productService.userConversationList(req, req.headers, (data) => {
+        res.send(data)
+    })
+})
 module.exports = productRouter
