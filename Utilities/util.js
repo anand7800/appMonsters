@@ -205,7 +205,7 @@ let statusMessage = {
         ar: "يرجى إدخال البريد الإلكتروني الصحيح."
     },
     EMAIL_SENT: {
-        en: "An email with password reset link has been sent to your registered email id.",
+        en: "An email with login credentials has been sent to your registered email id",
         ar: "تم إرسال بريد إلكتروني مع رابط لإعادة تعيين كلمة المرور إلى معرف البريد الإلكتروني المسجل"
     },
     INVALID_TOKEN: {

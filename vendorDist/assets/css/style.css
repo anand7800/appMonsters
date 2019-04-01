@@ -538,6 +538,7 @@ body {
 }
 .search-form .form-group {
 	width: 40px;
+	z-index: 1;
 	height: 40px;
 	background-color: #fff;
 	display: inline-block;
@@ -594,8 +595,8 @@ body {
 	position: relative;
 }
 .sidemenuwrap .settingsbx {
-	padding-top: 25px;
-	margin-top: 25px;
+	/* padding-top: 25px;
+	margin-top: 25px; */
 	border-top: 1px solid #f3f5f8;
 }
 .sidelogobx {
@@ -608,6 +609,9 @@ body {
 	-moz-transition: all 0.5s ease;
 	-o-transition: all 0.5s ease;
 	transition: all 0.5s ease;
+}
+.sidelogo:focus{
+	outline: none;
 }
 .sidelogo {
 	width: 157px;
@@ -1334,8 +1338,8 @@ body {
 }
 .uploadimgbx .fileinput .thumbnail img {
 	position: absolute;
-	max-width: 96%;
-	max-height: 96%;
+	max-width: 100%;
+    max-height: 100%; 
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
