@@ -189,7 +189,7 @@ let statusMessage = {
         ar: "تحديث الرمز المميز للجهاز بنجاح."
     },
     LOGIN_SUCCESS: {
-        en: "you are successfully login.",
+        en: "you have successfully login.",
         ar: "أنت تسجل الدخول بنجاح."
     },
     USER_EXISTS: {
