@@ -1062,7 +1062,8 @@ body {
 	background-color: #2acca6;
 }
 .recentOrderTable{
-	margin:0;
+	
+    text-transform: capitalize;
 }
 .recentOrderTable .table > thead > tr > th {
 	font-size:14px;
