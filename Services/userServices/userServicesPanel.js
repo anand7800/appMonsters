@@ -114,7 +114,7 @@ login = (data, callback) => {
                         'userType': succ.userType
                     }
                     // console.log(succ.userType == "staff" ? succ.parentId : false)
-                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ.userType == "staff" ? succ.parentId : succ._id)})
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ.userType == "staff" ? succ.parentId : succ._id) })
                     // commonFunction.android_notification("fdUDE4j000M:APA91bEkgqRGHyIqHEYhhpbYA3n2mxYohNh1RIOEUvQRlBFp1SCYUS6cwOTtAdNZ2RbwwgL4CcYyzLDCz0Geh6iVjeOEioKKq0JgRgKJB9GAEilLX5pLAo1NUly8ofZnIVQYMBuIwXcR", "msg", "chatType", "title", "sendorId", "senderName", "type")
                     if (succ.deviceType == 2) {
                         commonFunction.IOS_NOTIFICATION(succ.deviceToken, "Login Successfully", "Login", "WAKI", "sendorId", "senderName", "Login")
@@ -597,18 +597,25 @@ changePassword = (data, headers, callback) => {
     console.log("change password screen", data, headers)
     async.waterfall([
         function (cb) {
-            commonFunction.jwtDecode(headers.accesstoken, (err, jwtId) => {
-                console.log(err, jwtId)
-                if (jwtId) {
-                    cb(null, jwtId)
-                } else {
-                    cb(null, err)
-                }
-            })
+            if (headers.accessToken) {
+                commonFunction.jwtDecode(headers.accesstoken, (err, jwtId) => {
+                    console.log(err, jwtId)
+                    if (jwtId) {
+                        cb(null, jwtId)
+                    } else {
+                        cb(null, err)
+                    }
+                })
+            }
+            else {
+                cb(null,data._id)
+
+            }
         },
         function (jwtId, cb) {
             console.log("################", jwtId)
-            jwtId=data._id
+            // return
+            jwtId = data._id
             /* changing through bug 1 april */
             if (jwtId == undefined) {
                 callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
@@ -821,7 +828,7 @@ getUserInfo = (data, headers, callback) => {
         // },
         function (cb) {
 
-            userModel.findOne({ _id: data.userId },{'password':0}).exec((err, success) => {
+            userModel.findOne({ _id: data.userId }, { 'password': 0 }).exec((err, success) => {
                 if (err || !success)
                     cb(null)
                 else
