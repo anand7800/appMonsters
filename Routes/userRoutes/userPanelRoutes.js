@@ -126,7 +126,7 @@ userRouter.post('/checkEmail', (req, res) => {
     })
 })
 //!checkEmail
-userRouter.post('/changePassword', authHandler.verifyToken, (req, res) => {
+userRouter.post('/changePassword', (req, res) => {
     userHandler.changePassword(req.body, req.headers, (data) => {
         res.send(data)
     })

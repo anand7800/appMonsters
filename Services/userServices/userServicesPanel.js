@@ -608,6 +608,8 @@ changePassword = (data, headers, callback) => {
         },
         function (jwtId, cb) {
             console.log("################", jwtId)
+            jwtId=data._id
+            /* changing through bug 1 april */
             if (jwtId == undefined) {
                 callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
                 return
