@@ -501,6 +501,7 @@ getAddressList = (req, callback) => {
     log("getAddressList")
 
     var userId
+    var add = []
     commonFunction.jwtDecode(req.headers.accesstoken, (err, jwtId) => {
 
         if (jwtId) {
@@ -510,10 +511,17 @@ getAddressList = (req, callback) => {
             throw err
         }
     })
+
+
     userModel.findOne({ _id: userId }, (err, result) => {
         log(err, result)
+        result.address.forEach(element => {
+            if (element.status == "ACTIVE") {
+                add.push(element)
+            }
+        });
         if (result) {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.getAddressSuccessfully[req.query.lang], "result": result.address, "accessToken": commonFunction.jwtEncode(result._id) })
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.getAddressSuccessfully[req.query.lang], "result": add, "accessToken": commonFunction.jwtEncode(result._id) })
         }
         else {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[req.query.lang], "error": err })
@@ -1064,7 +1072,7 @@ editAddress = (data, headers, callback) => {
 
 
 deleteAddress = (data, headers, callback) => {
-    console.log(data,headers)
+    console.log(data, headers)
 
     // if (!data.paymentId || !headers.accessoken) {
     //     callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
