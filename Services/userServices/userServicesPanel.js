@@ -1064,13 +1064,12 @@ editAddress = (data, headers, callback) => {
 
 
 deleteAddress = (data, headers, callback) => {
-    console.log(data)
+    console.log(data,headers)
 
     // if (!data.paymentId || !headers.accessoken) {
     //     callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
     //     return
     // }
-
     // var userId = '5c657188f7f89745e14fda4a'
     let userId
 
