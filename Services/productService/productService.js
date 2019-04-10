@@ -3394,7 +3394,9 @@ listOfAddCart = (data, headers, callback) => {
                         orderId: value._id,
                         productId: value.productId._id,
                         productName: value.productId.productName,
-                        color: value.color,//!
+                        color: value.color ? value.color : "",//!
+                        size: value.size ? value.size : "",
+                        material: value.material ? value.material : "",
                         price: varianceValue.variants[0].price,//!
                         productQuantity: value.productQuantity,
                         image: varianceValue.variants[0].image,//!
