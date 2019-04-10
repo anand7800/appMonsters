@@ -985,12 +985,12 @@ deletePayment = (data, headers, callback) => {
 
 
 editAddress = (data, headers, callback) => {
-    // console.log('------->', data)
+    console.log('------->', data,headers)
     // let userId = '5c657188f7f89745e14fda4a'
-    if (!headers.accessoken) {
-        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
-        return
-    }
+    // if (!headers.accessoken) {
+    //     callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
+    //     return
+    // }
 
     let userId
     commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
