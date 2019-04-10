@@ -987,10 +987,10 @@ deletePayment = (data, headers, callback) => {
 editAddress = (data, headers, callback) => {
     console.log('------->', data,headers)
     // let userId = '5c657188f7f89745e14fda4a'
-    // if (!headers.accessoken) {
-    //     callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
-    //     return
-    // }
+    if (!headers.accessoken ||!data.addressId) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
+        return
+    }
 
     let userId
     commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
@@ -1019,7 +1019,7 @@ editAddress = (data, headers, callback) => {
             })
         },
         function (result, cb) {
-            console.log('===>>>', result.address[0])
+            console.log('===>>>', result)
             let update = {
                 $set: {
                     'address.$.status': data.status ? data.status : result.address[0].status,
