@@ -70,13 +70,23 @@ app.use('/admin', adminRoute)
 app.use('/vendor', productRoutes)
 // app.use('/web',webRoutes)
 // app.use(express.static(path.join(__dirname, 'dist')));
-app.use(express.static(path.join(__dirname, 'vendorDist')))
-// app.get('*', (req, res) => {
-//     res.sendFile(__dirname + '/dist/index.html')
+// app.use("/vendors" ,express.static(path.join(__dirname, 'vendorDist')))
+// // app.get('*', (req, res) => {
+// //     res.sendFile(__dirname + '/dist/index.html')
+// // });
+// app.get('/vendors*', (req, res) => {
+//     res.sendFile(__dirname + '/vendorDist/index.html')
 // });
-app.get('*', (req, res) => {
-    res.sendFile(__dirname + '/vendorDist/index.html')
-});
+
+app.use("/vendor", express.static(path.join(__dirname, 'vendorDist')));
+app.get('/vendor*', (req, res) => {
+    res.sendFile(`${__dirname}/vendorDist/index.html`);
+})
+// user
+app.use("/", express.static(path.join(__dirname, 'dist')));
+app.get('/*', (req, res) => {
+    res.sendFile(`${__dirname}/dist/index.html`);
+})
 
 /****************************socket start***********************
 ***************************socket start*************************

@@ -987,7 +987,7 @@ deletePayment = (data, headers, callback) => {
 editAddress = (data, headers, callback) => {
     // console.log('------->', data)
     // let userId = '5c657188f7f89745e14fda4a'
-    if (!data.paymentId || !headers.accessoken) {
+    if (!headers.accessoken) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
         return
     }

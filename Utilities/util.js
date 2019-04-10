@@ -105,7 +105,7 @@ let statusMessage = {
         ar: "التسجيل تم"
     },
     LOGGED_IN: {
-        en: "You have sucessfully logged in",
+        en: "You have successfully logged in",
         ar: "لقد نجحت في تسجيل الدخول"
     },
     COMPLETE: {
@@ -125,7 +125,7 @@ let statusMessage = {
         ar: "كلمة سر قديمة ليست صحيحة"
     },
     PASSWORD_UPDATED: {
-        en: "your password updated successfully.",
+        en: "your password has been updated successfully.",
         ar: "تم تحديث كلمة المرور الخاصة بك بنجاح"
     },
     SERVER_BUSY: {
@@ -137,7 +137,7 @@ let statusMessage = {
         ar: "تم تغيير كلمة المرور الخاصة بك بنجاح."
     },
     LOGOUT: {
-        en: "You are now signed out.",
+        en: "You are signed out.",
         ar: "لقد خرجت الآن."
     },
     PAGE_NOT_FOUND: {
@@ -177,7 +177,7 @@ let statusMessage = {
         ar: "تم تحميل الصورة بنجاح."
     },
     USER_ADDED: {
-        en: "Uploaded Image Successfully.",
+        en: "user added Successfully.",
         ar: "تم إنشاء المستخدم بنجاح."
     },
     STATUS_UPDATED: {
