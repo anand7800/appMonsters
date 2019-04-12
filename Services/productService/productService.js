@@ -1868,7 +1868,7 @@ orderDetail = (data, callback) => {
     }
     async.parallel({
         getOrderDetails: (cb) => {
-            orderPlaced.findOne(query, { 'orderPlacedDescription.$': 1 }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).exec((err, result) => {
+            orderPlaced.findOne(query, { 'orderPlacedDescription.$': 1 }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).populate('orderPlacedDescription.sellerId').exec((err, result) => {
                 if (err || !result || !result.orderPlacedDescription.length) {
                     res = {}
                     callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.ORDER_EMPTY[data.lang], 'result': res })
@@ -1909,6 +1909,8 @@ orderDetail = (data, callback) => {
                                 orderId: "ORD" + value.orderId,
                                 transactionId: value.transactionId,
                                 productId: value.productId._id,
+                                sellerId:value.sellerId._id,
+                                sellerName:value.sellerId.firstName,
                                 productName: value.productId.productName,
                                 color: getVariance.variants[0].color,
                                 price: getVariance.variants[0].price,
@@ -3394,7 +3396,7 @@ listOfAddCart = (data, headers, callback) => {
                         orderId: value._id,
                         productId: value.productId._id,
                         productName: value.productId.productName,
-                        color: value.color ? value.color : "",//!
+                        color: value.color ? value.color : "",
                         size: value.size ? value.size : "",
                         material: value.material ? value.material : "",
                         price: varianceValue.variants[0].price,//!

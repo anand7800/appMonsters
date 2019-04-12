@@ -91,6 +91,7 @@ app.get('/*', (req, res) => {
 /****************************socket start***********************
 ***************************socket start*************************
 ***************************socket start************************/
+
 var io = require('socket.io')(server);
 var sockets = {};
 global.onlineUsers = {};
