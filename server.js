@@ -2,7 +2,6 @@ let app = require('express')(),
     fs = require('fs'),
     env = require('./Utilities/environment').environment
 
-
 // if()
 // options = {
 //     key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
@@ -96,7 +95,6 @@ var io = require('socket.io')(server);
 var sockets = {};
 global.onlineUsers = {};
 io.sockets.on('connection', function (socket) {
-
     console.log("\x1b[31m", "Congratulation connection has been established");
 
     socket.on('initChat', function (data) {
@@ -258,7 +256,7 @@ io.sockets.on('connection', function (socket) {
     //!---------------------------- Send Message -------------------------------------------------//  
 
     socket.on('sendmessage', function (data) {
-        console.log("data entry is ==============================>", data);
+        console.log("data entry is ==============x================>", data);
         let senderId;
         commonfunction.jwtDecode(data.senderId, async (err, decodeSenderID) => {
             // console.log(err, decodeSenderID)

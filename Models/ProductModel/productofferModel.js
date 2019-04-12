@@ -38,7 +38,7 @@ const varianceOffer = mongoose.Schema({
         default: null
     },
     applicableOnProductCategory: {
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'productDescription' }],
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'productcategory1' }],
         default: null
     },
 

@@ -3,36 +3,36 @@ var Schema = mongoose.Schema;
 
 var userschema = new Schema({
 
-	
+
 	userName: {
 		type: String
 	},
 
-	userId : {
+	userId: {
 		type: String,
-		unique:true,
-		ref:'login'
-	}, 
-    deviceType:{
-		type:String,
-		default:"iOS"
-    },
-	deviceToken : {
-		type : String,
-		default : null
+		unique: true,
+		ref: 'login'
 	},
-	profilePic:{
-		type:String,
+	deviceType: {
+		type: String,
+		default: "iOS"
 	},
-	profilePicFull:{
-		type:String
+	deviceToken: {
+		type: String,
+		default: null
 	},
-	createdAt:{
-		type:Date,
-		default:Date.now()
+	profilePic: {
+		type: String,
 	},
-	blockedUsers:[String],
-	deletedUsers:[String]
+	profilePicFull: {
+		type: String
+	},
+	createdAt: {
+		type: Date,
+		default: Date.now()
+	},
+	blockedUsers: [String],
+	deletedUsers: [String]
 });
 
 var chatUsers = mongoose.model('chatUsers', userschema);

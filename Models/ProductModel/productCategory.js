@@ -21,7 +21,7 @@ var productcategoryListing = mongoose.Schema({
     status: {
         type: String,
         enum: ["ACTIVE", "INACTIVE"],
-        upperCase: true,
+        uppercase: true,
         default: "ACTIVE"
     }
 

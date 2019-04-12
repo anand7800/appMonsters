@@ -519,7 +519,7 @@ addBrand = (data, callback) => {
 
 }
 /* *******************************************************************
-**************************homeScreenApi*******************************
+**************************`homeScreenApi`*******************************
 ***********************************************************************/
 homeScreenApi = (query, callback) => {
     async.parallel({
@@ -655,6 +655,16 @@ homeScreenApi = (query, callback) => {
                 cb(null, response)
 
             })
+        },
+        vendorOffer: (cb) => {
+            productOffer.find({ status: 'ACTIVE' },{_id:1,image:1}).exec((err, result) => {
+                console.log(err, result);
+                if (err || result < 0)
+                    cb(null)
+                else {
+                    cb(null, result)
+                }
+            })
         }
 
     }, (err, response) => {
@@ -768,16 +778,18 @@ homeScreenApi = (query, callback) => {
         }, (err, result) => {
             // log(err, result) 
         })
+
+        
         res1['Top Deals'] = topOffer;
         res1['Top Promoted Deals'] = topPromotedDeals;
-
+        res1['Top Offer']=response.vendorOffer
         res1['Category'] = categories;//!done
 
         res1['Top Picks in Mobile'] = topPicksInMobile; //!done
         res1['Trending On waki'] = response.treadingOnWaki;
         res1['Brand'] = brand;//!done
 
-        orderedKey = ['Top Deals', 'Top Promoted Deals', 'Category', 'Top Picks in Mobile', 'Trending On waki', 'Brand', 'Top Picks in Fashion']
+        orderedKey = ['Top Deals', 'Top Promoted Deals','Top Offer', 'Category', 'Top Picks in Mobile', 'Trending On waki', 'Brand', 'Top Picks in Fashion']
         res1['Top Picks in Fashion'] = trendingFashion;//!done
         // log(query)
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.HOMESCREEN_API[query.lang], "result": res1, 'orderedKey': orderedKey });
@@ -836,9 +848,7 @@ OpenSubCategory = (data, callback) => {
 
         }, (err, success) => {
             categoryModelL1.findOne({ _id: data.categoryId }).exec((err, result) => {
-
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "categoryImage": result.image, "result": res })
-
             })
         })
     })
@@ -1833,6 +1843,7 @@ vendorOrderList = (header, callback) => {
 /********************************************************************
 **************************getSubCategoryList***********************
 ***********************************************************************/
+
 getSubCategoryList = (query, callback) => {
     console.log("get subcategory list ", query)
     subCategoryModelL2.find({ status: 'ACTIVE' }, { 'subCategoryName': 1, 'image': 1, categoryModel: 1 }).populate({ path: 'categoryModel' }).exec((err, result) => {
@@ -1909,8 +1920,8 @@ orderDetail = (data, callback) => {
                                 orderId: "ORD" + value.orderId,
                                 transactionId: value.transactionId,
                                 productId: value.productId._id,
-                                sellerId:value.sellerId._id,
-                                sellerName:value.sellerId.firstName,
+                                sellerId: value.sellerId._id,
+                                sellerName: value.sellerId.firstName,
                                 productName: value.productId.productName,
                                 color: getVariance.variants[0].color,
                                 price: getVariance.variants[0].price,
