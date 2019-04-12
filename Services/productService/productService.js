@@ -657,12 +657,20 @@ homeScreenApi = (query, callback) => {
             })
         },
         vendorOffer: (cb) => {
-            productOffer.find({ status: 'ACTIVE' },{_id:1,image:1}).exec((err, result) => {
+            let a = []
+            productOffer.find({ status: 'ACTIVE' }, { _id: 1, image: 1 }).exec((err, result) => {
                 console.log(err, result);
                 if (err || result < 0)
                     cb(null)
                 else {
-                    cb(null, result)
+                    result.forEach(element => {
+                        a.push({
+                            _id: element._id,
+                            image: element.image.length > 0?element.image[0]:"",
+                            type:"offers"
+                        })
+                    });
+                    cb(null, a)
                 }
             })
         }
@@ -779,17 +787,17 @@ homeScreenApi = (query, callback) => {
             // log(err, result) 
         })
 
-        
+
         res1['Top Deals'] = topOffer;
         res1['Top Promoted Deals'] = topPromotedDeals;
-        res1['Special Offer']=response.vendorOffer
+        res1['Special Offer'] = response.vendorOffer
         res1['Category'] = categories;//!done
 
         res1['Top Picks in Mobile'] = topPicksInMobile; //!done
         res1['Trending On waki'] = response.treadingOnWaki;
         res1['Brand'] = brand;//!done
 
-        orderedKey = ['Top Deals', 'Top Promoted Deals','Special Offer', 'Category', 'Top Picks in Mobile', 'Trending On waki', 'Brand', 'Top Picks in Fashion']
+        orderedKey = ['Top Deals', 'Top Promoted Deals', 'Special Offer', 'Category', 'Top Picks in Mobile', 'Trending On waki', 'Brand', 'Top Picks in Fashion']
         res1['Top Picks in Fashion'] = trendingFashion;//!done
         // log(query)
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.HOMESCREEN_API[query.lang], "result": res1, 'orderedKey': orderedKey });
