@@ -181,19 +181,36 @@ addSubCategory = (data, callback) => {
 *************************************/
 getCategoryList = (data, callback) => {
     // log(data.lang)
-
+    let mainArray = [];
     categoryModelL1.aggregate([
         {
             $lookup:
             {
-                from: 'productsubCategory',
-                localField: 'categoryModel1',
-                foreignField: '<field from the documents of the "from" collection>',
-                as: '<output array field>'
+                from: "productsubCategory",
+                localField: "_id",    // field in the orders collection
+                foreignField: "categoryModel",  // field in the items collection
+                as: "category"
             }
-        }
-    ])
+        },
+    ]).exec((err, aggregate) => {
+        console.log("errr", err, 'result', JSON.stringify(aggregate))
+        aggregate.forEach(element => {
+            let temp = {
 
+                "_id": element._id,
+                "categoryName": element.categoryName,
+                "image": element.image,
+                "icons": element.icons,
+                "subCategory": element.category.length
+            }
+            mainArray.push(temp)
+        });
+        if (err || aggregate.length > 0)
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.categoriesList_found[data.lang], "result": mainArray })
+        else
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
+    })
+    return
 
     categoryModelL1.find({ 'status': "ACTIVE" }, null, { sort: { 'serialNumber': 1 } }).select({ 'categoryName': 1, '_id': 1, 'icons': 1, 'image': 1 }).exec((err, result) => {
         if (err) {
@@ -594,12 +611,8 @@ homeScreenApi = (query, callback) => {
                             callback()
                         })
                     }, (err, response) => {
-
-                        // console.log('trending===>>', trending)
                         cb(null, trending)
-
                     });
-
                 }
                 else cb(null)
                 // cb(null,result)
@@ -672,7 +685,7 @@ homeScreenApi = (query, callback) => {
         },
         vendorOffer: (cb) => {
             let a = []
-            productOffer.find({ status: 'ACTIVE' }, { _id: 1, image: 1 }).exec((err, result) => {
+            productOffer.find({ status: 'ACTIVE' }, { _id: 1, image: 1, offerName: 1 }).exec((err, result) => {
                 console.log(err, result);
                 if (err || result < 0)
                     cb(null)
@@ -681,6 +694,7 @@ homeScreenApi = (query, callback) => {
                         a.push({
                             _id: element._id,
                             image: element.image.length > 0 ? element.image[0] : "",
+                            offerName: element.offerName,
                             type: "offers"
                         })
                     });
@@ -804,7 +818,7 @@ homeScreenApi = (query, callback) => {
 
         res1['Top Deals'] = topOffer;
         res1['Top Promoted Deals'] = topPromotedDeals;
-       
+
         res1['Category'] = categories;//!done
 
         res1['Top Picks in Mobile'] = topPicksInMobile; //!done
@@ -812,7 +826,7 @@ homeScreenApi = (query, callback) => {
         res1['Special Offer'] = response.vendorOffer
         res1['Brand'] = brand;//!done
 
-        orderedKey = ['Top Deals', 'Top Promoted Deals',  'Category', 'Top Picks in Mobile', 'Trending On waki','Special Offer', 'Brand', 'Top Picks in Fashion']
+        orderedKey = ['Top Deals', 'Top Promoted Deals', 'Category', 'Top Picks in Mobile', 'Trending On waki', 'Special Offer', 'Brand', 'Top Picks in Fashion']
         res1['Top Picks in Fashion'] = trendingFashion;//!done
         // log(query)
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.HOMESCREEN_API[query.lang], "result": res1, 'orderedKey': orderedKey });
@@ -926,6 +940,14 @@ categoryProductList = (data, callback) => {
                 })
             }
         })
+    }
+    else if (data.productListType == 'offer') {
+
+        productOffer.findOne({ _id: mongoose.Types.ObjectId("5c8ba06af518814a63ba3a7f") }).populate('applicableOnProduct').populate('applicableOnProductCategory').exec((err, getOffer) => {
+            console.log(err, getOffer)
+            callback(getOffer)
+        })
+
     }
     else {
         productModel.find({ productCategoryId: data.productCategoryId }).sort({ _id: -1 }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
@@ -4713,9 +4735,7 @@ userConversationList = (req, header, callback) => {
                 });
         }
     })
-
 }
-
 module.exports = {
     addCategory,
     addSubCategory,
