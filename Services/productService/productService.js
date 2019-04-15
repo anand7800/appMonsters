@@ -193,7 +193,7 @@ getCategoryList = (data, callback) => {
             }
         },
     ]).exec((err, aggregate) => {
-        console.log("errr", err, 'result', JSON.stringify(aggregate))
+        // console.log("errr", err, 'result', JSON.stringify(aggregate))
         aggregate.forEach(element => {
             let temp = {
 
