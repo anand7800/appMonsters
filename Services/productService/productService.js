@@ -181,6 +181,20 @@ addSubCategory = (data, callback) => {
 *************************************/
 getCategoryList = (data, callback) => {
     // log(data.lang)
+
+    categoryModelL1.aggregate([
+        {
+            $lookup:
+            {
+                from: 'productsubCategory',
+                localField: 'categoryModel1',
+                foreignField: '<field from the documents of the "from" collection>',
+                as: '<output array field>'
+            }
+        }
+    ])
+
+
     categoryModelL1.find({ 'status': "ACTIVE" }, null, { sort: { 'serialNumber': 1 } }).select({ 'categoryName': 1, '_id': 1, 'icons': 1, 'image': 1 }).exec((err, result) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
@@ -666,8 +680,8 @@ homeScreenApi = (query, callback) => {
                     result.forEach(element => {
                         a.push({
                             _id: element._id,
-                            image: element.image.length > 0?element.image[0]:"",
-                            type:"offers"
+                            image: element.image.length > 0 ? element.image[0] : "",
+                            type: "offers"
                         })
                     });
                     cb(null, a)
@@ -790,14 +804,15 @@ homeScreenApi = (query, callback) => {
 
         res1['Top Deals'] = topOffer;
         res1['Top Promoted Deals'] = topPromotedDeals;
-        res1['Special Offer'] = response.vendorOffer
+       
         res1['Category'] = categories;//!done
 
         res1['Top Picks in Mobile'] = topPicksInMobile; //!done
         res1['Trending On waki'] = response.treadingOnWaki;
+        res1['Special Offer'] = response.vendorOffer
         res1['Brand'] = brand;//!done
 
-        orderedKey = ['Top Deals', 'Top Promoted Deals', 'Special Offer', 'Category', 'Top Picks in Mobile', 'Trending On waki', 'Brand', 'Top Picks in Fashion']
+        orderedKey = ['Top Deals', 'Top Promoted Deals',  'Category', 'Top Picks in Mobile', 'Trending On waki','Special Offer', 'Brand', 'Top Picks in Fashion']
         res1['Top Picks in Fashion'] = trendingFashion;//!done
         // log(query)
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.HOMESCREEN_API[query.lang], "result": res1, 'orderedKey': orderedKey });
