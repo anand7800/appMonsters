@@ -652,7 +652,7 @@ homeScreenApi = (query, callback) => {
                 function (productId, cb) {
                     // console.log(productId)
 
-                    productModel.find({ _id: { $in: productId }, status: "ACTIVE" }).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, result) => {
+                    productModel.find({ _id: { $in: productId }, status: "ACTIVE" }).populate({ path: 'productCategoryId' }).populate({ path: 'varianceId' }).exec((err, result) => {
                         if (err || result < 0)
                             cb(null)
                         else {
@@ -660,13 +660,16 @@ homeScreenApi = (query, callback) => {
 
                                 let temp = {
                                     _id: element._id,
-                                    description: element.description,
-                                    price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
-                                    productName: element.productName,
-                                    // sellerId: element.sellerId,
-                                    brand: element.brandId.brandName,
-                                    // specifications: element.specifications,
-                                    image: element.varianceId == null ? element.image[0] : element.varianceId.variants[0].image[0],
+                                    categoryName: element.productCategoryId.productcategoryName,
+                                    image: element.productCategoryId.image,
+                                    // _id: element._id,
+                                    // description: element.description,
+                                    // price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
+                                    // productName: element.productName,
+                                    // // sellerId: element.sellerId,
+                                    // brand: element.brandId.brandName,
+                                    // // specifications: element.specifications,
+                                    // image: element.varianceId == null ? element.image[0] : element.varianceId.variants[0].image[0],
                                     type: 'trending'
                                 }
                                 results.push(temp)
@@ -942,14 +945,9 @@ categoryProductList = (data, callback) => {
         })
     }
     else if (data.productListType == 'offer') {
-        console.log("asdfasdfasfsdfdsfdsf")
         let a = [];
         productOffer.findOne({ _id: mongoose.Types.ObjectId("5c8ba06af518814a63ba3a7f") }).populate('applicableOnProduct').populate('applicableOnProductCategory').exec((err, getOffer) => {
-            console.log(getOffer)
             getOffer.applicableOnProduct.forEach(element => {
-                console.log(element);
-                
-
                 temp = {
                     _id: element._id,
                     description: element.description,
@@ -962,8 +960,6 @@ categoryProductList = (data, callback) => {
                     price: element.sellingPrice,
                 }
                 a.push(temp)
-                console.log(a);
-                
             });
             callback({
                 'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.SUBCATORY_FOUND[data.lang], 'result': a
