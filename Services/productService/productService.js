@@ -612,6 +612,7 @@ homeScreenApi = (query, callback) => {
                         })
                     }, (err, response) => {
                         cb(null, trending)
+
                     });
                 }
                 else cb(null)
@@ -674,16 +675,15 @@ homeScreenApi = (query, callback) => {
                                 }
                                 results.push(temp)
                             })
+                            results = _.uniqBy(results, function (e) {
+                                return e.id;
+                            });
                             cb(null, results)
                         }
-
                     })
                 }
             ], (err, response) => {
-
-
                 cb(null, response)
-
             })
         },
         vendorOffer: (cb) => {
