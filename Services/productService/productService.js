@@ -942,10 +942,33 @@ categoryProductList = (data, callback) => {
         })
     }
     else if (data.productListType == 'offer') {
-
+        console.log("asdfasdfasfsdfdsfdsf")
+        let a = [];
         productOffer.findOne({ _id: mongoose.Types.ObjectId("5c8ba06af518814a63ba3a7f") }).populate('applicableOnProduct').populate('applicableOnProductCategory').exec((err, getOffer) => {
-            console.log(err, getOffer)
-            callback(getOffer)
+            console.log(getOffer)
+            getOffer.applicableOnProduct.forEach(element => {
+                console.log(element);
+                
+
+                temp = {
+                    _id: element._id,
+                    description: element.description,
+                    image: element.image,
+                    // image: element.varianceId == null ? element.image : element.varianceId.variants[0].image,
+                    specifications: element.specifications,
+                    // brand: element.brandId.brandName,
+                    brand: "apple",
+                    productName: element.productName,
+                    price: element.sellingPrice,
+                }
+                a.push(temp)
+                console.log(a);
+                
+            });
+            callback({
+                'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.SUBCATORY_FOUND[data.lang], 'result': a
+            })
+
         })
 
     }
@@ -1374,7 +1397,7 @@ getProductCategoryName = (data, callback) => {
 ***********************************************************************/
 
 productDetails = (data, callback) => {
-    log('hitted productDetail api ios', data)
+    log('hitted productDetail api ', data)
     if (!data) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
@@ -4357,8 +4380,7 @@ deleteStaff = (data, header, callback) => {
             })
     })
 }
-
-
+// VendorSearchProduct
 VendorSearchProduct = (data, header, callback) => {
     var value = new RegExp(data.searchKeyword.trim(), 'i');
     let userId, mainResult = []
@@ -4537,6 +4559,7 @@ vendorSearchOffer = (data, header, callback) => {
         }
     })
 }
+//userConversationList
 userConversationList = (req, header, callback) => {
     var userId = req.body.userId;
 
@@ -4736,6 +4759,8 @@ userConversationList = (req, header, callback) => {
         }
     })
 }
+
+
 module.exports = {
     addCategory,
     addSubCategory,
@@ -4792,5 +4817,5 @@ module.exports = {
     analyticsProduct,
     AllProductReviewFeedback,
     vendorSearchOffer,
-    userConversationList
+    userConversationList,
 }
