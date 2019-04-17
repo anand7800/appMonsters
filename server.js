@@ -23,14 +23,24 @@ bodyParser = require('body-parser'),
     commonfunction = require('./commonFile/commonFunction'),
     _ = require('lodash');
 
+
+
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'www.waki.store/');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    if (!req.secure) {
+        res.redirect("https://" + req.headers.host + req.url)
+    }
+    next();
+});
 // var options = {
 //     key: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.key').toString(),
 //     cert: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.csr').toString()
 // };
 var options = {
     key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
-        cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
-    };
+    cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
+};
 // var server = require('http').Server(app);
 var server = require('https').Server(options, app);
 
