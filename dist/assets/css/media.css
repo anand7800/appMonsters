@@ -1,1355 +1,1034 @@
-@media only screen and (max-width: 2000px) {
-.trendingfashionbx .trendingbx figure {
-	height:335px;
-}
-}
 @media only screen and (max-width: 1800px) {
-.nav.fullwdmenu > li > a {
-    padding: 12px 36px;
+.aboutwakiCon .sminfo, .business_detailswrap .businConbx .sminfo {
+	font-size: 16px;
+	line-height: 32px;
 }
-.trendingfashionbx .trendingbx figure {
-	height:290px;
+.wakilogo, .aboutwakiCon {
+	left: 60px;
 }
-.lastprorows figure {
-	height:330px;
+.wakilogo {
+	top: 40px;
 }
-.lastprorows figure.smbx{
-	height:310px;
+.aboutwakiCon {
+	top: 190px;
 }
-.collectionsliderwarp .collectionbx {
-    padding: 40px 50px;
+.aboutwakiCon .wakitextrow img, .business_detailswrap .businesstextrow img {
+	width: 420px;
 }
-.collectionConbx .cellecheading{
-	font-size:30px;
-	margin-bottom:20px;
+.aboutwakiCon .emailrow .form-control, .btn-primary.loginbtn, .business_detailswrap .businConbx .businessfrombx .form-control, .picker .pc-element, .picker .pc-trigger, .picker .pc-select .pc-list li, .select-items div, .select-selected, .btn-primary.businessbtn {
+	font-size: 16px;
 }
-.shopnowrow {
-    margin-top: 40px;
+.business_detailswrap .businConbx {
+	margin-left: 60px;
 }
-.collectionsliderwarp .collectionbx .collectionConbx {
-    padding-top: 15px;
+.businessrttopbg {
+	width: 500px;
+	height: 570px;
 }
-.newcollectiontabSection{
-	height: 579px;
+.mybrand input[type=text],.mybrand button {
+	font-size:16px;
 }
-.collectiontabs{
-	height: 145px;
+.uploadimgbx,.uploadimgbx .fileinput .thumbnail {
+	width: 125px;
+	height: 125px;
 }
-.collectiontabs .tabCon{
-	padding: 41px 20px;
-	font-size: 22px;
+.business_detailswrap .businConbx .businessfrombx .sales_year_choose span.select{
+	font-size: 16px;
 }
-.collectiontabs.color_prints{
-	top: 145px;
-}
-.collectiontabs.saleofday{
-	top: 290px;
-}
-.collectiontabs.summer_item{
-	top: 435px;
-}
-.collectiontabs .tabCon .lefttooltips{
-	left: -24px;
-	width: 27px;
-	height: 145px;
-	background-size: 27px 145px;
-}
-.collectionchCon .collectionitem{
-	width: 340px;
-}
-.collectionslideCon h3{
-	font-size: 50px;
-}
-.collectionslideCon h3 span,.collectionslideCon h2{
-	font-size: 90px;
-}
-.collectionslideCon h4{
-	font-size: 28px;
-}
-.collectionslideCon .shopnowrow a {
-    padding: 16px 30px;
-    font-size: 18px;
-}
-.collectionslideCon .collectionchCon{
-	padding-right: 340px;
-}
-.subCategorySlider .itemimgbx{
-	width: 100px;
-	height: 100px;
-}
-.subCategorySlider .itembox h4{
+.orderid_row .idnum,.orderidinfowrap ul li .orderidpernm,.livechatConbx .chatheading{
 	font-size: 15px;
 }
-.profile_banner{
-	padding: 60px 35px;
+.orderidinfowrap ul li .ordersminfo,.orderid_row .orderidtime{
+	font-size: 14px;
+}
+.livechatConbx .chatsConbxs .chats_inputs,.livechatConbx .sending_messagerw .form-control,.btn-primary.sendmess{
+	font-size: 15px;
+}
+.livechatConbx .chatsConbxs .chats_inputs{
+	padding: 20px;
+}
+.livechatConbx .chatsConbxs{
+	top: 62px;
+	bottom: 94px;
+}
+.reviewfeddrow h4,.reviewfeddrow h5{
+	font-size: 15px;
+}
+.accountbxinfo .usrdetails .usrnm,.accountbxinfo.staffAccounts .usrdetails .usrnm span,.accountstaffwtbx .usrnms,.accountsetheaderrw .boxtitlenm{
+    font-size: 20px;
+}
+.accountbxinfo .usrdetails .phonenum_email,.accountstaffwtbx .phonenumrw, .accountstaffwtbx .emailusr,.address_rowss{
+	font-size: 14px;
+}
+.accountbxinfo.staffAccounts .usrdetails .usrnm{
+	font-size: 28px;
 }
 }
 @media only screen and (max-width: 1600px) {
-.nav.fullwdmenu > li > a {
-    padding: 12px 26px;
+.uploadimgbx,.uploadimgbx .fileinput .thumbnail {
+	width: 105px;
+	height: 105px;
 }
-.trendingfashionbx .trendingbx figure {
-	height:256px;
+.livechatConbx .chatsConbxs{
+	padding: 30px;
 }
-.lastprorows figure {
-	height:300px;
+.livechatConbx .chatsConbxs {
+	padding: 20px;
 }
-.lastprorows figure.smbx{
-	height:280px;
+.orderid_row .idnum, .orderidinfowrap ul li .orderidpernm, .livechatConbx .chatheading {
+    font-size: 15px;
 }
-.collectionConbx .cellecheading{
-	font-size:28px;
+.orderidinfowrap ul li .ordersminfo, .orderid_row .orderidtime {
+    font-size: 13px;
 }
-.collectionConbx .cellecheadingsm{
-	font-size:18px;
+.livechatConbx .chatsConbxs .chats_inputs {
+    padding: 15px;
 }
-.shopnowrow {
-    margin-top: 40px;
+.livechatConbx .chatsConbxs .chats_inputs, .livechatConbx .sending_messagerw .form-control, .btn-primary.sendmess {
+    font-size: 15px;
 }
-.newcollectiontabSection {
-    height: 499px;
+.startabsrow .reviewfeddrow h4{
+	margin-top: 5px;
 }
-.collectionsliderwarp .collectionbx .collectionConbx {
-    padding-top: 15px;
-}
-.collectionslideCon h3{
-	font-size: 40px;
-}
-.collectionslideCon h3 span, .collectionslideCon h2{
-	font-size: 80px;
-}
-.collectionslideCon h4{
-	font-size: 24px;
-}
-.collectionslideCon .collectionchCon {
-    padding: 80px 70px;
-    padding-right: 300px;
-}
-.collectionchCon .collectionitem{
-	width: 300px;
-}
-.collectiontabs {
-    height: 125px;
-}
-.collectiontabs.color_prints {
-    top: 125px;
-}
-.collectiontabs.saleofday {
-    top: 250px;
-}
-.collectiontabs.summer_item {
-    top: 375px;
-}
-.collectiontabs .tabCon {
-    padding: 34px 20px;
-    font-size: 20px;
-}
-.collectiontabs{
-	width: 400px;
-}
-.collectionslideCon{
-	margin-right: 400px;
-}
-.collectiontabs .tabCon .lefttooltips{
-	left: -20px;
-	width: 23px;
-	height: 125px;
-	background-size: 23px 125px;
-}
-.toppicswrap.productlisting .itembox .itemdetailsbx h4{
-	font-size: 14px;
-}
-.selectcategory [type="checkbox"]:not(:checked) + label, .selectcategory [type="checkbox"]:checked + label{
-	font-size: 13px;
-}
-.profile_banner h3{
-	font-size: 22px;
-}
-.profile_banner h4{
-	font-size: 17px;
-}
-.profile_banner h2.email,.profile_banner h2.mobilenum,.orderid_detailsbx .aedprice{
-	font-size: 26px;
-}
-.orderidprobox .proimgbx{
-	width: 160px;
-}
-.orderid_detailsbx{
-	margin-left: 160px;
-}
-.orderid_detailsbx .pro_ord_nm,.orderid_detailsbx .qty,.shippedbox h4{
+.addstaffAccount h3{
 	font-size: 18px;
 }
-.orderid_detailsbx .prosminfo, .orderid_detailsbx .storageitem,.orderid_detailsbx .order_placed_date,.orderid_detailsbx .brand_pro{
-	font-size: 14px;
+.addstaffAccount .infos{
+	font-size: 15px;
 }
-.orderid_detailsbx .orderidnum{
-	font-size: 13px;
-}
-.orderid_detailsbx{
-	padding-right: 140px;
-}
-.totalpaidrw .totalsheading, .totalpaidrw .aedpricebx,.paidvia{
-	font-size: 16px;
-}
-.shippedbox .addressbox h5{
-	font-size: 17px;
-}
-.shippedbox .addressbox h6{
-	font-size: 14px;
-}
-.orderlistContent .orderidprobox{
-	min-height: 260px;
-}
-.profiletabsConWrap .nav-tabs > li > a,.profileheading_row h3{
-	font-size: 16px;
-}
-.profiletabsConWrap .nav-tabs > li > a{
-	padding: 16px 30px;
+.accountbxinfo .usrdetails .usrnm, .accountbxinfo.staffAccounts .usrdetails .usrnm span, .accountstaffwtbx .usrnms,.accountsetheaderrw .boxtitlenm {
+    font-size: 18px;
 }
 }
 @media only screen and (max-width: 1440px) {
-.nav.fullwdmenu > li > a {
-	padding: 12px 22px;
+.aboutwakiCon {
+	top: 170px;
 }
-.trendingfashionbx .trendingbx figure {
-    height: 240px;
+.aboutwakiCon .wakitextrow img, .business_detailswrap .businesstextrow img {
+	width: 350px;
 }
-.lastprorows figure {
-    height: 280px;
+.aboutwakiCon .sminfo, .business_detailswrap .businConbx .sminfo {
+	font-size: 15px;
+	line-height: 28px;
 }
-.lastprorows figure.smbx {
-    height: 260px;
+.aboutwakiCon .emailrow .form-control {
+	padding: 13px 12px;
 }
-.collectionConbx .cellecheading{
-	font-size: 26px;
+.btn-primary.loginbtn {
+	padding: 13px 24px;
 }
-.collectionConbx .cellecheadingsm{
-	font-size: 16px;
+.aboutwakiCon .emailrow .form-control, .btn-primary.loginbtn {
+	font-size: 15px;
 }
-.collectionslideCon {
-    margin-right: 350px;
+.businessrttopbg {
+	width: 440px;
+	height: 502px;
 }
-.newcollectiontabSection {
-    height: 419px;
+.uploadimgbx,.uploadimgbx .fileinput .thumbnail {
+	width: 90px;
+	height: 90px;
 }
-.collectionslideCon h3{
-	font-size: 35px;
+.products_alllist_numrow .pro_digitbx h2 {
+    font-size: 32px;
 }
-.collectionslideCon h3 span, .collectionslideCon h2{
-	font-size: 70px;
-}
-.collectionslideCon h4{
-	font-size: 21px;
-}
-.collectionslideCon .collectionchCon {
-    padding: 60px 50px;
-    padding-right: 240px;
-}
-.collectionchCon .collectionitem{
-	width: 240px;
-	top: 60px;
-}
-.collectiontabs {
-    width: 350px;
-}
-.collectiontabs .tabCon {
-    padding: 27px 15px;
-    font-size: 18px;
-}
-.collectiontabs {
-    height: 105px;
-}
-.collectiontabs.color_prints {
-    top: 105px;
-}
-.collectiontabs.saleofday {
-    top: 210px;
-}
-.collectiontabs.summer_item {
-    top: 315px;
-}
-.collectiontabs .tabCon .lefttooltips{
-	left: -17px;
-	width: 19px;
-	height: 105px;
-	background-size: 19px 105px;
-}
-.collectionslideCon .shopnowrow a {
-    padding: 12px 30px;
-    font-size: 16px;
-}
-.toppicswrap.productlisting .productlistbox {
-    width: 25%;
-}
-.wdp5.wds20{
-	width: 20%;
-}
-.wdp5.wds80{
-	width: 80%;
-}
-}
-
-@media only screen and (max-width: 1400px) {
-.trendingfashionbx .trendingbx figure {
-	height: 225px;
-}
-.lastprorows figure {
-	height: 264px;
-}
-.lastprorows figure.smbx {
-	height: 244px;
-}
-}
-
-@media only screen and (max-width: 1320px) {
-#wrapper{
-	padding: 0 40px;
-	margin-top: 174px;
-}
-.navbar-default {
-	padding: 40px 40px 0px 40px;
-}
-.nav.fullwdmenu > li > a {
-	padding: 12px 18px;
-}
-.navbar-default span.leftColorbg,.navbar-default span.rightColorbg {
-    width: 40px;
-}
-.trendingfashionbx .trendingbx figure {
-	height: 220px;
-}
-.lastprorows figure {
-	height: 254px;
-}
-.lastprorows figure.smbx {
-	height: 234px;
-}
-.collectionConbx .cellecheading{
-	font-size: 24px;
-}
-.shopnowrow a{
-	padding: 10px 24px;
-	font-size: 16px;
-}
-.toppicswrap .itembox .itemimgbx{
-	height: 160px;
-}
-.toppicswrap .itembox .itemdetailsbx h4{
-	font-size: 14px;
-	padding-right: 60px;
-}
-.toppicswrap .itembox .itemdetailsbx .aedprice{
-	font-size: 12px;
-	padding-right: 5px;
-}
-.toppicswrap .itembox .itemdetailsbx .itemsmdes,.toppicswrap .itembox .itemdetailsbx .itemcomnm{
-	font-size: 12px;
-}
-.trendingfashionbx .hover01 span{
-	font-size: 13px;
-}
-.collectionsliderwarp .collectionbx {
-	padding: 30px 30px;
-	padding-right: 40px;
-}
-.lastprorows figure.smbx span{
-	font-size: 16px;
-}
-.lastprorows figure.smbx span i{
-	font-size: 12px;
-}
-.collectionslideCon {
-    margin-right: 300px;
-}
-.newcollectiontabSection {
-    height: 400px;
-}
-.collectionslideCon h3{
-	font-size: 32px;
-}
-.collectionslideCon h3 span, .collectionslideCon h2{
-	font-size: 64px;
-}
-.collectionslideCon h4{
+.products_alllist_numrow .pro_digitbx h3{
 	font-size: 18px;
 }
-.collectionslideCon .collectionchCon {
-    padding: 50px 60px;
-    padding-right: 220px;
+.imports_row .nav-tabs > li > a{
+	margin-right: 30px;
 }
-.collectionchCon .collectionitem{
-	width: 220px;
+.recentOrderTable .table > thead > tr > th,.recentOrderTable .table > tbody > tr > td{
+	font-size: 13px;
 }
-.collectiontabs {
-    width: 300px;
+.analyticsheading .productlisting .proimg{
+	width: 45px;
+	height: 45px;
 }
-.collectiontabs .tabCon {
-    padding: 26px 15px;
-    font-size: 17px;
+.analyticsheading .productlisting .aboutproductwrap{
+	margin-left: 54px;
 }
-.collectiontabs {
-    height: 100px;
+.orderid_row,.orderidinfowrap ul li .orderidpernm{
+	margin-bottom: 5px;
 }
-.collectiontabs.color_prints {
-    top: 100px;
+.orderidinfowrap ul li .ordersminfo {
+	line-height: 21px;
 }
-.collectiontabs.saleofday {
-    top: 200px;
+.livechatConbx .chatsConbxs .chats_inputs, .livechatConbx .sending_messagerw .form-control, .btn-primary.sendmess {
+    font-size: 14px;
 }
-.collectiontabs.summer_item {
-    top: 300px;
+.livechatConbx .chatsConbxs,.livechatConbx .sending_messagerw,.orderidinfowrap ul li {
+    padding: 15px;
 }
-.collectiontabs .tabCon .lefttooltips{
-	left: -17px;
-	width: 18px;
-	height: 100px;
-	background-size: 18px 100px;
+.livechatConbx .chatsConbxs{
+	bottom: 80px;
 }
-.collectionslideCon .shopnowrow a {
-    padding: 12px 30px;
-    font-size: 16px;
+.livechatConbx .chatsConbxs .chats_inputs{
+	padding: 15px;
+	line-height: 24px;
 }
-.subcategories-details {
-    padding: 20px;
+.livechatConbx .chatsConbxs .chatsrw {
+    margin-bottom: 40px;
 }
-.subCategorySlider .itemimgbx {
-    width: 90px;
-    height: 90px;
+.reviewfeddrow,.orderfeedbackbox,.startabsrow{
+    padding: 10px;
 }
-.subCategorySlider .itembox h4{
-	font-size: 14px;
-	line-height: 20px;
-}
-.subcategories-details .product-subcategory h3{
-	font-size: 21px;
-}
-.subcategories-banner,.subcategories-details .product-subcategory{
-	margin-bottom: 30px;
-}
-}
-@media only screen and (max-width: 1220px) {
-#wrapper{
-	padding: 0 30px;
-	margin-top: 164px;
-}
-.navbar-default {
-	padding: 30px 30px 0px 30px;
-}
-.nav.fullwdmenu > li > a {
-    padding: 12px 16px;
-}
-.navbar-default span.leftColorbg,.navbar-default span.rightColorbg {
-	width: 30px;
-}
-.trendingfashionbx .trendingbx figure {
-	height: 210px;
-}
-.lastprorows figure {
-	height: 244px;
-}
-.lastprorows figure.smbx {
-	height: 224px;
-}
-.toppicswrap{
-	padding: 20px 19px 10px 20px
-}
-.brandssectionbx,.trendingfashionbx{
-	padding: 20px 20px 10px 20px
-}
-.toppicswrap h3, .brandssectionbx h3, .trendingfashionbx h3{
-	font-size: 21px;
-	margin-top: 5px;
-}
-.brandssectionbx .brandsbx{
+.reviewfeddrow .reviewimg{
 	width: 80px;
 	height: 80px;
 }
-.toppicswrap .itembox .itemimgbx{
-	height: 140px;
+.reviewfeddrow .reviewproinfo{
+	margin-left: 95px;
+	padding-top: 7px;
 }
-.collectionConbx .typecollection .typetext{
-	font-size: 14px;
+.reviewfeddrow h4, .reviewfeddrow h5 {
+    font-size: 14px;
 }
-.collectionConbx .cellecheading {
-	font-size: 21px;
-	line-height: 28px;
+.reviewownernm,.reviewownerid{
+	font-size: 13px;
 }
-.collectionConbx .cellecheadingsm{
+.startabsrow .nav-tabs{
+	margin-top: 16px;
+}
+.starrow .fa{
 	font-size: 15px;
 }
-.profile_banner {
-    padding: 40px 25px;
+.reviewsminfo{
+	margin-top: 10px;
 }
-.profile_banner h3 {
-    font-size: 20px;
+.row.reviewpd{
+	margin: 0 -10px;
 }
-.profile_banner h4 {
+.reviewpdm{
+	padding: 0 10px;
+}
+.accountbxinfo .usrdetails .usrnm, .accountbxinfo.staffAccounts .usrdetails .usrnm span, .accountstaffwtbx .usrnms,.accountsetheaderrw .boxtitlenm {
     font-size: 16px;
 }
-.profile_banner h2.email, .profile_banner h2.mobilenum, .orderid_detailsbx .aedprice {
-    font-size: 24px;
-}
-.orderidprobox .proimgbx {
-    width: 130px;
-}
-.orderid_detailsbx{
-	margin-left: 130px;
-	padding: 15px;
-	padding-right: 120px;
-}
-.orderid_detailsbx .pro_ord_nm, .orderid_detailsbx .qty, .shippedbox h4 {
-    font-size: 16px;
-}
-.orderid_detailsbx .prosminfo, .orderid_detailsbx .storageitem, .orderid_detailsbx .order_placed_date, .orderid_detailsbx .brand_pro {
+.accountbxinfo .usrdetails .phonenum_email, .accountstaffwtbx .phonenumrw, .accountstaffwtbx .emailusr,.address_rowss {
     font-size: 13px;
 }
-.totalpaidrw .totalsheading, .totalpaidrw .aedpricebx, .paidvia {
+.accountstaffwtbx .staff_usr_row .usrnmbx{
+	width: 80px;
+	height: 80px;
+	font-size: 32px;
+	line-height: 80px;
+}
+.accounts_tabs_section .nav-tabs > li > a{
+	font-size: 14px;
+}
+.accountsetheaderrw .aciconbx{
+	width: 70px;
+	height: 70px;
+}
+.accountsetheaderrw .boxtitlenm{
+	line-height: 70px;
+}
+.changepassordform .form-control{
+	font-size: 14px;
+}
+.accountbxinfo {
+    padding: 15px 15px 10px 15px;
+}
+.accountstaffwtbx{
+	padding: 15px;
+}
+}
+@media only screen and (max-width: 1400px) {
+.livechatConbx .sending_messagerw .sendinput {
+    padding-right: 160px;
+}
+.btn-primary.sendmess{
+	width: 150px;
+}
+.addstaffAccount h3 {
+    font-size: 17px;
+}
+.addstaffAccount .infos,.addstaff_formbx .form-control {
+    font-size: 14px;
+}
+.changepassordform .subbtnrw .btn-primary{
+	width: 120px;
+}
+}
+@media only screen and (max-width: 1320px) {
+.aboutwakiCon .wakitextrow img, .business_detailswrap .businesstextrow img {
+	width: 300px;
+}
+.aboutwakiCon .sminfo, .business_detailswrap .businConbx .sminfo {
+	font-size: 14px;
+	line-height: 24px;
+}
+.business_detailswrap .businConbx .businessfrombx .form-control, .picker .pc-element, .picker .pc-trigger, .picker .pc-select .pc-list li, .select-items div, .select-selected, .btn-primary.businessbtn {
+	font-size: 14px;
+}
+.businessrttopbg {
+	width: 400px;
+	height: 456px;
+}
+.aboutwakiCon .emailrow .form-control {
+	width: 300px;
+}
+.dashboardConbx {
+    padding: 30px;
+}
+.reviewfeedbackwrap {
+    padding: 10px;
+}
+.starrow .fa {
+    font-size: 12px;
+}
+.livechatwrap{
+	padding: 10px 0 10px 10px;
+}
+.livechatwrap .padrightz{
+	padding-left: 10px;
+}
+.dashboardConbx .welcomebx,.dashboardConbx .digitbx{
+    padding: 15px;
+}
+.totalSeleswrap {
+    padding: 20px;
+}
+.orderstatuswrap .orderstatus{
+	padding:20px;
+}
+.activitiesCon{
+	padding-left:10px;
+}
+.sidemenubtn{
+	margin-left:30px;
+}
+.dashboardConbx .digitbx h4{
+	font-size:12px;
+}
+.dashboardConbx .welcomebx h2{
+	font-size:21px;
+}
+.dashboardConbx .welcomebx h3,.totalSelesinfobx .sminfo{
+	font-size:16px;
+}
+.headers .menuiconbx .header_rtbx{
+	right:30px;
+}
+.addproducts{
+	margin:30px;
+}
+.totalSelesinfobx h3{
+	font-size:24px;
+}
+.sidelogobx{
+	padding:0 30px;
+}
+.imports_row .nav-tabs > li > a{
+	font-size: 15px;
+	margin-right: 15px;
+}
+.orderid_row .idnum, .orderidinfowrap ul li .orderidpernm, .livechatConbx .chatheading {
     font-size: 15px;
 }
-.shippedbox .addressbox h5 {
-    font-size: 16px;
-}
-}
-@media only screen and (max-width: 1200px) {
-.trendingfashionbx .trendingbx figure {
-	height: 200px;
-}
-.lastprorows figure {
-    height: 235px;
-}
-.lastprorows figure.smbx {
-    height: 215px;
-}
-}
-@media only screen and (max-width: 1170px) {
-#wrapper {
-	padding:0px 15px;
-	margin-top: 140px;
-}
-.navbar-default {
-    padding: 15px 15px 0px 15px;
-}
-.navbar-default .logorw{
-	padding: 10px 0;
-}
-.nav.fullwdmenu{
-	padding: 0;
-}
-.nav.fullwdmenu > li > a{
+.orderidinfowrap ul li .ordersminfo{
 	font-size: 13px;
-	padding: 12px 14px;
+	line-height: 24px;
 }
-.nav.fullwdmenu .dropdown-menu > li > a{
+.orderid_row .orderidtime{
 	font-size: 13px;
 }
-.midConwrap .bannerbx,.midConwrap .bigbannerAdbx,.toppicswrap,.brandssectionbx,.trendingfashionbx,.collectionsliderwarp,.lastprorows{
-    margin-bottom: 15px;
+.orderid_row .idnum, .orderidinfowrap ul li .orderidpernm, .livechatConbx .chatheading,.livechatConbx .chatsConbxs .chats_inputs {
+    font-size: 14px;
 }
-.toppicswrap{
-	padding: 15px 14px 10px 15px;
+.livechatConbx .chatheading .placedate{
+	font-size: 13px;
 }
-.brandssectionbx,.trendingfashionbx{
-	padding: 15px 15px 10px 15px;
+.livechatConbx .chatheading{
+	padding: 15px;
 }
-.navbar-default span.leftColorbg, .navbar-default span.rightColorbg {
-    width: 15px;
+.livechatConbx .chatsConbxs .chatsrw {
+    margin-bottom: 35px;
 }
-.brandssectionbx .brandsbx {
+.livechatConbx .sending_messagerw .sendinput{
+	padding-right: 170px;
+}
+.btn-primary.sendmess{
+	width: 160px;
+}
+.livechatConbx .sending_messagerw .form-control,.btn-primary.sendmess{
+	font-size: 15px;
+}
+.livechatConbx .sending_messagerw .form-control{
+	padding: 12px 12px 12px 0;
+}
+.livechatConbx .chatsConbxs {
+    bottom: 76px;
+    top: 50px;
+}
+.changepassordform .subbtnrw .btn-primary{
+	width: 110px;
+}
+.accountbxinfo .usrimgbx{
+	width: 70px;
+	height: 70px;
+}
+.accountbxinfo .usrdetails{
+	margin-left: 85px;
+}
+}
+ @media only screen and (max-width: 1220px) {
+.wakilogo {
+	left: 20px;
+	top: 30px;
+}
+.aboutwakiCon {
+	left: 20px;
+	top: 150px;
+}
+.business_detailswrap .businConbx {
+	padding-top: 150px;
+}
+.business_detailswrap.vendor .businConbx {
+	padding-top: 110px;
+}
+.business_detailswrap .businesstextrow h1{
+	font-size: 24px;
+}
+.business_detailswrap.vendor .businConbx .businessfrombx{
+	margin-top: 30px;
+}
+.business_detailswrap .businConbx {
+	margin-left: 20px;
+}
+.aboutwakiCon .emailrow .form-control {
+	width: 100%;
+	margin-right: 0;
+}
+.btn-primary.loginbtn {
+	width: 100%;
+	padding: 12px 0;
+	margin-top: 15px;
+}
+.analyticsheading .productlisting .proimg {
+    width: 40px;
+    height: 40px;
+}
+.analyticsheading .productlisting .aboutproductwrap {
+    margin-left: 48px;
+}
+.productdetailswrap .aboutproductwrap .soldpro_sminfo{
+	font-size: 11px;
+}
+.productdetailswrap .aboutproductwrap .item_num_sold{
+	font-size: 13px;
+}
+.storesession .sessionwrap h4, .onlinestore .storeheadings h4, .analyticsheading .topproducts h4,.analyticsheading .sessionheading h4{
+	font-size: 15px;
+}
+.storesession .sessionwrap a, .onlinestore .storeheadings a{
+	font-size: 13px;
+}
+.analyticsheading .paddrw{
+	padding: 10px;
+}
+.business_detailswrap .businConbx .businessfrombx .uploadimgbx,.business_detailswrap .businConbx .businessfrombx .uploadimgbx .fileinput .thumbnail{
+	width: 110px;
+	height: 110px;
+}
+.startabsrow .reviewfeddrow .reviewimg {
     width: 60px;
     height: 60px;
 }
-.toppicswrap h3, .brandssectionbx h3, .trendingfashionbx h3{
-	font-size: 20px;
+.startabsrow .reviewfeddrow .reviewproinfo {
+	margin-left:70px;
+	padding-top: 0;
 }
-.trendingfashionbx .trendingbx figure {
-    height: 190px;
+.startabsrow .reviewfeddrow h5{
+	margin-top: 5px;
 }
-.trendingfashionbx .hover01 span{
-	bottom: 20px;
+.startabsrow .nav-tabs {
+    margin-top: 5px;
 }
-.lastprorows figure {
-    height: 220px;
-}
-.lastprorows figure.smbx {
-    height: 200px;
-}
-.collectionConbx .cellecheading{
-	font-size: 20px;
-}
-.lastprorows figure.smbx span{
+.changepassordform .subbtnrw .btn-primary {
+	width: 100px;
 	font-size: 14px;
+	padding: 10px 8px;
 }
-.lastprorows figure.smbx span{
-	bottom: 20px;
+.accountsetheaderrw .aciconbx {
+    width: 60px;
+    height: 60px;
 }
-.footerwrap{
-	padding: 30px 0;
+.accountsetheaderrw .boxtitlenm {
+    line-height: 60px;
 }
-.footerwrap .container{
-	width: auto;
+.accountsetheaderrw .aciconbx span{
+	width: 36px;
+	height: 36px;
+	margin: -18px 0 0 -18px;
+	background-size: 36px 72px;
 }
-.topitemsproductsSlbx {
-    margin-top: 35px;
+.accountsetheaderrw .aciconbx span.signout{
+	background-position: 0 -36px;
 }
-.owl-carousel.toppics .owl-stage-outer {
-    padding-bottom: 30px;
+.accountstaffwtbx .staff_usr_row .usrnmbx {
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
+    line-height: 70px;
 }
-.newcollectiontabSection {
-	height: 340px;
-	margin-bottom: 15px;
+.accountaction span{
+	width: 6px;
+	height: 6px;
+	margin-bottom: 4px;
 }
-.collectionslideCon h3{
-	font-size: 28px;
 }
-.collectionslideCon h3 span, .collectionslideCon h2{
-	font-size: 56px;
+@media only screen and (max-width: 1200px) {
+.dashboardConbx .digitbx.mnbtm,.dashboardConbx .welcomebx.mnbtm{
+	margin-bottom:30px;
 }
-.collectionslideCon h4{
-	font-size: 17px;
-}
-.collectionslideCon .collectionchCon {
-    padding: 50px 30px;
-    padding-right: 200px;
-}
-.collectionchCon .collectionitem{
-	width: 200px;
-}
-.collectiontabs {
-    width: 260px;
-}
-.collectiontabs .tabCon {
-    padding: 21px 15px;
-    font-size: 15px;
-}
-.collectiontabs {
-    height: 85px;
-}
-.collectiontabs.color_prints {
-    top: 85px;
-}
-.collectiontabs.saleofday {
-    top: 170px;
-}
-.collectiontabs.summer_item {
-    top: 255px;
-}
-.collectiontabs .tabCon .lefttooltips{
-	left: -15px;
-	width: 16px;
-	height: 85px;
-	background-size: 16px 85px;
-}
-.signinwrap .signinCon {
-    padding: 20px 30px 0 30px;
-}
-.emailAddressbox {
-    padding: 20px 0;
-}
-.signinCon h3{
-	font-size: 28px;
-}
-.registerrow .register_text{
-	font-size: 18px;
-}
-.toppicswrap.productlisting .productlistbox {
-    width: 33.33%;
-}
-.wdp5.wds20 {
-    width: 23%;
-}
-.wdp5.wds80 {
-    width: 77%;
-}
-.toppicswrap.productlisting {
-    padding: 20px;
-}
-}
-
-@media only screen and (max-width: 1080px) {
-.trendingfashionbx .trendingbx figure {
-	height: 184px;
-}
-.lastprorows figure {
-    height: 210px;
-}
-.lastprorows figure.smbx {
-    height: 190px;
-}
-}
-
-@media only screen and (max-width: 1023px) {
-.navbar-default {
-	padding: 10px 10px 0px 10px;
-}
-#wrapper {
-    padding: 0px 10px;
-    margin-top: 134px;
-}
-.logorw .navbar-nav > li{
-	margin: 0 10px;
-}
-.navbar-default span.leftColorbg, .navbar-default span.rightColorbg {
-    width: 10px;
-}
-.nav.fullwdmenu > li > a {
-    font-size: 12px;
-    padding: 12px 7px;
-}
-.nav.fullwdmenu .dropdown-menu > li > a{
-	font-size: 12px;
-}
-.logorw .navbar-nav > li > a span{
-	width: 24px;
-	height: 24px;
-	margin: -12px 0 0 -12px;
-	background-size: 48px 72px;
-}
-.logorw .navbar-nav > li:hover > a span.stores {
-	background-position: -24px 0;
-}
-.logorw .navbar-nav > li > a span.account {
-	background-position: 0 -24px;
-}
-.logorw .navbar-nav > li:hover > a span.account {
-	background-position: -24px -24px;
-}
-.logorw .navbar-nav > li > a span.cart {
-	background-position: 0 -48px;
-}
-.logorw .navbar-nav > li:hover > a span.cart {
-	background-position: -24px -48px;
-}
-.midConwrap .bannerbx,.midConwrap .bigbannerAdbx,.toppicswrap,.brandssectionbx,.trendingfashionbx,.collectionsliderwarp,.lastprorows{
-    margin-bottom: 10px;
-}
-.toppicswrap h3, .brandssectionbx h3, .trendingfashionbx h3 {
-    font-size: 18px;
-}
-.toppicswrap h3:after,.brandssectionbx h3:after,.trendingfashionbx h3:after{
-	bottom:-7px;
-}
-.toppicswrap .itembox .itemimgbx {
-    height: 120px;
-}
-.trendingfashionbx .marginwd8{
-	margin: 0 -5px;
-}
-.trendingfashionbx .colwd{
-	padding: 0 5px;
-}
-.trendingfashionbx .trendingbx{
-	margin-bottom: 10px;
-}
-.trendingfashionbx .trendingbx figure {
-    height: 150px;
-}
-.trendingfashionbx .hover01 span{
-	font-size: 12px;
-}
-.collectionsliderwarp .collectionbx {
-	padding: 15px 20px;
-	padding-right: 40px;
-}
-.collectionsliderwarp .row.mnmlt{
-	margin: 0 -5px;
-}
-.collectionsliderwarp .pdn{
-	margin: 0 5px;
-}
-.collectionConbx .cellecheading{
-	font-size: 18px;
-}
-.collectionConbx .cellecheadingsm{
-	font-size: 13px;
-}
-.collectionConbx .typecollection,.collectionConbx .cellecheading{
-	margin-bottom: 15px;
-}
-.shopnowrow {
-	margin-top: 20px;
-	margin-bottom: 10px;
-}
-.shopnowrow a {
-    padding: 10px 20px;
-    font-size: 15px;
-}
-.lastprorows .row.mnm {
-    margin: 0 -5px;
-}
-.lastprorows .pdnone {
-    margin: 0 5px;
-}
-.lastprorows figure {
-    height: 175px;
-}
-.lastprorows figure.smbx {
-	height: 165px;
-	margin: 5px;
-}
-.shoplinksbx h4{
-	font-size: 13px;
-}
-.shoplinksbx ul li a{
-	font-size: 12px;
-}
-.wakipromises .promisesbx .imgsbx span.original{
-	width:50px;
-	height:40px;
-	background-size: 87px 40px;
-}
-.wakipromises .promisesbx .imgsbx span.return{
-	width:36px;
-	height:40px;
-	background-size: 87px 40px;
-	background-position:-51px 0;
-}
-.wakipromises .promisesbx .promisecon {
-    font-size: 12px;
-    margin-left: 60px;
-}
-.footerwrap .downLinkContainer a{
-	margin-bottom: 10px;
-	margin-right: 0;
-}
-.newcollectiontabSection{
-	height: auto;
-	margin-bottom: 10px;
-	overflow: inherit;
-}
-.collectiontabs{
-	position: relative;
-	width: auto;
-	top: auto;
-	right: auto;
-	height: auto;
-	border-top: 1px solid #d9d9d9;
-	border-bottom: 0;
-}
-.collectiontabs .tabCon span{
-	display: inline-block;
-}
-.collectiontabs .tabCon .lefttooltips,.collectiontabs.active .tabCon .lefttooltips{
-	display: none;
-}
-.collectionslideCon{
-	margin-right: 0;
-}
-.collectiontabs.color_prints,.collectiontabs.saleofday,.collectiontabs.summer_item{
-	top: auto;
-}
-.collectionslideCon .collectionchCon {
-    padding: 30px;
-    padding-right: 200px;
-}
-.collectionchCon .collectionitem{
-	top: 30px;
-	right: 15px;
-}
-.collectionslideCon h3 {
-    font-size: 24px;
-}
-.collectionslideCon h3 span, .collectionslideCon h2{
-	font-size: 45px;
-}
-.collectionslideCon h4 {
-    font-size: 16px;
-}
-.collectionslideCon .shopnowrow a {
-    padding: 10px 20px;
-    font-size: 15px;
-}
-.wdp5.wds20 {
-    width: 30%;
-}
-.wdp5.wds80 {
-    width: 70%;
-}
-.toppicswrap.productlisting .productlistbox {
-    width: 50%;
-}
-.profileheading_row h3{
-	font-size: 15px;
-}
-.profiletabsConWrap .nav-tabs > li > a{
-	font-size: 14px;
-	padding: 13px 10px;
-}
-.profile_banner {
-    padding: 20px;
-}
-.profile_banner h3 {
-    font-size: 18px;
-}
-.profile_banner h4 {
+.imports_row .nav-tabs > li > a {
     font-size: 14px;
+    margin-right: 10px;
 }
-.profile_banner h2.email, .profile_banner h2.mobilenum {
+.recentorder_tablewrap{
+	padding:20px;
+}
+.create_new_offer .eqWrap{
+	display: block;
+}
+.productsviewrow.create_new_offer .texteditorwrap{
+	margin-bottom: 20px;
+}
+.orderid_row .orderidtime {
+    font-size: 12px;
+}
+.orderid_row {
+    padding-right: 60px;
+}
+.livechatConbx .chatsConbxs {
+    padding: 15px;
+}
+.livechatConbx .chatsConbxs .chats_inputs {
+	width: 90%;
+	padding: 10px;
+	font-size: 13px;
+	line-height: 24px;
+}
+.livechatConbx .chatsConbxs .chatsrw {
+    margin-bottom: 30px;
+}
+.livechatConbx .sending_messagerw {
+    padding: 15px;
+}
+.livechatConbx .sending_messagerw .sendinput {
+    padding-right: 150px;
+}
+.btn-primary.sendmess {
+    width: 140px;
+}
+.livechatConbx .chatheading .placedate{
+	text-align: left;
+}
+.livechatConbx .chatheading .placedate {
+    font-size: 11px;
+}
+.accountbxinfo .usrimgbx {
+    width: 60px;
+    height: 60px;
+}
+.accountbxinfo .usrdetails {
+    margin-left: 72px;
+}
+.accountbxinfo .usrdetails .phonenum_email{
+	margin-top: 6px;
+}
+.accountbxinfo.staffAccounts .usrdetails .usrnm span{
+	line-height: 21px;
+}
+}
+ @media only screen and (max-width: 1170px) {
+.aboutwakiCon {
+	width: 35%;
+	top: 160px;
+}
+.products_alllist_numrow .pro_digitbx h2 {
     font-size: 21px;
 }
-.orderlistContent .orderidprobox{
-	min-height: inherit;
-}
-}
-
-@media only screen and (max-width: 839px) {
-.nav.fullwdmenu > li > a,.nav.fullwdmenu .dropdown-menu > li > a {
-	font-size: 11px;
-}
-.trendingfashionbx .trendingbx figure {
-    height: 140px;
-}
-.lastprorows figure {
-    height: 160px;
-}
-.lastprorows figure.smbx {
-    height: 150px;
-}
-.lastprorows figure.smbx span{
-	font-size: 13px;
-}
-.lastprorows figure.smbx span i{
-	font-size: 11px;
-}
-}
-
-@media only screen and (max-width: 767px) {
-#wrapper {
-	padding: 0px;
-	margin-top: 70px;
-}
-.navbar-default {
-	padding:0;
-	background-color: #fff;
-}
-.navbar-default .logorw{
-	padding:0;
-	height: 60px;
-}
-.navbar-brand{
-	width: 100px;
-	height: 35px;
-	margin-left: -50px;
-	margin-top: -18px;
-}
-.navbar-nav {
-	position: absolute;
-	left: 5px;
-	top:15px;
-    float: none;
-    margin: 0;
-}
-.logorw .navbar-nav > li{
-	float: left;
-}
-.logorw .navbar-nav > li > a{
-	padding: 10px;
-	text-indent: -9999px;
-}
-ul.social-network,.navbar-default span.leftColorbg, .navbar-default span.rightColorbg{
-	display: none;
-}
-.trendingfashionbx .colwd{
-	float: left;
-	width: 25%;
-}
-.midConwrap .bigbannerAdbx{
-	padding: 0 10px;
-}
-.toppicswrap,.brandssectionbx,.trendingfashionbx,.midConwrap .bannerbx,.lastprorows{
-	margin-left: 10px;
-	margin-right: 10px;
-}
-.collectionsliderwarp .eqWrap,.lastprorows .eqWrap{
-	display: block;
-}
-.collectionsliderwarp .row.mnmlt{
-	margin: 0 5px;
-}
-.lastprorows .row.mnm{
-	margin:0;
-}
-.marginbtms{
-	margin-bottom: 10px !important;
-}
-.lastprorows .pdnone{
-	padding: 0;
-	margin:0;
-}
-.navbar-header{
-	position: absolute;
-	top: 5px;
-	right: 15px;
-}
-.navbar-toggle{
-	margin-right: 0;
-}
-.nav.fullwdmenu{
-	max-width: inherit;
-}
-#slide-navbar-collapse .navbar-nav{
-	top: auto;
-	left: auto;
-}
-.nav.fullwdmenu .dropdown-menu > li{
-	display: block;
-	height: auto;
-	line-height: normal;
-}
-.navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse{
-	max-height: inherit;
-}
-#slide-navbar-collapse {
-    position: fixed;
-    top: 0;
-	left: 0;
-	padding: 0;
-    width: 280px;
-    height: 100%;
-    background-color: #fff;
-	overflow: auto;
-	z-index: 99;
-	border: 0;
-  }
-.menu-overlay {
-    display: none;
-    background-color: #000;
-    bottom: 0;
-    left: 0;
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-    /* IE7 & 8 */
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 49;
-}
-.lastprorows figure,.lastprorows figure.smbx{
-	height: auto;
-	text-align: center;
-}
-.lastprorows figure.smbx.wdr5{
-	margin:0;
-	margin-right: 5px;
-}
-.lastprorows figure.smbx.wdl5{
-	margin:0;
+.products_alllist_numrow .pro_digitbx h3 {
+	font-size: 14px;
 	margin-left: 5px;
 }
-.lastprorows figure img{
-	position: static;
-	left: auto;
-	right: auto;
-	top: auto;
-	bottom: auto;
-	transform: none;
-	display: inline-block;
+.imports_row h3{
+	font-size: 17px;
 }
-.lastprorows .shadow{
-	position: static;
-	left: auto;
-	right: auto;
-	top: auto;
-	bottom: auto;
+.imports_row .importsfile .glyphicon{
+	font-size: 20px;
 }
-.clearbth{
-	padding-top: 15px;
-	display: block;
+.imports_row .importsfile .imports_text {
+    font-size: 18px;
 }
-.lastprorows .pdnone{
-	background-color: transparent;
+.imports_row .nav-tabs > li > a {
+	padding: 10px 5px;
+    margin-right: 5px;
 }
-.subcategorieswrap {
-    padding-top: 0;
-}
-.subcategories-details {
-    padding:15px;
-}
-.subcategories-details .product-subcategory{
-	padding: 20px 10px 0px 10px;
-}
-.subcategories-banner, .subcategories-details .product-subcategory {
-    margin-bottom: 20px;
-}
-.signinwrap{
-	padding-top: 0;
-}
-.signinwrap .signinCon {
-    padding: 10px 20px 0 20px;
-}
-.signinCon h3,.signinCon h6,.signinwithsocialrow,.registerrow .register_text,.signinCon h4{
-	text-align: center;
-}
-.signinCon h4{
-	padding-top: 10px;
-	font-size: 16px;
-	line-height: 24px;
-}
-.signinwithsocialrow .socialicon{
-	margin-right: 20px;
-}
-.registerrow .wakilogo{
-	display: none;
-}
-.registerrow .register_text{
-	font-size: 16px;
-	margin-top: 20px;
-}
-.signinCon h3 {
-    font-size: 24px;
-}
-.emailAddressbox h4{
-	font-size: 16px;
-	margin-bottom: 30px;
-}
-.emailAddressbox label,.emailAddressbox .forgot_text_row{
-	font-size: 15px;
-}
-.emailAddressbox .form-group {
-    margin-bottom: 20px;
-}
-.btn-primary.signin{
-	padding: 12px 28px;
-}
-.productlistingwrap {
-    padding-top: 0;
-}
-.row.wd5{
-	margin: 0;
-}
-.wdp5.wds80,.wdp5.wds20{
-	width: auto;
-	float: none;
-}
-.toppicswrap.productlisting .productlistbox {
-	float: left;
-}
-.toppicswrap.productlisting,.wdp5.wds20 {
-    margin: 0 5px;
-}
-.category_subcategory_row{
-	margin: 0 10px;
-	margin-bottom: 10px;
-}
-.categoryColbox .categorylist,.categoryheadingrow.brandshview{
-	display: none;
-}
-.categoryheadingrow.brandslidehview{
-	display: block;
-}
-.categoryheadingrow{
-	border-bottom: 0;
-}
-.categoryColbox .categorylist{
-	border-top: 1px solid #dfe5ec;
-}
-.categoryheadingrow{
-	font-size: 14px;
-}
-.category_subcategory_row{
-	padding: 15px;
-}
-.profileSectionwrap{
-	padding-top: 0;
-}
-.orderlistContent{
-	padding: 10px;
-}
-.profile_banner .hichaticon{
-	display: none;
-}
-.profiletabsConWrap .nav-tabs > li{
-	width: 50%;
-	text-align: center;
-}
-.profiletabsConWrap .nav-tabs > li > a{
-	display: block;
-}
-.profileheading_row{
-	padding: 15px;
-}
-.profile_banner{
-	padding: 15px;
-}
-.profile_banner h3{
-	margin-top: 10px;
-}
-.profile_banner h2.email,.profile_banner h2.mobilenum{
-	font-size: 18px;
-	line-height:30px;
-	margin-top: 15px;
-}
-.orderid_detailsbx .orderidnum{
-	position: static;
-	top: auto;
-	right: auto;
-	display: block;
-	padding-bottom: 5px;
-}
-.orderidprobox .proimgbx {
-    width: 100px;
-}
-.orderid_detailsbx {
-    margin-left: 100px;
-    padding-right: 0;
-}
-.orderid_detailsbx .deliveredbtn{
-	font-size: 13px;
-	padding: 10px;
-}
-.delivereddetailsbox{
-	padding: 10px 15px;
-}
-.totalpaidrw .totalsheading, .totalpaidrw .aedpricebx, .paidvia {
-    font-size: 14px;
-}
-}
-@media only screen and (max-width:639px) {
-.trendingfashionbx .colwd {
-	width: 33.33%;
-}
-.trendingfashionbx .trendingbx figure {
-    height: 170px;
-}
-.newcollectiontabSection{
-	margin-left:10px;
-	margin-right: 10px;
-}
-.collectionslideCon h3 {
+.totalSelesinfobx h3 {
     font-size: 21px;
 }
-.collectionslideCon h3 span, .collectionslideCon h2 {
-    font-size: 40px;
+.business_detailswrap .businConbx .businessfrombx .sales_year_choose span.select{
+	height: 50px;
+	line-height: 50px;
 }
-.collectionchCon .collectionitem {
-	width: 150px;
+.livechatwrap .wd40s {
+    width: 45%;
 }
-.collectionslideCon .collectionchCon{
-	padding-right: 150px;
+.livechatwrap .wd60s {
+    width: 55%;
+}
+.livechatConbx .chatheading .placedate {
+    font-size: 9px;
+}
+.startabsrow .reviewfeddrow h4{
+	font-size: 13px;
+	line-height: 18px;
+}
+.startabsrow .reviewfeddrow h5 {
+    margin-top: 0;
+}
+.changepassordform .subbtnrw .btn-primary {
+    width: 80px;
+    font-size: 14px;
+    padding: 10px 0px;
+}
+.accountbxinfo {
+    padding: 10px 10px 5px 10px;
+}
+.accountbxinfo .usrdetails .usrnm, .accountbxinfo.staffAccounts .usrdetails .usrnm span, .accountstaffwtbx .usrnms, .accountsetheaderrw .boxtitlenm {
+    font-size: 15px;
+}
+.accountbxinfo.staffAccounts .usrdetails .usrnm span {
+    line-height: 18px;
+}
+.accountstaffwtbx {
+    padding: 10px;
+}
+.accountsetheaderrw .boxtitlenm{
+	margin-left: 10px;
+}
+.accountbxinfo.staffAccounts .usrdetails .addmorebx{
+	top:18px;
+	margin-top: 0;
 }
 }
-
-@media only screen and (max-width:580px) {
-.trendingfashionbx .colwd {
-	width: 50%;
+ @media only screen and (max-width: 1023px) {
+.loginscreenwrap {
+	background: none;
+	background-color:#fff;
 }
-.trendingfashionbx .trendingbx figure {
-	height: 210px;
+.aboutwakiCon {
+	width: 45%;
+	top: 210px;
 }
-.collectionslideCon h3 span, .collectionslideCon h2 {
-    font-size: 35px;
+.businessrttopbg {
+	width: 300px;
+	height: 342px;
 }
-.collectionchCon .collectionitem {
-	width: 100px;
+.business_detailswrap .businConbx {
+	width: 56%;
 }
-.collectionslideCon .collectionchCon{
-	padding: 20px;
-	padding-right: 100px;
+.business_detailswrap .businConbx .businessfrombx {
+	padding-right: 0;
 }
-}
-
-@media only screen and (max-width:479px) {
-.trendingfashionbx .colwd {
+.aboutwakiCon {
+	position: static;
+	left: auto;
+	top: auto;
 	width: auto;
-	float: none;
+	padding: 160px 20px 20px 20px
 }
-.trendingfashionbx .trendingbx figure {
-	height: auto;
 }
-.trendingfashionbx .shadow{
-	position: static;
-	left: auto;
-	right: auto;
-	top: auto;
-	bottom: auto;
+@media(min-width:991px) {
+#wrapper {
+	padding-left: 300px;
 }
-.trendingfashionbx .hover01 figure img{
-	position: static;
-	left: auto;
-	right: auto;
-	top: auto;
-	bottom: auto;
-	transform: none;
-	display: inline-block;
+#wrapper.toggled {
+	padding-left: 0px;
 }
-.trendingfashionbx .hover01 span{
+#wrapper.toggled .headers {
+	padding-left: 0px;
+}
+#sidebar-wrapper {
+	width: 300px;
+}
+#wrapper.toggled #sidebar-wrapper {
+	width: 0px;
+}
+#page-content-wrapper {
+	/*padding: 20px;*/
+	position: relative;
+}
+#wrapper.toggled #page-content-wrapper {
+	position: relative;
+	margin-right: 0;
+}
+#wrapper.toggled .footer.dash .nav > li > a {
+	padding: 0px 10px;
 	font-size: 14px;
 }
-.toppicswrap,.brandssectionbx, .trendingfashionbx {
-    padding: 10px 9px 5px 10px;
+#wrapper.toggled .footer.dash p.copy {
+	font-size: 14px;
 }
-.toppicswrap .itembox .itemimgbx {
-    height: 110px;
 }
-.collectionsliderwarp .collectionbx{
-	padding: 10px 15px;
-	padding-right: 40px;
+@media only screen and (max-width: 991px) {
+.sidelogobx{
+	width:210px;
+	box-shadow:none;
 }
-.collectionConbx .typecollection .typetext{
-	font-size: 13px;
+#wrapper.toggled .sidelogobx {
+    width: 210px;
+    box-shadow: none;
 }
-.collectionConbx .cellecheading{
-	font-size: 16px;
-	line-height: 24px;
+#wrapper.toggled .headers {
+    padding-left: 0px;
 }
-.collectionConbx .cellecheadingsm{
-	font-size: 12px;
-	line-height: 20px;
+.sidemenubtn {
+    margin-left: 20px;
 }
-.shopnowrow a {
-    padding: 10px 16px;
-    font-size: 14px;
+#wrapper.toggled {
+    padding-left: 0;
 }
-.footerwrap {
-    padding: 15px 0;
+#wrapper.toggled #page-content-wrapper{
+	margin-right:0;
 }
-.collectionslideCon .shopnowrow a {
-    padding: 10px 16px;
-    font-size: 14px;
+.imports_row .nav-tabs > li > a{
+	padding:10px;
+	margin-right: 10px;
 }
-.collectionslideCon .collectionchCon {
+}
+@media only screen and (max-width: 767px) {
+.wakilogo {
+	width: 120px;
+	height: 42px;
+	left: 50%;
+	margin-left: -60px;
+}
+.aboutwakiCon .wakitextrow img, .business_detailswrap .businesstextrow img {
+	width: 240px;
+}
+.aboutwakiCon {
+	padding-top: 120px;
+}
+.businessrttopbg {
+	display: none;
+}
+.business_detailswrap .businConbx {
+	width: auto;
+	margin: 0 20px;
+	padding-top: 130px;
+}
+.headers{
+	height:70px;
+}
+#wrapper.toggled .sidelogobx {
+    width: 140px;
+}
+.sidelogobx {
+	width:140px;
+	height:70px;
+    padding: 0 20px;
+}
+.sidelogo{
+	width:100px;
+	height:35px;
+	background-size: 100px 35px;
+	margin-top:20px;
+}
+.headers .menuiconbx .pgnm{
+	display:none;
+}
+.headers .menuiconbx .header_rtbx {
+	top:16px;
+    right: 20px;
+}
+.sidemenubtn {
+	margin:25px;
+    margin-left: 10px;
+}
+#sidebar-wrapper{
+	top:70px;
+}
+#page-content-wrapper{
+	padding-top:70px;
+}
+.dashboardConbx {
+    padding: 20px 15px;
+}
+.reviewfeedbackwrap {
+    padding: 10px;
+}
+.dashboardConbx .digitbx.mnbtm, .dashboardConbx .welcomebx.mnbtm,.dashboardConbx .welcomerw, .dashboardConbx .digitrow,.totalSeleswrap,.orderstatuswrap .orderstatus {
+    margin-bottom: 20px;
+}
+.orderstatuswrap {
+    margin-bottom: 0px;
+}
+.orderstatuswrap .eqWrap{
+	display:block;
+}
+#sidebar-wrapper{
+	left:280px;
+	margin-left:-280px;
+}
+#wrapper.toggled #sidebar-wrapper{
+	width:280px;
+}
+.userprofilebx {
     padding: 15px;
-    padding-right: 80px;
 }
-.collectionslideCon h3{
-	font-size: 18px;
+.userprofilebx .usercirbx{
+	width:50px;
+	height:50px;
 }
-.collectionslideCon h3 span, .collectionslideCon h2 {
-    font-size: 30px;
+.userprofilebx .userpnm {
+    margin-left: 70px;
+    padding-top: 5px;
 }
-.collectionslideCon h4 {
+.sidemenuwrap .nav > li > a {
+    padding: 16px 50px 16px 20px;
     font-size: 14px;
+    color: #3d3d3d;
 }
-.collectionchCon .collectionitem {
-    width: 80px;
+.navbar-nav{
+	margin:0;
 }
-.toppicswrap.productlisting .productlistbox {
+.dashboardConbx .digitbx.mnbtm767{
+	margin-bottom: 20px;
+}
+.addproducts {
+    margin: 20px;
+	padding:20px;
+}
+.addproducts .addproimgbx{
+	margin-top:30px;
+	margin-bottom:30px;
+}
+.addproducts h3{
+	font-size:18px;
+}
+.addproducts .addprobtnrow .btn-primary.addpro{
+	padding:14px 20px;
+	font-size:14px;
+}
+.imports_row .nav-tabs > li{
+	width: 33.33%;
+}
+.imports_row .nav-tabs > li > a{
+	margin-right: 0;
+	padding:10px 0;
+	text-align: center;
+	display: block;
+}
+.recentorder_tablewrap{
+	padding:15px;
+}
+.recentOrderTable .table > thead > tr > th, .recentOrderTable .table > tbody > tr > td {
+    font-size: 12px;
+}
+.analyticsheading .storesession, .analyticsheading .onlinestore, .analyticsheading .topproducts {
+	padding: 0px 10px;
+}
+.analyticsheading .paddrw {
+	margin-bottom: 10px;
+}
+.productsviewrow .eqWrap{
+	display: block;
+}
+.productsviewrow .texteditorwrap{
+	margin-bottom: 20px;
+}
+.addproductheadingrow h3{
+	font-size: 16px;
+	padding-right: 150px;
+}
+.addproductheadingrow .addproheadingbtn .btn-primary.addprobtn{
+	font-size: 13px;
+	padding: 7px 12px;
+}
+.addproductheadingrow .addproheadingbtn .btn-primary.addprobtn.cancel{
+	margin-right: 10px;
+}
+.addproductheadingrow{
+	padding: 20px 15px;
+}
+.pdr10wds,.pdlsunye{
+	padding: 0 10px;
+}
+.pdrightwd10{
+	padding-right: 15px;
+}
+.pdleftwd10{
+	padding-left: 15px;
+}
+.mnbt7{
+	margin-bottom: 20px;
+}
+.table-responsive.revenue{
+	border: 0;
+	margin-bottom: 0;
+}
+.totalSeleswrap{
+	padding: 15px;
+}
+.totalSelesinfobx h3,.totalSelesinfobx.sales_reports h4{
+    font-size: 18px;
+}
+.sales_year_choose span.select{
+	font-size: 16px;
+}
+.totalSelesinfobx.sales_reports .sminfo{
+	font-size: 14px;
+	line-height: 28px;
+}
+.live_view_headingsbx{
+	margin-bottom: 15px;
+}
+.live_view_headingsbx h3, .live_view_headingsbx h4{
+	font-size: 17px;
+}
+.live_view_headingsbx h4{
+	font-size: 12px;
+}
+.livechatwrap .wd40s{
+	width: auto;
+	position: static;
+	top:auto;
+	left: auto;
+	bottom: auto;
+}
+.livechatwrap .wd60s{
+	position: static;
+	top: auto;
+	right: auto;
+	bottom: auto;
 	width: auto;
 	float: none;
 }
+.orderidinfowrap,.livechatConbx{
+	position: static;
+	top: auto;
+	right: auto;
+	left: auto;
+	bottom: auto;
 }
-@media only screen and (max-width:380px) {
-.logorw .navbar-nav > li{
-	margin: 0 7px;
+.orderidinfowrap{
+	max-height: 300px;
 }
-.subCategorySlider .itemimgbx {
-    width: 80px;
-    height: 80px;
+.livechatConbx .chatsConbxs{
+	position: static;
+	top: auto;
+	left: auto;
+	right:auto;
+	bottom: auto;
+	max-height: 400px;
 }
-.subCategorySlider .itembox h4 {
-    font-size: 13px;
+.livechatConbx .sending_messagerw{
+	position: static;
+	left: auto;
+	right: auto;
+	bottom: auto;
 }
+.livechatConbx{
+	margin-left: 0;
 }
+.livechatwrap .padrightz{
+	padding-left: 0;
+	margin-bottom: 15px;
+}
+.livechatwrap{
+	padding: 15px 10px;
+}
+.livechatConbx .chatheading,.livechatConbx .chatsConbxs,.livechatConbx .sending_messagerw{
+    padding: 10px;
+}
+.livechatConbx .chatsConbxs .chatsrw {
+    margin-bottom: 20px;
+}
+.livechatConbx .sending_messagerw .sendinput{
+	padding-right: 0;
+}
+.btn-primary.sendmess {
+	position: static;
+	left: auto;
+	top:auto;
+	width: 100%;
+	padding: 12px 0;
+	height: auto;
+	margin-top: 10px;
+}
+.livechatwrap{
+	height: auto !important;
+}
+.starrow{
+	text-align: left;
+}
+.review_pad_left{
+	padding-left: 15px;
+	margin-top: 10px;
+}
+.starrow .fa{
+	font-size: 16px;
+}
+.startabsrow .starrow .fa{
+	font-size: 10px;
+}
+.reviewfeddrow h4{
+	overflow: inherit;
+	text-overflow: inherit;
+	white-space: normal;
+	line-height: 24px;
+}
+.reviewownernm, .reviewownerid,.reviewsminfo{
+	overflow: inherit;
+	text-overflow: inherit;
+	white-space: normal;
+}
+.reviewsminfo{
+	height: auto;
+}
+.startabsrow .nav-tabs > li > a{
+	padding: 6px 0;
+}
+.addstaff_formbx .form-group{
+	margin-bottom: 20px;
 
-@media only screen and (max-width:359px) {
-.profiletabsConWrap .nav-tabs > li > a {
+}
+.accountdetailsrow .eqWrap{
+	display: block;
+}
+.accountSection .usrbxpad{
+	margin-bottom: 10px;
+}
+.accountbxinfo{
+	padding: 10px;
+}
+.accounts_tabs_section .nav-tabs > li > a {
+	padding: 12px 0;
 	font-size: 13px;
-	padding: 13px 5px;
+	margin-right: 0;
 }
-.orderidprobox .proimgbx {
-    width: 90px;
 }
-.orderid_detailsbx {
-    margin-left: 90px;
+@media only screen and (max-width: 380px) {
+.imports_row .nav-tabs > li > a{
+	font-size: 11px;
+}
+.startabsrow .starrow .fa{
+	font-size: 8px;
+}
+.accounts_tabs_section .nav-tabs > li > a span{
+	display: block;
+}
+}
+@media only screen and (max-width: 359px) {
+.addproducts .addprobtnrow .btn-primary.addpro {
+    padding: 14px 12px;
+    font-size: 12px;
+}
+.startabsrow .starrow .fa{
+	font-size: 7px;
 }
 }

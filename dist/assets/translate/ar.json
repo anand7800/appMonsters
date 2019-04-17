@@ -1,98 +1,201 @@
 {
 	"languages": [
 		{
-			"label": "الإنجليزية",
+			"label": "English",
 			"code": "en"
 		},
 		{
-			"label": "الفرنسية",
-			"code": "fr"
-		},
-		{
-			"label": "عربى",
+			"label": "Arabic",
 			"code": "ar"
 		}
     ],
-    "header":{
-        "store":"متجر",
-        "account":"الحساب",
-		"cart":"عربة التسوق",
-        "waki":"واكي",
-        "travel_gear":"معدات السفر",
-        "writing_instruments":"أدوات الكتابة",
-        "travel_accessories":"اكسسوارات السفر",
-		"leather":"جلد",
-		"jose":"جوزيه",
-		"marie":"ماري",
-		"simon":"سيمون",
-		"jamie":"جيمي",
-		"andrew":"أندرو",
-        "teddie":"نشر لتجفيفه",
-        "collections":"مجموعات",
-		"sunglasses":"نظارات شمسيه",
-		"electronics":"إلكترونيات",
-		"gift_sets":"طقم هدايا",
-		"apparels":"الملابس"
-    },
-    "home":{
-		"new_collection":"مجموعة جديدة من",
-		"fashionable":"قمصان عصرية",
-		"the":"ال",
-		"new":"الجديد",
-		"collections":"مجموعات",
-		"shirts_fashion":"قمصان عصرية",
-		"shop_now":"تسوق الآن",
-		"2015_collection":"2015 مجموعة",
-		"new_color":"لون جديد والمطبوعات",
-		"creative_prints":"ألوان جديدة ومطبوعات مبتكرة!",
-		"sale_of_day":"بيع اليوم! خصومات من",
-		"on_all_products":"على جميع المنتجات",
-		"sale":"تخفيض السعر",
-		"discounts":"خصومات",
-		"new_items_summer":"عناصر جديدة من الصيف",
-		"new_swim_wear":"ملابس السباحة الجديدة للبيع الآن",
-		"items":"العناصر",
-		"summer":"الصيف",
-		"top_picks_in_mobile":"أعلى اللقطات في الجوال",
-		"shop_by_brand":"عرض بواسطة الماركات",
-		"trend_in_fashion":"يتداول في الأزياء",
-		"dresses":"فساتين",
-		"new_coolection_of_evening_dree":"مجموعة جديدة من اللباس مساء",
-		"see_new_collection":"شاهد المجموعة الجديدة واختر ما تريد!"
-	},
-	"login_component":{
-		"sign_in":"SignIn",
-		"sign_in with":"Sign in with",
-		"dont_have_account":"Dont have an account",
-		"register":"Register here",
-		"use_email":"Or use your email address",
-		"email_address":"Email address",
-		"password":"Password",
-		"forgot_password":"Forgot password?"
-	},
-	"error":{
-		"email":{
-			"required":"Email is required",
-			"invalid":"Email is invalid"
+    "dashboard":{
+		"no_account":"If you don't have account",
+		"waki_welcome":"مرحبًا بكم في سوق واكي",
+		"total_active_cart":"مجموع عربات نشط",
+		"total_open_orders":"مجموع الطلبات المفتوحة",
+		"abandon_checkout":"مغادرة مهجورة",
+		"orders_pending":"الطلبات المعلقة",
+		"order_prepared":"أوامر لتكون مستعدة",
+		"order_ready_ship":"أوامر جاهزة للشحن",
+		"order_delivery":"طلب التسليم المنتظر",
+		"total_sales":"إجمالي المبيعات",
+		"collaborative":"يمكنك إدارة الأسواق المتعاونة بشكل تعاوني عبر شبكات التوصيل والتشغيل. بشكل حيوي المماطلة المستخدمين B2C بعد الفوائد الأساسية المثبتة. تصور بشكل كبير تقارب العملاء الموجهة دون عائد الاستثمار الثوري.",
+		"order_status":"حالة الطلب",
+		"activities":"أنشطة",
+		"view_all":"عرض الكل",
+		"recent_orders":"الطلبيات الأخيرة",
+		"sr_no":"الأب رقم",
+		"product":"المنتج",
+		"customer":"زبون",
+		"location":"موقعك",
+		"quantity":"كمية",
+		"status":"الحالة"
 		},
-		"password":{
-			"required":"Password is required"
-	},
-	"firstName":{
-		"required":"First Name is required",
-		"invalid":"First Name is invalid"
-	},
-	"lastName":{
-		"required":"Last Name is required",
-		"invalid":"Last Name is Invalid"
-	},
-	"country":{
-		"required":"country-code is required"
-	},
-	"phone":{
-		"required":"Phone is required",
-		"invalid":"Phone is invalid"
-	}
-	
-}
+		"order_listing":{
+			"all_orders":"جميع الطلبات",
+			"pending":"قيد الانتظار",
+			"to_be_prepared":"لتكون مستعدا",
+			"ready_ship":"على استعداد للسفينة",
+			"in_transit":"في مرحلة انتقالية",
+			"completed":"منجز",
+			"cancelled":"ألغيت",
+			"filter":"منقي",
+			"edit":"تصحيح",
+			"cancel":"إلغاء",
+			"order":"طلب",
+			"date":"تاريخ",
+			"customer":"زبون",
+			"payment_status":"حالة السداد",
+			"fullfillment_status":"حالة الاكتمال",
+			"total":"مجموع"
+		},
+		"ALL_products":{
+			"added_product":"المنتجات المضافة",
+			"brands":"العلامات التجارية",
+			"categories":"الاقسام",
+			"products":"منتجات",
+			"import":"استيراد",
+			"filter":"منقي",
+			"edit":"تصحيح",
+			"delete":"حذف",
+			"product":"المنتج",
+			"inventory":"المخزون",
+			"type_category":"نوع / الفئة",
+			"brand":"علامة تجارية"
+		},
+		"add_product_screen":{
+			"add_product_screen":"إضافة منتجات للبدء"
+		},
+		"inventory_screen":{
+			"inventory_list":"قائمة الجرد",
+			"product_variant":"منتج البديل",
+			"sku_code":"سكو الشفرة",
+			"units_sold":"وحدات تم البيع",
+			"quantity":"كمية"
+		},
+		"add_products":{
+			"add_your_product":"أضف منتجك",
+			"save":"حفظ",
+			"title":"عنوان",
+			"description":"وصف",
+			"product_images":"صور المنتج",
+			"product_category":"فئة المنتج",
+			"select_category":"اختر الفئة",
+			"product_subcategory":"فئة المنتج",
+			"select_subcategory":"اختر الفئة الفرعية",
+			"product_type_category":"فئة نوع المنتج",
+			"select_type":"اختر صنف",
+			"product_brand":"العلامة التجارية المنتج",
+			"select_brand":"اختر العلامة التجارية",
+			"product_tags":"علامات المنتج",
+			"modify_variants":"تعديل المتغيرات",
+			"variants":"مختلف",
+			"price":"السعر",
+			"sku":"سكو",
+			"inventory":"المخزون",
+			"image1":"صورة1",
+			"selling_price":"سعر البيع",
+			"cost_item":"البند التكلفة",
+			"item_weight":"وزن السلعة",
+			"inventory_sku":"المخزون سكو",
+			"quantity":"كمية",
+			"product_type":"نوع المنتج",
+			"available":"افايابلي للتجربة",
+			"option_name":"اسم الخيار",
+			"option_value":"قيم الخيار",
+			"add_another_variant":"أضف تنويعات أخرى",
+			"submit":"خضع"
+		},
+		"analytics":{
+			"online_store":"جلسات المتجر عبر الإنترنت",
+			"session_over_time":"جلسات مع مرور الوقت",
+			"view_report":"عرض التقارير",
+			"online_device_session":"جلسات تخزين عبر الإنترنت حسب نوع الجهاز",
+			"online_location":"جلسات متجر عبر الإنترنت حسب الموقع",
+			"extra_random_space":"مساحة إضافية عشوائية",
+			"top_product_sold":"أعلى المنتجات حسب الوحدات المباعة"
+		},
+		"revenue":{
+			"total_sales":"إجمالي المبيعات",
+			"orders":"أوامر",
+			"gross_sales":"إجمالي المبيعات",
+			"discounts":"خصومات",
+			"returns":"عائدات",
+			"net_sales":"صافي المبيعات",
+			"shipping":"الشحن",
+			"tax":"ضريبة"
+		},
+		"live_view":{
+			"visitor_right_now":"الزائر الآن",
+			"todays_total":"مجموع اليوم",
+			"orders":"أوامر",
+			"sales":"مبيعات"
+		},
+		"active_offer":{
+			"offer_title":"عنوان العرض",
+			"start_date":"تاريخ البدء",
+			"end_date":"تاريخ الانتهاء",
+			"type":"نوع",
+			"users":"المستخدمين"
+		},
+		"create_offer":{
+			"create_offer":"خلق عرض",
+			"title":"عنوان",
+			"product_images":"صور المنتج",
+			"offer_type":"نوع العرض",
+			"value":"القيمة",
+			"minimum_require":"الحد الأدنى من المتطلبات",
+			"applicable":"قابل للتطبيق",
+			"start_date":"تاريخ البدء",
+			"end_date":"تاريخ الانتهاء"
+		},
+		"sidebar":{
+			"dashboard":"لوحة القيادة",
+			"orders":"أوامر",
+			"order_list":"قائمة الطلبات",
+			"abandoned_checkout":"مغادرة مهجورة",
+			"products":"منتجات",
+			"all_products":"جميع المنتجات",
+			"add_products":"إضافة المنتجات",
+			"inventory":"المخزون",
+			"reports":"تقارير",
+			"analytics":"تحليلات",
+			"sale_reports":"تقارير المبيعات",
+			"live_view":"عرض لايف",
+			"sale_offers":"المبيعات والعروض",
+			"active_offers":"عروض نشطة",
+			"create_new":"خلق عرض جديد",
+			"all_offers":"جميع العروض والمبيعات",
+			"my_earning":"أجوري",
+			"notifications":"إخطارات",
+			"review_feedbacks":"ملاحظاتوتعليقا",
+			"my_account":"حسابي",
+			"setting":"الإعدادات",
+			"live_chat":"دردشة مباشرة",
+			"logout":"الخروج"
+		},
+		"edit":{
+			"edit_your_product":"تحرير المنتج الخاص بك",
+			"title":"عنوان",
+			"images" :"صور"
+		},
+		"show_variants":{
+			"variant_listing":"المنتج (المتغيرات) قائمة الجرد",
+			"update_stock":"تحديث الأسهم"
+		},
+		"error":{
+			"fullName":{
+				"required":"الإسم الكامل ضروري",
+				"invalid":"الاسم الكامل غير صالح"
+			},
+			"email":{
+				"required":"البريد الالكتروني مطلوب"
+			},
+			"phone":{
+				"required":"رقم الهاتف مطلوب",
+				"invalid":"رقم الهاتف غير صالح"
+			}
+		}
+		
 }

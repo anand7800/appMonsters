@@ -23,16 +23,13 @@ bodyParser = require('body-parser'),
     commonfunction = require('./commonFile/commonFunction'),
     _ = require('lodash');
 
-// var options = {
-//     key: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.key').toString(),
-//     cert: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.csr').toString()
-// };
-// options = {
-//     key: fs.readFileSync('/var/www/html/visionpro/certi/mobenture.key').toString(),
-//     cert: fs.readFileSync('/var/www/html/visionpro/certi/mobenture.crt').toString(),
-// }
-var server = require('http').Server(app);
-// var server = require('https').Server(options, app);
+var options = {
+    key: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.key').toString(),
+    cert: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.csr').toString()
+};
+
+// var server = require('http').Server(app);
+var server = require('https').Server(options, app);
 
 
 var chatHistory = require('./Models/userModel/chatHistory');
@@ -77,16 +74,16 @@ app.use('/vendor', productRoutes)
 //     res.sendFile(__dirname + '/vendorDist/index.html')
 // });
 
-app.use("/vendor", express.static(path.join(__dirname, 'vendorDist')));
-app.get('/vendor*', (req, res) => {
-    res.sendFile(`${__dirname}/vendorDist/index.html`);
-})
+
 // user
-app.use("/", express.static(path.join(__dirname, 'dist')));
-app.get('/*', (req, res) => {
+app.use("/v1", express.static(path.join(__dirname, 'dist')));
+app.get('/v1*', (req, res) => {
     res.sendFile(`${__dirname}/dist/index.html`);
 })
-
+app.use("/", express.static(path.join(__dirname, 'website')));
+app.get('/*', (req, res) => {
+    res.sendFile(`${__dirname}/website/index.html`);
+})
 /****************************socket start***********************
 ***************************socket start*************************
 ***************************socket start************************/
