@@ -1450,7 +1450,7 @@ productDetails = (data, callback) => {
                     })
                 },
                 getSimilarProduct: (cb) => {
-                    productModel.findOne({ "_id": data._id }).lean().exec((err, result1) => {
+                    productModel.findOne({ "_id": data._id ,status:"ACTIVE"}).lean().exec((err, result1) => {
                         productModel.find({
                             $or: [
                                 // { brandId: result1.brandId },
