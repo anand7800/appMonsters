@@ -3521,10 +3521,8 @@ listOfAddCart = (data, headers, callback) => {
             }
             res.address = address
             res.payment = payment
-            if (main.length==0) {
-                console.log(main.length)
+            if (main.length == 0) {
                 
-
                 delete res.productDetail
                 delete res.bagDetails
                 delete res.address

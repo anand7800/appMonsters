@@ -34,6 +34,17 @@ let serverURLs = {
         "EMAIL_SECURE": true,
         "CRON_PATTERN": '1 * * * * *',
     },
+    "live": {
+        "NODE_SERVER": "http://localhost",
+        "NODE_SERVER_PORT": "5050",
+        "MONGO_DB": "mongodb://35.165.140.114:27017/WAKINEW",
+        "EMAIL_USER": 'toothfairysanjeet@gmail.com',
+        "EMAIL_PASS": 'Sanj1234A',
+        "EMAIL_HOST": 'smtp.gmail.com',
+        "EMAIL_PORT": 465,
+        "EMAIL_SECURE": true,
+        "CRON_PATTERN": '1 * * * * *',
+    },
 
 }
 let config = {
