@@ -254,7 +254,6 @@ checkSocialProfile = (obj, callback) => {
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[obj.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
                 return
             }
-
         })
     }
 }

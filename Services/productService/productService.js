@@ -181,6 +181,8 @@ addSubCategory = (data, callback) => {
 *************************************/
 getCategoryList = (data, callback) => {
     // log(data.lang)
+    // let object=require('mongoose').ObjectId
+
     let mainArray = [];
     categoryModelL1.aggregate([
         {
@@ -192,8 +194,28 @@ getCategoryList = (data, callback) => {
                 as: "category"
             }
         },
+        // {$match:{_id:mongoose.Types.ObjectId('5c46c56529994644a4ec8580')}},
+
+        //         { $lookup: {
+        //             from: "productsubCategory",
+        //             let: {
+        //               article_id: "$_id"
+        //             },
+        //             pipeline: [
+        //               { $match: {
+        //                   $expr: { $and: [
+        //                     //   { $in: [ , "$all_category_id" ] },
+        //                     { $eq: [ "$status", "ACTIVE" ] },
+        //                     //   { $eq: [ "ACTIVE", "$$status" ] }
+        //                   ] }
+        //               } }
+        //             ],
+        //             as: "article_category"
+        //           } },
     ]).exec((err, aggregate) => {
-        // console.log("errr", err, 'result', JSON.stringify(aggregate))
+        console.log("errr", err, 'result', JSON.stringify(aggregate))
+        // callback(aggregate)
+        // return
         aggregate.forEach(element => {
             let temp = {
 
@@ -1450,7 +1472,7 @@ productDetails = (data, callback) => {
                     })
                 },
                 getSimilarProduct: (cb) => {
-                    productModel.findOne({ "_id": data._id ,status:"ACTIVE"}).lean().exec((err, result1) => {
+                    productModel.findOne({ "_id": data._id, status: "ACTIVE" }).lean().exec((err, result1) => {
                         productModel.find({
                             $or: [
                                 // { brandId: result1.brandId },
@@ -3497,6 +3519,12 @@ listOfAddCart = (data, headers, callback) => {
                 deliveryCharges: "50",
                 bagTotal: (totalPrice + 17 + 50).toString(),
                 productQuantity: response.bagDetails.orderDescription.length,
+            }
+            if (main.length < 0) {
+                delete res.productDetails
+                delete res.bagDetails
+                delete res.address
+                delete res.payment
             }
             res.address = address
             res.payment = payment
