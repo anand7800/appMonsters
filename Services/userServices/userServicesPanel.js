@@ -1,9 +1,9 @@
-const async = require('async')
-const userModel = require('../../Models/userModel/userPanelModel')
-let util = require('../../Utilities/util')
-const commonFunction = require('../../commonFile/commonFunction')
-log = console.log
-const mongoose = require('mongoose')
+const async = require('async');
+const userModel = require('../../Models/userModel/userPanelModel');
+let util = require('../../Utilities/util');
+const commonFunction = require('../../commonFile/commonFunction');
+log = console.log;
+const mongoose = require('mongoose');
 //!signup 
 signup = (data, callback) => {
     obj = data
@@ -133,6 +133,7 @@ login = (data, callback) => {
 
 //!social login
 socialLogin = (data, callback) => {
+    // return
     console.log('request', data)
     obj = data
     query = {
@@ -159,8 +160,25 @@ socialLogin = (data, callback) => {
                 return
             }
             else if (found.length > 0) {
-                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_EXISTS[data.lang] })
-                return
+                userModel.findOneAndUpdate({ email: data.email }, { $set: { 'social.socialId': data.socialId, 'social.socialType': data.socialType } }, { new: true }).exec((err, succ) => {
+                    console.log("update value", err, succ)
+                    let temp = {
+                        "_id": succ._id,
+                        "firstName": succ.firstName,
+                        "lastName": succ.lastName,
+                        "email": succ.email,
+                        "image": succ.image,
+                        "addressAdded": succ.isAddressAdded,
+                        "phone": succ.phone,
+                        "countryCode": succ.countryCode,
+                        "paymentAdded": succ.paymentAdded,
+                        "address": succ.address,
+                        "paymentMethod": succ.paymentMethod
+
+                    }
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[obj.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
+                    return
+                })
             }
             else {
                 var user = new userModel(query)
@@ -189,7 +207,7 @@ socialLogin = (data, callback) => {
                             "paymentMethod": succ.paymentMethod
 
                         }
-                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[obj.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ.id) })
+                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[obj.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
                         return
                     }
                 })
