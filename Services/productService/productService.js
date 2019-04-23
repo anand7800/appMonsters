@@ -3487,7 +3487,7 @@ listOfAddCart = (data, headers, callback) => {
                         }
                     }
                 }, { 'variants.$': 1 }).lean().exec(async (err, varianceValue) => {
-                    console.log("result", err, varianceValue)
+                    // console.log("result", err, varianceValue)
                     temp = {
                         brand: brandName.brandName,
                         orderId: value._id,
@@ -3510,7 +3510,6 @@ listOfAddCart = (data, headers, callback) => {
 
             })
         }, (err, responses => {
-
             res = {}
             res.productDetail = main
             res.bagDetails = {
@@ -3520,14 +3519,17 @@ listOfAddCart = (data, headers, callback) => {
                 bagTotal: (totalPrice + 17 + 50).toString(),
                 productQuantity: response.bagDetails.orderDescription.length,
             }
-            if (main.length < 0) {
-                delete res.productDetails
+            res.address = address
+            res.payment = payment
+            if (main.length==0) {
+                console.log(main.length)
+                
+
+                delete res.productDetail
                 delete res.bagDetails
                 delete res.address
                 delete res.payment
             }
-            res.address = address
-            res.payment = payment
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.list_of_wishList[data.lang], "result": res })
         }))
     })
