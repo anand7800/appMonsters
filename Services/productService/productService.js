@@ -2436,6 +2436,12 @@ addToWishList = (data, headers, callback) => {
     if (!data.productId)
         callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     else {
+
+        let temp={
+            color :data.color.toUpperCase(),
+            material:data.material.toUpperCase(),
+            size:data.size.toUpperCase()
+        }
         wishModel.findOne({ userId: userId }, (err, result) => {
             if (err) throw err
             else if (result) {
@@ -2453,7 +2459,7 @@ addToWishList = (data, headers, callback) => {
                             }
                         }
                     }
-                wishModel.find({ $and: [{ userId: userId }, { 'wishListDescription.productId': data.productId }] }, { 'wishListDescription.$': 1 }).exec((err, findOrder) => {
+                wishModel.find({ $and: [{ userId: userId }, { 'wishListDescription.productId': data.productId }, { 'wishListDescription.size': temp.size }, { 'wishListDescription.color': temp.color }, { 'wishListDescription.material': temp.material }] }, { 'wishListDescription.$': 1 }).exec((err, findOrder) => {
                     if (err) throw err
                     else if (findOrder.length > 0) {
                         callback({ statusCode: util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.WISHLIST_PRODUCT_ALREADY_EXIST[data.lang] })
@@ -3522,7 +3528,7 @@ listOfAddCart = (data, headers, callback) => {
             res.address = address
             res.payment = payment
             if (main.length == 0) {
-                
+
                 delete res.productDetail
                 delete res.bagDetails
                 delete res.address
