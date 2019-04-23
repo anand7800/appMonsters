@@ -185,35 +185,41 @@ getCategoryList = (data, callback) => {
 
     let mainArray = [];
     categoryModelL1.aggregate([
+        // {
+        //     $lookup:
+        //     {
+        //         from: "productsubCategory",
+        //         localField: "_id",    // field in the orders collection
+        //         foreignField: "categoryModel",  // field in the items collection
+        //         as: "category"
+        //     }
+        // },
+        // {$match:{_id:mongoose.Types.ObjectId('5c46c56529994644a4ec8580')}},
+
         {
-            $lookup:
-            {
+            $lookup: {
                 from: "productsubCategory",
-                localField: "_id",    // field in the orders collection
-                foreignField: "categoryModel",  // field in the items collection
+                let: {
+                    article_id: "$_id"
+                },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: {
+                                $and: [
+                                    { $eq: ['$categoryModel', "$$article_id"] },
+                                    { $eq: ["$status", "ACTIVE"] },
+                                    //   { $eq: [ "ACTIVE", "$$status" ] }
+                                ]
+                            }
+                        }
+                    }
+                ],
                 as: "category"
             }
         },
-        // {$match:{_id:mongoose.Types.ObjectId('5c46c56529994644a4ec8580')}},
-
-        //         { $lookup: {
-        //             from: "productsubCategory",
-        //             let: {
-        //               article_id: "$_id"
-        //             },
-        //             pipeline: [
-        //               { $match: {
-        //                   $expr: { $and: [
-        //                     //   { $in: [ , "$all_category_id" ] },
-        //                     { $eq: [ "$status", "ACTIVE" ] },
-        //                     //   { $eq: [ "ACTIVE", "$$status" ] }
-        //                   ] }
-        //               } }
-        //             ],
-        //             as: "article_category"
-        //           } },
     ]).exec((err, aggregate) => {
-        console.log("errr", err, 'result', JSON.stringify(aggregate))
+        // console.log("errr", err, 'result', JSON.stringify(aggregate))
         // callback(aggregate)
         // return
         aggregate.forEach(element => {
@@ -2437,10 +2443,10 @@ addToWishList = (data, headers, callback) => {
         callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     else {
 
-        let temp={
-            color :data.color.toUpperCase(),
-            material:data.material.toUpperCase(),
-            size:data.size.toUpperCase()
+        let temp = {
+            color: data.color.toUpperCase(),
+            material: data.material.toUpperCase(),
+            size: data.size.toUpperCase()
         }
         wishModel.findOne({ userId: userId }, (err, result) => {
             if (err) throw err
