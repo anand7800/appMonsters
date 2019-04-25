@@ -85,11 +85,11 @@ productRouter.post('/addToWishList', authHandler.verifyToken, (req, res) => {
 })
 
 // //!uploadImage  
-// vendorRouter.post('/uploadImage', (req, res) => {
-//     vendorPanelHandler.uploadImage(req.body, (data) => {
-//         res.send(data)
-//     })
-// })
+productRouter.post('/uploadImage1', (req, res) => {
+    productService.uploadImage1(req.body, (data) => {
+        res.send(data)
+    })
+})
 
 // //!wishList  
 productRouter.get('/wishList', authHandler.verifyToken, (req, res) => {

@@ -4595,6 +4595,19 @@ vendorSearchOffer = (data, header, callback) => {
         }
     })
 }
+
+
+
+uploadImage1 = (data, callback) => {
+    // console.log(data);
+    
+    commonFunction.uploadImg(data.image, (err, icons) => {
+        if (err) callback(null)
+        else{
+            callback(icons)
+        }
+    })
+}
 //userConversationList
 userConversationList = (req, header, callback) => {
     var userId = req.body.userId;
@@ -4854,4 +4867,5 @@ module.exports = {
     AllProductReviewFeedback,
     vendorSearchOffer,
     userConversationList,
+    uploadImage1
 }

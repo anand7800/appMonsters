@@ -17,8 +17,12 @@
         "auth_token": "b3b1ab827043c4512550840bf21c7a67",
         "number": "+17039971989"
     },
-    "credientialAdmin":{
-        "email":"test@gmail.com",
-        "password":"Techugo@gmail.com"
+    "credientialAdmin": {
+        "email": "test@gmail.com",
+        "password": "Techugo@gmail.com"
+    },
+    "payTabs": {
+        "email": "sumit@techugo.com",
+        "scret_key": "jHNnwY2CJxvhXvDmIJXuksDQ3P6DxTIQBwe7uhKdOfvML98tS6YdzB4CqbgY4ZOFv3MZkxd8MIVxS41KbZYKB2m2dD0hCPX7SK7c"
     }
 }

@@ -16,7 +16,12 @@ let app = require('express')(),
     waterfall = require('async-waterfall'),
     request = require('request'),
     commonfunction = require('./commonFile/commonFunction'),
-    _ = require('lodash');
+    paytabs = require('paytabs_api'),
+    
+    configJson = require('./config/config')
+_ = require('lodash');
+// console.log(configJson.payTabs);
+
 
 
 
@@ -45,25 +50,12 @@ var Room = require('./Models/userModel/room.js');
 var User = require('./Models/userModel/chatUser.js');
 var urlMedia = require('./Models/userModel/chatUrl.js');
 
-// var io = require('socket.io')(http);
-// app.use(bodyParser.json());
-// app.use(express.static(__dirname + '/views'));
-// app.set('view engine', 'ejs');
 
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan("dev"))
-// app.get('/', (req, res) => {
-//     res.send("server is running")
-// })
-// app.use(express.static(__dirname + '/views'));
-// app.set('view engine', 'ejs');
 
-/* 
-var dotenv = require('dotenv/config');
-console.log("ssdsds",process.env.superKey) 
-*/
 //!userRoutes
 let userRoutes = require('./Routes/userRoutes/userPanelRoutes')
 let adminRoute = require('./Routes/adminRoute/adminRoutes')
@@ -92,11 +84,33 @@ app.use("/", express.static(path.join(__dirname, 'website')));
 app.get('/*', (req, res) => {
     res.sendFile(`${__dirname}/website/index.html`);
 })
+
+/* payment  testing start*/
+// paytabs.validateSecretKey({
+//     'merchant_email': configJson.payTabs.email,
+//     'secret_key': configJson.payTabs.secret_key,
+// }, validateSecretKey);
+
+// function validateSecretKey(result) {
+//     if (result.response_code == 4012) {
+//         //Redirect your merchant to the payment link
+//         console.log("2", result.payment_url);
+//     } else {
+//         //Handle the error
+//         console.log("22222222222222222222", result);
+//     }
+// }
+
+
+/* payment  testing end */
+
 /****************************socket start***********************
 ***************************socket start*************************
 ***************************socket start************************/
 
 var io = require('socket.io')(server);
+
+
 var sockets = {};
 global.onlineUsers = {};
 io.sockets.on('connection', function (socket) {
