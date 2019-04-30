@@ -1,23 +1,6 @@
-$(function() {	
-	$('.colectionSlider').owlCarousel({
-        loop: true,
-        margin: 5,
-        nav: false,
-        dots: true,
-        autoplay: true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            768: {
-                items: 1
-            },
-            1024: {
-                items: 1
-            }
-        }
-    });
-	
+$(function() {
+
+
 	// $('.navbar-default .navbar-nav > li.dropdown').hover(function() {
 	// 	$('ul.dropdown-menu', this).stop(true, true).fadeIn('slow');
 	// 	$(this).addClass('open');
@@ -33,7 +16,7 @@ $(function() {
         }, 350);
         $('html').addClass('sidepanel');
         $(".menu-overlay").fadeIn(500);
-      
+
       });
       $(".menu-overlay").click(function(event) {
         $(".navbar-toggle").trigger("click");
@@ -42,14 +25,12 @@ $(function() {
       });
 
       $('.collectiontabs').click(function(){
-       
-        
+
+
         $('.collectiontabs').removeClass('active');
         $(this).addClass('active');
       });
 });
-
-
     function tabBx(id){
         if($('#'+id).css('display')=='block'){
             $('#'+id).fadeIn(500);

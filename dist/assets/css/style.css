@@ -2624,7 +2624,7 @@ span.checkboxbx [type="checkbox"]:checked + label:after {
 	border-radius: 4px;
 	margin-top: 15px;
 }
-/* add product css Starts 14/3 */
+/* add product css Starts start Here */
 .productCategorybox .variants h4 , 
 .productCategorybox .variants .sminfo,
 .productCategorybox label{
@@ -2669,4 +2669,70 @@ span.checkboxbx [type="checkbox"]:checked + label:after {
 .variant-input .optiontag {
     background-color: #8f69e1;
 }
-/* Add product css End 14/3*/
+/* Add product css End */
+
+/*Privacy Policy Start Here*/
+.privacy_policy_wrap {
+    background-color: #fff;
+	padding: 30px;
+	margin:30px;
+    border: 1px solid #d7e0f1;
+    margin-bottom: 30px;
+}
+.privacy_policy_wrap .headingtitle{
+	font-family: 'Montserrat-Medium';
+	font-size: 21px;
+	color: #000;
+	margin: 10px 0;
+}
+.privacy_policy_wrap .smheadingtitle{
+	font-family: 'Montserrat-Medium';
+	font-size: 18px;
+	color: #000;
+	margin: 30px 0 10px 0;
+}
+.privacy_policy_wrap .contenttextbx{
+	font-size: 16px;
+	color: #828281;
+	line-height: 24px;
+}
+.privacy_policy_wrap .contenttextbx p{
+	margin-bottom: 15px;
+}
+/*Privacy Policy End Here*/
+
+/*Footer Section Start Here*/
+.footer_vendor_rw{
+	padding: 20px 0;
+	margin: 0 30px;
+	border-top:1px solid #cedaea;
+}
+.footer_vendor_rw .copyrt{
+	display: inline-block;
+	float: left;
+}
+.footer_vendor_rw .footer_nav{
+	margin-left: 20px;
+	display: inline-block;
+}
+.footer_vendor_rw .footer_nav ul{
+	margin: 0;
+	padding:0;
+}
+.footer_vendor_rw .footer_nav ul li{
+	list-style: none;
+	float: left;
+	display: inline-block;
+}
+.footer_vendor_rw .footer_nav ul li a{
+	color: #27282a;
+	padding: 0 10px;
+	text-decoration: none;
+	display: inline-block;
+	-webkit-transition: all 400ms linear;
+	transition: all 400ms linear;
+}
+.footer_vendor_rw .footer_nav ul li:hover a{
+	color: #f8952d;
+}
+/*Footer Section End Here*/

@@ -63,6 +63,9 @@
 .accountbxinfo.staffAccounts .usrdetails .usrnm{
 	font-size: 28px;
 }
+.notificationlistrow,.notificationtimesrw{
+	font-size: 14px;
+}
 }
 @media only screen and (max-width: 1600px) {
 .uploadimgbx,.uploadimgbx .fileinput .thumbnail {
@@ -232,6 +235,18 @@
 .accountstaffwtbx{
 	padding: 15px;
 }
+.dashboardConbx{
+	padding: 30px;
+}
+.privacy_policy_wrap .headingtitle{
+	font-size: 20px;
+}
+.privacy_policy_wrap .contenttextbx{
+	font-size: 15px;
+}
+.privacy_policy_wrap .smheadingtitle{
+	font-size: 17px;
+}
 }
 @media only screen and (max-width: 1400px) {
 .livechatConbx .sending_messagerw .sendinput {
@@ -370,6 +385,10 @@
 }
 .accountbxinfo .usrdetails{
 	margin-left: 85px;
+}
+.notificationlistrow, .notificationtimesrw {
+	font-size: 13px;
+	line-height: 20px;
 }
 }
  @media only screen and (max-width: 1220px) {
@@ -707,6 +726,21 @@
 	left: 50%;
 	margin-left: -60px;
 }
+.footer_vendor_rw .copyrt{
+	display: block;
+	float: none;
+	text-align: center;
+}
+.footer_vendor_rw .footer_nav{
+	margin-left: 0;
+	display: block;
+	margin-top: 10px;
+	text-align: center;
+}
+.footer_vendor_rw .footer_nav ul{
+	display: table;
+	margin: auto;
+}
 .aboutwakiCon .wakitextrow img, .business_detailswrap .businesstextrow img {
 	width: 240px;
 }
@@ -1011,6 +1045,14 @@
 	font-size: 13px;
 	margin-right: 0;
 }
+.headers .menuiconbx .header_rtbx .dropdown-menu{
+	top:54px;
+	width: 300px;
+}
+.privacy_policy_wrap{
+	margin: 20px 15px;
+	padding: 20px;
+}
 }
 @media only screen and (max-width: 380px) {
 .imports_row .nav-tabs > li > a{
@@ -1022,6 +1064,9 @@
 .accounts_tabs_section .nav-tabs > li > a span{
 	display: block;
 }
+.headers .menuiconbx .header_rtbx .dropdown-menu {
+    width: 260px;
+}
 }
 @media only screen and (max-width: 359px) {
 .addproducts .addprobtnrow .btn-primary.addpro {
@@ -1030,5 +1075,8 @@
 }
 .startabsrow .starrow .fa{
 	font-size: 7px;
+}
+.headers .menuiconbx .header_rtbx .dropdown-menu {
+    width: 230px;
 }
 }

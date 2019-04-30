@@ -2,6 +2,9 @@
 .trendingfashionbx .trendingbx figure {
 	height:335px;
 }
+.navbar-default span.leftColorbg,.navbar-default span.rightColorbg{
+	width: 60px;
+}
 }
 @media only screen and (max-width: 1800px) {
 .nav.fullwdmenu > li > a {
@@ -103,6 +106,17 @@
 .contactus_scwrap .panel-title {
     font-size: 18px;
 }
+.termsContentwrap h3{
+	font-size: 21px;
+	line-height: 32px;
+}
+.termsContentwrap h4{
+	font-size: 16px;
+}
+.termsContentwrap .termstextdetails{
+	font-size: 16px;
+	line-height: 32px;
+}
 }
 @media only screen and (max-width: 1600px) {
 .nav.fullwdmenu > li > a {
@@ -136,7 +150,7 @@
 	font-size: 40px;
 }
 .collectionslideCon h3 span, .collectionslideCon h2{
-	font-size: 80px;
+	font-size: 75px;
 }
 .collectionslideCon h4{
 	font-size: 24px;
@@ -204,10 +218,7 @@
 	font-size: 14px;
 }
 .orderid_detailsbx .orderidnum{
-	font-size: 13px;
-}
-.orderid_detailsbx{
-	padding-right: 140px;
+	font-size: 12px;
 }
 .totalpaidrw .totalsheading, .totalpaidrw .aedpricebx,.paidvia{
 	font-size: 16px;
@@ -326,7 +337,16 @@
 .starrow .glyphicon{
 	font-size: 15px;
 }
-
+.accountsetheaderrw .aciconbx {
+    width: 70px;
+    height: 70px;
+}
+.accountsetheaderrw .boxtitlenm {
+    line-height: 70px;
+}
+.changepassordform .form-control {
+    font-size: 14px;
+}
 }
 
 @media only screen and (max-width: 1400px) {
@@ -339,6 +359,9 @@
 .lastprorows figure.smbx {
 	height: 244px;
 }
+.changepassordform .subbtnrw .btn-primary {
+    width: 120px;
+}
 }
 
 @media only screen and (max-width: 1320px) {
@@ -350,7 +373,7 @@
 	padding: 40px 40px 0px 40px;
 }
 .nav.fullwdmenu > li > a {
-  padding: 12px 10px;
+  padding: 12px;
 }
 .navbar-default span.leftColorbg,.navbar-default span.rightColorbg {
     width: 40px;
@@ -531,6 +554,23 @@
 .contactus_scwrap .panel-title {
     font-size: 16px;
 }
+.termsContentwrap h3{
+	font-size: 18px;
+	line-height: 28px;
+}
+.termsContentwrap h4{
+	font-size: 15px;
+}
+.termsContentwrap .termstextdetails{
+	font-size: 14px;
+	line-height: 28px;
+}
+.termsContentwrap{
+	padding: 15px;
+}
+.changepassordform .subbtnrw .btn-primary {
+    width: 110px;
+}
 }
 @media only screen and (max-width: 1220px) {
 #wrapper{
@@ -539,9 +579,6 @@
 }
 .navbar-default {
 	padding: 30px 30px 0px 30px;
-}
-.nav.fullwdmenu > li > a {
-    padding: 12px 16px;
 }
 .navbar-default span.leftColorbg,.navbar-default span.rightColorbg {
 	width: 30px;
@@ -628,6 +665,21 @@
 	padding: 10px;
 	margin-top: 0px;
 }
+.accountsetheaderrw .aciconbx {
+    width: 60px;
+    height: 60px;
+}
+.accountsetheaderrw .boxtitlenm {
+    line-height: 60px;
+}
+.accountsetheaderrw .boxtitlenm{
+	font-size: 16px;
+}
+.changepassordform .subbtnrw .btn-primary {
+    width: 100px;
+    font-size: 14px;
+    padding: 10px 8px;
+}
 }
 @media only screen and (max-width: 1200px) {
 .trendingfashionbx .trendingbx figure {
@@ -652,6 +704,9 @@
 .starrow{
 	text-align: left;
 }
+.accountstaffwtbx {
+    padding: 15px;
+}
 }
 @media only screen and (max-width: 1170px) {
 #wrapper {
@@ -669,7 +724,7 @@
 }
 .nav.fullwdmenu > li > a{
 	font-size: 13px;
-  padding: 12px 7px;
+     padding: 12px 10px;
 }
 .nav.fullwdmenu .dropdown-menu > li > a{
 	font-size: 13px;
@@ -810,6 +865,11 @@
 .contactus_scwrap .conwakiConbx {
     max-width: 500px;
 }
+.changepassordform .subbtnrw .btn-primary {
+    width: 80px;
+    font-size: 14px;
+    padding: 10px 0px;
+}
 }
 
 @media only screen and (max-width: 1080px) {
@@ -828,6 +888,9 @@
 .wakiproductinfowrap {
     margin-left: 330px;
 }
+.nav.fullwdmenu > li > a{
+     padding: 12px 7px;
+}
 }
 @media only screen and (max-width: 1023px) {
 .navbar-default {
@@ -844,11 +907,11 @@
     width: 10px;
 }
 .nav.fullwdmenu > li > a {
-    font-size: 12px;
-    padding: 12px 7px;
+    font-size: 11px;
+    padding: 12px 5px;
 }
 .nav.fullwdmenu .dropdown-menu > li > a{
-	font-size: 12px;
+	font-size: 11px;
 }
 .logorw .navbar-nav > li > a span{
 	width: 24px;
@@ -884,7 +947,7 @@
     height: 120px;
 }
 .trendingfashionbx .marginwd8{
-	margin: 0 -5px;
+	margin: 0;
 }
 .trendingfashionbx .colwd{
 	padding: 0 5px;
@@ -1051,6 +1114,7 @@
 }
 .wakiproinfo .infoprorw, .wakiproinfo .wakiprodes,.wakiproinfo .wakiprodes p{
 	margin-bottom: 10px;
+	word-wrap: break-word;
 }
 .wakiproductinfowrap .buynwrw a, .waki_addprobtnrow .add-to-bag, .waki_addprobtnrow .add-to-whislist {
     padding: 12px 24px;
@@ -1099,7 +1163,7 @@
 
 @media only screen and (max-width: 839px) {
 .nav.fullwdmenu > li > a,.nav.fullwdmenu .dropdown-menu > li > a {
-	font-size: 11px;
+	font-size: 10px;
 }
 .trendingfashionbx .trendingbx figure {
     height: 140px;
@@ -1131,11 +1195,11 @@
 	padding:0;
 	height: 60px;
 }
-.navbar-brand{
-	width: 100px;
-	height: 35px;
-	margin-left: -50px;
-	margin-top: -18px;
+.navbar-brand {
+    width: 80px;
+    height: 28px;
+    margin-left: -40px;
+    margin-top: -14px;
 }
 .navbar-nav {
 	position: absolute;
@@ -1421,18 +1485,21 @@ ul.social-network,.navbar-default span.leftColorbg, .navbar-default span.rightCo
 	width: 60px;
 }
 .wakiproductdetails {
-    padding: 15px;
+	margin: 10px;
+	padding: 0;
+}
+.wakiproductdetails.pd15wd{
+	padding: 15px;
 }
 .product-image {
 	float: none;
-	width: 280px;
+	width: auto;
 	margin: auto;
+	min-height: 300px;
 }
 .wakiproductinfowrap {
-    margin-left: 0;
-}
-.wakiproductinfowrap h1,.wakiproductinfowrap h3,.wakiproductinfowrap .buynwrw,.wakiproinfo,.wakipro_varientbx h4,.wakipro_varientbx .choose_varientrw,.waki_addprobtnrow{
-	text-align: center;
+	margin-left: 0;
+	padding: 15px;
 }
 .wakiproductinfowrap .buynwrw a, .waki_addprobtnrow .add-to-bag, .waki_addprobtnrow .add-to-whislist {
     padding: 10px 12px;
@@ -1449,8 +1516,8 @@ ul.social-network,.navbar-default span.leftColorbg, .navbar-default span.rightCo
 	right:15px;
 }
 .toppicswrap.products_details{
-	margin-left: 0;
-	margin-right: 0;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 .toppicswrap.productlisting.watchlist .productlistbox {
     width: 50%;
@@ -1524,6 +1591,61 @@ ul.social-network,.navbar-default span.leftColorbg, .navbar-default span.rightCo
     padding-top: 20px;
     padding-left: 0;
 }
+.termsContentwrap{
+	margin: 0 10px;
+	margin-bottom: 10px;
+}
+#settings .row.tabCon{
+	margin: 0 5px;
+	margin-top: 10px;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    border-top:none;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+    border-top:none;
+}
+.nav.fullwdmenu > li > a {
+    font-size: 14px;
+	padding: 10px;
+	border-bottom: 1px solid #f0f0f0;
+}
+.nav.fullwdmenu > li > .dropdown-menu{
+	padding: 0;
+	text-align: left;
+}
+.nav.fullwdmenu .dropdown-menu > li > a {
+    font-size:13px;
+}
+.navbar-default .navbar-toggle{
+	border: 0;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background-color:transparent;
+}
+.navbar-toggle{
+	margin-top: 11px;
+}
+.savedaddsbxrow .shippedbox .addressbox{
+	min-height: inherit;
+}
+#chooseAddress .modal-dialog{
+	width: 92%;
+}
+#chooseAddress .modal-body {
+    padding: 20px 20px 0 20px;
+}
+.logorw .navbar-nav > li > a > i.notif_num{
+	width: 20px;
+	height: 20px;
+	font-size: 11px;
+	right:-12px;
+	line-height: 20px;
+}
+.toppicswrap .itembox:hover .itemimgbx img{
+	-webkit-transform: scale(1);
+	transform: scale(1);
+}
 }
 @media only screen and (max-width:639px) {
 .trendingfashionbx .colwd {
@@ -1587,6 +1709,9 @@ ul.social-network,.navbar-default span.leftColorbg, .navbar-default span.rightCo
 .bagtotalcheckoutbtnbx .checkoutbutton{
 	padding: 8px 16px;
 }
+.collectionsliderwarp .collectionbx img{
+	margin-top: 40px;
+}
 }
 
 @media only screen and (max-width:479px) {
@@ -1594,9 +1719,9 @@ ul.social-network,.navbar-default span.leftColorbg, .navbar-default span.rightCo
 	width: auto;
 	float: none;
 }
-.trendingfashionbx .trendingbx figure {
+/* .trendingfashionbx .trendingbx figure {
 	height: auto;
-}
+} 
 .trendingfashionbx .shadow{
 	position: static;
 	left: auto;
@@ -1612,7 +1737,7 @@ ul.social-network,.navbar-default span.leftColorbg, .navbar-default span.rightCo
 	bottom: auto;
 	transform: none;
 	display: inline-block;
-}
+}*/
 .trendingfashionbx .hover01 span{
 	font-size: 14px;
 }

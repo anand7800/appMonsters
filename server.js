@@ -17,9 +17,8 @@ let app = require('express')(),
     request = require('request'),
     commonfunction = require('./commonFile/commonFunction'),
     paytabs = require('paytabs_api'),
-    
-    configJson = require('./config/config')
-_ = require('lodash');
+    configJson = require('./config/config'),
+    _ = require('lodash');
 // console.log(configJson.payTabs);
 
 
@@ -54,7 +53,7 @@ var urlMedia = require('./Models/userModel/chatUrl.js');
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-app.use(morgan("dev"))
+app.use(morgan("dev"));
 
 //!userRoutes
 let userRoutes = require('./Routes/userRoutes/userPanelRoutes')
@@ -75,7 +74,7 @@ app.use('/vendor', productRoutes)
 // });
 
 
-// user
+
 app.use("/v1", express.static(path.join(__dirname, 'dist')));
 app.get('/v1*', (req, res) => {
     res.sendFile(`${__dirname}/dist/index.html`);
