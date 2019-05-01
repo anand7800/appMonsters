@@ -9,7 +9,7 @@ let speakEasy = require('speakeasy');
 var NodeGeocoder = require('node-geocoder');
 var crypto = require('crypto');
 const twilio = require("twilio");
-const orderid = require('order-id')('WAKITECHUGO')
+const orderid = require('order-id')('WAKITECHUGO');
 var algorithm = 'aes-256-ctr',
     password = 'd6F3Efeq';
 var FCM = require('fcm-push');
@@ -22,7 +22,9 @@ cloudinary.config({
 let secret = speakEasy.generateSecret({
     length: 20
 });
-let salt = bcrypt.genSaltSync(10)
+let salt = bcrypt.genSaltSync(10);
+let webURL=require('../Utilities/config').config
+console.log(webURL.web__url.host)
 // nodemailer.createTestAccount((err, account) => { 
 //     if (err) {
 //         console.log("Account could not be created", err)
@@ -284,7 +286,7 @@ module.exports = {
                   <td><p class="body_text"><a href="" class="just_click"> YOUR EMAIL VERIFY LINK :</a> </p></td>
                 </tr>
                 <tr>
-                  <td class="confirm_btn"><a href="http://13.126.131.184:5050/resetPassword?email=${email}&forgotToken=${text}" >verify link</a></td>
+                  <td class="confirm_btn"><a href="${webURL.web__url.host}/resetPassword?email=${email}&forgotToken=${text}" >verify link</a></td>
                 </tr>
                 <tr>
                   <td><p></p></td>

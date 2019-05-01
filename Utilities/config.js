@@ -11,6 +11,7 @@ let serverURLs = {
         "EMAIL_PORT": 465,
         "EMAIL_SECURE": true,
         "CRON_PATTERN": '1 * * * * *',
+        "web_url": 'https://www.waki.store:6262/v1'
     },
     "staging": {
         "NODE_SERVER": "http://localhost",
@@ -22,6 +23,7 @@ let serverURLs = {
         "EMAIL_PORT": 465,
         "EMAIL_SECURE": true,
         "CRON_PATTERN": '1 * * * * *',
+        "web_url": 'https://www.waki.store:6262/v1'
     },
     "local": {
         "NODE_SERVER": "http://localhost",
@@ -33,6 +35,7 @@ let serverURLs = {
         "EMAIL_PORT": 465,
         "EMAIL_SECURE": true,
         "CRON_PATTERN": '1 * * * * *',
+        "web_url": 'https://www.waki.store:6262/v1'
     },
     "live": {
         "NODE_SERVER": "http://localhost",
@@ -44,6 +47,7 @@ let serverURLs = {
         "EMAIL_PORT": 465,
         "EMAIL_SECURE": true,
         "CRON_PATTERN": '1 * * * * *',
+        "web_url": 'https://www.waki.store:6262/v1'
     },
 
 }
@@ -71,7 +75,11 @@ let config = {
             "user": `${serverURLs[environment].EMAIL_USER}`,
             "pass": `${serverURLs[environment].EMAIL_PASS}`,
         }
+    },
+    "web__url": {
+        "host": `${serverURLs[environment].web_url}`
     }
+
 };
 
 module.exports = {
