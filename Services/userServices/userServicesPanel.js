@@ -4,6 +4,8 @@ let util = require('../../Utilities/util');
 const commonFunction = require('../../commonFile/commonFunction');
 log = console.log;
 const mongoose = require('mongoose');
+const paytabs = require('paytabs_api');
+
 //!signup 
 signup = (data, callback) => {
     obj = data
@@ -1162,6 +1164,24 @@ decodeToken = (data, callback) => {
         callback(decode)
     })
 }
+makePayment = (data, callback) => {
+    console.log(data)
+    paytabs.validateSecretKey({
+        'merchant_email': "sumit@techugo.com",
+        'secret_key': 'jHNnwY2CJxvhXvDmIJXuksDQ3P6DxTIQBwe7uhKdOfvML98tS6YdzB4CqbgY4ZOFv3MZkxd8MIVxS41KbZYKB2m2dD0hCPX7SK7c',
+    }, validateSecretKey);
+
+    function validateSecretKey(result) {
+        if (result.response_code == 4012) {
+            //Redirect your merchant to the payment link
+            console.log("2", result.payment_url);
+        } else {
+            //Handle the error
+            console.log("22222222222222222222", result);
+        }
+    }
+    callback()
+}
 module.exports = {
     signup,
     login,
@@ -1187,5 +1207,6 @@ module.exports = {
     deletePayment,
     editAddress,
     deleteAddress,
-    decodeToken
+    decodeToken,
+    makePayment
 }

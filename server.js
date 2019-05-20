@@ -20,10 +20,6 @@ let app = require('express')(),
     configJson = require('./config/config'),
     _ = require('lodash');
 // console.log(configJson.payTabs);
-
-
-
-
 // app.use(function (req, res, next) {
 //     res.setHeader('Access-Control-Allow-Origin', 'www.waki.store/');
 //     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -38,12 +34,12 @@ let app = require('express')(),
 // };
 
 
-var options = {
-    key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
-    cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
-};
-// var server = require('http').Server(app);
-var server = require('https').Server(options, app);
+// var options = {
+//     key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
+//     cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
+// };
+var server = require('http').Server(app);
+// var server = require('https').Server(options, app);
 
 
 var chatHistory = require('./Models/userModel/chatHistory');
@@ -75,8 +71,10 @@ app.use('/vendor', productRoutes)
 //     res.sendFile(__dirname + '/vendorDist/index.html')
 // });
 
-
-
+app.use("/admin", express.static(path.join(__dirname, 'admin')));
+app.get('/admin*', (req, res) => {
+    res.sendFile(`${__dirname}/admin/index.html`);
+})
 app.use("/v1", express.static(path.join(__dirname, 'dist')));
 app.get('/v1*', (req, res) => {
     res.sendFile(`${__dirname}/dist/index.html`);
@@ -110,7 +108,6 @@ app.get('/*', (req, res) => {
 ***************************socket start************************/
 
 var io = require('socket.io')(server);
-
 
 var sockets = {};
 global.onlineUsers = {};

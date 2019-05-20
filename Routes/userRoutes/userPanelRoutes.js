@@ -192,4 +192,10 @@ userRouter.post('/decodeToken', (req, res) => {
         res.send(data)
     })
 })
+
+userRouter.post('/makePayment', (req, res) => {
+    userHandler.makePayment(req.body, (data) => {
+        res.send(data)
+    })
+})
 module.exports = userRouter

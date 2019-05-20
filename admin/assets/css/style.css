@@ -1,0 +1,245 @@
+@font-face {
+	font-family: 'Montserrat-Regular';
+	src: url('../fonts/Montserrat-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/Montserrat-Regular.woff') format('woff'), url('../fonts/Montserrat-Regular.ttf') format('truetype'), url('../fonts/Montserrat-Regular.svg#Montserrat-Regular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Montserrat-Medium';
+	src: url('../fonts/Montserrat-Medium.eot?#iefix') format('embedded-opentype'), url('../fonts/Montserrat-Medium.woff') format('woff'), url('../fonts/Montserrat-Medium.ttf') format('truetype'), url('../fonts/Montserrat-Medium.svg#Montserrat-Medium') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Montserrat-Light';
+	src: url('../fonts/Montserrat-Light.eot?#iefix') format('embedded-opentype'), url('../fonts/Montserrat-Light.woff') format('woff'), url('../fonts/Montserrat-Light.ttf') format('truetype'), url('../fonts/Montserrat-Light.svg#Montserrat-Light') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Raleway-Medium';
+	src: url('../fonts/Raleway-Medium.eot?#iefix') format('embedded-opentype'), url('../fonts/Raleway-Medium.woff') format('woff'), url('../fonts/Raleway-Medium.ttf') format('truetype'), url('../fonts/Raleway-Medium.svg#Raleway-Medium') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+body{
+    font-family: 'Montserrat-Regular';
+}
+.user_detail_img{
+   width:250px;
+   float:left;   
+}
+.user_detail_div{
+   margin-left: 260px;
+}
+td.img-text{
+    line-height: 80px!important;
+}
+.site_title{
+    width: 143px;
+    height: 50px;
+    background: url(../images/waki_logo.png) left center no-repeat;
+    background-size: 143px 50px;
+    display: table;
+    margin: 4px auto;
+    padding-left: 0px;
+}
+.profile_img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.pro_img_wrapper{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    position: relative;
+    float: left;
+}
+@media only screen and (max-width:767px){
+    .user_detail_div{
+        margin-left: 0px;
+     }
+     .user_detail_img{
+         float:none;
+     }
+}
+.pro_img_wrapper img{
+    position: absolute;
+    max-height: 100%;
+    max-width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+.profile_img img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+/*Chating window Start here*/
+
+.livechaticon {
+    position: fixed;
+    bottom: 5px;
+    left: 16px;
+    cursor: pointer;
+    height:50px;
+      width:50px;
+      border:1px solid #52c9ec;
+      border-radius:50%;
+      background:#52c9ec;
+    z-index: 99;
+   }
+   .livechaticon  i{
+   color:#fff;
+   font-size:30px;
+   padding-top:9px;
+   padding-left:0px;
+   }
+   .livechaticon span.chaticon {
+    float: left;
+    width: 26px;
+    height: 26px;
+    background: url(../images/livechat_icon.png) no-repeat;
+    background-size: 100% 100%;
+    display: block;
+   }
+   .livechaticon span.txt {
+    display: inline-block;
+    margin: 0 10px;
+    color: #d42c1f;
+   }
+   .livechaticon span.txt span {
+    color: #ffa700;
+   }
+   .chatboxmodel {
+    position: fixed;
+    background-color: #fff;
+    right: 16px;
+    bottom: -460px;
+    width: 0;
+    display: none;
+    z-index: 9999;
+    -webkit-transition: all 400ms linear;
+    -moz-transition: all 400ms linear;
+    -o-transition: all 400ms linear;
+    -ms-transition: all 400ms linear;
+    transition: all 400ms linear;
+   }
+   html.chatbox .chatboxmodel {
+    bottom: 0px;
+   }
+   .chatboxmodel .titlerow {
+    position: relative;
+    background: #25d7ea;
+    padding: 12px;
+    color: #fff;
+   }
+   .chatboxmodel .titlerow .closesbtn {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+   }
+   .chatboxmodel .titlerow .closesbtn button.close {
+    color: #fff;
+    opacity: 1;
+    font-size: 24px;
+     background:transparent;
+    outline:none;
+    border:0px;
+   }
+   .chatboxmodel .chatsection {
+    padding: 5px;
+   }
+   .chatsection .chatbox{
+       position:relative;
+   }
+   .chatsection .chatbox .chatreceive{
+       width:80%;
+       float:left;
+       text-align:left;
+       margin:10px 0;
+       border:1px solid #f1f1f1;
+       padding:10px 5px;
+       border-radius:4px;
+       background:#f1f1f1;
+   }
+   .chatsection .chatbox .chatreceive p, .chatsection .chatbox .chatsend p{
+       font-size:11px;
+       margin:5px 0;
+       color:#888686;
+       word-wrap: break-word;
+   }
+   .chatsection .chatbox .chatreceive h6, .chatsection .chatbox .chatsend h6{
+       margin:0px;
+       color:#868686;
+   }
+   .chatsection .chatbox .chatreceive h6{
+       text-align: right;
+   }
+   .chatsection .chatbox .chatsend h6{
+       text-align: left;
+   }
+   .chatsection .chatbox h5{
+       color:#000;
+       margin:15px 0 2px 0;
+       text-align:left;
+       font-size:21px;
+   }
+   .chatsection .chatbox .chatsend{
+       width:80%;
+       float:right;
+       text-align:right;
+       margin:10px 0;
+       border:1px solid #ddd;
+       padding:10px 5px;
+       border-radius:4px;
+       background:#ddd;
+   }
+   .chatboxmodel .typemsg .form-group{
+       margin:20px;
+       padding:5px;
+   }
+   .chatboxmodel .typemsg .form-control{
+       border-radius: 4px;
+       width: 85%;
+       float:left;
+       padding: 5px;
+       border: 1px solid #ddd;
+       outline: none;
+   }
+   .typemsg .fa{
+       color:#000;
+       font-size:22px;
+       transform:rotate(50deg);
+       color:#25d7ea;
+       cursor:pointer;
+       margin-left:10px;
+   }
+   .chatboxmodel .chatsection {
+    padding: 5px;
+    height: 300px;
+    overflow-y: auto;
+    }
+    .chatboxmodel .typemsg{
+        position: absolute;
+        bottom:0px;
+        width: 100%;
+    }
+   
+   /*Chating window End here*/
