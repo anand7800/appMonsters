@@ -134,7 +134,7 @@ productRouter.post('/placeOrder', authHandler.verifyToken, (req, res) => {
 })
 
 //!orderList  
-productRouter.get('/orderList', authHandler.verifyToken, (req, res) => {
+productRouter.get('/orderList', /* authHandler.verifyToken, */ (req, res) => {
     productService.orderList(req.query, req.headers, (data) => {
         res.send(data)
     })

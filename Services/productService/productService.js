@@ -3550,10 +3550,12 @@ listOfAddCart = (data, headers, callback) => {
 ***********************************************************************/
 //!orderList
 orderList = (data, headers, callback) => {
+
     log("list of ORDER", data)
     var userId
-    if (data.userId)
+    if (data.userId) {
         userId = data.userId
+    }
     else {
         commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
             console.log(token)
@@ -3564,71 +3566,111 @@ orderList = (data, headers, callback) => {
 
     async.parallel({
         getOrderDetails: (cb) => {
-            orderPlaced.findOne({ userId: userId }).sort({ 'orderPlacedDescription.createdAt': 1 }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).exec((err, result) => {
-                if (err || !result || !result.orderPlacedDescription.length) {
-                    res = {}
-                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.ORDER_EMPTY[data.lang], 'result': res })
-                }
-                else {
-                    cb(null, result)
-                }
-            })
+            orderPlaced.findOne({ userId: userId }).sort({ 'orderPlacedDescription.createdAt': 1 }).populate({ path: 'userId' })
+                .populate({
+                    path: 'orderPlacedDescription.productId',
+                    populate: [{
+                        path: 'varianceId',
+                    },
+                    {
+                        path: 'brandId',
+                    }],
+                }).exec((err, result) => {
+
+                    if (err || !result || !result.orderPlacedDescription.length) {
+                        res = {}
+                        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.ORDER_EMPTY[data.lang], 'result': res })
+                    }
+                    else {
+                        cb(null, result)
+                    }
+                })
         }
     }, (err, response) => {
         var main = []
         async.forEachOf(response.getOrderDetails.orderPlacedDescription, (value, key, cb) => {
-            brandModel.findOne(value.productId.brandId, (err, brand) => {
-                varianceModel.findOne({
-                    "productId": mongoose.Types.ObjectId(value.productId._id),
-                    "variants": {
-                        "$elemMatch": {
-                            // "closed": false,
-                            "$and": [
-                                {
-                                    "color": value.color.toLowerCase(),
-                                },
-                                {
-                                    "size": value.size.toLowerCase(),
-                                },
-                                {
-                                    "material": value.material.toLowerCase(),
-                                }
-                            ]
-                        }
-                    }
-                }, { 'variants.$': 1 }).exec((err, getVariance) => {
-                    response.getOrderDetails.userId.address.forEach(element => {
-                        if (element._id.toString() == value.addressId.toString()) {
-                            // console.log('asdfasfd')
-                            temp = {
-                                brand: brand.brandName,
-                                orderId: "ORD" + value.orderId,
-                                transactionId: value.transactionId,
-                                productId: value.productId._id,
-                                productName: value.productId.productName,
-                                color: getVariance.variants[0].color,
-                                price: getVariance.variants[0].price,
-                                productQuantity: value.productQuantity,
-                                image: getVariance.variants[0].image,
-                                orderStatus: value.orderStatus,
-                                feedbackAdded: value.feedbackAdded,
-                                description: value.productId.description,
-                                orderDate: value.createdAt,
-                                orderPayment: value.orderPayment,
-                                deliveryAddress: element,
-                                estimateTax: value.estimateTax ? value.estimateTax : '17',
-                                deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "50",
-                                totalAmountPaid: (17 + 50 + parseInt(value.price)).toString()
-                                // specifications: agreResult[0].brandDesc[0].specifications
-                            }
-                            // console.log("#@@@@@@@@@@@2", temp)
-                            main.push(temp)
-                        }
 
-                    })
-                    cb()
-                })
+
+            value.productId.varianceId.variants.forEach(check => {
+                console.log(check.color, "color", value.color)
+                if (value.material.toLowerCase() == check.material && value.color.toLowerCase() == check.color && value.size.toLowerCase() == check.size) {
+                    temp = {
+                        brand: "response.getOrderDetails.orderPlacedDescription.productId.brandId.brandName",
+                        orderId: "ORD" + value.orderId,
+                        transactionId: value.transactionId,
+                        productId: value.productId._id,
+                        productName: value.productId.productName,
+                        color: check.color,
+                        price: check.price,
+                        productQuantity: value.productQuantity,
+                        image: check.image,
+                        orderStatus: value.orderStatus,
+                        feedbackAdded: value.feedbackAdded,
+                        description: value.productId.description,
+                        orderDate: value.createdAt,
+                        orderPayment: value.orderPayment,
+                        deliveryAddress: "element",
+                        estimateTax: value.estimateTax ? value.estimateTax : '17',
+                        deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "50",
+                        totalAmountPaid: (17 + 50 + parseInt(value.price)).toString()
+                    }
+                    main.push(temp)
+                }
             })
+
+            // if(value.material==value.productId.varianceId.variants)
+
+
+
+
+            // return
+            // brandModel.findOne(value.productId.brandId, (err, brand) => {
+            //     varianceModel.findOne({
+            //         "productId": mongoose.Types.ObjectId(value.productId._id),
+            //         "variants": {
+            //             "$elemMatch": {
+            //                 "$and": [
+            //                     {
+            //                         "color": value.color.toLowerCase(),
+            //                     },
+            //                     {
+            //                         "size": value.size.toLowerCase(),
+            //                     },
+            //                     {
+            //                         "material": value.material.toLowerCase(),
+            //                     }
+            //                 ]
+            //             }
+            //         }
+            //     }, { 'variants.$': 1 }).exec((err, getVariance) => {
+            //         response.getOrderDetails.userId.address.forEach(element => {
+            //             if (element._id.toString() == value.addressId.toString()) {
+            //                 temp = {
+            //                     brand: brand.brandName,
+            //                     orderId: "ORD" + value.orderId,
+            //                     transactionId: value.transactionId,
+            //                     productId: value.productId._id,
+            //                     productName: value.productId.productName,
+            //                     color: getVariance.variants[0].color,
+            //                     price: getVariance.variants[0].price,
+            //                     productQuantity: value.productQuantity,
+            //                     image: getVariance.variants[0].image,
+            //                     orderStatus: value.orderStatus,
+            //                     feedbackAdded: value.feedbackAdded,
+            //                     description: value.productId.description,
+            //                     orderDate: value.createdAt,
+            //                     orderPayment: value.orderPayment,
+            //                     deliveryAddress: element,
+            //                     estimateTax: value.estimateTax ? value.estimateTax : '17',
+            //                     deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "50",
+            //                     totalAmountPaid: (17 + 50 + parseInt(value.price)).toString()
+            //                 }
+            //                 main.push(temp)
+            //             }
+            //         })
+            cb()
+            //     })
+            // })
         }, (err, successfully) => {
             var res = {}
             var success = _.sortBy(main, ['orderDate'])
@@ -4600,10 +4642,10 @@ vendorSearchOffer = (data, header, callback) => {
 
 uploadImage1 = (data, callback) => {
     // console.log(data);
-    
+
     commonFunction.uploadImg(data.image, (err, icons) => {
         if (err) callback(null)
-        else{
+        else {
             callback(icons)
         }
     })
