@@ -16,7 +16,7 @@ let serverURLs = {
     "staging": {
         "NODE_SERVER": "http://localhost",
         "NODE_SERVER_PORT": "5050",
-        "MONGO_DB": "mongodb://35.165.140.114:27017/WAKINEW",
+        "MONGO_DB": "mongodb://13.126.131.184:27017/WAKINEW?authSource=admin",
         "EMAIL_USER": 'toothfairysanjeet@gmail.com',
         "EMAIL_PASS": 'Sanj1234A',
         "EMAIL_HOST": 'smtp.gmail.com',
