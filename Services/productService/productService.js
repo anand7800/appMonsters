@@ -3588,46 +3588,46 @@ orderList = (data, headers, callback) => {
         }
     }, (err, response) => {
         var main = []
+        let count = 0;
         async.forEachOf(response.getOrderDetails.orderPlacedDescription, (value, key, cb) => {
 
-
             value.productId.varianceId.variants.forEach(check => {
-                console.log(check.color, "color", value.color)
-                if (value.material.toLowerCase() == check.material && value.color.toLowerCase() == check.color && value.size.toLowerCase() == check.size) {
-                    temp = {
-                        brand: "response.getOrderDetails.orderPlacedDescription.productId.brandId.brandName",
-                        orderId: "ORD" + value.orderId,
-                        transactionId: value.transactionId,
-                        productId: value.productId._id,
-                        productName: value.productId.productName,
-                        color: check.color,
-                        price: check.price,
-                        productQuantity: value.productQuantity,
-                        image: check.image,
-                        orderStatus: value.orderStatus,
-                        feedbackAdded: value.feedbackAdded,
-                        description: value.productId.description,
-                        orderDate: value.createdAt,
-                        orderPayment: value.orderPayment,
-                        deliveryAddress:  {
-                            "addressType": "Work",
-                            "contactNumber": "8439389857",
-                            "fullName": "sumit ruhela",
-                            "houseNo": "Cctrr",
-                            "addresses": "Modinagar",
-                            "lng": "77.5779592",
-                            "lat": "28.831630699999998",
-                            "_id": "5beecb33c7fb5368f95a4ae9"
-                        }
-        ,
-                        estimateTax: value.estimateTax ? value.estimateTax : '17',
-                        deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "50",
-                        totalAmountPaid: (17 + 50 + parseInt(value.price)).toString()
-                    }
-                    main.push(temp)
-                }
-            })
 
+
+
+                // console.log(response.getOrderDetails.userId.address)
+                response.getOrderDetails.userId.address.forEach(userAddress => {
+                    if (userAddress._id.toString() == value.addressId.toString())
+
+
+                        if (value.material.toLowerCase() == check.material && value.color.toLowerCase() == check.color && value.size.toLowerCase() == check.size) {
+                            temp = {
+                                brand:value.productId.brandId.brandName /* response.getOrderDetails.orderPlacedDescription.productId.brandId.brandName */,
+                                orderId: "ORD" + value.orderId,
+                                transactionId: value.transactionId,
+                                productId: value.productId._id,
+                                productName: value.productId.productName,
+                                color: check.color,
+                                price: check.price,
+                                productQuantity: value.productQuantity,
+                                image: check.image,
+                                orderStatus: value.orderStatus,
+                                feedbackAdded: value.feedbackAdded,
+                                description: value.productId.description,
+                                orderDate: value.createdAt,
+                                orderPayment: value.orderPayment,
+                                deliveryAddress: userAddress,
+                                estimateTax: value.estimateTax ? value.estimateTax : '17',
+                                deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "50",
+                                totalAmountPaid: (17 + 50 + parseInt(value.price)).toString()
+                            }
+                            main.push(temp)
+                        }
+                })
+            })
+            console.log(count);
+
+            count++
             // if(value.material==value.productId.varianceId.variants)
 
 
