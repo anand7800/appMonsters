@@ -3203,11 +3203,11 @@ checkoutOrder = (data, headers, callback) => {
                                         sellerId: value.sellerId,
                                         productId: value.productId,
                                         // varianceId: data.varianceId ? data.varianceId : null,
-                                        orderPayment: data.orderPayment ? data.orderPayment : "COD",
-                                        orderStatus: "PLACED",
+                                        orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                        orderStatus: "PENDING",
                                         productQuantity: value.productQuantity ? value.productQuantity : 1,
                                         orderId: orderId,
-                                        transactionId: "1234567890",
+                                        transactionId: null,
                                         addressId: data.addressId ? data.addressId : "null",
                                         deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
                                         estimateTax: value.estimateTax ? value.estimateTax : "00",
@@ -3239,11 +3239,11 @@ checkoutOrder = (data, headers, callback) => {
                                     sellerId: value.sellerId,
                                     productId: value.productId,
                                     // varianceId: data.varianceId ? data.varianceId : null,
-                                    orderPayment: data.orderPayment ? data.orderPayment : "COD",
-                                    orderStatus: "PLACED",
+                                    orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                    orderStatus: "PENDING",
                                     productQuantity: value.productQuantity ? value.productQuantity : 1,
                                     orderId: orderId,
-                                    transactionId: "1234567890",
+                                    transactionId: null,
                                     addressId: data.addressId ? data.addressId : "null",
                                     deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
                                     estimateTax: value.estimateTax ? value.estimateTax : "00",
@@ -3285,7 +3285,11 @@ checkoutOrder = (data, headers, callback) => {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
             }
             else {
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang] })
+                callback({
+                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                    "orderId": 'ORD'+orderId,
+                    "orderPayment": data.orderPayment
+                })
             }
         })
     })
@@ -4680,7 +4684,7 @@ orderPayment = (data, header, callback) => {
     }
     else {
         data.orderId = data.orderId.slice(3)
-        
+
         async.parallel({
             changeStatus: (cb) => {
                 console.log("grdghfcmhsdcg")
@@ -4688,7 +4692,7 @@ orderPayment = (data, header, callback) => {
                     'orderPlacedDescription.orderId': data.orderId
                 }, {
                         $set: {
-                            'orderPlacedDescription.$.transactionId': data.status,
+                            'orderPlacedDescription.$.transactionId': data.transactionId,
                             'orderPlacedDescription.$.orderPayment': data.status
                         }
                     }, { new: true }).exec((err, result) => {
