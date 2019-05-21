@@ -2652,7 +2652,6 @@ placeOrder = (data, headers, callback) => {
                 })
             }
         }, (err, response) => {
-
             orderPlaced.findOne({ userId: userId }, (err, userFind) => {
                 if (err) {
                     callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
@@ -2696,9 +2695,11 @@ placeOrder = (data, headers, callback) => {
                                 type: util.statusMessage.type.PLACED[data.lang],
                                 // orderId: orderId
                             }
-                            commonAPI.notify(notifyData, userId, (err, result) => {
-                                // console.log("1659.....notifyAPI", err, result)
-                            })
+                            if (orderPayment == 'COD') {
+                                commonAPI.notify(notifyData, userId, (err, result) => {
+                                    // console.log("1659.....notifyAPI", err, result)
+                                })
+                            }
                             callback({
                                 statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
                                 "orderId": notifyData.orderId,
@@ -2750,9 +2751,11 @@ placeOrder = (data, headers, callback) => {
                                 title: util.statusMessage.TITLE.PLACED[data.lang],
                                 type: util.statusMessage.type.PLACED[data.lang],
                             }
-                            commonAPI.notify(notifyData, userId, (err, result) => {
-                                // console.log("1666...notifyAPI", err, result)
-                            })
+                            if (orderPayment == 'COD') {
+                                commonAPI.notify(notifyData, userId, (err, result) => {
+                                    // console.log("1666...notifyAPI", err, result)
+                                })
+                            }
                             callback({
                                 statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
                                 "orderId": notifyData.orderId,
@@ -3287,7 +3290,7 @@ checkoutOrder = (data, headers, callback) => {
             else {
                 callback({
                     "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
-                    "orderId": 'ORD'+orderId,
+                    "orderId": 'ORD' + orderId,
                     "orderPayment": data.orderPayment
                 })
             }
