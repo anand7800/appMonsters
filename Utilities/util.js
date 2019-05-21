@@ -104,6 +104,10 @@ let statusMessage = {
         en: "REGISTRATION DONE",
         ar: "التسجيل تم"
     },
+    PAYMENT_DONE: {
+        en: "Payment done",
+        ar: "التسجيل تم"
+    },
     LOGGED_IN: {
         en: "You have successfully logged in",
         ar: "لقد نجحت في تسجيل الدخول"

@@ -2683,7 +2683,7 @@ placeOrder = (data, headers, callback) => {
                         }
                     // console.log("req", query)
                     orderPlaced.findOneAndUpdate(query, update, { new: true, lean: true }, (err, orderPlaced) => {
-                        log("---------->>>>>",err, orderPlaced)
+                        log("---------->>>>>", err, orderPlaced)
                         if (err) {
                             callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                         }
@@ -2701,7 +2701,7 @@ placeOrder = (data, headers, callback) => {
                             })
                             callback({
                                 statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
-                                "orderId":notifyData.orderId,
+                                "orderId": notifyData.orderId,
                                 "orderPayment": orderPayment
                             })
                         }
@@ -2731,7 +2731,7 @@ placeOrder = (data, headers, callback) => {
                         }
                     }
                     orderPlaced.create(query, (err, result) => {
-                        console.log('++++++++++++++>>>>>>',err,result)
+                        console.log('++++++++++++++>>>>>>', err, result)
                         if (err) {
                             callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                         }
@@ -4669,6 +4669,49 @@ uploadImage1 = (data, callback) => {
         }
     })
 }
+// orderpAyment
+orderPayment = (data, header, callback) => {
+    console.log(data, header)
+
+    if (!data.orderId || !data.status || !data.orderId) {
+        callback({
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+        })
+        return
+    }
+    else {
+        async.parallel({
+            changeStatus: (cb) => {
+                console.log("grdghfcmhsdcg")
+                orderPlaced.findOneAndUpdate({
+                    'orderPlacedDescription.orderId': data.orderId
+                }, {
+                        $set: {
+                            'orderPlacedDescription.$.transactionId': data.status,
+                            'orderPlacedDescription.$.orderPayment': data.status
+                        }
+                    }, { new: true }).exec((err, result) => {
+
+                        if (err)
+                            cb(null)
+                        else {
+                            cb(null, result)
+                        }
+                    })
+
+            }
+
+
+        }, (err, response) => {
+            if (true) {
+                callback({
+                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PAYMENT_DONE[data.lang]
+                })
+            }
+
+        })
+    }
+}
 //userConversationList
 userConversationList = (req, header, callback) => {
     var userId = req.body.userId;
@@ -4928,5 +4971,6 @@ module.exports = {
     AllProductReviewFeedback,
     vendorSearchOffer,
     userConversationList,
-    uploadImage1
+    uploadImage1,
+    orderPayment
 }

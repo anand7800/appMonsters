@@ -132,9 +132,14 @@ productRouter.post('/placeOrder', authHandler.verifyToken, (req, res) => {
         res.send(data)
     })
 })
-
+// final payment done created by 21 may 2k19
+productRouter.post('/orderPayment', /* authHandler.verifyToken, */ (req, res) => {
+    productService.orderPayment(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
 //!orderList  
-productRouter.get('/orderList', /* authHandler.verifyToken, */ (req, res) => {
+productRouter.get('/orderList', authHandler.verifyToken, (req, res) => {
     productService.orderList(req.query, req.headers, (data) => {
         res.send(data)
     })
