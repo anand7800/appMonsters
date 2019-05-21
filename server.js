@@ -1,7 +1,7 @@
 let app = require('express')(),
     fs = require('fs'),
     env = require('./Utilities/environment').environment,
-
+    mongoose = require('mongoose'),
     // server = require('https').Server(app),
     bodyParser = require('body-parser'),
     express = require('express'),
@@ -19,7 +19,6 @@ let app = require('express')(),
     paytabs = require('paytabs_api'),
     configJson = require('./config/config'),
     _ = require('lodash');
-// console.log(configJson.payTabs);
 // app.use(function (req, res, next) {
 //     res.setHeader('Access-Control-Allow-Origin', 'www.waki.store/');
 //     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -32,7 +31,6 @@ let app = require('express')(),
 //     key: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.key').toString(),
 //     cert: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.csr').toString()
 // };
-
 
 // var options = {
 //     key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
@@ -85,6 +83,8 @@ app.get('/*', (req, res) => {
 })
 
 /* payment  testing start*/
+
+// console.log(configJson.payTabs.secret_key)
 // paytabs.validateSecretKey({
 //     'merchant_email': configJson.payTabs.email,
 //     'secret_key': configJson.payTabs.secret_key,

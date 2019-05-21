@@ -24,7 +24,7 @@ let secret = speakEasy.generateSecret({
 });
 let salt = bcrypt.genSaltSync(10);
 let webURL=require('../Utilities/config').config
-console.log(webURL.web__url.host)
+// console.log(webURL.web__url.host)
 // nodemailer.createTestAccount((err, account) => { 
 //     if (err) {
 //         console.log("Account could not be created", err)

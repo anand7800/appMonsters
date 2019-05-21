@@ -1,12 +1,17 @@
 var config = require("../Utilities/config").config;
 const mongoose = require('mongoose');
-global.Promise = mongoose.Promise;
+// global.Promise = mongoose.Promise;
+mongoose.Promise = global.Promise;
+
 const log = console.log;
 const db_name = require('../config/config').db.name;
 const host = require('../config/config').db.host;
 const DB_URL = config.DB_URL.url
 
-mongoose.connection.openUri(DB_URL/* ,{ useNewUrlParser: false }  */);
+log(DB_URL)
+mongoose.connect(DB_URL, { useNewUrlParser: true });
+
+// mongoose.connection.openUri(DB_URL/* ,{ useNewUrlParser: false }  */);
 // mongoose.connect.openUri(DB_URL,{ useNewUrlParser: true } );
 
 /************************************ Events of mongoose connection. ******************************************************/
@@ -15,7 +20,6 @@ mongoose.connection.openUri(DB_URL/* ,{ useNewUrlParser: false }  */);
 
 mongoose.connection.on('connected', () => {
   log('success', 'Mongoose default connection open to ' + DB_URL);
-
 });
 // If the connection throws an error
 mongoose.connection.on('error', (err) => {

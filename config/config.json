@@ -23,6 +23,6 @@
     },
     "payTabs": {
         "email": "sumit@techugo.com",
-        "scret_key": "jHNnwY2CJxvhXvDmIJXuksDQ3P6DxTIQBwe7uhKdOfvML98tS6YdzB4CqbgY4ZOFv3MZkxd8MIVxS41KbZYKB2m2dD0hCPX7SK7c"
+        "secret_key": "jHNnwY2CJxvhXvDmIJXuksDQ3P6DxTIQBwe7uhKdOfvML98tS6YdzB4CqbgY4ZOFv3MZkxd8MIVxS41KbZYKB2m2dD0hCPX7SK7c"
     }
 }

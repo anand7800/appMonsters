@@ -1,3 +1,5 @@
 module.exports = {
-	environment: "local"
+	environment: "staging"
 }
+
+/* staging local dev live */
