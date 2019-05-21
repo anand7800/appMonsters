@@ -4672,7 +4672,6 @@ uploadImage1 = (data, callback) => {
 // orderpAyment
 orderPayment = (data, header, callback) => {
     console.log(data, header)
-
     if (!data.orderId || !data.status || !data.orderId) {
         callback({
             "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
@@ -4680,6 +4679,8 @@ orderPayment = (data, header, callback) => {
         return
     }
     else {
+        data.orderId = data.orderId.slice(3)
+        
         async.parallel({
             changeStatus: (cb) => {
                 console.log("grdghfcmhsdcg")
