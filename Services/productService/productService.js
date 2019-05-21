@@ -3442,8 +3442,6 @@ listOfAddCart = (data, headers, callback) => {
     async.parallel({
         bagDetails: (cb) => {
             bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({ path: 'orderDescription.productId' }).lean().exec((err, result) => {
-
-
                 if (err || !result) {
                     let res = {}
                     callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.LIST_EMPTY[data.lang], 'result': res })
@@ -3506,9 +3504,9 @@ listOfAddCart = (data, headers, callback) => {
             res.productDetail = main
             res.bagDetails = {
                 productPrice: totalPrice.toString(),
-                estimateTax: "17",
-                deliveryCharges: "50",
-                bagTotal: (totalPrice + 17 + 50).toString(),
+                estimateTax: "0",
+                deliveryCharges: "0",
+                bagTotal: (totalPrice + 0 + 0).toString(),
                 productQuantity: response.bagDetails.orderDescription.length,
             }
             res.address = address
@@ -3570,19 +3568,12 @@ orderList = (data, headers, callback) => {
         var main = []
         let count = 0;
         async.forEachOf(response.getOrderDetails.orderPlacedDescription, (value, key, cb) => {
-
             value.productId.varianceId.variants.forEach(check => {
-
-
-
-                // console.log(response.getOrderDetails.userId.address)
                 response.getOrderDetails.userId.address.forEach(userAddress => {
                     if (userAddress._id.toString() == value.addressId.toString())
-
-
                         if (value.material.toLowerCase() == check.material && value.color.toLowerCase() == check.color && value.size.toLowerCase() == check.size) {
                             temp = {
-                                brand: value.productId.brandId.brandName /* response.getOrderDetails.orderPlacedDescription.productId.brandId.brandName */,
+                                brand: value.productId.brandId.brandName,
                                 orderId: "ORD" + value.orderId,
                                 transactionId: value.transactionId,
                                 productId: value.productId._id,
@@ -3597,8 +3588,8 @@ orderList = (data, headers, callback) => {
                                 orderDate: value.createdAt,
                                 orderPayment: value.orderPayment,
                                 deliveryAddress: userAddress,
-                                estimateTax: value.estimateTax ? value.estimateTax : '17',
-                                deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "50",
+                                estimateTax: value.estimateTax ? value.estimateTax : '0',
+                                deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "0",
                                 totalAmountPaid: (17 + 50 + parseInt(value.price)).toString()
                             }
                             main.push(temp)
@@ -3606,61 +3597,9 @@ orderList = (data, headers, callback) => {
                 })
             })
             console.log(count);
-
             count++
-            // if(value.material==value.productId.varianceId.variants)
-
-
-
-
-            // return
-            // brandModel.findOne(value.productId.brandId, (err, brand) => {
-            //     varianceModel.findOne({
-            //         "productId": mongoose.Types.ObjectId(value.productId._id),
-            //         "variants": {
-            //             "$elemMatch": {
-            //                 "$and": [
-            //                     {
-            //                         "color": value.color.toLowerCase(),
-            //                     },
-            //                     {
-            //                         "size": value.size.toLowerCase(),
-            //                     },
-            //                     {
-            //                         "material": value.material.toLowerCase(),
-            //                     }
-            //                 ]
-            //             }
-            //         }
-            //     }, { 'variants.$': 1 }).exec((err, getVariance) => {
-            //         response.getOrderDetails.userId.address.forEach(element => {
-            //             if (element._id.toString() == value.addressId.toString()) {
-            //                 temp = {
-            //                     brand: brand.brandName,
-            //                     orderId: "ORD" + value.orderId,
-            //                     transactionId: value.transactionId,
-            //                     productId: value.productId._id,
-            //                     productName: value.productId.productName,
-            //                     color: getVariance.variants[0].color,
-            //                     price: getVariance.variants[0].price,
-            //                     productQuantity: value.productQuantity,
-            //                     image: getVariance.variants[0].image,
-            //                     orderStatus: value.orderStatus,
-            //                     feedbackAdded: value.feedbackAdded,
-            //                     description: value.productId.description,
-            //                     orderDate: value.createdAt,
-            //                     orderPayment: value.orderPayment,
-            //                     deliveryAddress: element,
-            //                     estimateTax: value.estimateTax ? value.estimateTax : '17',
-            //                     deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "50",
-            //                     totalAmountPaid: (17 + 50 + parseInt(value.price)).toString()
-            //                 }
-            //                 main.push(temp)
-            //             }
-            //         })
             cb()
-            //     })
-            // })
+
         }, (err, successfully) => {
             var res = {}
             var success = _.sortBy(main, ['orderDate'])
@@ -4319,7 +4258,6 @@ orderChat = (data, header) => {
     //     }
     // })
     async.parallel({
-
         getOrderDetails: (cb) => {
             orderPlaced.find({ 'orderPlacedDescription.sellerId': userId }).populate({ path: 'orderPlacedDescription.productId', select: 'productName image' }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.reviewRatingId' }).sort('orderPlacedDescription.createdAt').exec((err, result) => {
                 if (err || result < 0 || result.length < 0) {
