@@ -2665,11 +2665,11 @@ placeOrder = (data, headers, callback) => {
                                     sellerId: data.sellerId,
                                     productId: data.productId,
                                     // varianceId: data.varianceId ? data.varianceId : null,
-                                    orderPayment: orderPayment ? orderPayment : "COD",
-                                    orderStatus: "PLACED",
+                                    orderPayment: orderPayment ? orderPayment : "PENDING",
+                                    orderStatus: "PENDING",
                                     productQuantity: data.productQuantity ? data.productQuantity : 1,
                                     orderId: orderId,
-                                    transactionId: "1234567890",
+                                    transactionId: null,
                                     addressId: data.addressId ? data.addressId : "null",
                                     deliveryCharges: data.deliveryCharges ? data.deliveryCharges : "00",
                                     estimateTax: data.estimateTax ? data.estimateTax : "00",
@@ -2683,7 +2683,7 @@ placeOrder = (data, headers, callback) => {
                         }
                     // console.log("req", query)
                     orderPlaced.findOneAndUpdate(query, update, { new: true, lean: true }, (err, orderPlaced) => {
-                        log(err, orderPlaced)
+                        log("---------->>>>>",err, orderPlaced)
                         if (err) {
                             callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                         }
@@ -2694,12 +2694,16 @@ placeOrder = (data, headers, callback) => {
                                 orderId: "ORD" + orderId,
                                 title: util.statusMessage.TITLE.PLACED[data.lang],
                                 type: util.statusMessage.type.PLACED[data.lang],
-                                orderId: orderId
+                                // orderId: orderId
                             }
                             commonAPI.notify(notifyData, userId, (err, result) => {
-                                console.log("1659.....notifyAPI", err, result)
+                                // console.log("1659.....notifyAPI", err, result)
                             })
-                            callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang] })
+                            callback({
+                                statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                "orderId":notifyData.orderId,
+                                "orderPayment": orderPayment
+                            })
                         }
                         else {
                             callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
@@ -2714,8 +2718,8 @@ placeOrder = (data, headers, callback) => {
                             productId: data.productId,
                             sellerId: data.sellerId,
                             // varianceId: data.varianceId ? data.varianceId : null,
-                            orderPayment: data.orderPayment ? data.orderPayment : "COD",
-                            orderStatus: "PLACED",
+                            orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                            orderStatus: "PENDING",
                             productQuantity: data.productQuantity ? data.productQuantity : 1,
                             orderId: orderId,
                             addressId: data.addressId ? data.addressId : "null",
@@ -2727,6 +2731,7 @@ placeOrder = (data, headers, callback) => {
                         }
                     }
                     orderPlaced.create(query, (err, result) => {
+                        console.log('++++++++++++++>>>>>>',err,result)
                         if (err) {
                             callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                         }
@@ -2746,9 +2751,13 @@ placeOrder = (data, headers, callback) => {
                                 type: util.statusMessage.type.PLACED[data.lang],
                             }
                             commonAPI.notify(notifyData, userId, (err, result) => {
-                                console.log("1666...notifyAPI", err, result)
+                                // console.log("1666...notifyAPI", err, result)
                             })
-                            callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang] })
+                            callback({
+                                statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                "orderId": notifyData.orderId,
+                                "orderPayment": orderPayment
+                            })
                         }
                         else {
                             callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
@@ -3602,7 +3611,7 @@ orderList = (data, headers, callback) => {
 
                         if (value.material.toLowerCase() == check.material && value.color.toLowerCase() == check.color && value.size.toLowerCase() == check.size) {
                             temp = {
-                                brand:value.productId.brandId.brandName /* response.getOrderDetails.orderPlacedDescription.productId.brandId.brandName */,
+                                brand: value.productId.brandId.brandName /* response.getOrderDetails.orderPlacedDescription.productId.brandId.brandName */,
                                 orderId: "ORD" + value.orderId,
                                 transactionId: value.transactionId,
                                 productId: value.productId._id,
