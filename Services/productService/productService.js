@@ -3609,7 +3609,17 @@ orderList = (data, headers, callback) => {
                         description: value.productId.description,
                         orderDate: value.createdAt,
                         orderPayment: value.orderPayment,
-                        deliveryAddress: "element",
+                        deliveryAddress:  {
+                            "addressType": "Work",
+                            "contactNumber": "8439389857",
+                            "fullName": "sumit ruhela",
+                            "houseNo": "Cctrr",
+                            "addresses": "Modinagar",
+                            "lng": "77.5779592",
+                            "lat": "28.831630699999998",
+                            "_id": "5beecb33c7fb5368f95a4ae9"
+                        }
+        ,
                         estimateTax: value.estimateTax ? value.estimateTax : '17',
                         deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "50",
                         totalAmountPaid: (17 + 50 + parseInt(value.price)).toString()
