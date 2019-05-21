@@ -238,42 +238,6 @@ getCategoryList = (data, callback) => {
         else
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
     })
-    return
-
-    categoryModelL1.find({ 'status': "ACTIVE" }, null, { sort: { 'serialNumber': 1 } }).select({ 'categoryName': 1, '_id': 1, 'icons': 1, 'image': 1 }).exec((err, result) => {
-        if (err) {
-            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-        }
-        else if (!result) {
-            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
-        }
-        else {
-
-            let temp = []
-            async.forEachOf(result, function (item, key, callback) {
-                subCategoryModelL2.findOne({ categoryModel: item._id }).count().exec((err, checkSubcategory) => {
-                    console.log('===>check', checkSubcategory)
-                    // })
-                    let data = {
-                        "_id": item._id,
-                        "categoryName": item.categoryName,
-                        "image": item.image,
-                        "icons": item.icons,
-                        "subCategory": checkSubcategory
-                    }
-                    temp.push(data)
-                    callback();
-                })
-            }, function (err) {
-                if (err) {
-                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-                }
-                else {
-                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.categoriesList_found[data.lang], "result": temp })
-                }
-            });
-        }
-    })
 }
 
 /* ************************************
@@ -3551,10 +3515,10 @@ listOfAddCart = (data, headers, callback) => {
             res.payment = payment
             if (main.length == 0) {
 
-                delete res.productDetail
-                delete res.bagDetails
-                delete res.address
-                delete res.payment
+                // delete res.productDetail
+                // delete res.bagDetails
+                // delete res.address
+                // delete res.payment
             }
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.list_of_wishList[data.lang], "result": res })
         }))
@@ -4687,7 +4651,14 @@ orderPayment = (data, header, callback) => {
     }
     else {
         data.orderId = data.orderId.slice(3)
-
+        // let notifyData = {
+        //     msg: util.statusMessage.ORDER_PLACED[data.lang],
+        //     productId: data.productId,
+        //     orderId: "ORD" + orderId,
+        //     title: util.statusMessage.TITLE.PLACED[data.lang],
+        //     type: util.statusMessage.type.PLACED[data.lang],
+        //     // orderId: orderId
+        // }
         async.parallel({
             changeStatus: (cb) => {
                 console.log("grdghfcmhsdcg")
