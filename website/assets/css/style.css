@@ -247,6 +247,17 @@ a.socialIcon:hover, .socialHoverClass {
 	max-width:1920px;
 	background-color:#fff;
 }
+.wakilogoviewmobilebx{
+	padding: 15px 10px;
+	background-color: #191919;
+	display: none;
+}
+.wakilogoviewmobilebx .wakilogos {
+	width: 120px;
+	height: 42px;
+	background: url(../images/waki_logo1.png) no-repeat;
+	background-size: 100% 100%;
+}
 .nav.fullwdmenu .tpbdr{
 	border-top:1px solid #f2f2f2;
 	display:block;
@@ -344,6 +355,9 @@ a.socialIcon:hover, .socialHoverClass {
 	box-shadow: 4px 12px 5px rgba(0,0,0,0.1);
 	cursor: pointer;
 }
+.toppicswrap .itembox:focus{
+	outline: none;
+}
 .toppicswrap .itembox .itemimgbx{
 	position:relative;
 	height:180px;
@@ -432,6 +446,11 @@ a.socialIcon:hover, .socialHoverClass {
 	font-family: 'ProximaNova-Semibold';
 	font-size:13px;
 	color:#8493a8;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.toppicswrap .itembox .itemdetailsbx .itemsmdes p{
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -1184,6 +1203,9 @@ html.sidepanel {
 	margin-bottom: 0;
 	font-weight: normal;
 	padding-bottom: 5px;
+}
+.emailAddressbox label span{
+	color:#ff0000;
 }
 .emailAddressbox .forgot_text_row{
 	font-family: 'Montserrat-Light';

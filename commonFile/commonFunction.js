@@ -455,8 +455,6 @@ module.exports = {
         return text;
     },
 
-
-
     find_duplicate_in_array: (arra1) => {
         var object = {};
         var result = [];

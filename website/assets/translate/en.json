@@ -76,7 +76,8 @@
 			"invalid":"Email is invalid"
 		},
 		"password":{
-			"required":"Password is required"
+      "required":"Password is required",
+      "invalid":"Password is invalid"
 	},
 	"firstName":{
 		"required":"First Name is required",
@@ -88,7 +89,7 @@
 	},
 	"phone":{
 		"required":"Phone is required",
-		"invalid":"Phone is invalid"
+		"invalid":"Phone should be between 5 to 16"
 	},
 	"country":{
 		"required":"country-code is required"
