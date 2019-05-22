@@ -1,20 +1,20 @@
 let environment = require('./environment').environment;
 
 let serverURLs = {
-    "dev": {
-        "NODE_SERVER": "http://localhost",
-        "NODE_SERVER_PORT": "6262",
-        "MONGO_DB": "mongodb://13.126.131.184:27017/WAKINEW?authSource=admin",
-        "EMAIL_USER": 'toothfairysanjeet@gmail.com',
-        "EMAIL_PASS": 'Sanj1234A',
-        "EMAIL_HOST": 'smtp.gmail.com',
-        "EMAIL_PORT": 465,
-        "EMAIL_SECURE": true,
-        "CRON_PATTERN": '1 * * * * *',
-        "web_url": 'https://www.waki.store:6262/v1'
-    },
+    // "dev": {
+    //     "NODE_SERVER": "http://localhost",
+    //     "NODE_SERVER_PORT": "5050",
+    //     "MONGO_DB": "mongodb://13.126.131.184:27017/WAKINEW?authSource=admin",
+    //     "EMAIL_USER": 'toothfairysanjeet@gmail.com',
+    //     "EMAIL_PASS": 'Sanj1234A',
+    //     "EMAIL_HOST": 'smtp.gmail.com',
+    //     "EMAIL_PORT": 465,
+    //     "EMAIL_SECURE": true,
+    //     "CRON_PATTERN": '1 * * * * *',
+    //     "web_url": 'https://www.waki.store:6262/v1'
+    // },
     "staging": {
-        "NODE_SERVER": "http://localhost",
+        "NODE_SERVER": "http://13.126.131.184",
         "NODE_SERVER_PORT": "5050",
         "MONGO_DB": "mongodb://13.126.131.184:27017/WAKINEW?authSource=admin",
         "EMAIL_USER": 'toothfairysanjeet@gmail.com',
@@ -23,7 +23,7 @@ let serverURLs = {
         "EMAIL_PORT": 465,
         "EMAIL_SECURE": true,
         "CRON_PATTERN": '1 * * * * *',
-        "web_url": 'https://www.waki.store:6262/v1'
+        "web_url": 'https://13.126.131.184:5050/v1'
     },
     "local": {
         "NODE_SERVER": "http://localhost",
@@ -35,7 +35,7 @@ let serverURLs = {
         "EMAIL_PORT": 465,
         "EMAIL_SECURE": true,
         "CRON_PATTERN": '1 * * * * *',
-        "web_url": 'https://www.waki.store:6262/v1'
+        "web_url": 'http://localhost:5050/v1'
     },
     "live": {
         "NODE_SERVER": "http://localhost",
