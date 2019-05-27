@@ -3064,13 +3064,14 @@ compareProduct = (data, callback) => {
             })
         },
         reviewAndRating1: (cb) => {
-            commonAPI.reviewAndRating(data.productId1, async (err, result) => {
-                // console.log("%5555555555555555", err, (result))
-                if (err && !result.length > 0) {
+            commonAPI.reviewAndRating(data.productId1, (err, result) => {
+                console.log("%5555555555555555", err, result.length)
+
+                if (err || result == 0) {
                     cb(null)
                 }
                 else {
-                    // console.log("@@@@",result)
+                    console.log("@@@@", result)
                     let rating = []
                     result.forEach(openArray => {
                         // if(openArray.reviewAndRating)
@@ -3085,13 +3086,13 @@ compareProduct = (data, callback) => {
             })
         },
         reviewAndRating2: (cb) => {
-            commonAPI.reviewAndRating(data.productId2, async (err, result) => {
-                // console.log("%5555555555555555", err, (result))
-                if (err && !result.length > 0) {
+            commonAPI.reviewAndRating(data.productId2, (err, result) => {
+                console.log("%5555555555555555", err, result)
+                if (err || result == 0) {
                     cb(null)
                 }
                 else {
-                    // console.log("@@@@",result)
+                    console.log("@@@@", result)
                     let rating = []
                     result.forEach(openArray => {
                         // if(openArray.reviewAndRating)
@@ -3112,6 +3113,9 @@ compareProduct = (data, callback) => {
             })
         },
     }, (err, result) => {
+
+        console.log("final", err, result)
+        // return
         res = []
 
         product1 = {

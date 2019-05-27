@@ -457,7 +457,7 @@ changeFeedBackStatus = async (orderId, productId, reviewId) => {
 //     // })
 // }
 
-reviewAndRating = async (_id, cb) => {
+reviewAndRating = (_id, cb) => {
     console.log("adfasfasdfasdf", _id)
     // brandDescriptionL4.findOne({ "brandDesc._id": _id }, { "brandDesc.$": 1 }, (err, result) => {
     //     // log(result.brandDesc[0]._id)
