@@ -3065,13 +3065,13 @@ compareProduct = (data, callback) => {
         },
         reviewAndRating1: (cb) => {
             commonAPI.reviewAndRating(data.productId1, (err, result) => {
-                console.log("%5555555555555555", err, result.length)
+                // console.log("%5555555555555555", err, result.length)
 
                 if (err || result == 0) {
                     cb(null)
                 }
                 else {
-                    console.log("@@@@", result)
+                    console.log("@@@@")
                     let rating = []
                     result.forEach(openArray => {
                         // if(openArray.reviewAndRating)
@@ -3080,19 +3080,19 @@ compareProduct = (data, callback) => {
                         // })
                     })
 
-
-                    cb(null, (rating.reduce(commonFunction.getSum) / rating.length).toString())
+                    console.log("pareser 1", rating)
+                    cb(null, (rating.reduce(commonFunction.getSum,0) / rating.length).toString())
                 }
             })
         },
         reviewAndRating2: (cb) => {
             commonAPI.reviewAndRating(data.productId2, (err, result) => {
-                console.log("%5555555555555555", err, result)
+                // console.log("%5555555555555555", err, result)
                 if (err || result == 0) {
                     cb(null)
                 }
                 else {
-                    console.log("@@@@", result)
+                    console.log("@@@222222222222222@")
                     let rating = []
                     result.forEach(openArray => {
                         // if(openArray.reviewAndRating)
@@ -3100,7 +3100,10 @@ compareProduct = (data, callback) => {
                         // openArray.forEach(innerArray => {                            
                         // })
                     })
-                    cb(null, (rating.reduce(commonFunction.getSum) / rating.length).toString())
+                    console.log(rating);
+                    
+                    console.log("check",(rating.reduce(commonFunction.getSum,0) / rating.length).toString())
+                    cb(null, (rating.reduce(commonFunction.getSum,0) / rating.length).toString())
                 }
             })
         },
@@ -3114,7 +3117,7 @@ compareProduct = (data, callback) => {
         },
     }, (err, result) => {
 
-        console.log("final", err, result)
+        console.log("final", err, result.reviewAndRating2,result.reviewAndRating1)
         // return
         res = []
 
@@ -3125,7 +3128,7 @@ compareProduct = (data, callback) => {
             productName: result.findProduct1.productName,
             brand: result.findProduct1.brandId.brandName,
             image: result.findProduct1.varianceId.variants[0].image[0],
-            reviewAndRating: result.reviewAndRating1,
+            reviewAndRating: result.reviewAndRating1?result.reviewAndRating1:0,
             subCategoryName: result.productSubcategory1.subCategoryName
         }
         product2 = {
@@ -3135,7 +3138,7 @@ compareProduct = (data, callback) => {
             productName: result.findProduct2.productName,
             brand: result.findProduct2.brandId.brandName,
             image: result.findProduct2.varianceId.variants[0].image[0],
-            reviewAndRating: result.reviewAndRating2,
+            reviewAndRating: result.reviewAndRating2?result.reviewAndRating2:0,
             subCategoryName: result.productSubcategory1.subCategoryName
 
         }
