@@ -88,8 +88,8 @@
 		"invalid":"Last Name is Invalid"
 	},
 	"phone":{
-		"required":"Phone is required",
-		"invalid":"Phone should be between 5 to 16"
+		"required":"Phone number is required",
+		"invalid":"Phone number should be between 5 to 15"
 	},
 	"country":{
 		"required":"country-code is required"

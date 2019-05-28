@@ -1326,7 +1326,7 @@ body {
 	position: relative;
 	width: 150px;
 	height: 150px;
-	background: url(../images/image_file_upload_icon.png) center center no-repeat;
+	/* background: url(../images/image_file_upload_icon.png) center center no-repeat; */
 	background-size: 38px 28px;
 	padding: 0;
 	margin-bottom: 0;

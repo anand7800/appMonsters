@@ -7,8 +7,8 @@ var chatSchema = new Schema({
     senderId: {
         type: String
     },
-    senderImage:{
-        type:String
+    senderImage: {
+        type: String
     },
     senderName: {
         type: String
@@ -16,8 +16,8 @@ var chatSchema = new Schema({
     receiverId: {
         type: String
     },
-    receiverImage:{
-        type:String
+    receiverImage: {
+        type: String
     },
     roomId: {
         type: String
@@ -36,9 +36,12 @@ var chatSchema = new Schema({
     message: {
         type: String
     },
-
+    orderId: {
+        type: String,
+        default: null
+    },
     timeStamp: {
-        type:String,
+        type: String,
         default: new Date().getTime()
     },
     status: {
@@ -48,9 +51,9 @@ var chatSchema = new Schema({
     hidden: {
         type: [String]
     },
-    isEncrypted:{
-        type:Boolean,
-        default:true
+    isEncrypted: {
+        type: Boolean,
+        default: true
     }
 });
 

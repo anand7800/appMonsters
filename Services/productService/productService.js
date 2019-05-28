@@ -2984,21 +2984,7 @@ applyFilter = (data, callback) => {
         let productArray = _.union(response.getColor, response.getBrand)
         let objectIdArray = productArray.map(s => mongoose.Types.ObjectId(s));
         console.log(objectIdArray)
-        // let query4 = [{
-        //     $unwind: '$brandDesc'
-        // }, {
-        //     $match: {
-        //         $and: [
-        //             {
-        //                 'brandDesc._id': {
-        //                     $in: objectIdArray
-        //                 }
-        //             },
-        //             { 'subCategory': mongoose.Types.ObjectId(data.subCategoryId) }
-        //         ]
-        //     }
-        // }
-        // ]
+       
 
         query4 = {
 

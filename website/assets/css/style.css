@@ -139,16 +139,25 @@ body {
 .logorw .navbar-nav > li:hover > a span.stores {
 	background-position: -30px 0;
 }
+.logorw .navbar-nav > li.active > a span.stores {
+	background-position: -30px 0;
+}
 .logorw .navbar-nav > li > a span.account {
 	background-position: 0 -30px;
 }
 .logorw .navbar-nav > li:hover > a span.account {
 	background-position: -30px -30px;
 }
+.logorw .navbar-nav > li.active > a span.account {
+	background-position: -30px -30px;
+}
 .logorw .navbar-nav > li > a span.cart {
 	background-position: 0 -60px;
 }
 .logorw .navbar-nav > li:hover > a span.cart {
+	background-position: -30px -60px;
+}
+.logorw .navbar-nav > li.active > a span.cart {
 	background-position: -30px -60px;
 }
 .navbar-brand {
@@ -1023,7 +1032,8 @@ html.sidepanel {
 	margin: 0 auto;
 	-webkit-transition: all 400ms linear;
 	transition: all 400ms linear;
-	overflow: hidden;
+  overflow: hidden;
+  background-color: #f9f9f9;
 }
 .subCategorySlider .itemimgbx:hover {
 	background-color: #f9f9f9;
@@ -1304,7 +1314,7 @@ html.sidepanel {
 .categoryColbox .categorylist{
 	padding: 15px 0 15px 15px;
 	overflow: hidden;
-	overflow-y:auto; 
+	overflow-y:auto;
 	max-height: 300px;
 }
 .categoryColbox .selectcategory{
@@ -1332,7 +1342,7 @@ html.sidepanel {
 .selectcategory [type="checkbox"]:checked + label:before {
   position: absolute;
   content: '';
-  left: 0; 
+  left: 0;
   top: 0;
   width: 24px;
   height: 24px;
@@ -1345,7 +1355,7 @@ html.sidepanel {
 .selectcategory [type="checkbox"]:checked + label:after {
   content: '\2713\0020';
   position: absolute;
-  left: 0; 
+  left: 0;
   top: 0;
   width: 24px;
   height: 24px;
@@ -1413,7 +1423,7 @@ html.sidepanel {
 	position: relative;
 }
 .profiletabsConWrap .nav-tabs{
-	padding: 0px 4px;
+	padding: 0px 84px;
 	background-color: #fff;
 	border-bottom:0;
 	margin-bottom: 10px;
@@ -2696,7 +2706,7 @@ html.sidepanel {
 .cardContentbx .form-control:-ms-input-placeholder {
 	color: #fff;
 }
-.cardContentbx .form-control:-moz-placeholder { 
+.cardContentbx .form-control:-moz-placeholder {
 	color: #fff;
 }
 .paymenticonrw{
@@ -2721,7 +2731,7 @@ html.sidepanel {
 .addpaymentlinkrw a:hover{
 	color: #8f69e1;
 }
-.ccv_numrw .form-control{ 
+.ccv_numrw .form-control{
 	width: 60px;
 	font-size: 18px;
 }

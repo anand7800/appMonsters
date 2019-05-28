@@ -12,7 +12,7 @@ adminRouter.post('/uploadImage', (req, res) => {
 
 
 //Business Detail   
-adminRouter.post('/BusinessDetail', authHandler.verifyToken, (req, res) => {
+adminRouter.post('/BusinessDetail', (req, res) => {
     adminHandler.businessDetails(req.body, req.headers, (data) => {
         res.send(data)
     })

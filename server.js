@@ -1080,13 +1080,12 @@ app.post('/deleteUser', (req, res) => {
 
 app.post('/userConversationList', function (req, res) {
     var userId = req.body.userId;
-
     console.log("eeeeee", req.body.userId)
     User.findOne({
         userId: userId
     }, (findError, findSuccess) => {
-        console.log("error" + JSON.stringify(findError))
-        console.log("success" + JSON.stringify(findSuccess))
+        // console.log("error" + JSON.stringify(findError))
+        // console.log("success" + JSON.stringify(findSuccess))
         if (findError)
             res.send(findError);
         else {
@@ -1101,18 +1100,20 @@ app.post('/userConversationList', function (req, res) {
                     else {
                         let usersIds = [];
                         usersIds = result1.map(x => {
+
                             if (x.activeUsers[0] == req.body.userId)
                                 return x.activeUsers[1]
                             else
                                 return x.activeUsers[0]
                         })
-                        // console.log("final result", usersIds)
+                        console.log("final result", usersIds)
+                        // return
                         User.find({ $or: [{ userName: { $regex: req.body.pattern, $options: 'i' } }, { userId: { $in: usersIds } }] }).sort({ userId: -1 }).exec(async (err, result) => {
-                            console.log("result====>>>", err, result)
+                            // console.log("result====>>>", err, result)
                             // return
 
                             if (err)
-                                console.log(err)
+                                return res.send(err);
                             else if (result.length == 0) {
                                 res.send({ responseCode: 200, responseMessage: "No user found.", result: result })
                             }
@@ -1188,7 +1189,10 @@ app.post('/userConversationList', function (req, res) {
                                                         //cons;ole.log("chatresult===>", JSON.stringify(chatResult));
                                                         let indx = chatResult.hidden.findIndex(x => x == chatResult.senderId);
                                                         //console.log("delete users "+findSuccess.deletedUsers.indexOf(sq.userId))
+                                                        console.log('------uper-->>', chatResult);
+                                                        // return
                                                         if (findSuccess.deletedUsers.indexOf(sq.userId) < 0 && sq.blockedUsers.indexOf(userId) < 0) {
+
                                                             await userList.push({
                                                                 participant_id: sq.userId,
                                                                 userName: sq.userName,
@@ -1201,10 +1205,14 @@ app.post('/userConversationList', function (req, res) {
                                                                 roomId: chatResult.roomId,
                                                                 time: parseInt(chatResult.timeStamp),
                                                                 isOnline: isOnline,
-                                                                unreadMessages: unreadMessages
+                                                                unreadMessages: unreadMessages,
+                                                                orderId: chatResult.orderId ? chatResult.orderId : ''
                                                             });
+                                                            console.log('-------->>',userList)
+                                                            
                                                         }
-                                                        // console.log("naveen====>>>",userList)
+                                                        // return
+                                                        // console.log("naveen====>>>", userList)
                                                     }
                                                     if (++counter == len) {
                                                         let pageNumber = req.body.pageNumber == 1 ? 1 : req.body.pageNumber;
@@ -1213,7 +1221,7 @@ app.post('/userConversationList', function (req, res) {
                                                         let end = pageNumber * maxResult;
                                                         let totalPage = Math.ceil(userList.length / maxResult)
                                                         // console.log("start======>>>" + start + "  end=======>>>>" + end + "  page number is" + pageNumber)
-                                                        console.log("SDFGSFGSDFG", userList)
+                                                        // console.log("SDFGSFGSDFG", userList)
                                                         res.send({
                                                             statusCode: 200,
                                                             statusMessage: 'list found',
@@ -1222,7 +1230,7 @@ app.post('/userConversationList', function (req, res) {
                                                         // res.send(userList)  
                                                         userList.sort(function (a, b) {
                                                             // console.log(typeof(a.time))
-                                                            console.log("########", a, b)
+                                                            // console.log("########", a, b)
                                                             return new Date((a.time).toString()).getTime() - new Date((b.time).toString()).getTime();
                                                             // return new Date((a.timeStamp)).getTime() - new Date((b.timeStamp)).getTime();
                                                         });
@@ -1231,7 +1239,7 @@ app.post('/userConversationList', function (req, res) {
 
                                                         var dataList = userList.slice(start, end);
 
-                                                        console.log("datalist after======>>>", dataList)
+                                                        // console.log("datalist after======>>>", dataList)
 
 
                                                         if (req.body.pattern) {
@@ -1249,7 +1257,7 @@ app.post('/userConversationList', function (req, res) {
                                                             pageNumber: pageNumber,
                                                             totalPage: totalPage
                                                         }
-                                                        console.log("chatlist", dataList)
+                                                        // console.log("chatlist", dataList)
                                                         // res.send({
                                                         //     responseCode: 200,
                                                         //     responseMessage: 'list found',
