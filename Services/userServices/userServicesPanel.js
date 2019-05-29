@@ -641,7 +641,7 @@ changePassword = (data, headers, callback) => {
         function (jwtId, cb) {
             console.log("################", jwtId)
             // return
-            jwtId = data._id
+            jwtId = jwtId
             /* changing through bug 1 april */
             if (jwtId == undefined) {
                 callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
