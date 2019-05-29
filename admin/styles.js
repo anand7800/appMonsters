@@ -557,7 +557,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/techugo/Desktop/gitbucket/final admin panel/wakiAdmin/src/styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! /home/techugo/Desktop/gitbucket/WAKI PROJECT/final admin panel/wakiAdmin/src/styles.css */"./src/styles.css");
 
 
 /***/ })

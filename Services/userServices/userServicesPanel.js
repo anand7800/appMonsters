@@ -624,7 +624,7 @@ changePassword = (data, headers, callback) => {
     console.log("change password screen", data, headers)
     async.waterfall([
         function (cb) {
-            if (headers.accessToken) {
+            if (headers.accesstoken) {
                 commonFunction.jwtDecode(headers.accesstoken, (err, jwtId) => {
                     console.log(err, jwtId)
                     if (jwtId) {
@@ -636,7 +636,6 @@ changePassword = (data, headers, callback) => {
             }
             else {
                 cb(null, data._id)
-
             }
         },
         function (jwtId, cb) {
