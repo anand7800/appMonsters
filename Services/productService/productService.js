@@ -2984,7 +2984,7 @@ applyFilter = (data, callback) => {
         let productArray = _.union(response.getColor, response.getBrand)
         let objectIdArray = productArray.map(s => mongoose.Types.ObjectId(s));
         console.log(objectIdArray)
-       
+
 
         query4 = {
 
@@ -3067,7 +3067,7 @@ compareProduct = (data, callback) => {
                     })
 
                     console.log("pareser 1", rating)
-                    cb(null, (rating.reduce(commonFunction.getSum,0) / rating.length).toString())
+                    cb(null, (rating.reduce(commonFunction.getSum, 0) / rating.length).toString())
                 }
             })
         },
@@ -3087,9 +3087,9 @@ compareProduct = (data, callback) => {
                         // })
                     })
                     console.log(rating);
-                    
-                    console.log("check",(rating.reduce(commonFunction.getSum,0) / rating.length).toString())
-                    cb(null, (rating.reduce(commonFunction.getSum,0) / rating.length).toString())
+
+                    console.log("check", (rating.reduce(commonFunction.getSum, 0) / rating.length).toString())
+                    cb(null, (rating.reduce(commonFunction.getSum, 0) / rating.length).toString())
                 }
             })
         },
@@ -3103,7 +3103,7 @@ compareProduct = (data, callback) => {
         },
     }, (err, result) => {
 
-        console.log("final", err, result.reviewAndRating2,result.reviewAndRating1)
+        console.log("final", err, result.reviewAndRating2, result.reviewAndRating1)
         // return
         res = []
 
@@ -3114,7 +3114,7 @@ compareProduct = (data, callback) => {
             productName: result.findProduct1.productName,
             brand: result.findProduct1.brandId.brandName,
             image: result.findProduct1.varianceId.variants[0].image[0],
-            reviewAndRating: result.reviewAndRating1?result.reviewAndRating1:0,
+            reviewAndRating: result.reviewAndRating1 ? result.reviewAndRating1 : 0,
             subCategoryName: result.productSubcategory1.subCategoryName
         }
         product2 = {
@@ -3124,7 +3124,7 @@ compareProduct = (data, callback) => {
             productName: result.findProduct2.productName,
             brand: result.findProduct2.brandId.brandName,
             image: result.findProduct2.varianceId.variants[0].image[0],
-            reviewAndRating: result.reviewAndRating2?result.reviewAndRating2:0,
+            reviewAndRating: result.reviewAndRating2 ? result.reviewAndRating2 : 0,
             subCategoryName: result.productSubcategory1.subCategoryName
 
         }
@@ -3431,10 +3431,26 @@ listOfAddCart = (data, headers, callback) => {
     commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         else userId = token
-    })
+    })/*    .populate({
+        path: 'orderPlacedDescription.productId',
+        populate: [{
+            path: 'varianceId',
+        },
+        {
+            path: 'brandId',
+        }], */
     async.parallel({
         bagDetails: (cb) => {
-            bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({ path: 'orderDescription.productId' }).lean().exec((err, result) => {
+            bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({
+                path: 'orderDescription.productId',
+                populate: [{
+                    path: 'varianceId',
+                },
+                {
+                    path: 'brandId',
+                }],
+            },
+            ).lean().exec((err, result) => {
                 if (err || !result) {
                     let res = {}
                     callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.LIST_EMPTY[data.lang], 'result': res })
@@ -3451,47 +3467,57 @@ listOfAddCart = (data, headers, callback) => {
         var main = []
         var totalPrice = 0
         async.forEachOf(response.bagDetails.orderDescription, async (value, key, callback) => {
-            await commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
-                await varianceModel.findOne({
-                    "productId": mongoose.Types.ObjectId(value.productId._id),
-                    "variants": {
-                        "$elemMatch": {
-                            "$and": [
-                                {
-                                    "color": value.color.toLowerCase(),
-                                },
-                                {
-                                    "size": value.size.toLowerCase(),
-                                },
-                                {
-                                    "material": value.material.toLowerCase(),
-                                }
-                            ]
-                        }
-                    }
-                }, { 'variants.$': 1 }).lean().exec(async (err, varianceValue) => {
-                    // console.log("result", err, varianceValue)
-                    temp = {
-                        brand: brandName.brandName,
-                        orderId: value._id,
-                        productId: value.productId._id,
-                        productName: value.productId.productName,
-                        color: value.color ? value.color : "",
-                        size: value.size ? value.size : "",
-                        material: value.material ? value.material : "",
-                        price: varianceValue.variants[0].price,//!
-                        productQuantity: value.productQuantity,
-                        image: varianceValue.variants[0].image,//!
-                        description: value.productId.description,
-                        specifications: value.productId.specifications
-                    }
-                    totalPrice = totalPrice + parseInt(varianceValue.variants[0].price)
-                    await main.push(temp)
-                    // console.log("###############",JSON.stringify(query))
-                    callback()
-                })
 
+
+
+            // await commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
+            await varianceModel.findOne({
+                "productId": mongoose.Types.ObjectId(value.productId._id),
+                "variants": {
+                    "$elemMatch": {
+                        "$and": [
+                            {
+                                "color": value.color.toLowerCase(),
+                            },
+                            {
+                                "size": value.size.toLowerCase(),
+                            },
+                            {
+                                "material": value.material.toLowerCase(),
+                            }
+                        ]
+                    }
+                }
+            }, { 'variants.$': 1 }).lean().exec(async (err, varianceValue) => {
+                console.log("result", err, varianceValue.variants[0].quantity)
+                console.log("quality", value.productQuantity);
+
+                console.log(parseFloat(varianceValue.variants[0].quantity) > parseFloat(value.productQuantity))
+
+
+                temp = {
+                    brand: value.productId.brandId.brandName,
+                    // orderId: value.orderId,
+                    productId: value.productId._id,
+                    productName: value.productId.productName,
+                    color: value.color ? value.color : "",
+                    size: value.size ? value.size : "",
+                    material: value.material ? value.material : "",
+                    price: varianceValue.variants[0].price,//!
+                    productQuantity: value.productQuantity,
+                    image: varianceValue.variants[0].image,//!
+                    description: value.productId.description,
+                    specifications: value.productId.specifications,
+                    inStock: parseFloat(varianceValue.variants[0].quantity) > parseFloat(value.productQuantity) ? true : false,
+                    inStockQuantity:varianceValue.variants[0].quantity
+                }
+                totalPrice = totalPrice + parseInt(varianceValue.variants[0].price)
+                await main.push(temp)
+                // console.log("###############",JSON.stringify(query))
+                callback()
             })
+
+            // })
         }, (err, responses => {
             res = {}
             res.productDetail = main
@@ -3583,7 +3609,7 @@ orderList = (data, headers, callback) => {
                                 deliveryAddress: userAddress,
                                 estimateTax: value.estimateTax ? value.estimateTax : '0',
                                 deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "0",
-                                totalAmountPaid: (17 + 50 + parseInt(value.price)).toString()
+                                totalAmountPaid: (0 + 0 + parseInt(check.price)).toString()
                             }
                             main.push(temp)
                         }

@@ -323,7 +323,7 @@ module.exports = {
 
     //!nodemailer
     sendMailTest: (email, subject, text, callback) => {
-        var html = `<p>Welcome to WAKI System!</p><br><p>Thanks for choosing our system. Your Vendor panel login credentials are as follows:-</p><br><h3>Email :"  ${email}  "</h3><h3>Password :"${text} "</h3><br>Regards<br>WAKI Team.`
+        var html = `<p>Welcome to WAKI!</p><br><p>Thanks for choosing WAKI. Your Vendor panel login credentials are as follows:-</p><br><h3>Email :"  ${email}  "</h3><h3>Password :"${text} "</h3><br>Regards<br>WAKI Team.`
         const mailBody = {
             from: "<do_not_reply@gmail.com>",
             to: email,
