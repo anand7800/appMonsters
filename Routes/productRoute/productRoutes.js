@@ -76,7 +76,12 @@ productRouter.get('/listOfAddCart', authHandler.verifyToken, (req, res) => {
         res.send(data)
     })
 })
-
+// api for increase stock in list of add to cart
+productRouter.post('/increaseStockOnCartList', /* authHandler.verifyToken,  */(req, res) => {
+    productService.increaseStockOnCartList(req.query, req.headers, (data) => {
+        res.send(data)
+    })
+})
 //!addTowishList  
 productRouter.post('/addToWishList', authHandler.verifyToken, (req, res) => {
     productService.addToWishList(req.body, req.headers, (data) => {
