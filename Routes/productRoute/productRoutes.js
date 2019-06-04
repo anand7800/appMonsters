@@ -78,7 +78,7 @@ productRouter.get('/listOfAddCart', authHandler.verifyToken, (req, res) => {
 })
 // api for increase stock in list of add to cart
 productRouter.post('/increaseStockOnCartList', /* authHandler.verifyToken,  */(req, res) => {
-    productService.increaseStockOnCartList(req.query, req.headers, (data) => {
+    productService.increaseStockOnCartList(req.body, req.headers, (data) => {
         res.send(data)
     })
 })

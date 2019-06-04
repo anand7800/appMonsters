@@ -4854,31 +4854,51 @@ increaseStockOnCartList = (data, header, callback) => {
     //     else userId = token
     // })
     // return
-    if (header.accesstoken || data.productId || data.productQuantity) {
+    // console.log(data,header)
+    if (!header.accesstoken || !data.productId || !data.productQuantity) {
         return callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
-    
+    let query = {
+        $and: [
+            {
+                userId: userId
+            },
+            {
+                'orderDescription.productId': data.productId
+            }
+        ]
+    }
+    let update = {
+        $set: {
+            'orderDescription.$.productQuantity': data.productQuantity
+        }
+    }
+    bagModel.findOneAndUpdate(query, update, { new: true }).exec((err, updated) => {
+        console.log("============>>>>>>>", err, updated)
+    })
     async.parallel({
-        updateQuantity: (cb) => {
-            let query = {
-                $and: [
-                    {
-                        userId: userId
-                    },
-                    {
-                        'orderDescription.productId': data.productId
-                    }
-                ]
-            }
-            let update = {
-                $set: {
-                    'orderDescription.$.productQuantity': data.productQuantity
-                }
-            }
-            bagModel.findOneAndUpdate(query, update, { new: true }).exec((err, updated) => {
-                console.log("============>>>>>>>", err, updated)
-            })
-        },
+        // updateQuantity: (cb) => {
+        //     let query = {
+        //         $and: [
+        //             {
+        //                 userId: userId
+        //             },
+        //             {
+        //                 'orderDescription.productId': data.productId
+        //             }
+        //         ]
+        //     }
+        //     let update = {
+        //         $set: {
+        //             'orderDescription.$.productQuantity': data.productQuantity
+        //         }
+        //     }
+        //     bagModel.findOneAndUpdate(query, update, { new: true }).exec((err, updated) => {
+
+        //         console.log("============>>>>>>>", err, updated)
+        //         cb(null, updated)
+        //     })
+        // },
 
         bagDetails: (cb) => {
             bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({
@@ -4946,9 +4966,9 @@ increaseStockOnCartList = (data, header, callback) => {
                     description: value.productId.description,
                     specifications: value.productId.specifications,
                     inStock: parseFloat(varianceValue.variants[0].quantity) > parseFloat(value.productQuantity) ? true : false,
-                    inStockQuantity: varianceValue.variants[0].quantity
+                    inStockQuantity: parseInt(varianceValue.variants[0].quantity)
                 }
-                totalPrice = totalPrice + parseInt(varianceValue.variants[0].price)
+                totalPrice = totalPrice + (parseInt(varianceValue.variants[0].price)*parseInt(value.productQuantity))
                 await main.push(temp)
                 // console.log("###############",JSON.stringify(query))
                 callback()
