@@ -2736,3 +2736,7 @@ span.checkboxbx [type="checkbox"]:checked + label:after {
 	color: #f8952d;
 }
 /*Footer Section End Here*/
+.alert-danger{
+	background-color: transparent;
+	border: 0;
+}

@@ -2,8 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var mongoosePaginate = require('mongoose-paginate');
 var chatSchema = new Schema({
-
-
     senderId: {
         type: String
     },

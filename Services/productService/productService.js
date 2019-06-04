@@ -3424,7 +3424,6 @@ physicalStore = (data, headers, callback) => {
 /********************************************************************
 **************************listOfAddCart*************************
 ***********************************************************************/
-
 listOfAddCart = (data, headers, callback) => {
     log("list of cart")
     var userId
@@ -3467,9 +3466,6 @@ listOfAddCart = (data, headers, callback) => {
         var main = []
         var totalPrice = 0
         async.forEachOf(response.bagDetails.orderDescription, async (value, key, callback) => {
-
-
-
             // await commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
             await varianceModel.findOne({
                 "productId": mongoose.Types.ObjectId(value.productId._id),
@@ -4649,205 +4645,205 @@ orderPayment = (data, header, callback) => {
     }
 }
 //userConversationList
-userConversationList = (req, header, callback) => {
-    var userId = req.body.userId;
+// userConversationList = (req, header, callback) => {
+//     var userId = req.body.userId;
 
-    console.log("eeeeee", req.body.userId)
-    User.findOne({
-        userId: userId
-    }, (findError, findSuccess) => {
-        console.log("error" + JSON.stringify(findError))
-        console.log("success" + JSON.stringify(findSuccess))
-        if (findError)
-            callback(findError);
-        else {
-            if (findSuccess) {
-                req.body.pattern = req.body.pattern ? req.body.pattern : '';
-                Room.find({ 'participants.userId': { $in: [req.body.userId] } }, { _id: 0, chatType: 0, createdAt: 0, status: 0, participants: 0, __v: 0 }, (error, result1) => {
-                    // console.log("###############",error,result1)
-                    if (error)
-                        console.log(error)
-                    else if (result1.length == 0)
-                        callback({ result: result1 })
-                    else {
-                        let usersIds = [];
-                        usersIds = result1.map(x => {
-                            if (x.activeUsers[0] == req.body.userId)
-                                return x.activeUsers[1]
-                            else
-                                return x.activeUsers[0]
-                        })
-                        // console.log("final result", usersIds)
-                        User.find({ $or: [{ userName: { $regex: req.body.pattern, $options: 'i' } }, { userId: { $in: usersIds } }] }).sort({ userId: -1 }).exec(async (err, result) => {
-                            console.log("result====>>>", err, result)
-                            // return
+//     console.log("eeeeee", req.body.userId)
+//     User.findOne({
+//         userId: userId
+//     }, (findError, findSuccess) => {
+//         console.log("error" + JSON.stringify(findError))
+//         console.log("success" + JSON.stringify(findSuccess))
+//         if (findError)
+//             callback(findError);
+//         else {
+//             if (findSuccess) {
+//                 req.body.pattern = req.body.pattern ? req.body.pattern : '';
+//                 Room.find({ 'participants.userId': { $in: [req.body.userId] } }, { _id: 0, chatType: 0, createdAt: 0, status: 0, participants: 0, __v: 0 }, (error, result1) => {
+//                     // console.log("###############",error,result1)
+//                     if (error)
+//                         console.log(error)
+//                     else if (result1.length == 0)
+//                         callback({ result: result1 })
+//                     else {
+//                         let usersIds = [];
+//                         usersIds = result1.map(x => {
+//                             if (x.activeUsers[0] == req.body.userId)
+//                                 return x.activeUsers[1]
+//                             else
+//                                 return x.activeUsers[0]
+//                         })
+//                         // console.log("final result", usersIds)
+//                         User.find({ $or: [{ userName: { $regex: req.body.pattern, $options: 'i' } }, { userId: { $in: usersIds } }] }).sort({ userId: -1 }).exec(async (err, result) => {
+//                             console.log("result====>>>", err, result)
+//                             // return
 
-                            if (err)
-                                console.log(err)
-                            else if (result.length == 0) {
-                                callback({ responseCode: 200, responseMessage: "No user found.", result: result })
-                            }
-                            else {
+//                             if (err)
+//                                 console.log(err)
+//                             else if (result.length == 0) {
+//                                 callback({ responseCode: 200, responseMessage: "No user found.", result: result })
+//                             }
+//                             else {
 
-                                if (err) {
-                                    return callback(err);
-                                }
-                                else if (result.length == 0) {
-                                    return callback({ responseCode: 400, responseMessage: "No users found" })
-                                }
-                                else {
-                                    // console.log("result==>", result, "++++++++++++")
-                                    var userList = [],
-                                        counter = 0,
-                                        len = result.length;
-                                    //console.log("result====>",result)
-                                    _.each(result, async function (sq) {
-                                        var query = {
-                                            $and: [{
-                                                $or: [{
-                                                    senderId: userId
-                                                }, {
-                                                    receiverId: userId
-                                                }]
-                                            }, {
-                                                $or: [{
-                                                    senderId: sq.userId
-                                                }, {
-                                                    receiverId: sq.userId
-                                                }]
-                                            },
-                                            { hidden: { $nin: [sq.userId] } }
-                                            ]
-                                        };
-                                        chatHistory.findOne(query).sort({
-                                            timeStamp: -1
-                                        }).exec(async function (err, chatResult) {
-                                            // console.log("chat result", chatResult)
-                                            if (err) {
-                                                callback({
-                                                    responseCode: 401,
-                                                    responseMessage: 'Something went wrong',
-                                                    err: err
-                                                });
-                                            } else {
-                                                //  console.log("userId==>",sq.userId)
-                                                // query.$and.push({ 
-                                                //   status: "SENT"
-                                                // })
-                                                var unreadMessages = 0;
-                                                chatHistory.find({
-                                                    $and: [{
-                                                        senderId: sq.userId
-                                                    }, {
-                                                        receiverId: userId
-                                                    }],
-                                                    status: "READ"
-                                                }).count().exec().then(async (result) => {
-                                                    // console.log("result===============================>", result);
-                                                    unreadMessages = result;
-                                                    if (chatResult && userId != sq.userId) {
-                                                        let isBlock = false;
-                                                        let isOnline = false;
-                                                        //console.log(findSuccess, "find success")
-                                                        // console.log(findSuccess.blockedUsers,"-----------",findSuccess.blockedUsers.indexOf(sq.userId),"----------",sq.userId)
-                                                        if (findSuccess.blockedUsers && findSuccess.blockedUsers.indexOf(sq.userId) < 0) { isBlock = false }
-                                                        else { isBlock = true }
-                                                        //  console.log(chatResult);
-                                                        // console.log("blocked===>",sq.blockedUsers.indexOf(userId))
-                                                        //console.log("online check===>",onlineUsers[sq.userId],"-------",onlineUsers) findSuccess.deletedUsers.indexOf(sq.userId) < 0 &&
-                                                        if (onlineUsers[sq.userId]) { isOnline = true; }
-                                                        //cons;ole.log("chatresult===>", JSON.stringify(chatResult));
-                                                        let indx = chatResult.hidden.findIndex(x => x == chatResult.senderId);
-                                                        //console.log("delete users "+findSuccess.deletedUsers.indexOf(sq.userId))
-                                                        if (findSuccess.deletedUsers.indexOf(sq.userId) < 0 && sq.blockedUsers.indexOf(userId) < 0) {
-                                                            await userList.push({
-                                                                participant_id: sq.userId,
-                                                                userName: sq.userName,
-                                                                profilePic: sq.profilePic,
-                                                                profilePicFull: sq.profilePicFull,
-                                                                message_type: indx > -1 ? '' : chatResult.messageType,
-                                                                isEncrypted: chatResult.isEncrypted,
-                                                                isBlock: isBlock,
-                                                                lastMsg: indx > -1 ? '' : chatResult.message,
-                                                                roomId: chatResult.roomId,
-                                                                time: parseInt(chatResult.timeStamp),
-                                                                isOnline: isOnline,
-                                                                unreadMessages: unreadMessages
-                                                            });
-                                                        }
-                                                        // console.log("naveen====>>>",userList)
-                                                    }
-                                                    if (++counter == len) {
-                                                        let pageNumber = req.body.pageNumber == 1 ? 1 : req.body.pageNumber;
-                                                        let maxResult = 2;
-                                                        let start = (pageNumber * maxResult) - maxResult;
-                                                        let end = pageNumber * maxResult;
-                                                        let totalPage = Math.ceil(userList.length / maxResult)
-                                                        // console.log("start======>>>" + start + "  end=======>>>>" + end + "  page number is" + pageNumber)
-                                                        console.log("SDFGSFGSDFG", userList)
-                                                        callback({
-                                                            statusCode: 200,
-                                                            statusMessage: 'list found',
-                                                            result: userList
-                                                        });
-                                                        // callback(userList)  
-                                                        userList.sort(function (a, b) {
-                                                            // console.log(typeof(a.time))
-                                                            console.log("########", a, b)
-                                                            return new Date((a.time).toString()).getTime() - new Date((b.time).toString()).getTime();
-                                                            // return new Date((a.timeStamp)).getTime() - new Date((b.timeStamp)).getTime();
-                                                        });
+//                                 if (err) {
+//                                     return callback(err);
+//                                 }
+//                                 else if (result.length == 0) {
+//                                     return callback({ responseCode: 400, responseMessage: "No users found" })
+//                                 }
+//                                 else {
+//                                     // console.log("result==>", result, "++++++++++++")
+//                                     var userList = [],
+//                                         counter = 0,
+//                                         len = result.length;
+//                                     //console.log("result====>",result)
+//                                     _.each(result, async function (sq) {
+//                                         var query = {
+//                                             $and: [{
+//                                                 $or: [{
+//                                                     senderId: userId
+//                                                 }, {
+//                                                     receiverId: userId
+//                                                 }]
+//                                             }, {
+//                                                 $or: [{
+//                                                     senderId: sq.userId
+//                                                 }, {
+//                                                     receiverId: sq.userId
+//                                                 }]
+//                                             },
+//                                             { hidden: { $nin: [sq.userId] } }
+//                                             ]
+//                                         };
+//                                         chatHistory.findOne(query).sort({
+//                                             timeStamp: -1
+//                                         }).exec(async function (err, chatResult) {
+//                                             // console.log("chat result", chatResult)
+//                                             if (err) {
+//                                                 callback({
+//                                                     responseCode: 401,
+//                                                     responseMessage: 'Something went wrong',
+//                                                     err: err
+//                                                 });
+//                                             } else {
+//                                                 //  console.log("userId==>",sq.userId)
+//                                                 // query.$and.push({ 
+//                                                 //   status: "SENT"
+//                                                 // })
+//                                                 var unreadMessages = 0;
+//                                                 chatHistory.find({
+//                                                     $and: [{
+//                                                         senderId: sq.userId
+//                                                     }, {
+//                                                         receiverId: userId
+//                                                     }],
+//                                                     status: "READ"
+//                                                 }).count().exec().then(async (result) => {
+//                                                     // console.log("result===============================>", result);
+//                                                     unreadMessages = result;
+//                                                     if (chatResult && userId != sq.userId) {
+//                                                         let isBlock = false;
+//                                                         let isOnline = false;
+//                                                         //console.log(findSuccess, "find success")
+//                                                         // console.log(findSuccess.blockedUsers,"-----------",findSuccess.blockedUsers.indexOf(sq.userId),"----------",sq.userId)
+//                                                         if (findSuccess.blockedUsers && findSuccess.blockedUsers.indexOf(sq.userId) < 0) { isBlock = false }
+//                                                         else { isBlock = true }
+//                                                         //  console.log(chatResult);
+//                                                         // console.log("blocked===>",sq.blockedUsers.indexOf(userId))
+//                                                         //console.log("online check===>",onlineUsers[sq.userId],"-------",onlineUsers) findSuccess.deletedUsers.indexOf(sq.userId) < 0 &&
+//                                                         if (onlineUsers[sq.userId]) { isOnline = true; }
+//                                                         //cons;ole.log("chatresult===>", JSON.stringify(chatResult));
+//                                                         let indx = chatResult.hidden.findIndex(x => x == chatResult.senderId);
+//                                                         //console.log("delete users "+findSuccess.deletedUsers.indexOf(sq.userId))
+//                                                         if (findSuccess.deletedUsers.indexOf(sq.userId) < 0 && sq.blockedUsers.indexOf(userId) < 0) {
+//                                                             await userList.push({
+//                                                                 participant_id: sq.userId,
+//                                                                 userName: sq.userName,
+//                                                                 profilePic: sq.profilePic,
+//                                                                 profilePicFull: sq.profilePicFull,
+//                                                                 message_type: indx > -1 ? '' : chatResult.messageType,
+//                                                                 isEncrypted: chatResult.isEncrypted,
+//                                                                 isBlock: isBlock,
+//                                                                 lastMsg: indx > -1 ? '' : chatResult.message,
+//                                                                 roomId: chatResult.roomId,
+//                                                                 time: parseInt(chatResult.timeStamp),
+//                                                                 isOnline: isOnline,
+//                                                                 unreadMessages: unreadMessages
+//                                                             });
+//                                                         }
+//                                                         // console.log("naveen====>>>",userList)
+//                                                     }
+//                                                     if (++counter == len) {
+//                                                         let pageNumber = req.body.pageNumber == 1 ? 1 : req.body.pageNumber;
+//                                                         let maxResult = 2;
+//                                                         let start = (pageNumber * maxResult) - maxResult;
+//                                                         let end = pageNumber * maxResult;
+//                                                         let totalPage = Math.ceil(userList.length / maxResult)
+//                                                         // console.log("start======>>>" + start + "  end=======>>>>" + end + "  page number is" + pageNumber)
+//                                                         console.log("SDFGSFGSDFG", userList)
+//                                                         callback({
+//                                                             statusCode: 200,
+//                                                             statusMessage: 'list found',
+//                                                             result: userList
+//                                                         });
+//                                                         // callback(userList)  
+//                                                         userList.sort(function (a, b) {
+//                                                             // console.log(typeof(a.time))
+//                                                             console.log("########", a, b)
+//                                                             return new Date((a.time).toString()).getTime() - new Date((b.time).toString()).getTime();
+//                                                             // return new Date((a.timeStamp)).getTime() - new Date((b.timeStamp)).getTime();
+//                                                         });
 
-                                                        userList.reverse();
+//                                                         userList.reverse();
 
-                                                        var dataList = userList.slice(start, end);
+//                                                         var dataList = userList.slice(start, end);
 
-                                                        console.log("datalist after======>>>", dataList)
+//                                                         console.log("datalist after======>>>", dataList)
 
 
-                                                        if (req.body.pattern) {
-                                                            dataList.sort(function (a, b) {
-                                                                var textA = a.userName.toUpperCase();
-                                                                var textB = b.userName.toUpperCase();
-                                                                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-                                                            });
-                                                        }
-                                                        //else
+//                                                         if (req.body.pattern) {
+//                                                             dataList.sort(function (a, b) {
+//                                                                 var textA = a.userName.toUpperCase();
+//                                                                 var textB = b.userName.toUpperCase();
+//                                                                 return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+//                                                             });
+//                                                         }
+//                                                         //else
 
-                                                        //console.log("datalist lenght"+dataList.length)
-                                                        var data = {
-                                                            data: dataList,
-                                                            pageNumber: pageNumber,
-                                                            totalPage: totalPage
-                                                        }
-                                                        console.log("chatlist", dataList)
-                                                        // callback({
-                                                        //     responseCode: 200,
-                                                        //     responseMessage: 'list found',
-                                                        //     result: data
-                                                        // });
-                                                    }
-                                                }).catch((failed) => {
-                                                    console.log("failed", failed)
-                                                });
-                                            }
-                                        })
-                                    });
-                                    await console.log("@@@@@@@", userList)
-                                }
-                            }
-                        })
-                    }
-                })
+//                                                         //console.log("datalist lenght"+dataList.length)
+//                                                         var data = {
+//                                                             data: dataList,
+//                                                             pageNumber: pageNumber,
+//                                                             totalPage: totalPage
+//                                                         }
+//                                                         console.log("chatlist", dataList)
+//                                                         // callback({
+//                                                         //     responseCode: 200,
+//                                                         //     responseMessage: 'list found',
+//                                                         //     result: data
+//                                                         // });
+//                                                     }
+//                                                 }).catch((failed) => {
+//                                                     console.log("failed", failed)
+//                                                 });
+//                                             }
+//                                         })
+//                                     });
+//                                     await console.log("@@@@@@@", userList)
+//                                 }
+//                             }
+//                         })
+//                     }
+//                 })
 
-            } else
-                callback({
-                    responseCode: 400,
-                    responseMessage: "User Not Found"
-                });
-        }
-    })
-}
+//             } else
+//                 callback({
+//                     responseCode: 400,
+//                     responseMessage: "User Not Found"
+//                 });
+//         }
+//     })
+// }
 
 
 module.exports = {
@@ -4906,7 +4902,7 @@ module.exports = {
     analyticsProduct,
     AllProductReviewFeedback,
     vendorSearchOffer,
-    userConversationList,
+    // userConversationList,
     uploadImage1,
     orderPayment
 }
