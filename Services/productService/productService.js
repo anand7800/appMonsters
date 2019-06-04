@@ -4849,7 +4849,7 @@ orderPayment = (data, header, callback) => {
 increaseStockOnCartList = (data, header, callback) => {
     log("list of cart")
     var userId 
-    commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
+    commonFunction.jwtDecode(header.accesstoken, (err, token) => {
         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         else userId = token
     })
