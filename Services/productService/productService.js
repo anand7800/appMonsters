@@ -4848,12 +4848,12 @@ orderPayment = (data, header, callback) => {
 
 increaseStockOnCartList = (data, header, callback) => {
     log("list of cart")
-    var userId = '5cbd6b7e0311011079dce3d1'
-    // commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
-    //     if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    //     else userId = token
-    // })
-    // return
+    var userId 
+    commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
+        if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        else userId = token
+    })
+    return
     // console.log(data,header)
     if (!header.accesstoken || !data.productId || !data.productQuantity) {
         return callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
