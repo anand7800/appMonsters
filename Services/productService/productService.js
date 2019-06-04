@@ -4853,8 +4853,7 @@ increaseStockOnCartList = (data, header, callback) => {
         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         else userId = token
     })
-    return
-    // console.log(data,header)
+    
     if (!header.accesstoken || !data.productId || !data.productQuantity) {
         return callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
