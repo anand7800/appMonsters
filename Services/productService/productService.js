@@ -3507,8 +3507,10 @@ listOfAddCart = (data, headers, callback) => {
                     inStock: parseFloat(varianceValue.variants[0].quantity) > parseFloat(value.productQuantity) ? true : false,
                     inStockQuantity: parseInt(varianceValue.variants[0].quantity)
                 }
-                totalPrice = totalPrice + parseInt(varianceValue.variants[0].price)
-                await main.push(temp)
+                // totalPrice = totalPrice + parseInt(varianceValue.variants[0].price)
+                // await main.push(temp)
+
+                totalPrice = totalPrice + (parseInt(varianceValue.variants[0].price)*parseInt(value.productQuantity))
                 // console.log("###############",JSON.stringify(query))
                 callback()
             })
