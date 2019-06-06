@@ -4876,29 +4876,6 @@ increaseStockOnCartList = (data, header, callback) => {
         console.log("============>>>>>>>", err, updated)
     })
     async.parallel({
-        // updateQuantity: (cb) => {
-        //     let query = {
-        //         $and: [
-        //             {
-        //                 userId: userId
-        //             },
-        //             {
-        //                 'orderDescription.productId': data.productId
-        //             }
-        //         ]
-        //     }
-        //     let update = {
-        //         $set: {
-        //             'orderDescription.$.productQuantity': data.productQuantity
-        //         }
-        //     }
-        //     bagModel.findOneAndUpdate(query, update, { new: true }).exec((err, updated) => {
-
-        //         console.log("============>>>>>>>", err, updated)
-        //         cb(null, updated)
-        //     })
-        // },
-
         bagDetails: (cb) => {
             bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({
                 path: 'orderDescription.productId',

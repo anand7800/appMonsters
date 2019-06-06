@@ -122,7 +122,8 @@ body {
 /*Business Details Start Here*/
 .business_detailswrap {
 	position: relative;
-	min-height: 800px;
+	overflow: hidden;
+	height: auto;
 	background-color: #fff;
 }
 .businessrttopbg {
@@ -146,6 +147,18 @@ body {
 .business_detailswrap .businesstextrow h1{
 	font-size: 30px;
 	text-transform: uppercase;
+}
+.business_detailswrap .businesstextrow h1.underline{
+	position: relative;
+}
+.business_detailswrap .businesstextrow h1.underline:after{
+	position: absolute;
+	left: 0;
+	bottom: -10px;
+	content: '';
+	height: 2px;
+	width: 60px;
+	background-color: #feb71f;
 }
 .business_detailswrap .businesstextrow img {
 	width: 500px;
@@ -2739,4 +2752,8 @@ span.checkboxbx [type="checkbox"]:checked + label:after {
 .alert-danger{
 	background-color: transparent;
 	border: 0;
+}
+.multiselect-dropdown .dropdown-btn{
+	padding: 14px !important;
+	border: 1px solid #c6c6c6 !important;
 }
