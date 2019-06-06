@@ -3426,11 +3426,11 @@ physicalStore = (data, headers, callback) => {
 ***********************************************************************/
 listOfAddCart = (data, headers, callback) => {
     log("list of cart")
-    var userId
-    commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
-        if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        else userId = token
-    })/*    .populate({
+    var userId = '5cbd6b7e0311011079dce3d1'
+    /*  commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
+         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+         else userId = token
+     }) *//*    .populate({
         path: 'orderPlacedDescription.productId',
         populate: [{
             path: 'varianceId',
@@ -3510,7 +3510,10 @@ listOfAddCart = (data, headers, callback) => {
                 // totalPrice = totalPrice + parseInt(varianceValue.variants[0].price)
                 // await main.push(temp)
 
-                totalPrice = totalPrice + (parseInt(varianceValue.variants[0].price)*parseInt(value.productQuantity))
+                totalPrice = totalPrice + (parseInt(varianceValue.variants[0].price) * parseInt(value.productQuantity))
+                await main.push(temp)
+
+
                 // console.log("###############",JSON.stringify(query))
                 callback()
             })
@@ -4850,12 +4853,12 @@ orderPayment = (data, header, callback) => {
 
 increaseStockOnCartList = (data, header, callback) => {
     log("list of cart")
-    var userId 
+    var userId
     commonFunction.jwtDecode(header.accesstoken, (err, token) => {
         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         else userId = token
     })
-    
+
     if (!header.accesstoken || !data.productId || !data.productQuantity) {
         return callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
@@ -4946,7 +4949,7 @@ increaseStockOnCartList = (data, header, callback) => {
                     inStock: parseFloat(varianceValue.variants[0].quantity) > parseFloat(value.productQuantity) ? true : false,
                     inStockQuantity: parseInt(varianceValue.variants[0].quantity)
                 }
-                totalPrice = totalPrice + (parseInt(varianceValue.variants[0].price)*parseInt(value.productQuantity))
+                totalPrice = totalPrice + (parseInt(varianceValue.variants[0].price) * parseInt(value.productQuantity))
                 await main.push(temp)
                 // console.log("###############",JSON.stringify(query))
                 callback()
