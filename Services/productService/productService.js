@@ -180,7 +180,7 @@ addSubCategory = (data, callback) => {
 *************getCategorylist***********************
 *************************************/
 getCategoryList = (data, callback) => {
-    // log(data.lang)
+    log(data.lang)
     // let object=require('mongoose').ObjectId
 
     let mainArray = [];
@@ -195,7 +195,6 @@ getCategoryList = (data, callback) => {
         //     }
         // },
         // {$match:{_id:mongoose.Types.ObjectId('5c46c56529994644a4ec8580')}},
-
         {
             $lookup: {
                 from: "productsubCategory",
@@ -222,19 +221,26 @@ getCategoryList = (data, callback) => {
         // console.log("errr", err, 'result', JSON.stringify(aggregate))
         // callback(aggregate)
         // return
+        let val = []
         aggregate.forEach(element => {
             let temp = {
-
                 "_id": element._id,
                 "categoryName": element.categoryName,
                 "image": element.image,
                 "icons": element.icons,
-                "subCategory": element.category.length
+                "subCategory": element.category.length,
+                "status":element.status
             }
             mainArray.push(temp)
         });
+        val=mainArray.filter(el => {
+            // console.log(el)
+            if (el.status == 'ACTIVE')
+                return true
+        })
+        
         if (err || aggregate.length > 0)
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.categoriesList_found[data.lang], "result": mainArray })
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.categoriesList_found[data.lang], "result": val })
         else
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
     })
@@ -1443,7 +1449,7 @@ productDetails = (data, callback) => {
                 },
                 getSimilarProduct: (cb) => {
                     productModel.findOne({ "_id": data._id, status: "ACTIVE" }).lean().exec((err, result1) => {
-                        
+
                         productModel.find({
                             $or: [
                                 // { brandId: result1.brandId },
@@ -3428,11 +3434,11 @@ physicalStore = (data, headers, callback) => {
 ***********************************************************************/
 listOfAddCart = (data, headers, callback) => {
     log("list of cart")
-    var userId 
-     commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
-         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-         else userId = token
-     }) 
+    var userId
+    commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
+        if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        else userId = token
+    })
     async.parallel({
         bagDetails: (cb) => {
             bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({
@@ -3558,7 +3564,7 @@ orderList = (data, headers, callback) => {
     }
     async.parallel({
         getOrderDetails: (cb) => {
-            orderPlaced.findOne({ userId: userId },null).populate({ path: 'userId' })
+            orderPlaced.findOne({ userId: userId }, null).populate({ path: 'userId' })
                 .populate({
                     path: 'orderPlacedDescription.productId',
                     populate: [{
@@ -3567,7 +3573,7 @@ orderList = (data, headers, callback) => {
                     {
                         path: 'brandId',
                     }],
-                }).sort({'orderPlacedDescription.createdAt':'desc'}).exec((err, result) => {
+                }).sort({ 'orderPlacedDescription.createdAt': 'desc' }).exec((err, result) => {
                     console.log(result)
                     if (err || !result || !result.orderPlacedDescription.length) {
                         res = {}
@@ -3670,7 +3676,7 @@ getNotification = (data, header, callback) => {
             console.log('2345678')
 
 
-            res=_.reverse(res)
+            res = _.reverse(res)
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.NOTIFICATION_SCREEN[data.lang], 'result': res })
         }
     })
