@@ -1443,12 +1443,14 @@ productDetails = (data, callback) => {
                 },
                 getSimilarProduct: (cb) => {
                     productModel.findOne({ "_id": data._id, status: "ACTIVE" }).lean().exec((err, result1) => {
+                        
                         productModel.find({
                             $or: [
                                 // { brandId: result1.brandId },
                                 { productCategoryId: result1.productCategoryId },
 
-                            ]
+                            ],
+                            status: "ACTIVE"
                         }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: "varianceId" }).lean().exec((err, result3) => {
                             // console.log("errAnd result", err, result3)
                             if (err || !result3) {
