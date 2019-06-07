@@ -1008,7 +1008,7 @@ searchProduct = (data, callback) => {
         //!function 1
         function (callback) {
             brandModel.findOne({ brandName: value }, { _id: 1 }, (err, brandId) => {
-                // console.log("$$$$$$$$$$$$$$", err, brandId)
+                console.log("$$$$$$$$$$$$$$", err, brandId)
                 if (err)
                     callback(null)
                 else {
@@ -3426,18 +3426,11 @@ physicalStore = (data, headers, callback) => {
 ***********************************************************************/
 listOfAddCart = (data, headers, callback) => {
     log("list of cart")
-    var userId = '5cbd6b7e0311011079dce3d1'
-    /*  commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
+    var userId 
+     commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
          if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
          else userId = token
-     }) *//*    .populate({
-       path: 'orderPlacedDescription.productId',
-       populate: [{
-           path: 'varianceId',
-       },
-       {
-           path: 'brandId',
-       }], */
+     }) 
     async.parallel({
         bagDetails: (cb) => {
             bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({
