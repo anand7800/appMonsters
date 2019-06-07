@@ -505,7 +505,11 @@ productRouter.post('/vendorSearchOffer', (req, res) => {
 //     })
 // })
 
-
+productRouter.get('/topProductSalesByVendor', authHandler.verifyToken, (req, res) => {
+    productService.topProductSalesByVendor(req.query, req.headers, (data) => {
+        res.send(data)
+    })
+})
 
 
 module.exports = productRouter

@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var category = mongoose.Schema({
-    //!level 1 
-    //!electronic tv men women 
+    //level 1 
+    //electronic tv men women 
     categoryName: {
         type: String
     },

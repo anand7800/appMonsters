@@ -229,16 +229,16 @@ getCategoryList = (data, callback) => {
                 "image": element.image,
                 "icons": element.icons,
                 "subCategory": element.category.length,
-                "status":element.status
+                "status": element.status
             }
             mainArray.push(temp)
         });
-        val=mainArray.filter(el => {
+        val = mainArray.filter(el => {
             // console.log(el)
             if (el.status == 'ACTIVE')
                 return true
         })
-        
+
         if (err || aggregate.length > 0)
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.categoriesList_found[data.lang], "result": val })
         else
@@ -308,7 +308,6 @@ addProductCategory = (data, callback) => {
 /* ************************************
 *************addBrandDescription*******
 ************************************ */
-
 addProduct = (data, header, callback) => {
     // log("api is hitted addBrandDescription",data,header)
     var sellerId
@@ -409,8 +408,6 @@ addProduct = (data, header, callback) => {
                         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_PRODUCT[data.lang], "result": response })
                     })
                 })
-
-
             }
             else {
                 callback('wrong')
@@ -4982,6 +4979,69 @@ increaseStockOnCartList = (data, header, callback) => {
     })
 }
 
+topProductSalesByVendor = (data, header, callback) => {
+
+    console.log("sdfasdf", data, header.accesstoken)
+    let userId
+    commonFunction.jwtDecode(header.accesstoken, (err, token) => {
+        if (err) {
+            callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        }
+        else userId = token
+    })
+
+    async.waterfall([
+        function (cb) {
+            orderPlaced.find({ orderPlacedDescription: { $elemMatch: { sellerId: mongoose.Types.ObjectId(userId) } } }, { 'orderPlacedDescription.sellerId': 1 }).populate({
+                path: 'orderPlacedDescription.productId',
+                'select': 'productName image'
+            }).exec((err, product) => {
+                // console.log("result", err, JSON.stringify(product))
+                if (err || product.length == 0) {
+
+                    cb(null, [])
+                }
+                else {
+                    cb(null, product)
+                }
+            })
+        },
+    ], (err, response) => {
+        // callback(response)
+        let mainArray = [];
+
+        if (response.length > 0) {
+            response.forEach(element => {
+                element.orderPlacedDescription.filter(el => {
+                    let temp = {
+                        productId: el.productId._id,
+                        productName: el.productId.productName,
+                        productImage: el.productId.image[0],
+                        // productCount: 0
+                    }
+                    mainArray.push(temp)
+                })
+            })
+
+            let myArr = []
+            mainArray.forEach(x => {
+                myArr.push(x.productId)
+            })
+            mainArray.forEach(x => {
+                x.count = _.filter(myArr, y => x.productId == y).length
+            })
+            mainArray = _.uniqBy(mainArray, 'productId');
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": mainArray })
+        }
+        else{
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": mainArray })
+        }
+    })
+
+    // callback()
+}
+
 module.exports = {
     addCategory,
     addSubCategory,
@@ -5041,5 +5101,6 @@ module.exports = {
     // userConversationList,
     uploadImage1,
     orderPayment,
-    increaseStockOnCartList
+    increaseStockOnCartList,
+    topProductSalesByVendor
 }
