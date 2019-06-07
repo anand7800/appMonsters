@@ -3431,13 +3431,13 @@ listOfAddCart = (data, headers, callback) => {
          if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
          else userId = token
      }) *//*    .populate({
-        path: 'orderPlacedDescription.productId',
-        populate: [{
-            path: 'varianceId',
-        },
-        {
-            path: 'brandId',
-        }], */
+       path: 'orderPlacedDescription.productId',
+       populate: [{
+           path: 'varianceId',
+       },
+       {
+           path: 'brandId',
+       }], */
     async.parallel({
         bagDetails: (cb) => {
             bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({
@@ -3546,7 +3546,7 @@ listOfAddCart = (data, headers, callback) => {
 
 /**************************orderList*************************
 ***********************************************************************/
-//!orderList
+// !orderList
 orderList = (data, headers, callback) => {
 
     log("list of ORDER", data)
@@ -3561,10 +3561,9 @@ orderList = (data, headers, callback) => {
             else userId = token
         })
     }
-
     async.parallel({
         getOrderDetails: (cb) => {
-            orderPlaced.findOne({ userId: userId }).sort({ 'orderPlacedDescription.createdAt': 1 }).populate({ path: 'userId' })
+            orderPlaced.findOne({ userId: userId },null).populate({ path: 'userId' })
                 .populate({
                     path: 'orderPlacedDescription.productId',
                     populate: [{
@@ -3573,8 +3572,8 @@ orderList = (data, headers, callback) => {
                     {
                         path: 'brandId',
                     }],
-                }).exec((err, result) => {
-
+                }).sort({'orderPlacedDescription.createdAt':'desc'}).exec((err, result) => {
+                    console.log(result)
                     if (err || !result || !result.orderPlacedDescription.length) {
                         res = {}
                         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.ORDER_EMPTY[data.lang], 'result': res })
@@ -3622,8 +3621,7 @@ orderList = (data, headers, callback) => {
 
         }, (err, successfully) => {
             var res = {}
-            var success = _.sortBy(main, ['orderDate'])
-
+            var success = _.reverse(main)
             res.productDetail = success
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "result": res })
 

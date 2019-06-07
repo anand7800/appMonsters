@@ -1112,9 +1112,7 @@ deleteAddress = (data, headers, callback) => {
             { _id: userId, },
             { 'address._id': data.addressId }
         ]
-
     }
-
     async.waterfall([
 
         function (cb) {
@@ -1141,7 +1139,6 @@ deleteAddress = (data, headers, callback) => {
 
     ], (err, succ) => {
         // console.log("resposne ", err, response)
-
         result = {
             "_id": succ._id,
             "firstName": succ.firstName,
