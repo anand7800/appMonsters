@@ -9,16 +9,12 @@ adminRouter.post('/uploadImage', (req, res) => {
         res.send(data)
     })
 })
-
-
 //Business Detail   
 adminRouter.post('/BusinessDetail', (req, res) => {
     adminHandler.businessDetails(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
-
-
 //addBrand
 adminRouter.post('/addBrand', (req, res) => {
     adminHandler.addBrand(req.body, (data) => {
@@ -31,8 +27,6 @@ adminRouter.get('/getBrandList', (req, res) => {
         res.send(data)
     })
 })
-
-
 //getProductList
 adminRouter.get('/getProductList', authHandler.verifyToken,(req, res) => {
     adminHandler.getProductList(req.query,req.headers, (data) => {

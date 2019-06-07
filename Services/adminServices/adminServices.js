@@ -460,7 +460,7 @@ createVendor = (data, callback) => {
             image: response.uploadImage,
             storeType: data.storeType,
             countryCode: data.countryCode,
-            status: data.status ? data.status : 'inactive'
+            // status: data.status ? data.status : 'inactive'
 
         })
         user.save((err, save) => {
