@@ -1056,6 +1056,8 @@ editAddress = (data, headers, callback) => {
                     'address.$.contactNumber': data.contactNumber ? data.contactNumber : result.address[0].contactNumber,
                     'address.$.addressType': data.addressType ? data.addressType : result.address[0].addressType,
                     'address.$.countryCode': data.countryCode ? data.countryCode : result.address[0].countryCode,
+                    'address.$.addresses': data.addresses ? data.addresses : result.address[0].addresses,
+
                 }
             }
             userModel.findOneAndUpdate(query, update, { new: true }).exec((err, update) => {
