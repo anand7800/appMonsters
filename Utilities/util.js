@@ -390,6 +390,10 @@ let statusMessage = {
         en:"Your payment card Remove",
         ar:""
     },
+    DELETE_ADDRESS_SUCCESS:{
+        en:"your address is deleted",
+        ar:"your address is deleted"
+    },
     TITLE: {
 
         PLACED: {

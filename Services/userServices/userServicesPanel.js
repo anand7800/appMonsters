@@ -1155,7 +1155,7 @@ deleteAddress = (data, headers, callback) => {
             "paymentMethod": succ.paymentMethod,
             "countryCode": succ.countryCode
         }
-        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DELET_PAYMENT[data.lang], 'result': result })
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DELETE_ADDRESS_SUCCESS[data.lang], 'result': result })
     })
 }
 decodeToken = (data, callback) => {
