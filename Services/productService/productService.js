@@ -3673,6 +3673,9 @@ getNotification = (data, header, callback) => {
         })
         if (response.getNotificationList) {
             console.log('2345678')
+
+
+            res=_.reverse(res)
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.NOTIFICATION_SCREEN[data.lang], 'result': res })
         }
     })
