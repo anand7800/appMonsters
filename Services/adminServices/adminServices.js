@@ -495,7 +495,7 @@ deleteVendor = (data, callback) => {
 //!changeOrderStatus
 changeOrderStatus = (data, callback) => {
     console.log("change order Status", data)
-    query = {
+    let query = {
         $and: [
             {
                 'orderPlacedDescription.orderId': data.orderId.substring(3)
@@ -509,12 +509,9 @@ changeOrderStatus = (data, callback) => {
     }
     placeOrderModel.findOneAndUpdate(query, update, { new: true }, async (err, result) => {
         // console.log(err, result)
-
-
         commonAPI.changeNotification(data, (err, result) => {
 
         })
-
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': result })
     })
 }

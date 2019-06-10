@@ -1400,7 +1400,6 @@ productDetails = (data, callback) => {
         }
         else {
             // })
-
             async.parallel({
                 findProduct: (cb) => {
                     productModel.findById({ "_id": data._id, }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, result) => {
@@ -1508,6 +1507,7 @@ productDetails = (data, callback) => {
                             variants: {},
                             color: [],
                             material: [],
+                            inStockQuantity:response.findProduct.quantity,
                             size: []
                         }
                         res.product = data
@@ -1539,7 +1539,8 @@ productDetails = (data, callback) => {
                                 image: response.findProduct.varianceId.variants[0].image ? response.findProduct.varianceId.variants[0].image : [],
                                 colors: _.uniq(color),
                                 material: _.uniq(material),
-                                size: _.uniq(size)
+                                size: _.uniq(size),
+                                inStockQuantity:response.findProduct.varianceId.variants[0].quantity
                                 // colors: [...new Set(color)].reverse().map(function (x) { return x.toUpperCase() }),
                                 // material: [...new Set(material)].reverse().map(function (x) { return x.toUpperCase() }),
                                 // size: [...new Set(size)].reverse().map(function (x) { return x.toUpperCase() })
