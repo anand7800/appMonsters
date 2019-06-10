@@ -508,10 +508,9 @@ changeOrderStatus = (data, callback) => {
         }
     }
     placeOrderModel.findOneAndUpdate(query, update, { new: true }, async (err, result) => {
-        // console.log(err, result)
-        commonAPI.changeNotification(data, (err, result) => {
-
-        })
+        console.log(err, result)
+        // commonAPI.changeNotification(data, (err, result) => {
+        // })
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang], 'result': result })
     })
 }

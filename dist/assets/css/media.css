@@ -66,6 +66,12 @@
 .notificationlistrow,.notificationtimesrw{
 	font-size: 14px;
 }
+.dashboardConbx{
+	padding:30px;
+}
+.sidemenubtn{
+	margin-left:30px;
+}
 }
 @media only screen and (max-width: 1600px) {
 .uploadimgbx,.uploadimgbx .fileinput .thumbnail {
@@ -725,6 +731,15 @@
 	height: 42px;
 	left: 50%;
 	margin-left: -60px;
+}
+.dontrempass{
+	position: static;
+	right: auto;
+	bottom: auto;
+	margin-left: 20px;
+}
+.dontrempass a{
+	color: #feb71f;
 }
 .footer_vendor_rw .copyrt{
 	display: block;

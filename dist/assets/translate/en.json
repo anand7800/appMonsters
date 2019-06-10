@@ -185,13 +185,24 @@
 			"variant_listing":"Product(Variants) Inventory Listing",
 			"update_stock":"Update Stock"
 		},
+		"orderSectionSearchingArr":[
+			{"key":"PENDING","value":"PENDING"},
+			{"key":"PLACED","value":"PLACED"},
+			{"key":"DISPATCH","value":"DISPATCH"},
+			{"key":"REJECTED","value":"REJECTED"},
+			{"key":"INPROGRESS","value":"INPROGRESS"},
+			{"key":"CANCELLED","value":"CANCELLED"},
+			{"key":"ORDERSHIPPED","value":"ORDERSHIPPED"},
+			{"key":"DELIVERED","value":"DELIVERED"}
+		],
 		"error":{
 			"fullName":{
 				"required":"Full Name Is Required",
-				"invalid":"Full Name should contain first and last name with space in between"
+				"invalid":"should contain only characters"
 			},
 			"email":{
-				"required":"Email Is Required"
+				"required":"Email Is Required",
+				"invalid":"Email is invalid"
 			},
 			"phone":{
 				"required":"Phone Number Is Required",
