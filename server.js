@@ -32,12 +32,12 @@ let app = require('express')(),
 //     cert: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.csr').toString()
 // };
 
-// var options = {
-//     key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
-//     cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
-// };
-var server = require('http').Server(app);
-// var server = require('https').Server(options, app);
+var options = {
+    key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
+    cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
+};
+// var server = require('http').Server(app);
+var server = require('https').Server(options, app);
 
 
 var chatHistory = require('./Models/userModel/chatHistory');
@@ -55,19 +55,6 @@ app.use(morgan("dev"));
 let userRoutes = require('./Routes/userRoutes/userPanelRoutes')
 let adminRoute = require('./Routes/adminRoute/adminRoutes')
 let productRoutes = require('./Routes/productRoute/productRoutes')
-// let webRoutes=require('./Routes/webRoutes/webRoutes')
-app.use('/user', userRoutes)
-app.use('/admin', adminRoute)
-app.use('/vendor', productRoutes)
-// app.use('/web',webRoutes)
-// app.use(express.static(path.join(__dirname, 'dist')));
-// app.use("/vendors" ,express.static(path.join(__dirname, 'vendorDist')))
-// // app.get('*', (req, res) => {
-// //     res.sendFile(__dirname + '/dist/index.html')
-// // });
-// app.get('/vendors*', (req, res) => {
-//     res.sendFile(__dirname + '/vendorDist/index.html')
-// });
 
 app.use("/admin", express.static(path.join(__dirname, 'admin')));
 app.get('/admin*', (req, res) => {
@@ -81,7 +68,9 @@ app.use("/", express.static(path.join(__dirname, 'website')));
 app.get('/*', (req, res) => {
     res.sendFile(`${__dirname}/website/index.html`);
 })
-
+app.use('/user', userRoutes)
+app.use('/admin', adminRoute)
+app.use('/vendor', productRoutes)
 /* payment  testing start*/
 
 // console.log(configJson.payTabs.secret_key)

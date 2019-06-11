@@ -4354,9 +4354,7 @@ myAccount = (data, header, callback) => {
         }
     ], (err, response) => {
 
-
-        console.log(response)
-        let result={ 'vendor': vendor, 'staff': staff,businessDetails:response }
+        let result={ 'vendor': vendor, 'staff': staff,businessDetails:response?response:null }
 
         callback({
             "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result

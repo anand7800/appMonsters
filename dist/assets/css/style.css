@@ -1332,6 +1332,7 @@ body {
 	padding-right: 10px;
 }
 .uploadimgbx .fileinput {
+	position: relative;
 	margin-bottom: 0;
 	vertical-align: top;
 }
@@ -2335,7 +2336,7 @@ span.checkboxbx [type="checkbox"]:checked + label:after {
 	margin-bottom: 10px;
 }
 .accounts_tabs_section .nav-tabs > li{
-	width: 33.33%;
+	width: 50%;
 	margin-bottom: 0;
 }
 .accounts_tabs_section .nav-tabs > li > a{

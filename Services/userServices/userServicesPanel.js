@@ -664,6 +664,7 @@ changePassword = (data, headers, callback) => {
         },
         function (jwtId, password, cb) {
             var oldpassword = util.encryptData(data.oldPassword)
+            console.log("-=-=-",oldpassword, password)
             if (oldpassword == password) {
                 cb(null, jwtId)
             }
