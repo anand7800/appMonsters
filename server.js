@@ -55,6 +55,10 @@ app.use(morgan("dev"));
 let userRoutes = require('./Routes/userRoutes/userPanelRoutes')
 let adminRoute = require('./Routes/adminRoute/adminRoutes')
 let productRoutes = require('./Routes/productRoute/productRoutes')
+app.use('/user', userRoutes)
+app.use('/admin', adminRoute)
+app.use('/vendor', productRoutes)
+
 
 app.use("/admin", express.static(path.join(__dirname, 'admin')));
 app.get('/admin*', (req, res) => {
@@ -64,13 +68,17 @@ app.use("/v1", express.static(path.join(__dirname, 'dist')));
 app.get('/v1*', (req, res) => {
     res.sendFile(`${__dirname}/dist/index.html`);
 })
+
+app.use("/blixr", express.static(path.join(__dirname, 'blixr')));
+app.get('/blixr*', (req, res) => {
+    res.sendFile(`${__dirname}/index.html`);
+})
+
 app.use("/", express.static(path.join(__dirname, 'website')));
 app.get('/*', (req, res) => {
     res.sendFile(`${__dirname}/website/index.html`);
 })
-app.use('/user', userRoutes)
-app.use('/admin', adminRoute)
-app.use('/vendor', productRoutes)
+
 /* payment  testing start*/
 
 // console.log(configJson.payTabs.secret_key)
