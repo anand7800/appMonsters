@@ -12,6 +12,8 @@ const bagModel = require('../../Models/ProductModel/bagModel')
 const wishModel = require('../../Models/ProductModel/wishModel')
 const orderPlaced = require('../../Models/ProductModel/orderPlaceModel')
 const physicalStores = require('../../Models/userModel/addPhysicalStore')
+const userBusinessDetails = require('../../Models/userModel/businessDetail')
+
 const reviewAndRatingL5 = require('../../Models/userModel/reviewAndRating')
 //!newModel
 
@@ -4301,7 +4303,6 @@ myAccount = (data, header, callback) => {
     // let userId = "5c46c2d1070fa144119a1cd5"
     let userId;
     let vendor = {}, staff = [];
-
     if (header.accesstoken) {
 
         commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
@@ -4340,13 +4341,26 @@ myAccount = (data, header, callback) => {
                 else if (element.userType == "staff" && element.status == "active")
                     staff.push(element)
             })
-            cb()
+            cb(null,userDetail)
+        },
+        function (data,cb){
+
+            userBusinessDetails.findOne({userId:mongoose.Types.ObjectId(userId)}).exec((err,businessDetails)=>{
+                if (err || !businessDetails)
+                cb(null)
+            else
+                cb(null, businessDetails)
+            })
         }
     ], (err, response) => {
-        callback({
-            "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': { 'vendor': vendor, 'staff': staff }
-        })
 
+
+        console.log(response)
+        let result={ 'vendor': vendor, 'staff': staff,businessDetails:response }
+
+        callback({
+            "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result
+        })
     })
 }
 
