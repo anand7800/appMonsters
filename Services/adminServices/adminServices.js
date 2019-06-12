@@ -156,10 +156,9 @@ businessDetails = (data, headers, callback) => {
                             console.log(err, succcc)
                         })
                         // subCategoryModelL2.create({ categoryModel: result._id })
-                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.CATEGORY_ADDED[data.lang], "result": result })
+                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.BUSINESS_DETAILS_ADDEDD[data.lang], "result": result })
                     }
                 })
-
             }
         })
     }

@@ -6,7 +6,11 @@ const authHandler = require('../../middleware/verifyToken');
 
 //!signUp
 webRouter.post('/dashboardGraph', (req, res) => {
-    webHandler.signup(req.body, (data) => {
+    webHandler.dashboardGraph(req.body,req.headers, (data) => {
         res.send(data)
     })
 })
+
+
+
+module.exports = webRouter;

@@ -311,7 +311,8 @@ addProductCategory = (data, callback) => {
 *************addBrandDescription*******
 ************************************ */
 addProduct = (data, header, callback) => {
-    // log("api is hitted addBrandDescription",data,header)
+    log("api is hitted addBrandDescription",data,header)
+
     var sellerId
     commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
         if (err) throw err
@@ -372,7 +373,6 @@ addProduct = (data, header, callback) => {
             }
 
         ], (err, response) => {
-
             if (response) {
                 var variance = []
                 async.forEachOf(data.variants, async (value, key, callback) => {

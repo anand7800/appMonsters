@@ -55,9 +55,13 @@ app.use(morgan("dev"));
 let userRoutes = require('./Routes/userRoutes/userPanelRoutes')
 let adminRoute = require('./Routes/adminRoute/adminRoutes')
 let productRoutes = require('./Routes/productRoute/productRoutes')
+let website = require('./Routes/webRoutes/webRoutes')
+
 app.use('/user', userRoutes)
 app.use('/admin', adminRoute)
 app.use('/vendor', productRoutes)
+app.use('/website', website)
+
 
 
 app.use("/admin", express.static(path.join(__dirname, 'admin')));
@@ -105,7 +109,6 @@ app.get('/*', (req, res) => {
 ***************************socket start************************/
 
 var io = require('socket.io')(server);
-
 var sockets = {};
 global.onlineUsers = {};
 io.sockets.on('connection', function (socket) {

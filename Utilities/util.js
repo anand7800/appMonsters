@@ -104,6 +104,10 @@ let statusMessage = {
         en: "REGISTRATION DONE",
         ar: "التسجيل تم"
     },
+    BUSINESS_DETAILS_ADDEDD: {
+        en: "Business detail has been add successfully",
+        ar: "Business detail has been add successfully"
+    },
     PAYMENT_DONE: {
         en: "Payment done",
         ar: "التسجيل تم"
