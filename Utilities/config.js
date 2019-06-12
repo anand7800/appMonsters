@@ -47,7 +47,7 @@ let serverURLs = {
         "EMAIL_PORT": 465,
         "EMAIL_SECURE": true,
         "CRON_PATTERN": '1 * * * * *',
-        "web_url": 'https://www.waki.store:6262/v1'
+        "web_url": 'https://www.waki.store/vendor'
     },
 
 }

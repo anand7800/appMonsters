@@ -103,7 +103,6 @@ dashboardGraph = (data, header, callback) => {
         var month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         
         if (response.length > 0) {
-            
             response.forEach(element => {
                 let temp = {
                     createdAt: new Date(element._id.createdAt).getMonth()+1,
@@ -111,22 +110,16 @@ dashboardGraph = (data, header, callback) => {
                 }
                 orderList.push(temp)
             });
-            
             //Lopp
             month_array.forEach(ele =>{
             let amount = 0;
                 orderList.forEach(ele1 =>{
                     if(ele == ele1.createdAt){
-                   
-                   
                            amount = amount + ele1.amountPaid
-                   
                     }
                     else{
                         amount = amount
-
                      }
-                    
                 }) 
                 mainArr.push(amount)
             })
