@@ -13,7 +13,9 @@ var variance = mongoose.Schema({
         
         color: {
             type: String,
+            uppercase:true,
             default: null
+        
         },
         price: {
             type: String,
@@ -29,10 +31,12 @@ var variance = mongoose.Schema({
         },
         size: {
             type: String,
+            uppercase:true,
             default: null
         },
         material: {
             type: String,
+            uppercase:true,
             default: null
         },
         quantity: {

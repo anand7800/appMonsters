@@ -18,7 +18,7 @@ let app = require('express')(),
     commonfunction = require('./commonFile/commonFunction'),
     paytabs = require('paytabs_api'),
     configJson = require('./config/config'),
-    _ = require('lodash');
+    _ = require('lodash');``
 // app.use(function (req, res, next) {
 //     res.setHeader('Access-Control-Allow-Origin', 'www.waki.store/');
 //     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -75,13 +75,13 @@ app.get('/v1*', (req, res) => {
 
 app.use("/blixr", express.static(path.join(__dirname, 'blixr')));
 app.get('/blixr*', (req, res) => {
-    res.sendFile(`${__dirname}/index.html`);
+    res.sendFile(`${__dirname}/blixr/index.html`);
 })
 
-app.use("/", express.static(path.join(__dirname, 'website')));
-app.get('/*', (req, res) => {
-    res.sendFile(`${__dirname}/website/index.html`);
-})
+// app.use("/", express.static(path.join(__dirname, 'website')));
+// app.get('/*', (req, res) => {
+//     res.sendFile(`${__dirname}/website/index.html`);
+// })
 
 /* payment  testing start*/
 

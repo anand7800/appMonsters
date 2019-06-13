@@ -511,5 +511,11 @@ productRouter.get('/topProductSalesByVendor', authHandler.verifyToken, (req, res
     })
 })
 
+productRouter.post('/deleteOffer',authHandler.verifyToken, (req, res) => {
+    productService.deleteOffer(req.body,(data) => {
+        res.send(data)
+    })
+})
+
 
 module.exports = productRouter

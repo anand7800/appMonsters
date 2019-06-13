@@ -2606,13 +2606,13 @@ placeOrder = (data, headers, callback) => {
                         "$elemMatch": {
                             "$and": [
                                 {
-                                    "color": data.color.toLowerCase(),
+                                    "color": data.color.toUpperCase(),
                                 },
                                 {
-                                    "size": data.size.toLowerCase(),
+                                    "size": data.size.toUpperCase(),
                                 },
                                 {
-                                    "material": data.material.toLowerCase(),
+                                    "material": data.material.toUpperCase(),
                                 }
                             ]
                         }
@@ -5054,7 +5054,27 @@ topProductSalesByVendor = (data, header, callback) => {
 
     // callback()
 }
+/* this is for image upload image to cloud  */
+deleteOffer = (data, callback) => {
+    let userId 
+    if (header.accesstoken) {
 
+        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+            if (err) throw err
+            else {
+                userId = decodeId
+            }
+        })
+    }
+    else {
+        callback({
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+        })
+        return
+    }
+
+    
+}
 module.exports = {
     addCategory,
     addSubCategory,
@@ -5115,5 +5135,6 @@ module.exports = {
     uploadImage1,
     orderPayment,
     increaseStockOnCartList,
-    topProductSalesByVendor
+    topProductSalesByVendor,
+    deleteOffer
 }

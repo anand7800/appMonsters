@@ -39,10 +39,6 @@ var qr = require('qr-image');
 const today = moment().startOf('day')
 var Promise = require('promise');
 
-
-
-
-
 /* ************************************
 *************api's start here***********************
 ************************************ */
