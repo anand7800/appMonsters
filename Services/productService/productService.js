@@ -3593,7 +3593,7 @@ orderList = (data, headers, callback) => {
             value.productId.varianceId.variants.forEach(check => {
                 response.getOrderDetails.userId.address.forEach(userAddress => {
                     if (userAddress._id.toString() == value.addressId.toString())
-                        if (value.material.toLowerCase() == check.material && value.color.toLowerCase() == check.color && value.size.toLowerCase() == check.size) {
+                        if (value.material.toUpperCase() == check.material && value.color.toUpperCase() == check.color && value.size.toUpperCase() == check.size) {
                             temp = {
                                 brand: value.productId.brandId.brandName,
                                 orderId: "ORD" + value.orderId,
