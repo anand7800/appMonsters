@@ -942,6 +942,7 @@ categoryProductList = (data, callback) => {
         })
     }
     else if (data.productListType == 'offer') {
+        console.log('asdfasfd')
         let a = [];
         productOffer.findOne({ _id: mongoose.Types.ObjectId("5c8ba06af518814a63ba3a7f") }).populate('applicableOnProduct').populate('applicableOnProductCategory').exec((err, getOffer) => {
             getOffer.applicableOnProduct.forEach(element => {
@@ -1602,9 +1603,9 @@ getVariance = (data, callback) => {
     console.log('get variance', data)
     // var color = [data.color.toLowerCase()], material = [data.material.toLowerCase()], size = [data.size.toLowerCase()];
     temp = {
-        color: data.color.toLowerCase(),
-        size: data.size.toLowerCase(),
-        material: data.material.toLowerCase(),
+        color: data.color.toUpperCase(),
+        size: data.size.toUpperCase(),
+        material: data.material.toUpperCase(),
     }
     // console.log(temp)
     query1 = {
@@ -1964,13 +1965,13 @@ orderDetail = (data, callback) => {
                             // "closed": false,
                             "$and": [
                                 {
-                                    "color": value.color.toLowerCase(),
+                                    "color": value.color.toUpperCase(),
                                 },
                                 {
-                                    "size": value.size.toLowerCase(),
+                                    "size": value.size.toUpperCase(),
                                 },
                                 {
-                                    "material": value.material.toLowerCase(),
+                                    "material": value.material.toUpperCase(),
                                 }
                             ]
                         }
@@ -3298,13 +3299,13 @@ wishList = (data, headers, callback) => {
                             // "closed": false,
                             "$and": [
                                 {
-                                    "color": value.color.toLowerCase(),
+                                    "color": value.color.toUpperCase(),
                                 },
                                 {
-                                    "size": value.size.toLowerCase(),
+                                    "size": value.size.toUpperCase(),
                                 },
                                 {
-                                    "material": value.material.toLowerCase(),
+                                    "material": value.material.toUpperCase(),
                                 }
                             ]
                         }
@@ -3476,13 +3477,13 @@ listOfAddCart = (data, headers, callback) => {
                     "$elemMatch": {
                         "$and": [
                             {
-                                "color": value.color.toLowerCase(),
+                                "color": value.color.toUpperCase(),
                             },
                             {
-                                "size": value.size.toLowerCase(),
+                                "size": value.size.toUpperCase(),
                             },
                             {
-                                "material": value.material.toLowerCase(),
+                                "material": value.material.toUpperCase(),
                             }
                         ]
                     }
@@ -4929,13 +4930,13 @@ increaseStockOnCartList = (data, header, callback) => {
                     "$elemMatch": {
                         "$and": [
                             {
-                                "color": value.color.toLowerCase(),
+                                "color": value.color.toUpperCase(),
                             },
                             {
-                                "size": value.size.toLowerCase(),
+                                "size": value.size.toUpperCase(),
                             },
                             {
-                                "material": value.material.toLowerCase(),
+                                "material": value.material.toUpperCase(),
                             }
                         ]
                     }
