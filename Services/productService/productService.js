@@ -2516,6 +2516,8 @@ addReviewAndRating = (header, data, callback) => {
             // }
         }
         reviewRatingModel.findOne({ userId: userId, productId: data.productId }).exec((err, check) => {
+
+            console.log("---->>",err,check)
             if (err || check) {
                 callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
                 return

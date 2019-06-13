@@ -5,11 +5,6 @@ var reviewAndRating = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'login'
     },
-    // reviewAndRating: [{
-    // userId: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'login'
-    // },
     productId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'productDescription'
