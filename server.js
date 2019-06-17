@@ -32,7 +32,7 @@ let app = require('express')(),
 //     cert: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.csr').toString()
 // };
 
-var options = {
+var options = { 
     key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
     cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
 };
