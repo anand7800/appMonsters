@@ -465,8 +465,8 @@ editProduct = (data, callback) => {
             let query = { _id: data.productId }
             let update = {
                 $set: {
-                    categoryModel: data.categoryId || response.productDetail.categoryModel._id,
-                    subCategory: data.subCategoryId || response.productDetail.subCategory._id,
+                    categoryModel: data.categoryModel || response.productDetail.categoryModel._id,
+                    subCategory: data.subCategory || response.productDetail.subCategory._id,
                     productCategoryId: data.productCategoryId || response.productDetail.productCategoryId._id,
                     brandId: data.brandId || response.productDetail.brandId._id,
                     sellerId: response.productDetail.sellerId._id,
