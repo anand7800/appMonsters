@@ -1533,7 +1533,7 @@ productDetails = (data, callback) => {
                                 productTry: response.findProduct.productTry,
                                 inStock: test.quantity > 0 ? true : false,
                                 tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
-                                price: test.price ? test.price : '',
+                                price: test.price ? response.findProduct.varianceId.variants[0].price : '',
                                 image: response.findProduct.varianceId.variants[0].image ? response.findProduct.varianceId.variants[0].image : [],
                                 colors: _.uniq(color),
                                 material: _.uniq(material),
