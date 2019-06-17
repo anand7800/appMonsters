@@ -5,6 +5,10 @@ const varianceOffer = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'login'
     },
+    staffId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'login'
+    },
     offerName: {
         type: String,
         default: null

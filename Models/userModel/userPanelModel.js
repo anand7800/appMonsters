@@ -147,7 +147,7 @@ function init() {
         else {
             if (success == null) {
                 new login({
-                    email: "test@gmail.com",
+                    email: "admin@techugo.com",
                     password: util.encryptData("Techugo@123"),
                     userType: "admin"
                 }).save((error, success) => {

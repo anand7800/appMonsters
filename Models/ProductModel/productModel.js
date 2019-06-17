@@ -6,7 +6,10 @@ var brandDescription = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'productcategory'
     },
-
+    staffId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'login'
+    },
     subCategory: {             //! MOBILE / TV / COMPUTER              //!LEVEL 2
         type: mongoose.Schema.Types.ObjectId,
         ref: 'productsubCategory'

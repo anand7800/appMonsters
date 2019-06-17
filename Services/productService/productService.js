@@ -343,6 +343,7 @@ addProduct = (data, header, callback) => {
                     subCategory: data.subCategoryId,
                     productCategoryId: data.productCategoryId,
                     brandId: data.brandId,
+                    staffId: data.staffId ? data.staffId : null,
                     sellerId: sellerId,
                     productName: data.productName,
                     sellingPrice: data.sellingPrice,
@@ -894,7 +895,7 @@ OpenSubCategory = (data, callback) => {
 **************************categoryProductList*******************************
 ***********************************************************************/
 categoryProductList = (data, callback) => {
-    
+
     console.log("api is hitted", data)
     var response = []
     var parkar = Object
@@ -906,17 +907,10 @@ categoryProductList = (data, callback) => {
             }
             else if (productDetail.length > 0) {
                 productDetail.forEach(element => {
-                    // console.log("asdfasdfasdfasdf" + element.brandDesc._id)
-                    promise = new Promise((resolve, reject) => {
-                        varianceModel.findOne({ productId: element._id }).exec((err2, data2) => {
-                            // console.log("#@#########@#@#@#@#@#@#", err2, data2)
-                            if (err2) { reject(err2) }
-                            // console.log(data2)
-                            resolve(data2)
-                        })
-                    })
+                    
                     if (element) {
-                        // console.log('---------->>', element.brandDesc)
+
+                        console.log('---------->>', element.varianceId.variants[0].price)
                         let temp = {
                             description: element.description,
                             image: element.varianceId == null ? element.image : element.varianceId.variants[0].image,
@@ -924,7 +918,7 @@ categoryProductList = (data, callback) => {
                             _id: element._id,
                             brand: element.brandId.brandName,
                             productName: element.productName,
-                            price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
+                            price: element.varianceId.variants.length > 0 ? element.varianceId.variants[0].price : element.sellingPrice,
                         }
                         response.push(temp)
                     }
@@ -942,10 +936,10 @@ categoryProductList = (data, callback) => {
         })
     }
     else if (data.productListType == 'offer') {
-        
+
         let a = [];
         productOffer.findOne({ _id: mongoose.Types.ObjectId(data.productCategoryId) }).populate('applicableOnProduct').populate('applicableOnProductCategory').exec((err, getOffer) => {
-            console.log(err,'-------->>>',getOffer)
+            console.log(err, '-------->>>', getOffer)
             getOffer.applicableOnProduct.forEach(element => {
                 temp = {
                     _id: element._id,
@@ -1718,10 +1712,10 @@ getVariance = (data, callback) => {
         res = {}
         var color = [],
             material = [], size = []
-        if (data.color != '')  color = [data.color]
-        if (data.material != '')  material = [data.material]
-        if (data.size != '')  size = [data.size]
-        
+        if (data.color != '') color = [data.color]
+        if (data.material != '') material = [data.material]
+        if (data.size != '') size = [data.size]
+
         varianceModel.findById({ _id: response.varianceDetail._id }).exec((err, combination) => {
             if (err || !combination) throw err
             else {
@@ -2287,6 +2281,7 @@ addVendoroffer = (data, header, callback) => {
             else {
                 query = {
                     userId: mongoose.Types.ObjectId(userId),
+                    staffId: data.staffId ? data.staffId : null,
                     offerName: data.offerName,
                     description: data.description,
                     offerType: data.offerType,
