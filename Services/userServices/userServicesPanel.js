@@ -730,8 +730,14 @@ editProfile = (data, headers, callback) => {
 
 reset = (data, callback) => {
     console.log(data)
+
+    if(!data.email|| !data.forgotToken){
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        return
+    }
     query = {
-        email: data.email
+        email: data.email,
+        forgotToken:data.forgotToken
     }
     update = {
         password: util.encryptData(data.newPassword),
