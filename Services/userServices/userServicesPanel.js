@@ -764,8 +764,7 @@ verifyLink = (data, callback) => {
         }]
     }
     userModel.find(criteria, (err, result) => {
-        log(err, "ambuj")
-        log(result, "pppp")
+        
         if (result.length > 0) {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "email": data.email })
         }

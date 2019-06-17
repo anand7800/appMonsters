@@ -894,7 +894,7 @@ OpenSubCategory = (data, callback) => {
 **************************categoryProductList*******************************
 ***********************************************************************/
 categoryProductList = (data, callback) => {
-    console.log("asdf")
+    
     console.log("api is hitted", data)
     var response = []
     var parkar = Object
@@ -942,9 +942,10 @@ categoryProductList = (data, callback) => {
         })
     }
     else if (data.productListType == 'offer') {
-        console.log('asdfasfd')
+        
         let a = [];
-        productOffer.findOne({ _id: mongoose.Types.ObjectId("5c8ba06af518814a63ba3a7f") }).populate('applicableOnProduct').populate('applicableOnProductCategory').exec((err, getOffer) => {
+        productOffer.findOne({ _id: mongoose.Types.ObjectId(data.productCategoryId) }).populate('applicableOnProduct').populate('applicableOnProductCategory').exec((err, getOffer) => {
+            console.log(err,'-------->>>',getOffer)
             getOffer.applicableOnProduct.forEach(element => {
                 temp = {
                     _id: element._id,
