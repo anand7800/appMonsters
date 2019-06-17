@@ -311,7 +311,7 @@ addProductCategory = (data, callback) => {
 *************addBrandDescription*******
 ************************************ */
 addProduct = (data, header, callback) => {
-    log("api is hitted addBrandDescription",data,header)
+    log("api is hitted addBrandDescription", data, header)
 
     var sellerId
     commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
@@ -1510,7 +1510,7 @@ productDetails = (data, callback) => {
                             variants: {},
                             color: [],
                             material: [],
-                            inStockQuantity:parseInt(response.findProduct.quantity),
+                            inStockQuantity: parseInt(response.findProduct.quantity),
                             size: []
                         }
                         res.product = data
@@ -1543,7 +1543,7 @@ productDetails = (data, callback) => {
                                 colors: _.uniq(color),
                                 material: _.uniq(material),
                                 size: _.uniq(size),
-                                inStockQuantity:parseInt(response.findProduct.varianceId.variants[0].quantity)
+                                inStockQuantity: parseInt(response.findProduct.varianceId.variants[0].quantity)
                                 // colors: [...new Set(color)].reverse().map(function (x) { return x.toUpperCase() }),
                                 // material: [...new Set(material)].reverse().map(function (x) { return x.toUpperCase() }),
                                 // size: [...new Set(size)].reverse().map(function (x) { return x.toUpperCase() })
@@ -1715,7 +1715,12 @@ getVariance = (data, callback) => {
 
     }, (err, response) => {
         res = {}
-        var color = [data.color], material = [data.material], size = [data.size]
+        var color = [],
+            material = [], size = []
+        if (data.color != '')  color = [data.color]
+        if (data.material != '')  material = [data.material]
+        if (data.size != '')  size = [data.size]
+        
         varianceModel.findById({ _id: response.varianceDetail._id }).exec((err, combination) => {
             if (err || !combination) throw err
             else {
@@ -2518,7 +2523,7 @@ addReviewAndRating = (header, data, callback) => {
         }
         reviewRatingModel.findOne({ userId: userId, productId: data.productId }).exec((err, check) => {
 
-            console.log("---->>",err,check)
+            console.log("---->>", err, check)
             if (err || check) {
                 callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
                 return
@@ -4344,20 +4349,20 @@ myAccount = (data, header, callback) => {
                 else if (element.userType == "staff" && element.status == "active")
                     staff.push(element)
             })
-            cb(null,userDetail)
+            cb(null, userDetail)
         },
-        function (data,cb){
+        function (data, cb) {
 
-            userBusinessDetails.findOne({userId:mongoose.Types.ObjectId(userId)}).exec((err,businessDetails)=>{
+            userBusinessDetails.findOne({ userId: mongoose.Types.ObjectId(userId) }).exec((err, businessDetails) => {
                 if (err || !businessDetails)
-                cb(null)
-            else
-                cb(null, businessDetails)
+                    cb(null)
+                else
+                    cb(null, businessDetails)
             })
         }
     ], (err, response) => {
 
-        let result={ 'vendor': vendor, 'staff': staff,businessDetails:response?response:null }
+        let result = { 'vendor': vendor, 'staff': staff, businessDetails: response ? response : null }
 
         callback({
             "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result
@@ -5050,7 +5055,7 @@ topProductSalesByVendor = (data, header, callback) => {
             mainArray = _.uniqBy(mainArray, 'productId');
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": mainArray })
         }
-        else{
+        else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": mainArray })
         }
     })
@@ -5059,7 +5064,7 @@ topProductSalesByVendor = (data, header, callback) => {
 }
 /* this is for image upload image to cloud  */
 deleteOffer = (data, callback) => {
-    let userId 
+    let userId
     if (header.accesstoken) {
 
         commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
@@ -5076,7 +5081,7 @@ deleteOffer = (data, callback) => {
         return
     }
 
-    
+
 }
 module.exports = {
     addCategory,
