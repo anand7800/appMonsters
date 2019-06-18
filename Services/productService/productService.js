@@ -1745,7 +1745,7 @@ getVariance = (data, callback) => {
                     colors: _.uniq(color),
                     size: _.uniq(size),
                     material: _.uniq(material),
-                    inStockQuantity: parseInt(varianceDetail.variants[0].quantity)
+                    inStockQuantity: parseInt(response.varianceDetail.variants[0].quantity)
                 }
                 res.product = temp
                 console.log("======>", response.varianceDetail)
