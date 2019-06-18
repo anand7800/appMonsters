@@ -1736,27 +1736,16 @@ getVariance = (data, callback) => {
                     _id: response.varianceDetail.productId._id,
                     brand: response.varianceDetail.productId.brandId.brandName,
                     productName: response.varianceDetail.productId.productName,
-                    // price: response.findProduct.price,
                     description: response.varianceDetail.productId.description,
                     specifications: response.varianceDetail.productId.specifications[0],
                     productTry: response.varianceDetail.productId.productTry,
                     inStock: response.varianceDetail.variants[0].quantity > 0 ? true : false,
                     price: response.varianceDetail.variants[0].price,
                     image: response.varianceDetail.variants[0].image ? response.varianceDetail.variants[0].image : [],
-                    // variants: {
-                    //     _id: test._id,
-                    //     color: test.color.toUpperCase(),
-                    //     material: test.material.toUpperCase(),
-                    //     image: test.image ? test.image : [],
-                    //     size: test.size.toUpperCase(),
-                    //     price: test.price ? test.price : ''
-                    // },
-                    // colors: [data.color],
-                    // material: [data.material],
-                    // size: [data.size]
                     colors: _.uniq(color),
                     size: _.uniq(size),
-                    material: _.uniq(material)
+                    material: _.uniq(material),
+                    inStockQuantity: parseInt(varianceDetail.variants[0].quantity)
                 }
                 res.product = temp
                 console.log("======>", response.varianceDetail)
