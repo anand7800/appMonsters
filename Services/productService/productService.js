@@ -3437,7 +3437,7 @@ physicalStore = (data, headers, callback) => {
 **************************listOfAddCart*************************
 ***********************************************************************/
 listOfAddCart = (data, headers, callback) => {
-    log("list of cart")
+    log("list of cart",data,headers)
     var userId
     commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })

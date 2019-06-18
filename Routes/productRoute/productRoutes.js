@@ -71,7 +71,7 @@ productRouter.post('/addToCart', authHandler.verifyToken, (req, res) => {
 })
 
 //!listOfAddCart  
-productRouter.get('/listOfAddCart', authHandler.verifyToken, (req, res) => {
+productRouter.get('/listOfAddCart',/*  authHandler.verifyToken, */ (req, res) => {
     productService.listOfAddCart(req.query, req.headers, (data) => {
         res.send(data)
     })
