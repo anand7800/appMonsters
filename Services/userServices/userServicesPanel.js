@@ -766,7 +766,7 @@ verifyLink = (data, callback) => {
     userModel.find(criteria, (err, result) => {
         
         if (result.length > 0) {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "email": data.email })
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "email": data.email,"forgotToken":data.forgotToken })
         }
         else {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
