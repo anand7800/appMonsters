@@ -4951,7 +4951,7 @@ increaseStockOnCartList = (data, header, callback) => {
                     image: varianceValue.variants[0].image,//!
                     description: value.productId.description,
                     specifications: value.productId.specifications,
-                    inStock: parseFloat(varianceValue.variants[0].quantity) > parseFloat(value.productQuantity) ? true : false,
+                    inStock: parseFloat(varianceValue.variants[0].quantity) >= parseFloat(value.productQuantity) ? true : false,
                     inStockQuantity: parseInt(varianceValue.variants[0].quantity)
                 }
                 totalPrice = totalPrice + (parseInt(varianceValue.variants[0].price) * parseInt(value.productQuantity))
