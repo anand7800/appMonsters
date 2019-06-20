@@ -99,8 +99,8 @@ login = (data, callback) => {
                 var hash = util.encryptData(data.password)
                 if (succ.password == hash) {
                     let address = []
-                    succ.address=succ.address.filter(e=>{
-                        if(e.status=="ACTIVE"){
+                    succ.address = succ.address.filter(e => {
+                        if (e.status == "ACTIVE") {
                             return true
                         }
                     })
@@ -110,7 +110,7 @@ login = (data, callback) => {
                         "lastName": succ.lastName,
                         "email": succ.email,
                         "image": succ.image,
-                        "addressAdded": succ.address.length>0?true:false,
+                        "addressAdded": succ.address.length > 0 ? true : false,
                         "phone": succ.phone,
                         "countryCode": succ.countryCode ? succ.countryCode : "",
                         "paymentAdded": succ.paymentAdded,
@@ -169,7 +169,7 @@ socialLogin = (data, callback) => {
             }
             else if (found.length > 0) {
                 userModel.findOneAndUpdate({ email: data.email }, { $set: { 'social.socialId': data.socialId, 'social.socialType': data.socialType } }, { new: true }).exec((err, succ) => {
-                    console.log("update value", err, succ)
+                    
                     let temp = {
                         "_id": succ._id,
                         "firstName": succ.firstName,
@@ -201,13 +201,19 @@ socialLogin = (data, callback) => {
                         return
                     }
                     else {
+
+                        succ.address = succ.address.filter(e => {
+                            if (e.status == "ACTIVE") {
+                                return true
+                            }
+                        })
                         result = {
                             "_id": succ._id,
                             "firstName": succ.firstName,
                             "lastName": succ.lastName,
                             "email": succ.email,
                             "image": succ.image,
-                            "addressAdded": succ.isAddressAdded,
+                            "addressAdded": succ.address.length > 0 ? true : false,
                             "phone": succ.phone,
                             "countryCode": succ.countryCode,
                             "paymentAdded": succ.paymentAdded,
@@ -245,13 +251,19 @@ checkSocialProfile = (obj, callback) => {
                 return
             }
             else {
+
+        succ.address = succ.address.filter(e => {
+            if (e.status == "ACTIVE") {
+                return true
+            }
+        })
                 result = {
                     "_id": succ._id,
                     "firstName": succ.firstName,
                     "lastName": succ.lastName,
                     "email": succ.email,
                     "image": succ.image,
-                    "addressAdded": succ.isAddressAdded,
+                    "addressAdded": succ.address.length>0?true:false,
                     "phone": succ.phone,
                     "countryCode": succ.countryCode,
                     "paymentAdded": succ.paymentAdded,
@@ -327,13 +339,20 @@ addAddress = (data, headers, callback) => {
                 return
             }
             else {
+
+
+                succ.address = succ.address.filter(e => {
+                    if (e.status == "ACTIVE") {
+                        return true
+                    }
+                })
                 result = {
                     "_id": succ._id,
                     "firstName": succ.firstName,
                     "lastName": succ.lastName,
                     "email": succ.email,
                     "image": succ.image,
-                    "addressAdded": succ.isAddressAdded,
+                    "addressAdded": succ.address.length > 0 ? true : false,
                     "phone": succ.phone,
                     "paymentAdded": succ.paymentAdded,
                     "address": succ.address,
@@ -1082,13 +1101,19 @@ editAddress = (data, headers, callback) => {
 
     ], (err, succ) => {
         // console.log("resposne ", err, response)
+
+        succ.address = succ.address.filter(e => {
+            if (e.status == "ACTIVE") {
+                return true
+            }
+        })
         let result = {
             "_id": succ._id,
             "firstName": succ.firstName,
             "lastName": succ.lastName,
             "email": succ.email,
             "image": succ.image,
-            "addressAdded": succ.isAddressAdded,
+            "addressAdded": succ.address .length> 0 ? true : false,
             "phone": succ.phone,
             "paymentAdded": succ.paymentAdded,
             "address": succ.address,
@@ -1106,13 +1131,7 @@ editAddress = (data, headers, callback) => {
 deleteAddress = (data, headers, callback) => {
     console.log(data, headers)
 
-    // if (!data.paymentId || !headers.accessoken) {
-    //     callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
-    //     return
-    // }
-    // var userId = '5c657188f7f89745e14fda4a'
     let userId
-
     commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
         if (err) throw err
         else {
@@ -1151,13 +1170,18 @@ deleteAddress = (data, headers, callback) => {
 
     ], (err, succ) => {
         // console.log("resposne ", err, response)
+        succ.address = succ.address.filter(e => {
+            if (e.status == "ACTIVE") {
+                return true
+            }
+        })
         result = {
             "_id": succ._id,
             "firstName": succ.firstName,
             "lastName": succ.lastName,
             "email": succ.email,
             "image": succ.image,
-            "addressAdded": succ.isAddressAdded,
+            "addressAdded": succ.address.length > 0 ? true : false,
             "phone": succ.phone,
             "paymentAdded": succ.paymentAdded,
             "address": succ.address,
