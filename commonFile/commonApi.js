@@ -436,18 +436,18 @@ changeFeedBackStatus = async (orderId, productId, reviewId) => {
 //         }
 
 
-//         // {
-//         //     $unwind: '$reviewAndRating'
-//         // }, {
-//         //     $match: {
-//         //         // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
-//         //         $or: [
-//         //             { 'reviewAndRating.productId': mongoose.Types.ObjectId(_id) },
-//         //             { 'reviewAndRating.status': "ACTIVE"}
-//         //         ]
-//         //     },
-//         //     // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
-//         // }
+// {
+//     $unwind: '$reviewAndRating'
+// }, {
+//     $match: {
+//         // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
+//         $or: [
+//             { 'reviewAndRating.productId': mongoose.Types.ObjectId(_id) },
+//             { 'reviewAndRating.status': "ACTIVE"}
+//         ]
+//     },
+//     // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
+// }
 //     ])/* reviewAndRatingL5.find({reviewAndRating: {$elemMatch: {productId: _id } } }).populate({path: 'reviewAndRating.userId',select:'firstName lastName image'}) */.exec((err, result) => {
 
 //         console.log("result",err, JSON.stringify(result))
@@ -492,8 +492,6 @@ getUserDetail = async (userId, cb) => {
 }
 //send notification
 notify = (data, userId, cb) => {
-
-
     getUserDetail(userId, (err, result) => {
 
         if (result.deviceType == 2) {
@@ -542,9 +540,7 @@ notify = (data, userId, cb) => {
                 })
             }
         })
-
     })
-
 }
 
 //change statue notifcaition
@@ -570,9 +566,7 @@ changeNotification = (data, callback) => {
     notificationModel.findOneAndUpdate(query, update, { multi: true, new: true }).exec((err, success) => {
         console.log("common api", err, success)
         callback(null, success)
-
     })
-    // callback(null,success)
 }
 
 module.exports = {

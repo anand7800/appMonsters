@@ -16,7 +16,7 @@ const userBusinessDetails = require('../../Models/userModel/businessDetail')
 
 const reviewAndRatingL5 = require('../../Models/userModel/reviewAndRating')
 //!newModel
-
+const adminService = require('../adminServices/adminServices')
 //chat model
 var chatHistory = require('../../Models/userModel/chatHistory');
 var Room = require('../../Models/userModel/room.js');
@@ -907,7 +907,7 @@ categoryProductList = (data, callback) => {
             }
             else if (productDetail.length > 0) {
                 productDetail.forEach(element => {
-                    
+
                     if (element) {
 
                         console.log('---------->>', element.varianceId.variants[0].price)
@@ -2575,6 +2575,7 @@ deleteCart = (data, headers, callback) => {
         })
     }
 }
+
 /********************************************************************
 **************************placeOrder*************************
 ***********************************************************************/
@@ -2630,7 +2631,7 @@ placeOrder = (data, headers, callback) => {
                                     productId: data.productId,
                                     // varianceId: data.varianceId ? data.varianceId : null,
                                     orderPayment: orderPayment ? orderPayment : "PENDING",
-                                    orderStatus: "PENDING",
+                                    orderStatus: "PLACED",
                                     productQuantity: data.productQuantity ? data.productQuantity : 1,
                                     orderId: orderId,
                                     transactionId: null,
@@ -2734,6 +2735,15 @@ placeOrder = (data, headers, callback) => {
                 }
                 //!!! delete in addtocart
                 commonAPI.deleteCart(userId, data.productId)
+                let temp = {
+                    varianceId: response.getProdctdetail.variants[0]._id,
+                    stock: (parseInt(response.getProdctdetail.variants[0].quantity) - parseInt(data.productQuantity)).toString(),
+                    lang: "en"
+                }
+
+                adminService.updateVarianceStock(temp, (err, response) => {
+                    console.log(err, response)
+                })
                 //!
             })
 
@@ -3426,7 +3436,7 @@ physicalStore = (data, headers, callback) => {
 **************************listOfAddCart*************************
 ***********************************************************************/
 listOfAddCart = (data, headers, callback) => {
-    log("list of cart",data,headers)
+    log("list of cart", data, headers)
     var userId
     commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
@@ -3434,7 +3444,8 @@ listOfAddCart = (data, headers, callback) => {
     })
     async.parallel({
         bagDetails: (cb) => {
-            bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({
+            bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) })
+            .populate({ path: 'userId' }).populate({
                 path: 'orderDescription.productId',
                 populate: [{
                     path: 'varianceId',
@@ -3456,6 +3467,11 @@ listOfAddCart = (data, headers, callback) => {
     }, (err, response) => {
         // console.log(response.bagDetails.userId)
         var address = response.bagDetails.userId.address
+        address=address.filter(e=>{
+            if(e.status=="ACTIVE"){
+                return true
+            }
+        })
         var payment = response.bagDetails.userId.paymentMethod
         var main = []
         var totalPrice = 0
