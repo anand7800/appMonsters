@@ -98,13 +98,19 @@ login = (data, callback) => {
             else {
                 var hash = util.encryptData(data.password)
                 if (succ.password == hash) {
+                    let address = []
+                    succ.address=succ.address.filter(e=>{
+                        if(e.status=="ACTIVE"){
+                            return true
+                        }
+                    })
                     result = {
                         "_id": succ._id,
                         "firstName": succ.firstName,
                         "lastName": succ.lastName,
                         "email": succ.email,
                         "image": succ.image,
-                        "addressAdded": succ.isAddressAdded,
+                        "addressAdded": succ.address.length>0?true:false,
                         "phone": succ.phone,
                         "countryCode": succ.countryCode ? succ.countryCode : "",
                         "paymentAdded": succ.paymentAdded,
@@ -664,7 +670,7 @@ changePassword = (data, headers, callback) => {
         },
         function (jwtId, password, cb) {
             var oldpassword = util.encryptData(data.oldPassword)
-            console.log("-=-=-",oldpassword, password)
+            console.log("-=-=-", oldpassword, password)
             if (oldpassword == password) {
                 cb(null, jwtId)
             }
@@ -731,13 +737,13 @@ editProfile = (data, headers, callback) => {
 reset = (data, callback) => {
     console.log(data)
 
-    if(!data.email|| !data.forgotToken){
+    if (!data.email || !data.forgotToken) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
     }
     query = {
         email: data.email,
-        forgotToken:data.forgotToken
+        forgotToken: data.forgotToken
     }
     update = {
         password: util.encryptData(data.newPassword),
@@ -764,9 +770,9 @@ verifyLink = (data, callback) => {
         }]
     }
     userModel.find(criteria, (err, result) => {
-        
+
         if (result.length > 0) {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "email": data.email,"forgotToken":data.forgotToken })
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "email": data.email, "forgotToken": data.forgotToken })
         }
         else {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
