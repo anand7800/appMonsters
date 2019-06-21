@@ -73,6 +73,8 @@ let htmlEnDeCode = (function () {
 let statusCode = {
     EVERYTHING_IS_OK: 200,
 
+    OUT_OF_STOCK: 300,
+
     NEW_RESOURCE_CREATED: 201,
 
     RESOURCE_DELETED: 204,
@@ -386,17 +388,21 @@ let statusMessage = {
         en: "Profile details Upload successfully",
         ar: ""
     },
-    EDIT_PAYMENT:{
-        en:"Your payment card update",
-        ar:""
+    EDIT_PAYMENT: {
+        en: "Your payment card update",
+        ar: ""
     },
-    DELET_PAYMENT:{
-        en:"Your payment card Remove",
-        ar:""
+    DELET_PAYMENT: {
+        en: "Your payment card Remove",
+        ar: ""
     },
-    DELETE_ADDRESS_SUCCESS:{
-        en:"your address is deleted",
-        ar:"your address is deleted"
+    DELETE_ADDRESS_SUCCESS: {
+        en: "your address is deleted",
+        ar: "your address is deleted"
+    },
+    OUT_OF_STOCK: {
+        en: "Some item not in stock please remove it before checkout",
+        ar: "Some item not in stock please remove it before checkout"
     },
     TITLE: {
 

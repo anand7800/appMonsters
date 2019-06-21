@@ -3160,112 +3160,122 @@ checkoutOrder = (data, headers, callback) => {
     commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
         userId = result
     })
-    async.parallel({
-        checkoutOrder: (cb) => {
-            bagModel.findOne({ userId: userId }, (err, result) => {
-                async.forEachOf(result.orderDescription, (value, key, callback) => {
-                    console.log("value ,453534535345", value)
-                    orderPlaced.findOne({ userId: userId }, (err, userFind) => {
-                        if (err) {
-                            callback(null)
-                        }
-                        else if (userFind) {
-                            console.log("user is find")
-                            orderPlaced.findOneAndUpdate({ userId: userId }, {
-                                $push: {
-                                    orderPlacedDescription: {
-                                        sellerId: value.sellerId,
-                                        productId: value.productId,
-                                        // varianceId: data.varianceId ? data.varianceId : null,
-                                        orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                                        orderStatus: "PENDING",
-                                        productQuantity: value.productQuantity ? value.productQuantity : 1,
-                                        orderId: orderId,
-                                        transactionId: null,
-                                        addressId: data.addressId ? data.addressId : "null",
-                                        deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
-                                        estimateTax: value.estimateTax ? value.estimateTax : "00",
-                                        // totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "00",
-                                        color: value.color,
-                                        size: value.size,
-                                        material: value.material,
-                                        totalAmountPaid: value.totalAmountPaid
 
+    listOfAddCart(data, headers, (result) => {
+        // console.log(err,result)
+        if (result.result.inStockBag == false) {
+            callback({ "statusCode": util.statusCode.OUT_OF_STOCK, "statusMessage": util.statusMessage.OUT_OF_STOCK[data.lang], result: result.result })
+            return
+        }
+        else {
+            async.parallel({
+                checkoutOrder: (cb) => {
+                    bagModel.findOne({ userId: userId }, (err, result) => {
+                        async.forEachOf(result.orderDescription, (value, key, callback) => {
+                            console.log("value ,453534535345", value)
+                            orderPlaced.findOne({ userId: userId }, (err, userFind) => {
+                                if (err) {
+                                    callback(null)
+                                }
+                                else if (userFind) {
+                                    console.log("user is find")
+                                    orderPlaced.findOneAndUpdate({ userId: userId }, {
+                                        $push: {
+                                            orderPlacedDescription: {
+                                                sellerId: value.sellerId,
+                                                productId: value.productId,
+                                                // varianceId: data.varianceId ? data.varianceId : null,
+                                                orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                                orderStatus: "PENDING",
+                                                productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                                orderId: orderId,
+                                                transactionId: null,
+                                                addressId: data.addressId ? data.addressId : "null",
+                                                deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                                estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                                // totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "00",
+                                                color: value.color,
+                                                size: value.size,
+                                                material: value.material,
+                                                totalAmountPaid: value.totalAmountPaid
+
+                                            }
+                                        }
+                                    }, { new: true, lean: true }, (err, orderPlaced) => {
+                                        if (err) {
+                                            callback(null)
+                                        }
+                                        else if (orderPlaced) {
+                                            callback(null, orderPlaced)
+                                        }
+                                        else {
+                                            callback(null)
+                                        }
+                                    })
+                                }
+                                else {
+                                    log('not exist')
+                                    let query = {
+                                        userId: userId,
+                                        orderPlacedDescription: {
+                                            sellerId: value.sellerId,
+                                            productId: value.productId,
+                                            // varianceId: data.varianceId ? data.varianceId : null,
+                                            orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                            orderStatus: "PENDING",
+                                            productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                            orderId: orderId,
+                                            transactionId: null,
+                                            addressId: data.addressId ? data.addressId : "null",
+                                            deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                            estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                            // totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "00",
+                                            color: value.color,
+                                            size: value.size,
+                                            material: value.material,
+                                            totalAmountPaid: value.totalAmountPaid
+                                        }
                                     }
+                                    var place = new orderPlaced(query)
+                                    place.save(query, (err, result) => {
+                                        if (err) {
+                                            callback(null)
+                                        }
+                                        else if (result) {
+                                            callback(null, result)
+                                        }
+                                        else {
+                                            callback(null)
+                                        }
+                                    })
                                 }
-                            }, { new: true, lean: true }, (err, orderPlaced) => {
-                                if (err) {
-                                    callback(null)
-                                }
-                                else if (orderPlaced) {
-                                    callback(null, orderPlaced)
-                                }
-                                else {
-                                    callback(null)
-                                }
+                                // //!!! delete in addtocart
+                                // commonAPI.deleteCart(userId, productId)
+                                // //!
                             })
-                        }
-                        else {
-                            log('not exist')
-                            let query = {
-                                userId: userId,
-                                orderPlacedDescription: {
-                                    sellerId: value.sellerId,
-                                    productId: value.productId,
-                                    // varianceId: data.varianceId ? data.varianceId : null,
-                                    orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                                    orderStatus: "PENDING",
-                                    productQuantity: value.productQuantity ? value.productQuantity : 1,
-                                    orderId: orderId,
-                                    transactionId: null,
-                                    addressId: data.addressId ? data.addressId : "null",
-                                    deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
-                                    estimateTax: value.estimateTax ? value.estimateTax : "00",
-                                    // totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "00",
-                                    color: value.color,
-                                    size: value.size,
-                                    material: value.material,
-                                    totalAmountPaid: value.totalAmountPaid
-                                }
+                        }, (err, result) => {
+                            if (err) cb(null)
+                            else {
+                                cb(null, result)
                             }
-                            var place = new orderPlaced(query)
-                            place.save(query, (err, result) => {
-                                if (err) {
-                                    callback(null)
-                                }
-                                else if (result) {
-                                    callback(null, result)
-                                }
-                                else {
-                                    callback(null)
-                                }
-                            })
-                        }
-                        // //!!! delete in addtocart
-                        // commonAPI.deleteCart(userId, productId)
-                        // //!
+                        })
                     })
-                }, (err, result) => {
-                    if (err) cb(null)
+                }
+            }, (err, response) => {
+                bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
+                    if (err) {
+                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                    }
                     else {
-                        cb(null, result)
+                        callback({
+                            "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                            "orderId": 'ORD' + orderId,
+                            "orderPayment": data.orderPayment
+                        })
                     }
                 })
             })
         }
-    }, (err, response) => {
-        bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
-            if (err) {
-                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-            }
-            else {
-                callback({
-                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
-                    "orderId": 'ORD' + orderId,
-                    "orderPayment": data.orderPayment
-                })
-            }
-        })
     })
 }
 /********************************************************************
@@ -3440,6 +3450,7 @@ physicalStore = (data, headers, callback) => {
 ***********************************************************************/
 listOfAddCart = (data, headers, callback) => {
     log("list of cart", data, headers)
+    let inStockBag = true
     var userId
     commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
@@ -3520,9 +3531,11 @@ listOfAddCart = (data, headers, callback) => {
                     inStock: parseFloat(varianceValue.variants[0].quantity) >= parseFloat(value.productQuantity) ? true : false,
                     inStockQuantity: parseInt(varianceValue.variants[0].quantity)
                 }
+                if (temp.inStock == false) {
+                    inStockBag = false
+                }
                 // totalPrice = totalPrice + parseInt(varianceValue.variants[0].price)
                 // await main.push(temp)
-
                 totalPrice = totalPrice + (parseInt(varianceValue.variants[0].price) * parseInt(value.productQuantity))
                 await main.push(temp)
 
@@ -3544,6 +3557,7 @@ listOfAddCart = (data, headers, callback) => {
             }
             res.address = address
             res.payment = payment
+            res.inStockBag = inStockBag
             if (main.length == 0) {
 
                 // delete res.productDetail
