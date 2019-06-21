@@ -1501,7 +1501,7 @@ productDetails = (data, callback) => {
                             specifications: response.findProduct.specifications[0],
                             productTry: response.findProduct.productTry,
                             tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
-                            inStock: test.quantity > 0 ? true : false,
+                            inStock: parseInt(response.findProduct.quantity) > 0 ? true : false,
                             variants: {},
                             color: [],
                             material: [],
@@ -1531,7 +1531,7 @@ productDetails = (data, callback) => {
                                 description: response.findProduct.description,
                                 specifications: response.findProduct.specifications[0],
                                 productTry: response.findProduct.productTry,
-                                inStock: parseInt(response.findProduct.varianceId.variants[0]).quantity >= 0 ? true : false,
+                                inStock: parseInt(response.findProduct.varianceId.variants[0].quantity) > 0 ? true : false,
                                 tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
                                 price: test.price ? response.findProduct.varianceId.variants[0].price : '',
                                 image: response.findProduct.varianceId.variants[0].image ? response.findProduct.varianceId.variants[0].image : [],
@@ -1558,7 +1558,7 @@ productDetails = (data, callback) => {
                     res.similarProduct = response.getSimilarProduct
                     // console.log(res)
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
-                    commonAPI.updateViewer(data,(err,response)=>{
+                    commonAPI.updateViewer(data, (err, response) => {
                         // console.log(err,response)
                     })
                 }
@@ -3448,30 +3448,30 @@ listOfAddCart = (data, headers, callback) => {
     async.parallel({
         bagDetails: (cb) => {
             bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) })
-            .populate({ path: 'userId' }).populate({
-                path: 'orderDescription.productId',
-                populate: [{
-                    path: 'varianceId',
+                .populate({ path: 'userId' }).populate({
+                    path: 'orderDescription.productId',
+                    populate: [{
+                        path: 'varianceId',
+                    },
+                    {
+                        path: 'brandId',
+                    }],
                 },
-                {
-                    path: 'brandId',
-                }],
-            },
-            ).lean().exec((err, result) => {
-                if (err || !result) {
-                    let res = {}
-                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.LIST_EMPTY[data.lang], 'result': res })
-                }
-                else {
-                    cb(null, result)
-                }
-            })
+                ).lean().exec((err, result) => {
+                    if (err || !result) {
+                        let res = {}
+                        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.LIST_EMPTY[data.lang], 'result': res })
+                    }
+                    else {
+                        cb(null, result)
+                    }
+                })
         }
     }, (err, response) => {
         // console.log(response.bagDetails.userId)
         var address = response.bagDetails.userId.address
-        address=address.filter(e=>{
-            if(e.status=="ACTIVE"){
+        address = address.filter(e => {
+            if (e.status == "ACTIVE") {
                 return true
             }
         })
