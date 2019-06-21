@@ -401,8 +401,8 @@ let statusMessage = {
         ar: "your address is deleted"
     },
     OUT_OF_STOCK: {
-        en: "Some item not in stock please remove it before checkout",
-        ar: "Some item not in stock please remove it before checkout"
+        en: "Some items are not in stock please remove it before checkout",
+        ar: "Some items are not in stock please remove it before checkout"
     },
     TITLE: {
 

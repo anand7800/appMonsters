@@ -3186,7 +3186,7 @@ checkoutOrder = (data, headers, callback) => {
                                                 productId: value.productId,
                                                 // varianceId: data.varianceId ? data.varianceId : null,
                                                 orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                                                orderStatus: "PENDING",
+                                                orderStatus: "PLACED",
                                                 productQuantity: value.productQuantity ? value.productQuantity : 1,
                                                 orderId: orderId,
                                                 transactionId: null,
@@ -3222,7 +3222,7 @@ checkoutOrder = (data, headers, callback) => {
                                             productId: value.productId,
                                             // varianceId: data.varianceId ? data.varianceId : null,
                                             orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                                            orderStatus: "PENDING",
+                                            orderStatus: "PLACED",
                                             productQuantity: value.productQuantity ? value.productQuantity : 1,
                                             orderId: orderId,
                                             transactionId: null,
@@ -3262,18 +3262,22 @@ checkoutOrder = (data, headers, callback) => {
                     })
                 }
             }, (err, response) => {
-                bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
-                    if (err) {
-                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                    }
-                    else {
-                        callback({
-                            "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
-                            "orderId": 'ORD' + orderId,
-                            "orderPayment": data.orderPayment
-                        })
-                    }
+
+                callback({
+                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                    "orderId": 'ORD' + orderId,
+                    "orderPayment": data.orderPayment
                 })
+                if (data.orderPayment == "ONLINE") {
+                    bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
+                        if (err) {
+                            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                        }
+                        else {
+                            console.log("---------delete bag------->>>",result)
+                        }
+                    })
+                }
             })
         }
     })
