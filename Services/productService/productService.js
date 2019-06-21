@@ -1521,7 +1521,7 @@ productDetails = (data, callback) => {
                             if (test.color != "") color.push(test.color)
                             if (test.material != "") material.push(test.material)
                             if (test.size != "") size.push(test.size)
-                            console.log('---------->', _.uniq(size))
+                            // console.log('---------->', _.uniq(size))
                             // console.log('into the looop', test)
                             let data = {
                                 _id: response.findProduct._id,
@@ -1531,7 +1531,7 @@ productDetails = (data, callback) => {
                                 description: response.findProduct.description,
                                 specifications: response.findProduct.specifications[0],
                                 productTry: response.findProduct.productTry,
-                                inStock: test.quantity > 0 ? true : false,
+                                inStock: parseInt(response.findProduct.varianceId.variants[0]).quantity >= 0 ? true : false,
                                 tryImage: response.findProduct.tryImage ? response.findProduct.tryImage : "",
                                 price: test.price ? response.findProduct.varianceId.variants[0].price : '',
                                 image: response.findProduct.varianceId.variants[0].image ? response.findProduct.varianceId.variants[0].image : [],
@@ -1558,6 +1558,9 @@ productDetails = (data, callback) => {
                     res.similarProduct = response.getSimilarProduct
                     // console.log(res)
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
+                    // commonAPI.updateViewer(data,(err,response)=>{
+                    //     console.log(err,response)
+                    // })
                 }
                 else {
                     console.log("###############errrorr#####################################3")

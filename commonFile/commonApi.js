@@ -568,7 +568,25 @@ changeNotification = (data, callback) => {
         callback(null, success)
     })
 }
+//Update viewer by their device id on product details
+updateViewer = (data, callback) => {
 
+    console.log("=====update device======>>>", data)
+    if (data._id && data.deviceType) {
+
+        let query = {
+            _id: mongoose.Types.ObjectId(data._id)
+        }
+        let update = {
+            $push: {
+                viewBydevice: data.deviceTyt
+            }
+        }
+        brandDescriptionL4.findByIdAndUpdate(query, update, { new: true }).exec((err, Response) => {
+            callback(err, Response)
+        })
+    }
+}
 module.exports = {
     deleteCart,
     findProduct,
@@ -591,6 +609,7 @@ module.exports = {
     getUsername,
     getUserDetail,
     notify,
-    changeNotification
+    changeNotification,
+    updateViewer
 
 }

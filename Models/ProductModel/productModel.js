@@ -6,7 +6,7 @@ var brandDescription = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'productcategory'
     },
-    staffId:{
+    staffId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'login'
     },
@@ -32,9 +32,9 @@ var brandDescription = mongoose.Schema({
         type: String,
         default: null
     },
-    summary:{
-        type:String,
-        default:null
+    summary: {
+        type: String,
+        default: null
     },
     sellingPrice: {
         type: String,
@@ -105,6 +105,11 @@ var brandDescription = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    viewBydevice: {
+        type:Array,
+        default:[]
+    },
+
     status: {
         type: String,
         enum: ["ACTIVE", "INACTIVE", "REJECTED"],
