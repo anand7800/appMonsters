@@ -85,21 +85,78 @@ app.get('/blixr*', (req, res) => {
 
 /* payment  testing start*/
 
-// console.log(configJson.payTabs.secret_key)
-// paytabs.validateSecretKey({
-//     'merchant_email': configJson.payTabs.email,
-//     'secret_key': configJson.payTabs.secret_key,
-// }, validateSecretKey);
+console.log(configJson.payTabs.secret_key)
+paytabs.validateSecretKey({
+    'merchant_email': configJson.payTabs.email,
+    'secret_key': configJson.payTabs.secret_key,
+}, validateSecretKey);
 
-// function validateSecretKey(result) {
-//     if (result.response_code == 4012) {
-//         //Redirect your merchant to the payment link
-//         console.log("2", result.payment_url);
-//     } else {
-//         //Handle the error
-//         console.log("22222222222222222222", result);
-//     }
-// }
+function validateSecretKey(result) {
+    if (result.response_code == 4012) {
+        //Redirect your merchant to the payment link
+        console.log("2", result.payment_url);
+    } else {
+        //Handle the error
+        console.log("22222222222222222222", result);
+    }
+}
+app.get('/payment', (req, res) => {
+    paytabs.createPayPage({
+        'merchant_email': configJson.payTabs.email,
+        'secret_key': configJson.payTabs.secret_key,
+        'currency': 'SAR',//change this to the required currency
+        'amount': '10',//change this to the required amount
+        'site_url': 'www.techugo.com',//change this to reflect your site
+        'title': 'Order for Shoes',//Change this to reflect your order title
+        'quantity': 1,//Quantity of the product
+        'unit_price': 10, //Quantity * price must be equal to amount
+        'products_per_title': 'Shoes', //Change this to your products
+        'return_url': 'www.techugo.com',//This should be your callback url
+        'cc_first_name': 'Samy',//Customer First Name
+        'cc_last_name': 'Saad',//Customer Last Name
+        'cc_phone_number': '00973', //Country code
+        'phone_number': '12332323', //Customer Phone
+        'billing_address': 'Address', //Billing Address
+        'city': 'Manama',//Billing City
+        'state': 'Manama',//Billing State
+        'postal_code': '1234',//Postal Code
+        'country': 'BHR',//Iso 3 country code
+        'email': 'sumit@yopmail.com',//Customer Email
+        'ip_customer': '192.101.101.101',//Pass customer IP here
+        'ip_merchant': '192.101.101.101',//Change this to your server IP
+        'address_shipping': 'Shipping',//Shipping Address
+        'city_shipping': 'Manama',//Shipping City
+        'state_shipping': 'Manama',//Shipping State
+        'postal_code_shipping': '973',
+        'country_shipping': 'BHR',
+        'other_charges': 0,//Other chargs can be here
+        'reference_no': 1234,//Pass the order id on your system for your reference
+        'msg_lang': 'en',//The language for the response
+        'cms_with_version': 'Nodejs Lib v1',//Feel free to change this
+    }, createPayPage);
+
+    function createPayPage(result) {
+        if (result.response_code == 4012) {
+            //Redirect your merchant to the payment link
+            console.log(result);
+            res.json(result)
+        } else {
+            //Handle the error
+            res.json(result)
+        }
+    }
+})
+app.get('/verifyPayment/:data', (req, res) => {
+    paytabs.verifyPayment({
+        'merchant_email': configJson.payTabs.email,
+        'secret_key': configJson.payTabs.secret_key,
+        'payment_reference': req.params.data
+    }, verifyPayment);
+
+    function verifyPayment(result) {
+        res.json(result)
+    }
+})
 
 
 /* payment  testing end */
@@ -1208,8 +1265,8 @@ app.post('/userConversationList', function (req, res) {
                                                                 unreadMessages: unreadMessages,
                                                                 orderId: chatResult.orderId ? chatResult.orderId : ''
                                                             });
-                                                            console.log('-------->>',userList)
-                                                            
+                                                            console.log('-------->>', userList)
+
                                                         }
                                                         // return
                                                         // console.log("naveen====>>>", userList)
