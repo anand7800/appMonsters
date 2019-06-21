@@ -579,7 +579,7 @@ updateViewer = (data, callback) => {
         }
         let update = {
             $push: {
-                viewBydevice: data.deviceTyt
+                viewBydevice: parseInt(data.deviceType)
             }
         }
         brandDescriptionL4.findByIdAndUpdate(query, update, { new: true }).exec((err, Response) => {

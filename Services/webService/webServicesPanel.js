@@ -48,7 +48,7 @@ dashboardGraph = (data, header, callback) => {
 
     console.log(data);
 
-    let userId 
+    let userId
     if (header.accesstoken) {
 
         commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
@@ -95,39 +95,88 @@ dashboardGraph = (data, header, callback) => {
         let mainArr = []
         console.log(err, response)
         let orderList = []
-        let month_array=[1,2,3,4,5,6,7,8,9,10,11,12]
+        let month_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
         var month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        
+
         if (response.length > 0) {
             response.forEach(element => {
                 let temp = {
-                    createdAt: new Date(element._id.createdAt).getMonth()+1,
+                    createdAt: new Date(element._id.createdAt).getMonth() + 1,
                     amountPaid: parseInt(element._id.totalAmountPaid == '' ? 0 : element._id.totalAmountPaid)
                 }
                 orderList.push(temp)
             });
             //Lopp
-            month_array.forEach(ele =>{
-            let amount = 0;
-                orderList.forEach(ele1 =>{
-                    if(ele == ele1.createdAt){
-                           amount = amount + ele1.amountPaid
+            month_array.forEach(ele => {
+                let amount = 0;
+                orderList.forEach(ele1 => {
+                    if (ele == ele1.createdAt) {
+                        amount = amount + ele1.amountPaid
                     }
-                    else{
+                    else {
                         amount = amount
-                     }
-                }) 
+                    }
+                })
                 mainArr.push(amount)
             })
         }
-        callback({"statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],value:mainArr,month:month})
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], value: mainArr, month: month })
         // callback(orderList)
     })
 }
 
+viewerGraph = (data, header, callback) => {
+    let userId ;
+    let android = [], IOS = [], WEB = []
+    if (header.accesstoken) {
 
+        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+            console.log(err,decodeId)
+            if (err) throw err
+            else {
+                userId = decodeId
+            }
+        })
+    }
+    else {
+        callback({
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+        })
+        return
+    }
+    let query = {
+        sellerId: mongoose.Types.ObjectId(userId)
+    }
+    productModel.find(query, { viewBydevice: 1 }).exec((err, response) => {
+        if (err || response.length == 0) {
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+        }
+        else {
+
+            response.forEach(element => {
+                element.viewBydevice.filter(viewer => {
+
+                    if (viewer == 1)
+                        android.push(viewer)
+                    else if (viewer == 2)
+                        IOS.push(viewer)
+                    else if (viewer == 3)
+                    WEB.push(viewer)
+                })
+            })
+
+            let result = {
+                IOS: IOS.length,
+                android: android.length,
+                WEB: WEB.length
+            }
+
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
+        }
+    })
+}
 
 module.exports = {
     dashboardGraph,
-
+    viewerGraph
 }

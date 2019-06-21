@@ -1558,9 +1558,9 @@ productDetails = (data, callback) => {
                     res.similarProduct = response.getSimilarProduct
                     // console.log(res)
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
-                    // commonAPI.updateViewer(data,(err,response)=>{
-                    //     console.log(err,response)
-                    // })
+                    commonAPI.updateViewer(data,(err,response)=>{
+                        // console.log(err,response)
+                    })
                 }
                 else {
                     console.log("###############errrorr#####################################3")

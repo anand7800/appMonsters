@@ -11,6 +11,10 @@ webRouter.post('/dashboardGraph', (req, res) => {
     })
 })
 
-
+webRouter.get('/viewerGraph', (req, res) => {
+    webHandler.viewerGraph(req.query,req.headers, (data) => {
+        res.send(data)
+    })
+})
 
 module.exports = webRouter;
