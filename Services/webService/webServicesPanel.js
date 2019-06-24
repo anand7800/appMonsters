@@ -381,7 +381,7 @@ checkoutOrder = (data, headers, callback) => {
                         'cms_with_version': 'Nodejs Lib v1',//Feel free to change this
                     }, createPayPage);
                     function createPayPage(result) {
-                        if (result.response_code == 4012) {
+                       
                             //Redirect your merchant to the payment link
                             callback({
                                 "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
@@ -390,9 +390,7 @@ checkoutOrder = (data, headers, callback) => {
                                 "Payment":result
                             })
                             return
-                        } else {
-                            //Handle the error
-                        }
+                   
                     }
                 }
             })
