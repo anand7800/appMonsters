@@ -2743,11 +2743,13 @@ placeOrder = (data, headers, callback) => {
                     stock: (parseInt(response.getProdctdetail.variants[0].quantity) - parseInt(data.productQuantity)).toString(),
                     lang: "en"
                 }
-
-                adminService.updateVarianceStock(temp, (err, response) => {
-                    console.log(err, response)
-                })
-                //!
+                /* decreament quantity on main model */
+                if (orderPayment == 'COD') {
+                    adminService.updateVarianceStock(temp, (err, response) => {
+                        console.log(err, response)
+                    })
+                }
+                
             })
 
 
@@ -3162,7 +3164,7 @@ checkoutOrder = (data, headers, callback) => {
     })
 
     listOfAddCart(data, headers, (result) => {
-        // console.log(err,result)
+
         if (result.result.inStockBag == false) {
             callback({ "statusCode": util.statusCode.OUT_OF_STOCK, "statusMessage": util.statusMessage.OUT_OF_STOCK[data.lang], result: result.result })
             return
@@ -3274,7 +3276,7 @@ checkoutOrder = (data, headers, callback) => {
                             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                         }
                         else {
-                            console.log("---------delete bag------->>>",result)
+                            console.log("---------delete bag------->>>", result)
                         }
                     })
                 }
@@ -4651,14 +4653,6 @@ orderPayment = (data, header, callback) => {
     }
     else {
         data.orderId = data.orderId.slice(3)
-        // let notifyData = {
-        //     msg: util.statusMessage.ORDER_PLACED[data.lang],
-        //     productId: data.productId,
-        //     orderId: "ORD" + orderId,
-        //     title: util.statusMessage.TITLE.PLACED[data.lang],
-        //     type: util.statusMessage.type.PLACED[data.lang],
-        //     // orderId: orderId
-        // }
         async.parallel({
             changeStatus: (cb) => {
                 console.log("grdghfcmhsdcg")
@@ -4670,24 +4664,20 @@ orderPayment = (data, header, callback) => {
                             'orderPlacedDescription.$.orderPayment': data.status
                         }
                     }, { new: true }).exec((err, result) => {
-
+                        console.log('===========>>>',err,result)
                         if (err)
                             cb(null)
                         else {
                             cb(null, result)
                         }
                     })
-
             }
-
-
         }, (err, response) => {
             if (true) {
                 callback({
                     "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PAYMENT_DONE[data.lang]
                 })
             }
-
         })
     }
 }
