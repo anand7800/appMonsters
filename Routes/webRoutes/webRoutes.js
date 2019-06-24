@@ -29,7 +29,11 @@ webRouter.post('/checkoutOrder',authHandler.verifyToken, (req, res) => {
         res.send(data)
     })
 })
-
+webRouter.post('/verifyPayment',authHandler.verifyToken, (req, res) => {
+    webHandler.verifyPayment(req.body, (data) => {
+        res.send(data)
+    })
+})
 
 
 module.exports = webRouter;

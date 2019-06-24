@@ -38,8 +38,9 @@ const _ = require('lodash');
 var qr = require('qr-image');
 const today = moment().startOf('day')
 var Promise = require('promise');
-paytabs = require('paytabs_api'),
-    configJson = require('../../config/config');
+const paytabs = require('paytabs_api'),
+    configJson = require('../../config/config'),
+    productService=require('../productService/productService');
 
 /* ************************************
 *************api's start here***********************
@@ -381,25 +382,51 @@ checkoutOrder = (data, headers, callback) => {
                         'cms_with_version': 'Nodejs Lib v1',//Feel free to change this
                     }, createPayPage);
                     function createPayPage(result) {
-                       
-                            //Redirect your merchant to the payment link
-                            callback({
-                                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
-                                "orderId": 'ORD' + orderId,
-                                "orderPayment": data.orderPayment,
-                                "Payment":result
-                            })
-                            return
-                   
+
+                        //Redirect your merchant to the payment link
+                        callback({
+                            "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                            "orderId": 'ORD' + orderId,
+                            "orderPayment": data.orderPayment,
+                            "Payment": result
+                        })
+                        return
+
                     }
                 }
             })
         }
     })
 }
+
+
+verifyPayment = (data,headers ,callback) => {
+    if (!data.orderId || !data.status ||!data.transactionId ) {
+        callback({
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+        })
+        return
+    }
+    paytabs.verifyPayment({
+        'merchant_email': configJson.payTabs.email,
+        'secret_key': configJson.payTabs.secret_key,
+        'payment_reference': data.pId
+    }, verifyPayment);
+
+    function verifyPayment(result) {
+        console.log("verfiy payment--->",result)
+        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PAYMENT_DONE[data.lang], result: result })
+
+        productService.orderPayment(data,headers,(err,result)=>{
+            console.log("orderpayment status",err,result)
+        })
+    }
+
+}
 module.exports = {
     dashboardGraph,
     viewerGraph,
     filterWeb,
-    checkoutOrder
+    checkoutOrder,
+    verifyPayment
 }

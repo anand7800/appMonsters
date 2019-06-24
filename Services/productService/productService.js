@@ -4640,7 +4640,7 @@ uploadImage1 = (data, callback) => {
 // orderpAyment this api for after payment success 
 orderPayment = (data, header, callback) => {
     console.log(data, header)
-    if (!data.orderId || !data.status || !data.orderId) {
+    if (!data.orderId || !data.status ) {
         callback({
             "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
