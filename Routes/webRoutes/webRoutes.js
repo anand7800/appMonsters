@@ -30,7 +30,7 @@ webRouter.post('/checkoutOrder',authHandler.verifyToken, (req, res) => {
     })
 })
 webRouter.post('/verifyPayment',authHandler.verifyToken, (req, res) => {
-    webHandler.verifyPayment(req.body, (data) => {
+    webHandler.verifyPayment(req.body,req.headers, (data) => {
         res.send(data)
     })
 })

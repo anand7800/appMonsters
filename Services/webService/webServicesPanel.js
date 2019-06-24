@@ -347,7 +347,7 @@ checkoutOrder = (data, headers, callback) => {
                     })
                     return
                 }
-                else if (data.totalAmountPaid && data.orderPayment == 'ONLINE') {
+                else if (data.totalAmountPaid && data.orderPayment == 'PENDING') {
                     paytabs.createPayPage({
                         'merchant_email': configJson.payTabs.email,
                         'secret_key': configJson.payTabs.secret_key,
@@ -358,7 +358,7 @@ checkoutOrder = (data, headers, callback) => {
                         'quantity': 1,//Quantity of the product
                         'unit_price': data.totalAmountPaid, //Quantity * price must be equal to amount
                         'products_per_title': 'Shoes', //Change this to your products
-                        'return_url': 'www.techugo.com',//This should be your callback url
+                        'return_url': 'https://waki.store/shop/cart',//This should be your callback url
                         'cc_first_name': 'Samy',//Customer First Name
                         'cc_last_name': 'Saad',//Customer Last Name
                         'cc_phone_number': '00973', //Country code
