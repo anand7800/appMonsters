@@ -358,8 +358,8 @@ checkoutOrder = (data, headers, callback) => {
                         'quantity': 1,//Quantity of the product
                         'unit_price': data.totalAmountPaid, //Quantity * price must be equal to amount
                         'products_per_title': 'Shoes', //Change this to your products
-                        // 'return_url': 'https://waki.store/shop/payment',//This should be your callback url
-                        'return_url':'localhost:4200/payment',
+                        'return_url': 'https://waki.store/shop/payment',//This should be your callback url
+                        // 'return_url':'localhost:4200/payment',
                         'cc_first_name': 'Samy',//Customer First Name
                         'cc_last_name': 'Saad',//Customer Last Name
                         'cc_phone_number': '00973', //Country code
