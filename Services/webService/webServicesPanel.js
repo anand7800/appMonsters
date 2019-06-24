@@ -126,12 +126,12 @@ dashboardGraph = (data, header, callback) => {
 }
 
 viewerGraph = (data, header, callback) => {
-    let userId ;
+    let userId;
     let android = [], IOS = [], WEB = []
     if (header.accesstoken) {
 
         commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-            console.log(err,decodeId)
+            console.log(err, decodeId)
             if (err) throw err
             else {
                 userId = decodeId
@@ -161,7 +161,7 @@ viewerGraph = (data, header, callback) => {
                     else if (viewer == 2)
                         IOS.push(viewer)
                     else if (viewer == 3)
-                    WEB.push(viewer)
+                        WEB.push(viewer)
                 })
             })
 
@@ -176,7 +176,56 @@ viewerGraph = (data, header, callback) => {
     })
 }
 
+
+filterWeb = (data, callback) => {
+    console.log("incoming data ===>", data)
+    async.parallel({
+        getProduct: (cb) => {
+            let query = {
+
+                $and: [
+                    {
+                        $or: [
+                            { brandId: { $in: data.brandId } },
+                            { categoryModel: { $in: data.categoryId } },
+                        ]
+                    },
+                    { status: 'ACTIVE' }
+                ]
+            }
+            productModel.find(query).populate('varianceId brandId').exec((err, result) => {
+                console.log(err, result)
+                cb(null, result)
+            })
+        }
+
+    }, (err, response) => {
+        let mainArray = [];
+        if (response.getProduct.length > 0) {
+            response.getProduct.forEach(element => {
+                let temp = {
+                    "description": element.description,
+                    "image": element.varianceId.variants.length > 0 ? element.varianceId.variants[0].image :element.image,
+                    "_id": element._id,
+                    "brand": element.brandId.brandName,
+                    "productName": element.productName,
+                    "price":element.varianceId.variants.length > 0 ? element.varianceId.variants[0].price : element.price,
+                    "status": element.status
+                }
+                mainArray.push(temp)
+            })
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], result: mainArray })
+            return
+        }
+        else {
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+            return
+        }
+    })
+
+}
 module.exports = {
     dashboardGraph,
-    viewerGraph
+    viewerGraph,
+    filterWeb
 }
