@@ -38,6 +38,8 @@ const _ = require('lodash');
 var qr = require('qr-image');
 const today = moment().startOf('day')
 var Promise = require('promise');
+paytabs = require('paytabs_api'),
+    configJson = require('../../config/config');
 
 /* ************************************
 *************api's start here***********************
@@ -205,11 +207,11 @@ filterWeb = (data, callback) => {
             response.getProduct.forEach(element => {
                 let temp = {
                     "description": element.description,
-                    "image": element.varianceId.variants.length > 0 ? element.varianceId.variants[0].image :element.image,
+                    "image": element.varianceId.variants.length > 0 ? element.varianceId.variants[0].image : element.image,
                     "_id": element._id,
                     "brand": element.brandId.brandName,
                     "productName": element.productName,
-                    "price":element.varianceId.variants.length > 0 ? element.varianceId.variants[0].price : element.price,
+                    "price": element.varianceId.variants.length > 0 ? element.varianceId.variants[0].price : element.price,
                     "status": element.status
                 }
                 mainArray.push(temp)
@@ -222,10 +224,184 @@ filterWeb = (data, callback) => {
             return
         }
     })
+}
 
+checkoutOrder = (data, headers, callback) => {
+    console.log('api is hitted', data)
+    var userId
+
+    var orderId = commonFunction.generateOrderId(6)
+    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+        userId = result
+    })
+
+    listOfAddCart(data, headers, (result) => {
+
+        if (result.result.inStockBag == false) {
+            callback({ "statusCode": util.statusCode.OUT_OF_STOCK, "statusMessage": util.statusMessage.OUT_OF_STOCK[data.lang], result: result.result })
+            return
+        }
+        else {
+            async.parallel({
+                checkoutOrder: (cb) => {
+                    bagModel.findOne({ userId: userId }, (err, result) => {
+                        async.forEachOf(result.orderDescription, (value, key, callback) => {
+                            orderPlaced.findOne({ userId: userId }, (err, userFind) => {
+                                if (err) {
+                                    callback(null)
+                                }
+                                else if (userFind) {
+                                    orderPlaced.findOneAndUpdate({ userId: userId }, {
+                                        $push: {
+                                            orderPlacedDescription: {
+                                                sellerId: value.sellerId,
+                                                productId: value.productId,
+                                                orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                                orderStatus: "PLACED",
+                                                productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                                orderId: orderId,
+                                                transactionId: null,
+                                                addressId: data.addressId ? data.addressId : "null",
+                                                deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                                estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                                // totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "00",
+                                                color: value.color,
+                                                size: value.size,
+                                                material: value.material,
+                                                totalAmountPaid: value.totalAmountPaid
+
+                                            }
+                                        }
+                                    }, { new: true, lean: true }, (err, orderPlaced) => {
+                                        if (err) {
+                                            callback(null)
+                                        }
+                                        else if (orderPlaced) {
+                                            callback(null, orderPlaced)
+                                        }
+                                        else {
+                                            callback(null)
+                                        }
+                                    })
+                                }
+                                else {
+                                    log('not exist')
+                                    let query = {
+                                        userId: userId,
+                                        orderPlacedDescription: {
+                                            sellerId: value.sellerId,
+                                            productId: value.productId,
+                                            orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                            orderStatus: "PLACED",
+                                            productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                            orderId: orderId,
+                                            transactionId: null,
+                                            addressId: data.addressId ? data.addressId : "null",
+                                            deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                            estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                            color: value.color,
+                                            size: value.size,
+                                            material: value.material,
+                                            totalAmountPaid: value.totalAmountPaid
+                                        }
+                                    }
+                                    var place = new orderPlaced(query)
+                                    place.save(query, (err, result) => {
+                                        if (err) {
+                                            callback(null)
+                                        }
+                                        else if (result) {
+                                            callback(null, result)
+                                        }
+                                        else {
+                                            callback(null)
+                                        }
+                                    })
+                                }
+                            })
+                        }, (err, result) => {
+                            if (err) cb(null)
+                            else {
+                                cb(null, result)
+                            }
+                        })
+                    })
+                }
+            }, (err, response) => {
+                console.log("------------->>", err, response)
+
+                if (data.orderPayment == "COD") {
+                    bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
+                        if (err) {
+                            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                        }
+                        else {
+                            console.log("---------delete bag------->>>", result)
+                        }
+                    })
+                    callback({
+                        "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                        "orderId": 'ORD' + orderId,
+                        "orderPayment": data.orderPayment
+                    })
+                    return
+                }
+                else if (data.totalAmountPaid && data.orderPayment == 'ONLINE') {
+                    paytabs.createPayPage({
+                        'merchant_email': configJson.payTabs.email,
+                        'secret_key': configJson.payTabs.secret_key,
+                        'currency': 'SAR',//change this to the required currency
+                        'amount': data.totalAmountPaid,//change this to the required amount
+                        'site_url': 'www.techugo.com',//change this to reflect your site
+                        'title': 'Order for Shoes',//Change this to reflect your order title
+                        'quantity': 1,//Quantity of the product
+                        'unit_price': data.totalAmountPaid, //Quantity * price must be equal to amount
+                        'products_per_title': 'Shoes', //Change this to your products
+                        'return_url': 'www.techugo.com',//This should be your callback url
+                        'cc_first_name': 'Samy',//Customer First Name
+                        'cc_last_name': 'Saad',//Customer Last Name
+                        'cc_phone_number': '00973', //Country code
+                        'phone_number': '12332323', //Customer Phone
+                        'billing_address': 'Address', //Billing Address
+                        'city': 'Manama',//Billing City
+                        'state': 'Manama',//Billing State
+                        'postal_code': '1234',//Postal Code
+                        'country': 'BHR',//Iso 3 country code
+                        'email': 'sumit@yopmail.com',//Customer Email
+                        'ip_customer': '192.101.101.101',//Pass customer IP here
+                        'ip_merchant': '192.101.101.101',//Change this to your server IP
+                        'address_shipping': 'Shipping',//Shipping Address
+                        'city_shipping': 'Manama',//Shipping City
+                        'state_shipping': 'Manama',//Shipping State
+                        'postal_code_shipping': '973',
+                        'country_shipping': 'BHR',
+                        'other_charges': 0,//Other chargs can be here
+                        'reference_no': 1234,//Pass the order id on your system for your reference
+                        'msg_lang': 'en',//The language for the response
+                        'cms_with_version': 'Nodejs Lib v1',//Feel free to change this
+                    }, createPayPage);
+                    function createPayPage(result) {
+                        if (result.response_code == 4012) {
+                            //Redirect your merchant to the payment link
+                            callback({
+                                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                "orderId": 'ORD' + orderId,
+                                "orderPayment": data.orderPayment,
+                                "Payment":result
+                            })
+                            return
+                        } else {
+                            //Handle the error
+                        }
+                    }
+                }
+            })
+        }
+    })
 }
 module.exports = {
     dashboardGraph,
     viewerGraph,
-    filterWeb
+    filterWeb,
+    checkoutOrder
 }

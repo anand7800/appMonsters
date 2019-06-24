@@ -23,7 +23,8 @@ var Room = require('../../Models/userModel/room.js');
 var User = require('../../Models/userModel/chatUser.js');
 var urlMedia = require('../../Models/userModel/chatUrl.js');
 
-//
+const configJson = require('../../config/config');
+
 const reviewRatingModel = require('../../Models/ProductModel/reviewRatingModel')
 const notificationModel = require('../../Models/userModel/userNotification')
 const moment = require('moment')
@@ -38,6 +39,7 @@ const _ = require('lodash');
 var qr = require('qr-image');
 const today = moment().startOf('day')
 var Promise = require('promise');
+paytabs = require('paytabs_api'),
 /* ************************************
 *************add category***********************
 ************************************ */
@@ -3156,6 +3158,7 @@ compareProduct = (data, callback) => {
 checkoutOrder = (data, headers, callback) => {
     console.log('api is hitted', data)
 
+
     var userId
 
     var orderId = commonFunction.generateOrderId(6)
@@ -3174,19 +3177,16 @@ checkoutOrder = (data, headers, callback) => {
                 checkoutOrder: (cb) => {
                     bagModel.findOne({ userId: userId }, (err, result) => {
                         async.forEachOf(result.orderDescription, (value, key, callback) => {
-                            console.log("value ,453534535345", value)
                             orderPlaced.findOne({ userId: userId }, (err, userFind) => {
                                 if (err) {
                                     callback(null)
                                 }
                                 else if (userFind) {
-                                    console.log("user is find")
                                     orderPlaced.findOneAndUpdate({ userId: userId }, {
                                         $push: {
                                             orderPlacedDescription: {
                                                 sellerId: value.sellerId,
                                                 productId: value.productId,
-                                                // varianceId: data.varianceId ? data.varianceId : null,
                                                 orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
                                                 orderStatus: "PLACED",
                                                 productQuantity: value.productQuantity ? value.productQuantity : 1,
@@ -3222,7 +3222,6 @@ checkoutOrder = (data, headers, callback) => {
                                         orderPlacedDescription: {
                                             sellerId: value.sellerId,
                                             productId: value.productId,
-                                            // varianceId: data.varianceId ? data.varianceId : null,
                                             orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
                                             orderStatus: "PLACED",
                                             productQuantity: value.productQuantity ? value.productQuantity : 1,
@@ -3231,7 +3230,6 @@ checkoutOrder = (data, headers, callback) => {
                                             addressId: data.addressId ? data.addressId : "null",
                                             deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
                                             estimateTax: value.estimateTax ? value.estimateTax : "00",
-                                            // totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "00",
                                             color: value.color,
                                             size: value.size,
                                             material: value.material,
@@ -3251,9 +3249,6 @@ checkoutOrder = (data, headers, callback) => {
                                         }
                                     })
                                 }
-                                // //!!! delete in addtocart
-                                // commonAPI.deleteCart(userId, productId)
-                                // //!
                             })
                         }, (err, result) => {
                             if (err) cb(null)
@@ -3264,13 +3259,13 @@ checkoutOrder = (data, headers, callback) => {
                     })
                 }
             }, (err, response) => {
-
+                console.log("------------->>",err,response)
                 callback({
                     "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
                     "orderId": 'ORD' + orderId,
                     "orderPayment": data.orderPayment
                 })
-                if (data.orderPayment == "ONLINE") {
+                if (data.orderPayment == "COD") {
                     bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
                         if (err) {
                             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })

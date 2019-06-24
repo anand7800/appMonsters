@@ -23,5 +23,13 @@ webRouter.post('/filterWeb', (req, res) => {
         res.send(data)
     })
 })
+/* checkout for website  */
+webRouter.post('/checkoutOrder',authHandler.verifyToken, (req, res) => {
+    webHandler.checkoutOrder(req.body,req.headers, (data) => {
+        res.send(data)
+    })
+})
+
+
 
 module.exports = webRouter;
