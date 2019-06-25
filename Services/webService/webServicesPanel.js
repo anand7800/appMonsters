@@ -265,12 +265,10 @@ checkoutOrder = (data, headers, callback) => {
                                                 addressId: data.addressId ? data.addressId : "null",
                                                 deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
                                                 estimateTax: value.estimateTax ? value.estimateTax : "00",
-                                                // totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "00",
                                                 color: value.color,
                                                 size: value.size,
                                                 material: value.material,
                                                 totalAmountPaid: value.totalAmountPaid
-
                                             }
                                         }
                                     }, { new: true, lean: true }, (err, orderPlaced) => {
@@ -402,7 +400,7 @@ checkoutOrder = (data, headers, callback) => {
 
 
 verifyPayment = (data,headers ,callback) => {
-    if (!data.orderId || !data.status ||!data.transactionId ) {
+    if (!data.pId ) {
         callback({
             "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
@@ -413,14 +411,13 @@ verifyPayment = (data,headers ,callback) => {
         'secret_key': configJson.payTabs.secret_key,
         'payment_reference': data.pId
     }, verifyPayment);
-
     function verifyPayment(result) {
         console.log("verfiy payment--->",result)
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PAYMENT_DONE[data.lang], result: result })
-
-        productService.orderPayment(data,headers,(err,result)=>{
-            console.log("orderpayment status",err,result)
-        })
+        return
+        // productService.orderPayment(data,headers,(err,result)=>{
+        //     console.log("orderpayment status",err,result)
+        // })
     }
 
 }

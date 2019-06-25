@@ -40,80 +40,80 @@ var qr = require('qr-image');
 const today = moment().startOf('day')
 var Promise = require('promise');
 paytabs = require('paytabs_api'),
-/* ************************************
-*************add category***********************
-************************************ */
+    /* ************************************
+    *************add category***********************
+    ************************************ */
 
-addCategory = (data, callback) => {
-    log("addCategory")
-    if (!data) {
-        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    }
-    else {
-        async.parallel({
-            exist: (cb) => {
-                categoryModelL1.findOne({ categoryName: data.categoryName }, (err, exist) => {
-                    if (err) cb(null)
-                    else if (!exist) cb(null)
-                    else {
-                        cb(null, exist)
-                    }
-                })
-            },
-            uploadIcons: (cb) => {
-                commonFunction.uploadImg(data.icons, (err, icons) => {
-                    if (err) cb(null)
-                    else if (!icons) cb(null)
-                    else cb(null, icons)
-                })
-            },
-            uploadImage: (cb) => {
-                commonFunction.uploadImg(data.image, (err, image) => {
-                    if (err) cb(null)
-                    else if (!image) cb(null)
-                    else cb(null, image)
-                })
-            },
-            findLength: (cb) => {
-                categoryModelL1.find().count().exec((err, result) => {
-                    log(err, result)
-                    if (err) cb(null)
-                    else if (!result) cb(null)
-                    else cb(null, result)
-                })
-            }
-
-        }, (err, response) => {
-            if (err) {
-                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-            }
-            else if (response.exist) {
-                callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
-            }
-            else {
-                log(response.findLength)
-                query = {
-                    'categoryName': data.categoryName,
-                    'icons': response.uploadIcons ? response.uploadIcons : "",
-                    'image': response.uploadImage ? response.uploadImage : "",
-                    'status': "ACTIVE",
-                    'serialNumber': response.findLength
+    addCategory = (data, callback) => {
+        log("addCategory")
+        if (!data) {
+            callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        }
+        else {
+            async.parallel({
+                exist: (cb) => {
+                    categoryModelL1.findOne({ categoryName: data.categoryName }, (err, exist) => {
+                        if (err) cb(null)
+                        else if (!exist) cb(null)
+                        else {
+                            cb(null, exist)
+                        }
+                    })
+                },
+                uploadIcons: (cb) => {
+                    commonFunction.uploadImg(data.icons, (err, icons) => {
+                        if (err) cb(null)
+                        else if (!icons) cb(null)
+                        else cb(null, icons)
+                    })
+                },
+                uploadImage: (cb) => {
+                    commonFunction.uploadImg(data.image, (err, image) => {
+                        if (err) cb(null)
+                        else if (!image) cb(null)
+                        else cb(null, image)
+                    })
+                },
+                findLength: (cb) => {
+                    categoryModelL1.find().count().exec((err, result) => {
+                        log(err, result)
+                        if (err) cb(null)
+                        else if (!result) cb(null)
+                        else cb(null, result)
+                    })
                 }
-                categoryModelL1.create(query, (err, result) => {
-                    if (err)
-                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-                    else if (!result)
-                        callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
-                    else {
-                        // subCategoryModelL2.create({ categoryModel: result._id })
-                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.CATEGORY_ADDED[data.lang], "result": result })
+
+            }, (err, response) => {
+                if (err) {
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+                }
+                else if (response.exist) {
+                    callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
+                }
+                else {
+                    log(response.findLength)
+                    query = {
+                        'categoryName': data.categoryName,
+                        'icons': response.uploadIcons ? response.uploadIcons : "",
+                        'image': response.uploadImage ? response.uploadImage : "",
+                        'status': "ACTIVE",
+                        'serialNumber': response.findLength
                     }
-                })
-            }
-        })
+                    categoryModelL1.create(query, (err, result) => {
+                        if (err)
+                            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+                        else if (!result)
+                            callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
+                        else {
+                            // subCategoryModelL2.create({ categoryModel: result._id })
+                            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.CATEGORY_ADDED[data.lang], "result": result })
+                        }
+                    })
+                }
+            })
+        }
     }
-}
 
 /* ************************************
 *************add Subcategory***********************
@@ -1750,10 +1750,11 @@ getVariance = (data, callback) => {
                     colors: _.uniq(color),
                     size: _.uniq(size),
                     material: _.uniq(material),
-                    inStockQuantity: parseInt(response.varianceDetail.variants[0].quantity)
+                    inStockQuantity: parseInt(response.varianceDetail.variants[0].quantity),
+                    varianceId: response.varianceDetail.variants[0]
                 }
                 res.product = temp
-                console.log("======>", response.varianceDetail)
+                // console.log("======>", response.varianceDetail)
                 res.sellerInfo = {
                     _id: response.varianceDetail.sellerId._id,
                     sellerName: response.varianceDetail.sellerId.firstName,
@@ -2751,7 +2752,7 @@ placeOrder = (data, headers, callback) => {
                         console.log(err, response)
                     })
                 }
-                
+
             })
 
 
@@ -3157,8 +3158,6 @@ compareProduct = (data, callback) => {
 ***********************************************************************/
 checkoutOrder = (data, headers, callback) => {
     console.log('api is hitted', data)
-
-
     var userId
 
     var orderId = commonFunction.generateOrderId(6)
@@ -3166,9 +3165,9 @@ checkoutOrder = (data, headers, callback) => {
         userId = result
     })
 
-    listOfAddCart(data, headers, (result) => {
+    listOfAddCart(data, headers, (bagList) => {
 
-        if (result.result.inStockBag == false) {
+        if (bagList.result.inStockBag == false) {
             callback({ "statusCode": util.statusCode.OUT_OF_STOCK, "statusMessage": util.statusMessage.OUT_OF_STOCK[data.lang], result: result.result })
             return
         }
@@ -3176,76 +3175,116 @@ checkoutOrder = (data, headers, callback) => {
             async.parallel({
                 checkoutOrder: (cb) => {
                     bagModel.findOne({ userId: userId }, (err, result) => {
-                        async.forEachOf(result.orderDescription, (value, key, callback) => {
-                            orderPlaced.findOne({ userId: userId }, (err, userFind) => {
+                        async.forEachOf(result.orderDescription, async (value, key, callback) => {
+                            orderPlaced.findOne({ userId: userId }, async (err, userFind) => {
+                                console.log("orderplaced api", err, userFind)
                                 if (err) {
                                     callback(null)
                                 }
-                                else if (userFind) {
-                                    orderPlaced.findOneAndUpdate({ userId: userId }, {
-                                        $push: {
-                                            orderPlacedDescription: {
-                                                sellerId: value.sellerId,
-                                                productId: value.productId,
-                                                orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                                                orderStatus: "PLACED",
-                                                productQuantity: value.productQuantity ? value.productQuantity : 1,
-                                                orderId: orderId,
-                                                transactionId: null,
-                                                addressId: data.addressId ? data.addressId : "null",
-                                                deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
-                                                estimateTax: value.estimateTax ? value.estimateTax : "00",
-                                                // totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "00",
-                                                color: value.color,
-                                                size: value.size,
-                                                material: value.material,
-                                                totalAmountPaid: value.totalAmountPaid
+                                else if (userFind) {                                    
+                                    getVariance({
+                                        "_id": value.productId,
+                                        "color": value.color,
+                                        "material": value.material,
+                                        "size": value.size
+                                    }, (getVariance) => {
+                                        console.log("====>>>", JSON.stringify(getVariance.result.product))
+                                        let temp = {
+                                            varianceId: getVariance.result.product.varianceId._id,
+                                            stock: (parseInt(getVariance.result.product.varianceId.quantity) - parseInt(value.productQuantity)).toString(),
+                                            lang: "en"
+                                        }
+                                        console.log("created resposne==>", temp)
+                                        if (data.orderPayment == 'COD') {
+                                            adminService.updateVarianceStock(temp,async (err, response) => {
+                                                console.log('=========================>>>update data', err, response)
+                                                orderPlaced.findOneAndUpdate({ userId: userId }, {
+                                                    $push: {
+                                                        orderPlacedDescription: {
+                                                            sellerId: value.sellerId,
+                                                            productId: value.productId,
+                                                            orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                                            orderStatus: "PLACED",
+                                                            productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                                            orderId: orderId,
+                                                            transactionId: null,
+                                                            addressId: data.addressId ? data.addressId : "null",
+                                                            deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                                            estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                                            color: value.color,
+                                                            size: value.size,
+                                                            material: value.material,
+                                                            totalAmountPaid: value.totalAmountPaid
 
-                                            }
+                                                        }
+                                                    }
+                                                }, { new: true, lean: true }, (err, orderPlaced) => {
+                                                    if (err) {
+                                                        callback(null)
+                                                    }
+                                                    else if (orderPlaced) {
+                                                        callback(null, orderPlaced)
+                                                    }
+                                                    else {
+                                                        callback(null)
+                                                    }
+                                                })
+                                            })
                                         }
-                                    }, { new: true, lean: true }, (err, orderPlaced) => {
-                                        if (err) {
-                                            callback(null)
-                                        }
-                                        else if (orderPlaced) {
-                                            callback(null, orderPlaced)
-                                        }
-                                        else {
-                                            callback(null)
-                                        }
+
                                     })
                                 }
                                 else {
-                                    log('not exist')
-                                    let query = {
-                                        userId: userId,
-                                        orderPlacedDescription: {
-                                            sellerId: value.sellerId,
-                                            productId: value.productId,
-                                            orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                                            orderStatus: "PLACED",
-                                            productQuantity: value.productQuantity ? value.productQuantity : 1,
-                                            orderId: orderId,
-                                            transactionId: null,
-                                            addressId: data.addressId ? data.addressId : "null",
-                                            deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
-                                            estimateTax: value.estimateTax ? value.estimateTax : "00",
-                                            color: value.color,
-                                            size: value.size,
-                                            material: value.material,
-                                            totalAmountPaid: value.totalAmountPaid
+                                    
+                                    getVariance({
+                                        "_id": value.productId,
+                                        "color": value.color,
+                                        "material": value.material,
+                                        "size": value.size
+                                    }, (getVariance) => {
+                                        console.log("====>>>", JSON.stringify(getVariance.result.product))
+                                        let temp = {
+                                            varianceId: getVariance.result.product.varianceId._id,
+                                            stock: (parseInt(getVariance.result.product.varianceId.quantity) - parseInt(value.productQuantity)).toString(),
+                                            lang: "en"
                                         }
-                                    }
-                                    var place = new orderPlaced(query)
-                                    place.save(query, (err, result) => {
-                                        if (err) {
-                                            callback(null)
-                                        }
-                                        else if (result) {
-                                            callback(null, result)
-                                        }
-                                        else {
-                                            callback(null)
+                                        console.log("created resposne==>", temp)
+                                        if (data.orderPayment == 'COD') {
+                                            adminService.updateVarianceStock(temp, (err, response) => {
+                                                console.log("------update data ------->>>", err, response)
+
+                                                let query = {
+                                                    userId: userId,
+                                                    orderPlacedDescription: {
+                                                        sellerId: value.sellerId,
+                                                        productId: value.productId,
+                                                        orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                                        orderStatus: "PLACED",
+                                                        productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                                        orderId: orderId,
+                                                        transactionId: null,
+                                                        addressId: data.addressId ? data.addressId : "null",
+                                                        deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                                        estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                                        color: value.color,
+                                                        size: value.size,
+                                                        material: value.material,
+                                                        totalAmountPaid: value.totalAmountPaid
+                                                    }
+                                                }
+                                                var place = new orderPlaced(query)
+                                                place.save(query, (err, result) => {
+                                                    if (err) {
+                                                        callback(null)
+                                                    }
+                                                    else if (result) {
+                                                        callback(null, result)
+                                                    }
+                                                    else {
+                                                        callback(null)
+                                                    }
+                                                })
+                                            })
                                         }
                                     })
                                 }
@@ -3259,7 +3298,8 @@ checkoutOrder = (data, headers, callback) => {
                     })
                 }
             }, (err, response) => {
-                console.log("------------->>",err,response)
+
+                console.log("------------->>", err, response)
                 callback({
                     "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
                     "orderId": 'ORD' + orderId,
@@ -4640,7 +4680,7 @@ uploadImage1 = (data, callback) => {
 // orderpAyment this api for after payment success 
 orderPayment = (data, header, callback) => {
     console.log(data, header)
-    if (!data.orderId || !data.status ) {
+    if (!data.orderId || !data.status) {
         callback({
             "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
@@ -4659,7 +4699,7 @@ orderPayment = (data, header, callback) => {
                             'orderPlacedDescription.$.orderPayment': data.status
                         }
                     }, { new: true }).exec((err, result) => {
-                        console.log('===========>>>',err,result)
+                        console.log('===========>>>', err, result)
                         if (err)
                             cb(null)
                         else {
