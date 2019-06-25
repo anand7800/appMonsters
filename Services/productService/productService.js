@@ -2593,7 +2593,7 @@ placeOrder = (data, headers, callback) => {
     commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
         if (result) userId = result
         else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        // returnvarianceId
+        
     })
     if (!data.productId || !userId)
         callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
@@ -2752,16 +2752,8 @@ placeOrder = (data, headers, callback) => {
                         console.log(err, response)
                     })
                 }
-
             })
-
-
-
         })
-
-        // let condition = { 'orderDescription.productId': data.productId }
-        // let update = { '$set': { 'orderDescription.$': { orderStatus: "PLACED" } } }
-        //!placeorder
     }
 }
 /********************************************************************
@@ -3166,7 +3158,7 @@ checkoutOrder = (data, headers, callback) => {
     })
 
     listOfAddCart(data, headers, (bagList) => {
-
+        orderData = []
         if (bagList.result.inStockBag == false) {
             callback({ "statusCode": util.statusCode.OUT_OF_STOCK, "statusMessage": util.statusMessage.OUT_OF_STOCK[data.lang], result: result.result })
             return
@@ -3177,116 +3169,142 @@ checkoutOrder = (data, headers, callback) => {
                     bagModel.findOne({ userId: userId }, (err, result) => {
                         async.forEachOf(result.orderDescription, async (value, key, callback) => {
                             orderPlaced.findOne({ userId: userId }, async (err, userFind) => {
-                                console.log("orderplaced api", err, userFind)
+
+                                var userFind = await checkOrderTableEmpty({ userId: userId })
+
                                 if (err) {
                                     callback(null)
                                 }
-                                else if (userFind) {                                    
-                                    getVariance({
+                                else if (userFind) {
+                                    let obj = {
                                         "_id": value.productId,
                                         "color": value.color,
                                         "material": value.material,
                                         "size": value.size
-                                    }, (getVariance) => {
-                                        console.log("====>>>", JSON.stringify(getVariance.result.product))
-                                        let temp = {
-                                            varianceId: getVariance.result.product.varianceId._id,
-                                            stock: (parseInt(getVariance.result.product.varianceId.quantity) - parseInt(value.productQuantity)).toString(),
-                                            lang: "en"
-                                        }
-                                        console.log("created resposne==>", temp)
-                                        if (data.orderPayment == 'COD') {
-                                            adminService.updateVarianceStock(temp,async (err, response) => {
-                                                console.log('=========================>>>update data', err, response)
-                                                orderPlaced.findOneAndUpdate({ userId: userId }, {
-                                                    $push: {
-                                                        orderPlacedDescription: {
-                                                            sellerId: value.sellerId,
-                                                            productId: value.productId,
-                                                            orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                                                            orderStatus: "PLACED",
-                                                            productQuantity: value.productQuantity ? value.productQuantity : 1,
-                                                            orderId: orderId,
-                                                            transactionId: null,
-                                                            addressId: data.addressId ? data.addressId : "null",
-                                                            deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
-                                                            estimateTax: value.estimateTax ? value.estimateTax : "00",
-                                                            color: value.color,
-                                                            size: value.size,
-                                                            material: value.material,
-                                                            totalAmountPaid: value.totalAmountPaid
+                                    }
 
-                                                        }
-                                                    }
-                                                }, { new: true, lean: true }, (err, orderPlaced) => {
-                                                    if (err) {
-                                                        callback(null)
-                                                    }
-                                                    else if (orderPlaced) {
-                                                        callback(null, orderPlaced)
-                                                    }
-                                                    else {
-                                                        callback(null)
-                                                    }
-                                                })
-                                            })
-                                        }
+                                    var function_result = await getVarianceData(obj)
 
-                                    })
+
+                                    let temp = {
+                                        varianceId: function_result.variants[0]._id,
+                                        stock: (parseInt(function_result.variants[0].quantity) - parseInt(value.productQuantity)).toString(),
+                                        lang: "en"
+                                    }
+
+                                    if (data.orderPayment == 'COD') {
+                                        var updatevariance = await updateStock(temp)
+
+                                        // adminService.updateVarianceStock(temp, async (err, response) => {
+                                        // console.log('=========================>>>update data', err, response)
+                                        orderPlaced.findOneAndUpdate({ userId: userId }, {
+                                            $push: {
+                                                orderPlacedDescription: {
+                                                    sellerId: value.sellerId,
+                                                    productId: value.productId,
+                                                    orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                                    orderStatus: "PLACED",
+                                                    productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                                    orderId: orderId,
+                                                    transactionId: null,
+                                                    addressId: data.addressId ? data.addressId : "null",
+                                                    deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                                    estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                                    color: value.color,
+                                                    size: value.size,
+                                                    material: value.material,
+                                                    totalAmountPaid: value.totalAmountPaid
+
+                                                }
+                                            }
+                                        }, { new: true, lean: true }, (err, orderPlaced) => {
+                                            if (err) {
+                                                callback(null)
+                                            }
+                                            else if (orderPlaced) {
+                                                callback(null, orderPlaced)
+                                            }
+                                            else {
+                                                callback(null)
+                                            }
+                                        })
+                                    }
                                 }
                                 else {
-                                    
-                                    getVariance({
+
+                                    /*not found */
+                                    let obj = {
                                         "_id": value.productId,
                                         "color": value.color,
                                         "material": value.material,
                                         "size": value.size
-                                    }, (getVariance) => {
-                                        console.log("====>>>", JSON.stringify(getVariance.result.product))
-                                        let temp = {
-                                            varianceId: getVariance.result.product.varianceId._id,
-                                            stock: (parseInt(getVariance.result.product.varianceId.quantity) - parseInt(value.productQuantity)).toString(),
-                                            lang: "en"
+                                    }
+                                    var function_result = await getVarianceData(obj)
+                                    let temp = {
+                                        varianceId: function_result.variants[0]._id,
+                                        stock: (parseInt(function_result.variants[0].quantity) - parseInt(value.productQuantity)).toString(),
+                                        lang: "en"
+                                    }
+                                    if (data.orderPayment == 'COD') {
+                                        var updatevariance = await updateStock(temp)
+                                        var ele = {
+                                            sellerId: value.sellerId,
+                                            productId: value.productId,
+                                            orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                            orderStatus: "PLACED",
+                                            productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                            orderId: orderId,
+                                            transactionId: null,
+                                            addressId: data.addressId ? data.addressId : "null",
+                                            deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                            estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                            color: value.color,
+                                            size: value.size,
+                                            material: value.material,
+                                            totalAmountPaid: value.totalAmountPaid
                                         }
-                                        console.log("created resposne==>", temp)
-                                        if (data.orderPayment == 'COD') {
-                                            adminService.updateVarianceStock(temp, (err, response) => {
-                                                console.log("------update data ------->>>", err, response)
+                                        orderData.push(ele)
 
-                                                let query = {
-                                                    userId: userId,
-                                                    orderPlacedDescription: {
-                                                        sellerId: value.sellerId,
-                                                        productId: value.productId,
-                                                        orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                                                        orderStatus: "PLACED",
-                                                        productQuantity: value.productQuantity ? value.productQuantity : 1,
-                                                        orderId: orderId,
-                                                        transactionId: null,
-                                                        addressId: data.addressId ? data.addressId : "null",
-                                                        deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
-                                                        estimateTax: value.estimateTax ? value.estimateTax : "00",
-                                                        color: value.color,
-                                                        size: value.size,
-                                                        material: value.material,
-                                                        totalAmountPaid: value.totalAmountPaid
-                                                    }
-                                                }
-                                                var place = new orderPlaced(query)
-                                                place.save(query, (err, result) => {
-                                                    if (err) {
-                                                        callback(null)
-                                                    }
-                                                    else if (result) {
-                                                        callback(null, result)
-                                                    }
-                                                    else {
-                                                        callback(null)
-                                                    }
-                                                })
-                                            })
-                                        }
-                                    })
+                                        callback(null)
+                                        // adminService.updateVarianceStock(temp, (err, response) => {
+                                        // console.log("------update data ------->>>", err, response)
+
+                                        // let query = {
+                                        //     userId: userId,
+                                        //     orderPlacedDescription: {
+                                        //         sellerId: value.sellerId,
+                                        //         productId: value.productId,
+                                        //         orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                        //         orderStatus: "PLACED",
+                                        //         productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                        //         orderId: orderId,
+                                        //         transactionId: null,
+                                        //         addressId: data.addressId ? data.addressId : "null",
+                                        //         deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                        //         estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                        //         color: value.color,
+                                        //         size: value.size,
+                                        //         material: value.material,
+                                        //         totalAmountPaid: value.totalAmountPaid
+                                        //     }
+                                        // }
+
+
+                                        // var place = new orderPlaced(query)
+                                        // place.save(query, (err, result) => {
+                                        //     if (err) {
+                                        //         callback(null)
+                                        //     }
+                                        //     else if (result) {
+                                        //         callback(null, result)
+                                        //     }
+                                        //     else {
+                                        //         callback(null)
+                                        //     }
+                                        // })
+                                        // })
+                                    }
+                                    // })
                                 }
                             })
                         }, (err, result) => {
@@ -3298,6 +3316,18 @@ checkoutOrder = (data, headers, callback) => {
                     })
                 }
             }, (err, response) => {
+
+                if (orderData.length > 0) {
+                    let res = {
+                        userId: userId,
+                        orderPlacedDescription: orderData
+                    }
+                    console.log('=====outtttttttttttttt======>>', res)
+                    var place = new orderPlaced(res)
+                    place.save(res, (err, result) => {
+                        console.log("new account", err, result)
+                    })
+                }
 
                 console.log("------------->>", err, response)
                 callback({
@@ -4708,6 +4738,19 @@ orderPayment = (data, header, callback) => {
                     })
             }
         }, (err, response) => {
+            if (header.accesstoken) {
+                commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+                    if (err) throw err
+                    else {
+                        bagModel.findOneAndRemove({ userId: decodeId }, (err, result) => {
+                            console.log("---------delete bag------->>>", result);
+                        })
+                    }
+                })
+            }
+            bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
+                console.log("---------delete bag------->>>", result)
+            })
             if (true) {
                 callback({
                     "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PAYMENT_DONE[data.lang]
@@ -5192,4 +5235,62 @@ module.exports = {
     increaseStockOnCartList,
     topProductSalesByVendor,
     deleteOffer
+}
+
+
+async function getVarianceData(data) {
+    temp = {
+        color: data.color.toUpperCase(),
+        size: data.size.toUpperCase(),
+        material: data.material.toUpperCase(),
+    }
+    // console.log(temp)
+    query1 = {
+        "productId": mongoose.Types.ObjectId(data._id),
+        "variants": {
+            "$elemMatch": {
+                // "closed": false,
+                "$and": [
+                    {
+                        "color": temp.color,
+                    },
+                    {
+                        "size": temp.size,
+                    },
+                    {
+                        "material": temp.material,
+                    }
+                ]
+            }
+        }
+    }
+    return new Promise((resolve, reject) => {
+        varianceModel.findOne(query1, { 'variants.$': 1 }).populate({ path: 'productId' }).populate({ path: 'sellerId' }).lean().exec((err6, dbData6) => {
+            if (err6) reject(err6)
+            resolve(dbData6)
+        })
+    })
+}
+
+
+async function updateStock(data) {
+    return new Promise((resolve, reject) => {
+        varianceModel.findOneAndUpdate({ 'variants._id': data.varianceId }, { $set: { 'variants.$.quantity': data.stock } }, { new: true }).exec((err, success) => {
+            console.log('-===update stock success>>>', err, success)
+            if (err) reject(err)
+            resolve(success)
+        })
+    })
+}
+
+
+
+async function checkOrderTableEmpty(data) {
+    return new Promise((resolve, reject) => {
+        orderPlaced.findOne({ userId: data.userId }).exec((err, success) => {
+            console.log(err, success)
+            if (err) reject(err)
+            resolve(success)
+        })
+    })
 }
