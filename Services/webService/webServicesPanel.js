@@ -410,7 +410,7 @@ checkoutOrder = (data, headers, callback) => {
     listOfAddCart(data, headers, (bagList) => {
         orderData = []
         if (bagList.result.inStockBag == false) {
-            callback({ "statusCode": util.statusCode.OUT_OF_STOCK, "statusMessage": util.statusMessage.OUT_OF_STOCK[data.lang], result: result.result })
+            callback({ "statusCode": util.statusCode.OUT_OF_STOCK, "statusMessage": util.statusMessage.OUT_OF_STOCK[data.lang], result: bagList.result })
             return
         }
         else {
@@ -594,13 +594,6 @@ checkoutOrder = (data, headers, callback) => {
                         console.log("new account", err, result)
                     })
                 }
-
-                console.log("------------->>", err, response)
-                // callback({
-                //     "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
-                //     "orderId": 'ORD' + orderId,
-                //     "orderPayment": data.orderPayment
-                // })
                 if (data.orderPayment == "COD") {
                     bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
                         if (err) {
