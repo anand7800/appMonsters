@@ -2586,7 +2586,7 @@ deleteCart = (data, headers, callback) => {
 **************************placeOrder*************************
 ***********************************************************************/
 placeOrder = (data, headers, callback) => {
-    log("placeOrder", data, headers.accesstoken)
+    log("placeOrder", data, headers.accesstoken);
     var userId;
     var orderId = commonFunction.generateOrderId(6)
     var orderPayment = data.orderPayment.toUpperCase()

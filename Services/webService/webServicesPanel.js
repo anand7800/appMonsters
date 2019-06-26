@@ -402,7 +402,6 @@ filterWeb = (data, callback) => {
 checkoutOrder = (data, headers, callback) => {
     console.log('api is hitted', data)
     var userId
-
     var orderId = commonFunction.generateOrderId(6)
     commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
         userId = result
@@ -480,9 +479,41 @@ checkoutOrder = (data, headers, callback) => {
                                             }
                                         })
                                     }
+                                    else {
+                                        orderPlaced.findOneAndUpdate({ userId: userId }, {
+                                            $push: {
+                                                orderPlacedDescription: {
+                                                    sellerId: value.sellerId,
+                                                    productId: value.productId,
+                                                    orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                                    orderStatus: "PLACED",
+                                                    productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                                    orderId: orderId,
+                                                    transactionId: null,
+                                                    addressId: data.addressId ? data.addressId : "null",
+                                                    deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                                    estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                                    color: value.color,
+                                                    size: value.size,
+                                                    material: value.material,
+                                                    totalAmountPaid: value.totalAmountPaid
+
+                                                }
+                                            }
+                                        }, { new: true, lean: true }, (err, orderPlaced) => {
+                                            if (err) {
+                                                callback(null)
+                                            }
+                                            else if (orderPlaced) {
+                                                callback(null, orderPlaced)
+                                            }
+                                            else {
+                                                callback(null)
+                                            }
+                                        })
+                                    }
                                 }
                                 else {
-
                                     /*not found */
                                     let obj = {
                                         "_id": value.productId,
@@ -518,6 +549,27 @@ checkoutOrder = (data, headers, callback) => {
 
                                         callback(null)
 
+                                    }
+                                    else {
+                                        var ele = {
+                                            sellerId: value.sellerId,
+                                            productId: value.productId,
+                                            orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                            orderStatus: "PLACED",
+                                            productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                            orderId: orderId,
+                                            transactionId: null,
+                                            addressId: data.addressId ? data.addressId : "null",
+                                            deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                            estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                            color: value.color,
+                                            size: value.size,
+                                            material: value.material,
+                                            totalAmountPaid: value.totalAmountPaid
+                                        }
+                                        orderData.push(ele)
+
+                                        callback(null)
                                     }
                                 }
                             })
@@ -633,12 +685,284 @@ verifyPayment = (data, headers, callback) => {
     }
 
 }
+
+/********************************************************************
+**************************placeOrder*************************
+***********************************************************************/
+placeOrder = (data, headers, callback) => {
+    log("placeOrder", data, headers.accesstoken)
+    var userId;
+    var orderId = commonFunction.generateOrderId(6);
+    var orderPayment = data.orderPayment.toUpperCase();
+    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+        if (result) userId = result
+        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+
+    })
+    if (!data.productId || !userId) {
+        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+    else {
+        async.parallel({
+            getProdctdetail: (cb) => {
+                let query = {
+                    "productId": mongoose.Types.ObjectId(data.productId),
+                    "variants": {
+                        "$elemMatch": {
+                            "$and": [
+                                {
+                                    "color": data.color.toUpperCase(),
+                                },
+                                {
+                                    "size": data.size.toUpperCase(),
+                                },
+                                {
+                                    "material": data.material.toUpperCase(),
+                                }
+                            ]
+                        }
+                    }
+                }
+                varianceModel.findOne(query, { 'variants.$': 1 }).exec((err, result) => {
+                    if (err) cb(null)
+                    else cb(null, result)
+                })
+            }
+        }, (err, response) => {
+            orderPlaced.findOne({ userId: userId }, (err, userFind) => {
+                if (err) {
+                    callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                }
+                else if (userFind) {
+                    query = { userId: userId },
+                        update = {
+                            $push: {
+                                orderPlacedDescription: {
+                                    sellerId: data.sellerId,
+                                    productId: data.productId,
+                                    // varianceId: data.varianceId ? data.varianceId : null,
+                                    orderPayment: orderPayment ? orderPayment : "PENDING",
+                                    orderStatus: "PLACED",
+                                    productQuantity: data.productQuantity ? data.productQuantity : 1,
+                                    orderId: orderId,
+                                    transactionId: null,
+                                    addressId: data.addressId ? data.addressId : "null",
+                                    deliveryCharges: data.deliveryCharges ? data.deliveryCharges : "00",
+                                    estimateTax: data.estimateTax ? data.estimateTax : "00",
+                                    // totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "00",
+                                    color: data.color,
+                                    size: data.size,
+                                    material: data.material,
+                                    totalAmountPaid: response.getProdctdetail.variants[0].price
+                                }
+                            }
+                        }
+                    // console.log("req", query)
+                    orderPlaced.findOneAndUpdate(query, update, { new: true, lean: true }, (err, orderPlaced) => {
+                        log("---------->>>>>", err, orderPlaced)
+                        if (err) {
+                            callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                        }
+                        else if (orderPlaced) {
+                            let notifyData = {
+                                msg: util.statusMessage.ORDER_PLACED[data.lang],
+                                productId: data.productId,
+                                orderId: "ORD" + orderId,
+                                title: util.statusMessage.TITLE.PLACED[data.lang],
+                                type: util.statusMessage.type.PLACED[data.lang],
+                                // orderId: orderId
+                            }
+                            if (orderPayment == 'COD') {
+                                commonAPI.notify(notifyData, userId, (err, result) => {
+                                    // console.log("1659.....notifyAPI", err, result)
+                                })
+                                callback({
+                                    statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                    "orderId": notifyData.orderId,
+                                    "orderPayment": orderPayment
+                                })
+                            }
+                            else if (orderPayment == 'ONLINE' && data.totalAmount) {
+                                paytabs.createPayPage({
+                                    'merchant_email': configJson.payTabs.email,
+                                    'secret_key': configJson.payTabs.secret_key,
+                                    'currency': 'SAR',//change this to the required currency
+                                    'amount': data.totalAmount,//change this to the required amount
+                                    'site_url': 'www.techugo.com',//change this to reflect your site
+                                    'title': 'Order for Shoes',//Change this to reflect your order title
+                                    'quantity': 1,//Quantity of the product
+                                    'unit_price': data.totalAmount, //Quantity * price must be equal to amount
+                                    'products_per_title': 'Shoes', //Change this to your products
+                                    'return_url': 'https://waki.store/shop/payment',//This should be your callback url
+                                    // 'return_url':'localhost:4200/payment',
+                                    'cc_first_name': 'Samy',//Customer First Name
+                                    'cc_last_name': 'Saad',//Customer Last Name
+                                    'cc_phone_number': '00973', //Country code
+                                    'phone_number': '12332323', //Customer Phone
+                                    'billing_address': 'Address', //Billing Address
+                                    'city': 'Manama',//Billing City
+                                    'state': 'Manama',//Billing State
+                                    'postal_code': '1234',//Postal Code
+                                    'country': 'BHR',//Iso 3 country code
+                                    'email': 'sumit@yopmail.com',//Customer Email
+                                    'ip_customer': '192.101.101.101',//Pass customer IP here
+                                    'ip_merchant': '192.101.101.101',//Change this to your server IP
+                                    'address_shipping': 'Shipping',//Shipping Address
+                                    'city_shipping': 'Manama',//Shipping City
+                                    'state_shipping': 'Manama',//Shipping State
+                                    'postal_code_shipping': '973',
+                                    'country_shipping': 'BHR',
+                                    'other_charges': 0,//Other chargs can be here
+                                    'reference_no': 1234,//Pass the order id on your system for your reference
+                                    'msg_lang': 'en',//The language for the response
+                                    'cms_with_version': 'Nodejs Lib v1',//Feel free to change this
+                                }, createPayPage);
+                                function createPayPage(result) {
+
+                                    //Redirect your merchant to the payment link
+                                    callback({
+                                        "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                        "orderId": 'ORD' + orderId,
+                                        "orderPayment": data.orderPayment,
+                                        "Payment": result
+                                    })
+                                    return
+                                }
+
+                            }
+                        }
+                        else {
+                            callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
+                        }
+                    })
+                }
+                else {
+                    log('not exist')
+                    let query = {
+                        userId: userId,
+                        orderPlacedDescription: {
+                            productId: data.productId,
+                            sellerId: data.sellerId,
+                            // varianceId: data.varianceId ? data.varianceId : null,
+                            orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                            orderStatus: "PENDING",
+                            productQuantity: data.productQuantity ? data.productQuantity : 1,
+                            orderId: orderId,
+                            addressId: data.addressId ? data.addressId : "null",
+                            // totalAmountPaid: data.price ? data.price : "00",
+                            color: data.color,
+                            size: data.size,
+                            material: data.material,
+                            totalAmountPaid: response.getProdctdetail.variants[0].price
+                        }
+                    }
+                    orderPlaced.create(query, (err, result) => {
+                        console.log('++++++++++++++>>>>>>', err, result)
+                        if (err) {
+                            callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                        }
+                        else if (result) {
+                            res = {}
+                            res.result = result
+                            temp = {}
+                            temp.length = 1
+                            //! delete in addtocart
+                            commonAPI.deleteCart(userId, data.productId)
+                            //!
+                            let notifyData = {
+                                msg: util.statusMessage.ORDER_PLACED[data.lang],
+                                productId: data.productId,
+                                orderId: "ORD" + orderId,
+                                title: util.statusMessage.TITLE.PLACED[data.lang],
+                                type: util.statusMessage.type.PLACED[data.lang],
+                            }
+                            if (orderPayment == 'COD') {
+                                commonAPI.notify(notifyData, userId, (err, result) => {
+                                    // console.log("1666...notifyAPI", err, result)
+                                })
+                                callback({
+                                    statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                    "orderId": notifyData.orderId,
+                                    "orderPayment": orderPayment
+                                })
+                            }
+                            else {
+                                paytabs.createPayPage({
+                                    'merchant_email': configJson.payTabs.email,
+                                    'secret_key': configJson.payTabs.secret_key,
+                                    'currency': 'SAR',//change this to the required currency
+                                    'amount': data.totalAmount,//change this to the required amount
+                                    'site_url': 'www.techugo.com',//change this to reflect your site
+                                    'title': 'Order for Shoes',//Change this to reflect your order title
+                                    'quantity': 1,//Quantity of the product
+                                    'unit_price': data.totalAmount, //Quantity * price must be equal to amount
+                                    'products_per_title': 'Shoes', //Change this to your products
+                                    'return_url': 'https://waki.store/shop/payment',//This should be your callback url
+                                    // 'return_url':'localhost:4200/payment',
+                                    'cc_first_name': 'Samy',//Customer First Name
+                                    'cc_last_name': 'Saad',//Customer Last Name
+                                    'cc_phone_number': '00973', //Country code
+                                    'phone_number': '12332323', //Customer Phone
+                                    'billing_address': 'Address', //Billing Address
+                                    'city': 'Manama',//Billing City
+                                    'state': 'Manama',//Billing State
+                                    'postal_code': '1234',//Postal Code
+                                    'country': 'BHR',//Iso 3 country code
+                                    'email': 'sumit@yopmail.com',//Customer Email
+                                    'ip_customer': '192.101.101.101',//Pass customer IP here
+                                    'ip_merchant': '192.101.101.101',//Change this to your server IP
+                                    'address_shipping': 'Shipping',//Shipping Address
+                                    'city_shipping': 'Manama',//Shipping City
+                                    'state_shipping': 'Manama',//Shipping State
+                                    'postal_code_shipping': '973',
+                                    'country_shipping': 'BHR',
+                                    'other_charges': 0,//Other chargs can be here
+                                    'reference_no': 1234,//Pass the order id on your system for your reference
+                                    'msg_lang': 'en',//The language for the response
+                                    'cms_with_version': 'Nodejs Lib v1',//Feel free to change this
+                                }, createPayPage);
+                                function createPayPage(result) {
+
+                                    //Redirect your merchant to the payment link
+                                    callback({
+                                        "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                        "orderId": 'ORD' + orderId,
+                                        "orderPayment": data.orderPayment,
+                                        "Payment": result
+                                    })
+                                    return
+                                }
+                            }
+                        }
+                        else {
+                            callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
+                        }
+                    })
+                }
+                //!!! delete in addtocart
+                commonAPI.deleteCart(userId, data.productId)
+                let temp = {
+                    varianceId: response.getProdctdetail.variants[0]._id,
+                    stock: (parseInt(response.getProdctdetail.variants[0].quantity) - parseInt(data.productQuantity)).toString(),
+                    lang: "en"
+                }
+                /* decreament quantity on main model */
+                if (orderPayment == 'COD') {
+                    adminService.updateVarianceStock(temp, (err, response) => {
+                        console.log(err, response)
+                    })
+                }
+            })
+        })
+    }
+}
 module.exports = {
     dashboardGraph,
     viewerGraph,
     filterWeb,
     checkoutOrder,
-    verifyPayment
+    verifyPayment,
+    placeOrder
 }
 
 

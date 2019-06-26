@@ -34,6 +34,10 @@ webRouter.post('/verifyPayment',authHandler.verifyToken, (req, res) => {
         res.send(data)
     })
 })
-
+webRouter.post('/placeOrder', authHandler.verifyToken, (req, res) => {
+    webHandler.placeOrder(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
 
 module.exports = webRouter;
