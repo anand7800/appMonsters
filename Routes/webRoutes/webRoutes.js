@@ -39,5 +39,9 @@ webRouter.post('/placeOrder', authHandler.verifyToken, (req, res) => {
         res.send(data)
     })
 })
-
+webRouter.post('/showFilter', (req, res) => {
+    webHandler.showFilter(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
 module.exports = webRouter;

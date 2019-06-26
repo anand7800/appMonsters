@@ -190,7 +190,7 @@ filterWeb = (data, callback) => {
                     {
                         $or: [
                             { brandId: { $in: data.brandId } },
-                            { categoryModel: { $in: data.categoryId } },
+                            { subCategory: { $in: data.categoryId } },
                         ]
                     },
                     { status: 'ACTIVE' }
@@ -226,6 +226,10 @@ filterWeb = (data, callback) => {
         }
     })
 }
+
+
+
+
 
 // checkoutOrder = (data, headers, callback) => {
 //     console.log('api is hitted', data)
@@ -826,7 +830,6 @@ placeOrder = (data, headers, callback) => {
                                     })
                                     return
                                 }
-
                             }
                         }
                         else {
@@ -954,13 +957,52 @@ placeOrder = (data, headers, callback) => {
         })
     }
 }
+
+/* show filter  */
+showFilter = (data, header, callback) => {
+    console.log("=-Incoming data >>>", data, header)
+    async.parallel({
+        getbrand: (cb) => {
+            productModel.find({ subCategory: data.subCategory, status: "ACTIVE" }).select('brandId').populate({ path: 'brandId' }).exec((err, response) => {
+
+                cb(null, response)
+            })
+        },
+        getCategory: (cb) => {
+            productCategoryModelL3.find({ _id: data.productCategoryId, status: "ACTIVE" }).populate('subCategory').exec((err, response) => {
+                cb(null, response)
+            })
+        }
+
+    }, (err, response) => {
+        let brand = [], category = [];
+        response.getbrand.forEach(element => {
+
+            brand.push(element.brandId)
+        })
+        response.getCategory.forEach(element => {
+
+            category.push(element.subCategory)
+
+        })
+
+        brand = _.unionBy(brand, '_id')
+        category = _.unionBy(category, '_id')
+        callback({
+            statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],
+            result: { brand: brand, category: category }
+        })
+    })
+}
+
 module.exports = {
     dashboardGraph,
     viewerGraph,
     filterWeb,
     checkoutOrder,
     verifyPayment,
-    placeOrder
+    placeOrder,
+    showFilter
 }
 
 

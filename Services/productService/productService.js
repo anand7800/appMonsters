@@ -2644,7 +2644,6 @@ placeOrder = (data, headers, callback) => {
                                     addressId: data.addressId ? data.addressId : "null",
                                     deliveryCharges: data.deliveryCharges ? data.deliveryCharges : "00",
                                     estimateTax: data.estimateTax ? data.estimateTax : "00",
-                                    // totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "00",
                                     color: data.color,
                                     size: data.size,
                                     material: data.material,
