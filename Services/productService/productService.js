@@ -2337,7 +2337,18 @@ addToCart = (data, headers, callback) => {
                             }
                         }
                     }
-                bagModel.find({ $and: [{ userId: userId }, { 'orderDescription.varianceId': data.varianceId }, { 'orderDescription.productId': data.productId }] }, { 'orderDescription.$': 1 }).exec((err, findOrder) => {
+                let query1 = {
+                    $and:
+                        [
+                            { userId: userId },
+                            { 'orderDescription.varianceId': data.varianceId },
+                            { 'orderDescription.productId': data.productId },
+                            { "orderDescription.material": data.material },
+                            { "orderDescription.color": data.color },
+                            { "orderDescription.size": data.size }
+                        ]
+                }
+                bagModel.find(query1, { 'orderDescription.$': 1 }).exec((err, findOrder) => {
                     if (err) throw err
                     else if (findOrder.length > 0) {
                         callback({ statusCode: util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.BAG_PRODUCT_ALREADY_EXIST[data.lang] })
@@ -2593,7 +2604,7 @@ placeOrder = (data, headers, callback) => {
     commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
         if (result) userId = result
         else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        
+
     })
     if (!data.productId || !userId)
         callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
