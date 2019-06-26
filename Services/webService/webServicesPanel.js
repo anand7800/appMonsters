@@ -596,11 +596,11 @@ checkoutOrder = (data, headers, callback) => {
                 }
 
                 console.log("------------->>", err, response)
-                callback({
-                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
-                    "orderId": 'ORD' + orderId,
-                    "orderPayment": data.orderPayment
-                })
+                // callback({
+                //     "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                //     "orderId": 'ORD' + orderId,
+                //     "orderPayment": data.orderPayment
+                // })
                 if (data.orderPayment == "COD") {
                     bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
                         if (err) {
@@ -609,6 +609,11 @@ checkoutOrder = (data, headers, callback) => {
                         else {
                             console.log("---------delete bag------->>>", result)
                         }
+                    })
+                    callback({
+                        "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                        "orderId": 'ORD' + orderId,
+                        "orderPayment": data.orderPayment
                     })
                 }
                 else if (data.totalAmountPaid && data.orderPayment == 'PENDING') {
@@ -782,7 +787,7 @@ placeOrder = (data, headers, callback) => {
                                     "orderPayment": orderPayment
                                 })
                             }
-                            else if (orderPayment == 'ONLINE' && data.totalAmount) {
+                            else if (orderPayment == 'PENDING' && data.totalAmount) {
                                 paytabs.createPayPage({
                                     'merchant_email': configJson.payTabs.email,
                                     'secret_key': configJson.payTabs.secret_key,
