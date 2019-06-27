@@ -12,7 +12,7 @@ const auth = {
             return
         }
         commonFunction.jwtDecode(req.headers.accesstoken, (err, decoded) => {
-            // console.log("verify token", err, decoded)
+            
             if (err) {
                 res.send({ "statusCode": "501", "statusMessage": "access token related error", "error": err })
             } else {
