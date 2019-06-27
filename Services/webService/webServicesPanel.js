@@ -40,7 +40,8 @@ const today = moment().startOf('day')
 var Promise = require('promise');
 const paytabs = require('paytabs_api'),
     configJson = require('../../config/config'),
-    productService = require('../productService/productService');
+    productService = require('../productService/productService'),
+    adminService = require('../adminServices/adminServices');
 
 /* ************************************
 *************api's start here***********************

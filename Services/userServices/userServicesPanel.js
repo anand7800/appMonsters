@@ -59,10 +59,7 @@ signup = (data, callback) => {
                             "paymentAdded": succ.paymentAdded,
                             "address": succ.address,
                             "paymentMethod": succ.paymentMethod,
-
                         }
-
-
                         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.REGISTRATION_DONE[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
                         return
                     }
@@ -1088,7 +1085,6 @@ editAddress = (data, headers, callback) => {
                     'address.$.addressType': data.addressType ? data.addressType : result.address[0].addressType,
                     'address.$.countryCode': data.countryCode ? data.countryCode : result.address[0].countryCode,
                     'address.$.addresses': data.addresses ? data.addresses : result.address[0].addresses,
-
                 }
             }
             userModel.findOneAndUpdate(query, update, { new: true }).exec((err, update) => {
@@ -1098,7 +1094,6 @@ editAddress = (data, headers, callback) => {
 
             })
         }
-
     ], (err, succ) => {
         // console.log("resposne ", err, response)
 
