@@ -1376,7 +1376,7 @@ getProductCategoryName = (data, callback) => {
     productCategoryModelL3.find(query).select({ '_id': 1, 'productcategoryName': 1, 'image': 1 }).exec((error, success) => {
         console.log(error, JSON.stringify(success))
         if (success.length > 0) {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": success ,"subcategoryId":data.subcategoryId})
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": success ,"subcategoryId":data.subCategoryId})
         }
         else {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
