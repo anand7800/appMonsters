@@ -4755,12 +4755,13 @@ orderPayment = (data, header, callback) => {
                         bagModel.findOneAndRemove({ userId: decodeId }, (err, result) => {
                             console.log("---------delete bag------->>>", result);
                         })
+                        bagModel.findOneAndRemove({ userId: decodeId }, (err, result) => {
+                            console.log("---------delete bag------->>>", result)
+                        })
                     }
                 })
             }
-            bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
-                console.log("---------delete bag------->>>", result)
-            })
+          
             if (true) {
                 callback({
                     "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PAYMENT_DONE[data.lang]
