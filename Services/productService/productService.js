@@ -962,7 +962,39 @@ categoryProductList = (data, callback) => {
             })
 
         })
-
+    }
+    else if(data.productListType == 'web'){
+        productModel.find({ subCategory: data.productCategoryId }).sort({ _id: -1 }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
+            console.log("err,product", err, productDetail)
+            if (err) {
+                throw err
+            }
+            else if (productDetail.length > 0) {
+                productDetail.forEach(element => {
+                    let temp = {
+                        description: element.description,
+                        // image: element.image,
+                        image: element.varianceId == null ? element.image : element.varianceId.variants[0].image,
+                        specifications: element.specifications,
+                        _id: element._id,
+                        brand: element.brandId.brandName,
+                        productName: element.productName,
+                        price: element.varianceId == null ? "" : element.varianceId.variants[0].price,
+                        status: element.status
+                    }
+                    response.push(temp)
+                })
+                callback({
+                    'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.SUBCATORY_FOUND[data.lang], 'result': response
+                })
+            }
+            else {
+                res = []
+                callback({
+                    'statusCode': util.statusCode.NOT_FOUND, 'statusMessage': util.statusMessage.NOT_FOUND[data.lang], 'result': res
+                })
+            }
+        })
     }
     else {
         productModel.find({ productCategoryId: data.productCategoryId }).sort({ _id: -1 }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
