@@ -786,7 +786,7 @@ showFilter = (data, header, callback) => {
     console.log("=-Incoming data >>>", data, header)
     async.parallel({
         getbrand: (cb) => {
-            productModel.find({ subCategory: data.subCategory, status: "ACTIVE" }).select('brandId').populate({ path: 'brandId' }).exec((err, response) => {
+            productModel.find({ productCategoryId: data.productCategoryId, status: "ACTIVE" }).select('brandId').populate({ path: 'brandId' }).exec((err, response) => {
 
                 cb(null, response)
             })
