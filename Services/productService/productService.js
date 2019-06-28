@@ -233,6 +233,7 @@ getCategoryList = (data, callback) => {
                 "image": element.image,
                 "icons": element.icons,
                 "subCategory": element.category.length,
+                "subCategoryArray":element.category,
                 "status": element.status
             }
             mainArray.push(temp)
