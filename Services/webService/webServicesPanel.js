@@ -786,13 +786,13 @@ showFilter = (data, header, callback) => {
     console.log("=-Incoming data >>>", data, header)
     async.parallel({
         getbrand: (cb) => {
-            productModel.find({ productCategoryId: data.productCategoryId, status: "ACTIVE" }).select('brandId').populate({ path: 'brandId' }).exec((err, response) => {
+            productModel.find({ subCategory: data.subCategory, status: "ACTIVE" }).select('brandId').populate({ path: 'brandId' }).exec((err, response) => {
 
                 cb(null, response)
             })
         },
         getCategory: (cb) => {
-            productCategoryModelL3.find({ _id: data.productCategoryId, status: "ACTIVE" }).populate('subCategory').exec((err, response) => {
+            productCategoryModelL3.find({ subCategory: data.subCategory, status: "ACTIVE" }).populate('subCategory').exec((err, response) => {
                 cb(null, response)
             })
         }
@@ -805,7 +805,7 @@ showFilter = (data, header, callback) => {
         })
         response.getCategory.forEach(element => {
 
-            category.push(element.subCategory)
+            category.push(element)
 
         })
 
