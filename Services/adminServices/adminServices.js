@@ -257,7 +257,6 @@ addBrand = (data, callback) => {
 getBrandList = (callback) => {
     // console.log('dasdf  ')
     brandListModel.find({ status: "ACTIVE" }, { status: 0 }).exec(async (err, succ) => {
-
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": "brand list", "result": succ })
 
     })

@@ -1104,7 +1104,7 @@ searchProduct = (data, callback) => {
         var productDetail = []
         // console.log("#################3", JSON.stringify(result))
         result.forEach(element => {
-            console.log('*************', element)
+            console.log('*************', element.varianceId.variants.length==0)
             let temp = {
                 _id: element._id,
                 productName: element.productName,
@@ -1115,29 +1115,13 @@ searchProduct = (data, callback) => {
                 brandName: element.brandId.brandName,
                 description: element.description,
                 // price: element.varianceId.variants[0].price,
-                price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
-                image: element.varianceId == null ? element.image : element.varianceId.variants[0].image,
+                price: element.varianceId.variants.length==0 ? element.sellingPrice : element.varianceId.variants[0].price,
+                image: element.varianceId.variants.length==0 ? element.image : element.varianceId.variants[0].image,
                 specifications: element.specifications
             }
             productDetail.push(temp)
 
         })
-
-
-
-        /*  })
-         brandDescriptionL4.aggregate([{
-             $unwind: '$brandDesc'
-         }, {
-             $match: {
-                 $or: [
-                     { 'brandDesc.productName': { $regex: value } },
-                     { 'brandDesc.color': { $regex: value } },
-                     { 'brandDesc.tag': { $in: [value] } },
-                 ]
-             }
-         }
-         ], (err, result) => { */
         async.forEachOf(result, (value, key, cb) => {
             // console.log(value)
             subCategoryModelL2.findOne({ '_id': value.subCategory }, (err, categoryResult) => {
