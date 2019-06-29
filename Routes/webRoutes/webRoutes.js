@@ -44,4 +44,11 @@ webRouter.post('/showFilter', (req, res) => {
         res.send(data)
     })
 })
+
+//deleteCart  
+webRouter.post('/deleteCart', authHandler.verifyToken, (req, res) => {
+    webHandler.deleteCart(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
 module.exports = webRouter;

@@ -817,6 +817,55 @@ showFilter = (data, header, callback) => {
         })
     })
 }
+deleteCart = (data, headers, callback) => {
+    log("delete cart or remove", data)
+    var userId;
+    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+        if (result) userId = result
+        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        return
+    })
+    if (!data.productId)
+        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    else {
+        bagModel.findOne({ userId: userId }, (err, userFound) => {
+            if (err) {
+                callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+            }
+            else if (userFound) {
+                query = { userId: userId },
+                    update = {
+                        $pull: {
+                            orderDescription: {
+                                productId: data.productId
+                            }
+                        }
+                    }
+                bagModel.find({ $and: [query, { 'orderDescription.productId': data.productId }, { 'orderDescription.material': data.material }, { 'orderDescription.size': data.size }, { 'orderDescription.color': data.color }] }, { 'orderDescription.$': 1 }).exec((err, findId) => {
+                    if (err) {
+                        callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                    }
+                    else if (findId.length > 0) {
+                        bagModel.update({ _id: findId[0]._id }, update, { new: true }).exec((err, deleted) => {
+                            if (err) {
+                                callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                            }
+                            else {
+                                callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PRODUCT_DELETE_CART[data.lang] })
+                            }
+                        })
+                    }
+                    else {
+                        callback({ statusCode: util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PRODUCT_NOT_FOUND[data.lang] });
+                    }
+                })
+            }
+            else {
+                callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": "user not exists" });
+            }
+        })
+    }
+}
 
 module.exports = {
     dashboardGraph,
@@ -825,7 +874,8 @@ module.exports = {
     checkoutOrder,
     verifyPayment,
     placeOrder,
-    showFilter
+    showFilter,
+    deleteCart
 }
 
 

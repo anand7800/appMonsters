@@ -233,7 +233,7 @@ getCategoryList = (data, callback) => {
                 "image": element.image,
                 "icons": element.icons,
                 "subCategory": element.category.length,
-                "subCategoryArray": element.category,
+                "subCategoryArray":element.category,
                 "status": element.status
             }
             mainArray.push(temp)
@@ -963,7 +963,7 @@ categoryProductList = (data, callback) => {
 
         })
     }
-    else if (data.productListType == 'web') {
+    else if(data.productListType == 'web'){
         productModel.find({ subCategory: data.productCategoryId }).sort({ _id: -1 }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
             console.log("err,product", err, productDetail)
             if (err) {
@@ -1104,7 +1104,7 @@ searchProduct = (data, callback) => {
         var productDetail = []
         // console.log("#################3", JSON.stringify(result))
         result.forEach(element => {
-            console.log('*************', element.varianceId.variants.length == 0)
+            console.log('*************', element.varianceId.variants.length==0)
             let temp = {
                 _id: element._id,
                 productName: element.productName,
@@ -1115,8 +1115,8 @@ searchProduct = (data, callback) => {
                 brandName: element.brandId.brandName,
                 description: element.description,
                 // price: element.varianceId.variants[0].price,
-                price: element.varianceId.variants.length == 0 ? element.sellingPrice : element.varianceId.variants[0].price,
-                image: element.varianceId.variants.length == 0 ? element.image : element.varianceId.variants[0].image,
+                price: element.varianceId.variants.length==0 ? element.sellingPrice : element.varianceId.variants[0].price,
+                image: element.varianceId.variants.length==0 ? element.image : element.varianceId.variants[0].image,
                 specifications: element.specifications
             }
             productDetail.push(temp)
@@ -1393,7 +1393,7 @@ getProductCategoryName = (data, callback) => {
     productCategoryModelL3.find(query).select({ '_id': 1, 'productcategoryName': 1, 'image': 1 }).exec((error, success) => {
         console.log(error, JSON.stringify(success))
         if (success.length > 0) {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": success, "subcategoryId": data.subCategoryId })
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": success ,"subcategoryId":data.subCategoryId})
         }
         else {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
@@ -2584,7 +2584,7 @@ deleteCart = (data, headers, callback) => {
                             }
                         }
                     }
-                bagModel.find({ $and: [query, { 'orderDescription.productId': data.productId }, { 'orderDescription.material': data.material }, { 'orderDescription.size': data.size }, { 'orderDescription.color': data.color }] }, { 'orderDescription.$': 1 }).exec((err, findId) => {
+                bagModel.find({ $and: [query, { 'orderDescription.productId': data.productId }] }, { 'orderDescription.$': 1 }).exec((err, findId) => {
                     if (err) {
                         callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                     }
@@ -4772,11 +4772,11 @@ orderPayment = (data, header, callback) => {
                         bagModel.findOneAndRemove({ userId: decodeId }, (err, result) => {
                             console.log("---------delete bag------->>>", result);
                         })
-
+                        
                     }
                 })
             }
-
+          
             if (true) {
                 callback({
                     "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PAYMENT_DONE[data.lang]

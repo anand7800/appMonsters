@@ -117,7 +117,7 @@ productRouter.post('/deleteWishItem', authHandler.verifyToken, (req, res) => {
     })
 })
 
-//!deleteCart  
+//deleteCart  
 productRouter.post('/deleteCart', authHandler.verifyToken, (req, res) => {
     productService.deleteCart(req.body, req.headers, (data) => {
         res.send(data)
