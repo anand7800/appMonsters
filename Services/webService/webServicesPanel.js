@@ -220,7 +220,7 @@ filterWeb = (data, callback) => {
             return
         }
         else {
-            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], result: []})
             return
         }
     })

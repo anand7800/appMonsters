@@ -417,7 +417,7 @@ getUserList = (data, callback) => {
 createVendor = (data, callback) => {
     // console.log('create  vendor', data)
     // data.email.toLowerCase()
-    if (!data.image && !data.email &&!data.password) {
+    if (!data.email || !data.password || !data.profilePic) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
     }
@@ -470,9 +470,9 @@ createVendor = (data, callback) => {
 
             else if (save) {
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.EMAIL_SENT[data.lang], 'result': save })
-                // commonFunction.sendMailTest(data.email, "WAKI CREATE PASSWORD", password, (err, mailsent) => {
-                //     console.log(err, mailsent)
-                // })
+                commonFunction.sendMailTest(data.email, "WAKI", data.password, (err, mailsent) => {
+                    console.log(err, mailsent)
+                })
             }
         })
     })
@@ -665,11 +665,11 @@ getAllVariant = (data, callback) => {
 }
 //!update stock
 updateVarianceStock = (data, callback) => {
-    
-    console.log("data",  data.varianceId,  data.stock)
+
+    console.log("data", data.varianceId, data.stock)
 
     varianceModel.findOneAndUpdate({ 'variants._id': data.varianceId }, { $set: { 'variants.$.quantity': data.stock } }, { new: true }).exec((err, success) => {
-        
+
         if (err) throw err
         else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang] })
