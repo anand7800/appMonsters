@@ -841,12 +841,11 @@ deleteCart = (data, headers, callback) => {
                         { 'orderDescription.productId': data.productId },
                         { 'orderDescription.size': data.size },
                         { 'orderDescription.material': data.material },
-                        
                         { 'orderDescription.color': data.color }
                     ]
                 }, { 'orderDescription.$': 1 }
                 ).exec((err, findId) => {
-                    // console.log("=====>>", err, JSON.stringify(findId))
+                    console.log("=====>>", err, JSON.stringify(findId))
                     // return
                     if (err) {
                         callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
