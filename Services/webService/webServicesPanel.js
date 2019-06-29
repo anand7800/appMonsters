@@ -819,12 +819,12 @@ showFilter = (data, header, callback) => {
 }
 deleteCart = (data, headers, callback) => {
     log("delete cart or remove", data)
-    var userId='5bfbb0bbfd72a14b693fa9a0';
-    // commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-    //     if (result) userId = result
-    //     else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    //     return
-    // })
+    var userId;
+    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+        if (result) userId = result
+        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        return
+    })
     if (!data.productId)
         callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     else {
