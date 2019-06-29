@@ -220,7 +220,7 @@ filterWeb = (data, callback) => {
             return
         }
         else {
-            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], result: []})
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], result: [] })
             return
         }
     })
@@ -819,12 +819,12 @@ showFilter = (data, header, callback) => {
 }
 deleteCart = (data, headers, callback) => {
     log("delete cart or remove", data)
-    var userId;
-    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-        if (result) userId = result
-        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    })
+    var userId='5bfbb0bbfd72a14b693fa9a0';
+    // commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+    //     if (result) userId = result
+    //     else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    //     return
+    // })
     if (!data.productId)
         callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     else {
@@ -834,18 +834,32 @@ deleteCart = (data, headers, callback) => {
             }
             else if (userFound) {
                 query = { userId: userId },
-                    update = {
-                        $pull: {
-                            orderDescription: {
-                                productId: data.productId
-                            }
-                        }
-                    }
-                bagModel.find({ $and: [query, { 'orderDescription.productId': data.productId }, { 'orderDescription.material': data.material }, { 'orderDescription.size': data.size }, { 'orderDescription.color': data.color }] }, { 'orderDescription.$': 1 }).exec((err, findId) => {
+                    
+                bagModel.find({
+                    $and: [
+                        { userId: userId },
+                        { 'orderDescription.productId': data.productId },
+                        { 'orderDescription.size': data.size },
+                        { 'orderDescription.material': data.material },
+                        
+                        { 'orderDescription.color': data.color }
+                    ]
+                }, { 'orderDescription.$': 1 }
+                ).exec((err, findId) => {
+                    // console.log("=====>>", err, JSON.stringify(findId))
+                    // return
                     if (err) {
                         callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                     }
                     else if (findId.length > 0) {
+                        let update = {
+                            $pull: {
+                                orderDescription: {
+                                    _id: findId[0].orderDescription[0]._id
+
+                                }
+                            }
+                        }
                         bagModel.update({ _id: findId[0]._id }, update, { new: true }).exec((err, deleted) => {
                             if (err) {
                                 callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
