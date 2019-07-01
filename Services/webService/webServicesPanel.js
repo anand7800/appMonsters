@@ -879,6 +879,140 @@ deleteCart = (data, headers, callback) => {
         })
     }
 }
+/* duplicate api for increase quantity  */
+
+increaseStockOnCartList = (data, header, callback) => {
+    log("list of cart")
+    var userId
+    commonFunction.jwtDecode(header.accesstoken, (err, token) => {
+        if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        else userId = token
+    })
+
+    if (!header.accesstoken || !data.productId || !data.productQuantity) {
+        return callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    }
+    let query = {
+        $and: [
+            {
+                userId: userId
+            },
+            {
+                'orderDescription.productId': data.productId,
+                'orderDescription.size': data.size,
+                'orderDescription.color': data.color,
+                'orderDescription.material': data.material,
+
+
+            }
+        ]
+    }
+    let update = {
+        $set: {
+            'orderDescription.$.productQuantity': data.productQuantity
+        }
+    }
+    bagModel.findOneAndUpdate(query, update, { new: true }).exec((err, updated) => {
+        console.log("============>>>>>>>", err, updated)
+    })
+    async.parallel({
+        bagDetails: (cb) => {
+            bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({
+                path: 'orderDescription.productId',
+                populate: [{
+                    path: 'varianceId',
+                },
+                {
+                    path: 'brandId',
+                }],
+            },
+            ).lean().exec((err, result) => {
+                if (err || !result) {
+                    let res = {}
+                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.LIST_EMPTY[data.lang], 'result': res })
+                }
+                else {
+                    cb(null, result)
+                }
+            })
+        }
+    }, (err, response) => {
+        // console.log(response.bagDetails.userId)
+        var address = response.bagDetails.userId.address
+        var payment = response.bagDetails.userId.paymentMethod
+        var main = []
+        var totalPrice = 0
+        async.forEachOf(response.bagDetails.orderDescription, async (value, key, callback) => {
+            // await commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
+            await varianceModel.findOne({
+                "productId": mongoose.Types.ObjectId(value.productId._id),
+                "variants": {
+                    "$elemMatch": {
+                        "$and": [
+                            {
+                                "color": value.color.toUpperCase(),
+                            },
+                            {
+                                "size": value.size.toUpperCase(),
+                            },
+                            {
+                                "material": value.material.toUpperCase(),
+                            }
+                        ]
+                    }
+                }
+            }, { 'variants.$': 1 }).lean().exec(async (err, varianceValue) => {
+              
+
+                console.log(parseFloat(varianceValue.variants[0].quantity) > parseFloat(value.productQuantity))
+
+
+                temp = {
+                    brand: value.productId.brandId.brandName,
+                    // orderId: value.orderId,
+                    productId: value.productId._id,
+                    productName: value.productId.productName,
+                    color: value.color ? value.color : "",
+                    size: value.size ? value.size : "",
+                    material: value.material ? value.material : "",
+                    price: varianceValue.variants[0].price,//!
+                    productQuantity: value.productQuantity,
+                    image: varianceValue.variants[0].image,//!
+                    description: value.productId.description,
+                    specifications: value.productId.specifications,
+                    inStock: parseFloat(varianceValue.variants[0].quantity) >= parseFloat(value.productQuantity) ? true : false,
+                    inStockQuantity: parseInt(varianceValue.variants[0].quantity)
+                }
+                totalPrice = totalPrice + (parseInt(varianceValue.variants[0].price) * parseInt(value.productQuantity))
+                await main.push(temp)
+                // console.log("###############",JSON.stringify(query))
+                callback()
+            })
+
+            // })
+        }, (err, responses => {
+            res = {}
+            res.productDetail = main
+            res.bagDetails = {
+                productPrice: totalPrice.toString(),
+                estimateTax: "0",
+                deliveryCharges: "0",
+                bagTotal: (totalPrice + 0 + 0).toString(),
+                productQuantity: response.bagDetails.orderDescription.length,
+            }
+            res.address = address
+            res.payment = payment
+            if (main.length == 0) {
+
+                // delete res.productDetail
+                // delete res.bagDetails
+                // delete res.address
+                // delete res.payment
+            }
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.list_of_wishList[data.lang], "result": res })
+        }))
+    })
+}
 
 module.exports = {
     dashboardGraph,
@@ -888,7 +1022,8 @@ module.exports = {
     verifyPayment,
     placeOrder,
     showFilter,
-    deleteCart
+    deleteCart,
+    increaseStockOnCartList
 }
 
 

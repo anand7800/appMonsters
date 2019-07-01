@@ -51,4 +51,10 @@ webRouter.post('/deleteCart', authHandler.verifyToken, (req, res) => {
         res.send(data)
     })
 })
+// api for increase stock in list of add to cart
+webRouter.post('/increaseStockOnCartList', authHandler.verifyToken, (req, res) => {
+    webHandler.increaseStockOnCartList(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
 module.exports = webRouter;
