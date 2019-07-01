@@ -882,7 +882,7 @@ deleteCart = (data, headers, callback) => {
 /* duplicate api for increase quantity  */
 
 increaseStockOnCartList = (data, header, callback) => {
-    log("list of cart")
+    log("increaseStockOnCartList",data,header.accesstoken)
     var userId
     commonFunction.jwtDecode(header.accesstoken, (err, token) => {
         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
