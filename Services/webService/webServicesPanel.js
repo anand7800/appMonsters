@@ -876,7 +876,7 @@ deleteCart = (data, headers, callback) => {
             else {
                 callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": "user not exists" });
             }
-        })
+        }) 
     }
 }
 /* duplicate api for increase quantity  */
