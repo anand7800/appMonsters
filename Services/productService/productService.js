@@ -3388,7 +3388,6 @@ wishList = (data, headers, callback) => {
     }, (err, response) => {
         var main = []
         async.forEachOf(response.getWishProduct.wishListDescription, (value, key, callback) => {
-
             commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
                 varianceModel.findOne({
                     "productId": mongoose.Types.ObjectId(value.productId._id),
@@ -3411,6 +3410,7 @@ wishList = (data, headers, callback) => {
                 }).exec((err, varianceValue) => {
                     console.log("result", err, varianceValue)
                     temp = {
+                        _id:value._id,
                         productId: value.productId._id,
                         brand: brandName.brandName,
                         productName: value.productId.productName,
@@ -3435,7 +3435,7 @@ wishList = (data, headers, callback) => {
 **********************************************************************/
 
 deleteWishItem = (data, headers, callback) => {
-    log("addToWishList")
+    log("deleteWishItem",data,headers.accesstoken)
     var userId
     commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
         if (result) userId = result

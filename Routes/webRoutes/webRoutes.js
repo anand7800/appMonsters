@@ -6,13 +6,13 @@ const authHandler = require('../../middleware/verifyToken');
 
 /* view sales of product main page of vendor */
 webRouter.post('/dashboardGraph', (req, res) => {
-    webHandler.dashboardGraph(req.body,req.headers, (data) => {
+    webHandler.dashboardGraph(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
 //most viwer in app and web as well
 webRouter.get('/viewerGraph', (req, res) => {
-    webHandler.viewerGraph(req.query,req.headers, (data) => {
+    webHandler.viewerGraph(req.query, req.headers, (data) => {
         res.send(data)
     })
 })
@@ -24,13 +24,13 @@ webRouter.post('/filterWeb', (req, res) => {
     })
 })
 /* checkout for website  */
-webRouter.post('/checkoutOrder',authHandler.verifyToken, (req, res) => {
-    webHandler.checkoutOrder(req.body,req.headers, (data) => {
+webRouter.post('/checkoutOrder', authHandler.verifyToken, (req, res) => {
+    webHandler.checkoutOrder(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
-webRouter.post('/verifyPayment',authHandler.verifyToken, (req, res) => {
-    webHandler.verifyPayment(req.body,req.headers, (data) => {
+webRouter.post('/verifyPayment', authHandler.verifyToken, (req, res) => {
+    webHandler.verifyPayment(req.body, req.headers, (data) => {
         res.send(data)
     })
 })
@@ -54,6 +54,19 @@ webRouter.post('/deleteCart', authHandler.verifyToken, (req, res) => {
 // api for increase stock in list of add to cart
 webRouter.post('/increaseStockOnCartList', authHandler.verifyToken, (req, res) => {
     webHandler.increaseStockOnCartList(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
+
+// addTowishList  
+webRouter.post('/addToWishList', authHandler.verifyToken, (req, res) => {
+    webHandler.addToWishList(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
+//deleteWishItem  
+webRouter.post('/deleteWishItem', authHandler.verifyToken, (req, res) => {
+    webHandler.deleteWishItem(req.body, req.headers, (data) => {
         res.send(data)
     })
 })

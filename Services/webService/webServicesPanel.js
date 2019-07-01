@@ -1014,6 +1014,140 @@ increaseStockOnCartList = (data, header, callback) => {
     })
 }
 
+/********************************************************************
+**************************addtowishlist*************************
+***********************************************************************/
+addToWishList = (data, headers, callback) => {
+    log("addToWishList", data)
+    var userId;
+    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+        if (result) userId = result
+        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        return
+    })
+    if (!data.productId)
+        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    else {
+
+        let temp = {
+            color: data.color.toUpperCase(),
+            material: data.material.toUpperCase(),
+            size: data.size.toUpperCase()
+        }
+        wishModel.findOne({ userId: userId }, (err, result) => {
+            if (err) throw err
+            else if (result) {
+                query = { userId: userId },
+                    update = {
+                        $push: {
+                            wishListDescription: {
+                                productId: data.productId,
+                                // orderPayment: "PENDING",
+                                orderStatus: "WISHLIST",
+                                productQuantity: data.productQuantity ? data.productQuantity : 1,
+                                size: data.size,
+                                color: data.color,
+                                material: data.material
+                            }
+                        }
+                    }
+                wishModel.find({ $and: [{ userId: userId }, { 'wishListDescription.productId': data.productId }, { 'wishListDescription.size': temp.size }, { 'wishListDescription.color': temp.color }, { 'wishListDescription.material': temp.material }] }, { 'wishListDescription.$': 1 }).exec((err, findOrder) => {
+                    if (err) throw err
+                    else if (findOrder.length > 0) {
+                        callback({ statusCode: util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.WISHLIST_PRODUCT_ALREADY_EXIST[data.lang] })
+                        return
+                    }
+                    else {
+                        wishModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, result) => {
+                            if (result) {
+                                temp = {}
+                                // log("lenght", result.wishListDescription.length)
+                                temp.length = result.wishListDescription.length
+                                callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_WISHLIST[data.lang], "result": result })
+                            }
+                            else {
+                                callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
+                            }
+                        })
+                    }
+                })
+            }
+            else {
+                log('not exist')
+                query = {
+                    userId: userId,
+                    wishListDescription: {
+                        productId: data.productId,
+                        // orderPayment: "PENDING",
+                        orderStatus: "WISHLIST",
+                        productQuantity: data.productQuantity ? data.productQuantity : 1,
+                        size: data.size,
+                        color: data.color,
+                        material: data.material
+                    }
+                }
+                wishModel.create(query, (err, result) => {
+                    if (result) {
+                        res = {}
+                        res.result = result
+                        temp = {}
+                        temp.length = 1
+                        callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_WISHLIST[data.lang] })
+                    }
+                    else {
+                        callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
+                    }
+                })
+            }
+        })
+    }
+}
+/********************************************************************
+**************************deleteWishItem*************************
+**********************************************************************/
+
+deleteWishItem = (data, headers, callback) => {
+    log("deleteWishItem",data,headers.accesstoken)
+    var userId
+    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+        if (result) userId = result
+        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        return
+    })
+    if (!data._id)
+        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] ,error:"_id key is missing "})
+    else {
+        wishModel.findOne({ userId: userId }, (err, result) => {
+            if (err) throw err
+            else if (result) {
+                query = { userId: userId },
+                    update = {
+                        $pull: {
+                            wishListDescription: {
+                                _id:data._id,
+                                // productId: data.productId,
+                                // orderPayment: "PENDING",
+                                // orderStatus: "WISHLIST",
+                                // productQuantity: data.productQuantity ? data.productQuantity : 1
+                            }
+                        }
+                    }
+                wishModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, result) => {
+                    log("orderModel==============>", err, result)
+                    if (result) {
+                        temp = {}
+                        log("lenght", result.wishListDescription.length)
+                        temp.length = result.wishListDescription.length
+                        callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PRODUCT_DELETE_WISHLIST[data.lang] })
+                    }
+                    else {
+                        callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
+                    }
+                })
+            }
+        })
+    }
+}
 module.exports = {
     dashboardGraph,
     viewerGraph,
@@ -1023,7 +1157,9 @@ module.exports = {
     placeOrder,
     showFilter,
     deleteCart,
-    increaseStockOnCartList
+    increaseStockOnCartList,
+    addToWishList,
+    deleteWishItem
 }
 
 
