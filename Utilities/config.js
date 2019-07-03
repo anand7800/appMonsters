@@ -47,7 +47,8 @@ let serverURLs = {
         "EMAIL_PORT": 465,
         "EMAIL_SECURE": true,
         "CRON_PATTERN": '1 * * * * *',
-        "web_url": 'https://www.waki.store/vendor'
+        "web_url": 'https://www.waki.store/vendor',
+        "webSite": "https://www.waki.store/shop"
     },
 
 }
@@ -78,8 +79,10 @@ let config = {
     },
     "web__url": {
         "host": `${serverURLs[environment].web_url}`
+    },
+    "website_url": {
+        "host": `${serverURLs[environment].webSite}`
     }
-
 };
 
 module.exports = {

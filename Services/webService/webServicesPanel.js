@@ -4,8 +4,8 @@ const productCategoryModelL3 = require('../../Models/ProductModel/productCategor
 const brandModel = require('../../Models/ProductModel/allBrandModel')
 const productModel = require('../../Models/ProductModel/productModel')
 const varianceModel = require('../../Models/ProductModel/productVariance')
-// const orderModel = require('../../Models/userModel/userOrder')
-// const placeOrderModel = require('../../Models/userModel/orderPlaced')
+    // const orderModel = require('../../Models/userModel/userOrder')
+    // const placeOrderModel = require('../../Models/userModel/orderPlaced')
 const userModel = require('../../Models/userModel/userPanelModel')
 const productOffer = require('../../Models/ProductModel/productofferModel')
 const bagModel = require('../../Models/ProductModel/bagModel')
@@ -15,7 +15,7 @@ const physicalStores = require('../../Models/userModel/addPhysicalStore')
 const userBusinessDetails = require('../../Models/userModel/businessDetail')
 
 const reviewAndRatingL5 = require('../../Models/userModel/reviewAndRating')
-//!newModel
+    //!newModel
 
 //chat model
 var chatHistory = require('../../Models/userModel/chatHistory');
@@ -44,8 +44,8 @@ const paytabs = require('paytabs_api'),
     adminService = require('../adminServices/adminServices');
 
 /* ************************************
-*************api's start here***********************
-************************************ */
+ *************api's start here***********************
+ ************************************ */
 
 
 dashboardGraph = (data, header, callback) => {
@@ -61,17 +61,16 @@ dashboardGraph = (data, header, callback) => {
                 userId = decodeId
             }
         })
-    }
-    else {
+    } else {
         callback({
-            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING,
+            "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
         return
     }
     async.waterfall([
-        function (cb) {
-            let query = [
-                {
+        function(cb) {
+            let query = [{
                     $unwind: '$orderPlacedDescription'
                 }, {
                     $match: {
@@ -116,8 +115,7 @@ dashboardGraph = (data, header, callback) => {
                 orderList.forEach(ele1 => {
                     if (ele == ele1.createdAt) {
                         amount = amount + ele1.amountPaid
-                    }
-                    else {
+                    } else {
                         amount = amount
                     }
                 })
@@ -125,13 +123,15 @@ dashboardGraph = (data, header, callback) => {
             })
         }
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], value: mainArr, month: month })
-        // callback(orderList)
+            // callback(orderList)
     })
 }
 
 viewerGraph = (data, header, callback) => {
     let userId;
-    let android = [], IOS = [], WEB = []
+    let android = [],
+        IOS = [],
+        WEB = []
     if (header.accesstoken) {
 
         commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
@@ -141,10 +141,10 @@ viewerGraph = (data, header, callback) => {
                 userId = decodeId
             }
         })
-    }
-    else {
+    } else {
         callback({
-            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING,
+            "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
         return
     }
@@ -154,8 +154,7 @@ viewerGraph = (data, header, callback) => {
     productModel.find(query, { viewBydevice: 1 }).exec((err, response) => {
         if (err || response.length == 0) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-        }
-        else {
+        } else {
 
             response.forEach(element => {
                 element.viewBydevice.filter(viewer => {
@@ -185,8 +184,7 @@ filterWeb = (data, callback) => {
         getProduct: (cb) => {
             let query = {
 
-                $and: [
-                    {
+                $and: [{
                         $or: [
                             { brandId: { $in: data.brandId } },
                             { subCategory: { $in: data.categoryId } },
@@ -218,8 +216,7 @@ filterWeb = (data, callback) => {
             })
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], result: mainArray })
             return
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], result: [] })
             return
         }
@@ -241,20 +238,18 @@ checkoutOrder = (data, headers, callback) => {
         if (bagList.result.inStockBag == false) {
             callback({ "statusCode": util.statusCode.OUT_OF_STOCK, "statusMessage": util.statusMessage.OUT_OF_STOCK[data.lang], result: bagList.result })
             return
-        }
-        else {
+        } else {
             async.parallel({
                 checkoutOrder: (cb) => {
                     bagModel.findOne({ userId: userId }, (err, result) => {
-                        async.forEachOf(result.orderDescription, async (value, key, callback) => {
-                            orderPlaced.findOne({ userId: userId }, async (err, userFind) => {
+                        async.forEachOf(result.orderDescription, async(value, key, callback) => {
+                            orderPlaced.findOne({ userId: userId }, async(err, userFind) => {
 
                                 var userFind = await checkOrderTableEmpty({ userId: userId })
 
                                 if (err) {
                                     callback(null)
-                                }
-                                else if (userFind) {
+                                } else if (userFind) {
                                     let obj = {
                                         "_id": value.productId,
                                         "color": value.color,
@@ -297,16 +292,13 @@ checkoutOrder = (data, headers, callback) => {
                                         }, { new: true, lean: true }, (err, orderPlaced) => {
                                             if (err) {
                                                 callback(null)
-                                            }
-                                            else if (orderPlaced) {
+                                            } else if (orderPlaced) {
                                                 callback(null, orderPlaced)
-                                            }
-                                            else {
+                                            } else {
                                                 callback(null)
                                             }
                                         })
-                                    }
-                                    else {
+                                    } else {
                                         orderPlaced.findOneAndUpdate({ userId: userId }, {
                                             $push: {
                                                 orderPlacedDescription: {
@@ -330,17 +322,14 @@ checkoutOrder = (data, headers, callback) => {
                                         }, { new: true, lean: true }, (err, orderPlaced) => {
                                             if (err) {
                                                 callback(null)
-                                            }
-                                            else if (orderPlaced) {
+                                            } else if (orderPlaced) {
                                                 callback(null, orderPlaced)
-                                            }
-                                            else {
+                                            } else {
                                                 callback(null)
                                             }
                                         })
                                     }
-                                }
-                                else {
+                                } else {
                                     /*not found */
                                     let obj = {
                                         "_id": value.productId,
@@ -376,8 +365,7 @@ checkoutOrder = (data, headers, callback) => {
 
                                         callback(null)
 
-                                    }
-                                    else {
+                                    } else {
                                         var ele = {
                                             sellerId: value.sellerId,
                                             productId: value.productId,
@@ -425,57 +413,58 @@ checkoutOrder = (data, headers, callback) => {
                     bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
                         if (err) {
                             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                        }
-                        else {
+                        } else {
                             console.log("---------delete bag------->>>", result)
                         }
                     })
                     callback({
-                        "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                        "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                        "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
                         "orderId": 'ORD' + orderId,
                         "orderPayment": data.orderPayment
                     })
-                }
-                else if (data.totalAmountPaid && data.orderPayment == 'PENDING') {
+                } else if (data.totalAmountPaid && data.orderPayment == 'PENDING') {
                     paytabs.createPayPage({
                         'merchant_email': configJson.payTabs.email,
                         'secret_key': configJson.payTabs.secret_key,
-                        'currency': 'SAR',//change this to the required currency
-                        'amount': data.totalAmountPaid,//change this to the required amount
-                        'site_url': 'www.techugo.com',//change this to reflect your site
-                        'title': 'Order for Shoes',//Change this to reflect your order title
-                        'quantity': 1,//Quantity of the product
+                        'currency': 'SAR', //change this to the required currency
+                        'amount': data.totalAmountPaid, //change this to the required amount
+                        'site_url': 'www.techugo.com', //change this to reflect your site
+                        'title': 'Order for Shoes', //Change this to reflect your order title
+                        'quantity': 1, //Quantity of the product
                         'unit_price': data.totalAmountPaid, //Quantity * price must be equal to amount
                         'products_per_title': 'Shoes', //Change this to your products
-                        'return_url': 'https://waki.store/shop/payment',//This should be your callback url
+                        'return_url': 'https://waki.store/shop/payment', //This should be your callback url
                         // 'return_url':'localhost:4200/payment',
-                        'cc_first_name': 'Samy',//Customer First Name
-                        'cc_last_name': 'Saad',//Customer Last Name
+                        'cc_first_name': 'Samy', //Customer First Name
+                        'cc_last_name': 'Saad', //Customer Last Name
                         'cc_phone_number': '00973', //Country code
                         'phone_number': '12332323', //Customer Phone
                         'billing_address': 'Address', //Billing Address
-                        'city': 'Manama',//Billing City
-                        'state': 'Manama',//Billing State
-                        'postal_code': '1234',//Postal Code
-                        'country': 'BHR',//Iso 3 country code
-                        'email': 'sumit@yopmail.com',//Customer Email
-                        'ip_customer': '192.101.101.101',//Pass customer IP here
-                        'ip_merchant': '192.101.101.101',//Change this to your server IP
-                        'address_shipping': 'Shipping',//Shipping Address
-                        'city_shipping': 'Manama',//Shipping City
-                        'state_shipping': 'Manama',//Shipping State
+                        'city': 'Manama', //Billing City
+                        'state': 'Manama', //Billing State
+                        'postal_code': '1234', //Postal Code
+                        'country': 'BHR', //Iso 3 country code
+                        'email': 'sumit@yopmail.com', //Customer Email
+                        'ip_customer': '192.101.101.101', //Pass customer IP here
+                        'ip_merchant': '192.101.101.101', //Change this to your server IP
+                        'address_shipping': 'Shipping', //Shipping Address
+                        'city_shipping': 'Manama', //Shipping City
+                        'state_shipping': 'Manama', //Shipping State
                         'postal_code_shipping': '973',
                         'country_shipping': 'BHR',
-                        'other_charges': 0,//Other chargs can be here
-                        'reference_no': 1234,//Pass the order id on your system for your reference
-                        'msg_lang': 'en',//The language for the response
-                        'cms_with_version': 'Nodejs Lib v1',//Feel free to change this
+                        'other_charges': 0, //Other chargs can be here
+                        'reference_no': 1234, //Pass the order id on your system for your reference
+                        'msg_lang': 'en', //The language for the response
+                        'cms_with_version': 'Nodejs Lib v1', //Feel free to change this
                     }, createPayPage);
+
                     function createPayPage(result) {
 
                         //Redirect your merchant to the payment link
                         callback({
-                            "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                            "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                            "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
                             "orderId": 'ORD' + orderId,
                             "orderPayment": data.orderPayment,
                             "Payment": result
@@ -491,7 +480,8 @@ checkoutOrder = (data, headers, callback) => {
 verifyPayment = (data, headers, callback) => {
     if (!data.pId) {
         callback({
-            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING,
+            "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
         return
     }
@@ -500,6 +490,7 @@ verifyPayment = (data, headers, callback) => {
         'secret_key': configJson.payTabs.secret_key,
         'payment_reference': data.pId
     }, verifyPayment);
+
     function verifyPayment(result) {
         console.log("verfiy payment--->", result)
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PAYMENT_DONE[data.lang], result: result })
@@ -512,8 +503,8 @@ verifyPayment = (data, headers, callback) => {
 }
 
 /********************************************************************
-**************************placeOrder*************************
-***********************************************************************/
+ **************************placeOrder*************************
+ ***********************************************************************/
 placeOrder = (data, headers, callback) => {
     log("placeOrder", data, headers.accesstoken)
     var userId;
@@ -526,16 +517,14 @@ placeOrder = (data, headers, callback) => {
     })
     if (!data.productId || !userId) {
         callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    }
-    else {
+    } else {
         async.parallel({
             getProdctdetail: (cb) => {
                 let query = {
                     "productId": mongoose.Types.ObjectId(data.productId),
                     "variants": {
                         "$elemMatch": {
-                            "$and": [
-                                {
+                            "$and": [{
                                     "color": data.color.toUpperCase(),
                                 },
                                 {
@@ -557,8 +546,7 @@ placeOrder = (data, headers, callback) => {
             orderPlaced.findOne({ userId: userId }, (err, userFind) => {
                 if (err) {
                     callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                }
-                else if (userFind) {
+                } else if (userFind) {
                     query = { userId: userId },
                         update = {
                             $push: {
@@ -582,13 +570,12 @@ placeOrder = (data, headers, callback) => {
                                 }
                             }
                         }
-                    // console.log("req", query)
+                        // console.log("req", query)
                     orderPlaced.findOneAndUpdate(query, update, { new: true, lean: true }, (err, orderPlaced) => {
                         log("---------->>>>>", err, orderPlaced)
                         if (err) {
                             callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                        }
-                        else if (orderPlaced) {
+                        } else if (orderPlaced) {
                             let notifyData = {
                                 msg: util.statusMessage.ORDER_PLACED[data.lang],
                                 productId: data.productId,
@@ -602,51 +589,53 @@ placeOrder = (data, headers, callback) => {
                                     // console.log("1659.....notifyAPI", err, result)
                                 })
                                 callback({
-                                    statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                    statusCode: util.statusCode.EVERYTHING_IS_OK,
+                                    "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
                                     "orderId": notifyData.orderId,
                                     "orderPayment": orderPayment
                                 })
-                            }
-                            else if (orderPayment == 'PENDING' && data.totalAmount) {
+                            } else if (orderPayment == 'PENDING' && data.totalAmount) {
                                 paytabs.createPayPage({
                                     'merchant_email': configJson.payTabs.email,
                                     'secret_key': configJson.payTabs.secret_key,
-                                    'currency': 'SAR',//change this to the required currency
-                                    'amount': data.totalAmount,//change this to the required amount
-                                    'site_url': 'www.techugo.com',//change this to reflect your site
-                                    'title': 'Order for Shoes',//Change this to reflect your order title
-                                    'quantity': 1,//Quantity of the product
+                                    'currency': 'SAR', //change this to the required currency
+                                    'amount': data.totalAmount, //change this to the required amount
+                                    'site_url': 'www.techugo.com', //change this to reflect your site
+                                    'title': 'Order for Shoes', //Change this to reflect your order title
+                                    'quantity': 1, //Quantity of the product
                                     'unit_price': data.totalAmount, //Quantity * price must be equal to amount
                                     'products_per_title': 'Shoes', //Change this to your products
-                                    'return_url': 'https://waki.store/shop/payment',//This should be your callback url
+                                    'return_url': 'https://waki.store/shop/payment', //This should be your callback url
                                     // 'return_url':'localhost:4200/payment',
-                                    'cc_first_name': 'Samy',//Customer First Name
-                                    'cc_last_name': 'Saad',//Customer Last Name
+                                    'cc_first_name': 'Samy', //Customer First Name
+                                    'cc_last_name': 'Saad', //Customer Last Name
                                     'cc_phone_number': '00973', //Country code
                                     'phone_number': '12332323', //Customer Phone
                                     'billing_address': 'Address', //Billing Address
-                                    'city': 'Manama',//Billing City
-                                    'state': 'Manama',//Billing State
-                                    'postal_code': '1234',//Postal Code
-                                    'country': 'BHR',//Iso 3 country code
-                                    'email': 'sumit@yopmail.com',//Customer Email
-                                    'ip_customer': '192.101.101.101',//Pass customer IP here
-                                    'ip_merchant': '192.101.101.101',//Change this to your server IP
-                                    'address_shipping': 'Shipping',//Shipping Address
-                                    'city_shipping': 'Manama',//Shipping City
-                                    'state_shipping': 'Manama',//Shipping State
+                                    'city': 'Manama', //Billing City
+                                    'state': 'Manama', //Billing State
+                                    'postal_code': '1234', //Postal Code
+                                    'country': 'BHR', //Iso 3 country code
+                                    'email': 'sumit@yopmail.com', //Customer Email
+                                    'ip_customer': '192.101.101.101', //Pass customer IP here
+                                    'ip_merchant': '192.101.101.101', //Change this to your server IP
+                                    'address_shipping': 'Shipping', //Shipping Address
+                                    'city_shipping': 'Manama', //Shipping City
+                                    'state_shipping': 'Manama', //Shipping State
                                     'postal_code_shipping': '973',
                                     'country_shipping': 'BHR',
-                                    'other_charges': 0,//Other chargs can be here
-                                    'reference_no': 1234,//Pass the order id on your system for your reference
-                                    'msg_lang': 'en',//The language for the response
-                                    'cms_with_version': 'Nodejs Lib v1',//Feel free to change this
+                                    'other_charges': 0, //Other chargs can be here
+                                    'reference_no': 1234, //Pass the order id on your system for your reference
+                                    'msg_lang': 'en', //The language for the response
+                                    'cms_with_version': 'Nodejs Lib v1', //Feel free to change this
                                 }, createPayPage);
+
                                 function createPayPage(result) {
 
                                     //Redirect your merchant to the payment link
                                     callback({
-                                        "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                        "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                                        "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
                                         "orderId": 'ORD' + orderId,
                                         "orderPayment": data.orderPayment,
                                         "Payment": result
@@ -654,13 +643,11 @@ placeOrder = (data, headers, callback) => {
                                     return
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
                         }
                     })
-                }
-                else {
+                } else {
                     log('not exist')
                     let query = {
                         userId: userId,
@@ -684,15 +671,14 @@ placeOrder = (data, headers, callback) => {
                         console.log('++++++++++++++>>>>>>', err, result)
                         if (err) {
                             callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                        }
-                        else if (result) {
+                        } else if (result) {
                             res = {}
                             res.result = result
                             temp = {}
                             temp.length = 1
-                            //! delete in addtocart
+                                //! delete in addtocart
                             commonAPI.deleteCart(userId, data.productId)
-                            //!
+                                //!
                             let notifyData = {
                                 msg: util.statusMessage.ORDER_PLACED[data.lang],
                                 productId: data.productId,
@@ -705,51 +691,53 @@ placeOrder = (data, headers, callback) => {
                                     // console.log("1666...notifyAPI", err, result)
                                 })
                                 callback({
-                                    statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                    statusCode: util.statusCode.EVERYTHING_IS_OK,
+                                    "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
                                     "orderId": notifyData.orderId,
                                     "orderPayment": orderPayment
                                 })
-                            }
-                            else {
+                            } else {
                                 paytabs.createPayPage({
                                     'merchant_email': configJson.payTabs.email,
                                     'secret_key': configJson.payTabs.secret_key,
-                                    'currency': 'SAR',//change this to the required currency
-                                    'amount': data.totalAmount,//change this to the required amount
-                                    'site_url': 'www.techugo.com',//change this to reflect your site
-                                    'title': 'Order for Shoes',//Change this to reflect your order title
-                                    'quantity': 1,//Quantity of the product
+                                    'currency': 'SAR', //change this to the required currency
+                                    'amount': data.totalAmount, //change this to the required amount
+                                    'site_url': 'www.techugo.com', //change this to reflect your site
+                                    'title': 'Order for Shoes', //Change this to reflect your order title
+                                    'quantity': 1, //Quantity of the product
                                     'unit_price': data.totalAmount, //Quantity * price must be equal to amount
                                     'products_per_title': 'Shoes', //Change this to your products
-                                    'return_url': 'https://waki.store/shop/payment',//This should be your callback url
+                                    'return_url': 'https://waki.store/shop/payment', //This should be your callback url
                                     // 'return_url':'localhost:4200/payment',
-                                    'cc_first_name': 'Samy',//Customer First Name
-                                    'cc_last_name': 'Saad',//Customer Last Name
+                                    'cc_first_name': 'Samy', //Customer First Name
+                                    'cc_last_name': 'Saad', //Customer Last Name
                                     'cc_phone_number': '00973', //Country code
                                     'phone_number': '12332323', //Customer Phone
                                     'billing_address': 'Address', //Billing Address
-                                    'city': 'Manama',//Billing City
-                                    'state': 'Manama',//Billing State
-                                    'postal_code': '1234',//Postal Code
-                                    'country': 'BHR',//Iso 3 country code
-                                    'email': 'sumit@yopmail.com',//Customer Email
-                                    'ip_customer': '192.101.101.101',//Pass customer IP here
-                                    'ip_merchant': '192.101.101.101',//Change this to your server IP
-                                    'address_shipping': 'Shipping',//Shipping Address
-                                    'city_shipping': 'Manama',//Shipping City
-                                    'state_shipping': 'Manama',//Shipping State
+                                    'city': 'Manama', //Billing City
+                                    'state': 'Manama', //Billing State
+                                    'postal_code': '1234', //Postal Code
+                                    'country': 'BHR', //Iso 3 country code
+                                    'email': 'sumit@yopmail.com', //Customer Email
+                                    'ip_customer': '192.101.101.101', //Pass customer IP here
+                                    'ip_merchant': '192.101.101.101', //Change this to your server IP
+                                    'address_shipping': 'Shipping', //Shipping Address
+                                    'city_shipping': 'Manama', //Shipping City
+                                    'state_shipping': 'Manama', //Shipping State
                                     'postal_code_shipping': '973',
                                     'country_shipping': 'BHR',
-                                    'other_charges': 0,//Other chargs can be here
-                                    'reference_no': 1234,//Pass the order id on your system for your reference
-                                    'msg_lang': 'en',//The language for the response
-                                    'cms_with_version': 'Nodejs Lib v1',//Feel free to change this
+                                    'other_charges': 0, //Other chargs can be here
+                                    'reference_no': 1234, //Pass the order id on your system for your reference
+                                    'msg_lang': 'en', //The language for the response
+                                    'cms_with_version': 'Nodejs Lib v1', //Feel free to change this
                                 }, createPayPage);
+
                                 function createPayPage(result) {
 
                                     //Redirect your merchant to the payment link
                                     callback({
-                                        "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                        "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                                        "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
                                         "orderId": 'ORD' + orderId,
                                         "orderPayment": data.orderPayment,
                                         "Payment": result
@@ -757,8 +745,7 @@ placeOrder = (data, headers, callback) => {
                                     return
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
                         }
                     })
@@ -766,11 +753,11 @@ placeOrder = (data, headers, callback) => {
                 //!!! delete in addtocart
                 commonAPI.deleteCart(userId, data.productId)
                 let temp = {
-                    varianceId: response.getProdctdetail.variants[0]._id,
-                    stock: (parseInt(response.getProdctdetail.variants[0].quantity) - parseInt(data.productQuantity)).toString(),
-                    lang: "en"
-                }
-                /* decreament quantity on main model */
+                        varianceId: response.getProdctdetail.variants[0]._id,
+                        stock: (parseInt(response.getProdctdetail.variants[0].quantity) - parseInt(data.productQuantity)).toString(),
+                        lang: "en"
+                    }
+                    /* decreament quantity on main model */
                 if (orderPayment == 'COD') {
                     adminService.updateVarianceStock(temp, (err, response) => {
                         console.log(err, response)
@@ -798,7 +785,8 @@ showFilter = (data, header, callback) => {
         }
 
     }, (err, response) => {
-        let brand = [], category = [];
+        let brand = [],
+            category = [];
         response.getbrand.forEach(element => {
 
             brand.push(element.brandId)
@@ -812,77 +800,72 @@ showFilter = (data, header, callback) => {
         brand = _.unionBy(brand, '_id')
         category = _.unionBy(category, '_id')
         callback({
-            statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],
+            statusCode: util.statusCode.EVERYTHING_IS_OK,
+            "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],
             result: { brand: brand, category: category }
         })
     })
 }
 deleteCart = (data, headers, callback) => {
-    log("delete cart or remove", data)
-    var userId;
-    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-        if (result) userId = result
-        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    })
-    if (!data.productId)
-        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    else {
-        bagModel.findOne({ userId: userId }, (err, userFound) => {
-            if (err) {
-                callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-            }
-            else if (userFound) {
-                query = { userId: userId },
-                    
-                bagModel.find({
-                    $and: [
-                        { userId: userId },
-                        { 'orderDescription.productId': data.productId },
-                        { 'orderDescription.size': data.size },
-                        { 'orderDescription.material': data.material },
-                        { 'orderDescription.color': data.color }
-                    ]
-                }, { 'orderDescription.$': 1 }
-                ).exec((err, findId) => {
-                    console.log("=====>>", err, JSON.stringify(findId))
-                    // return
-                    if (err) {
-                        callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                    }
-                    else if (findId.length > 0) {
-                        let update = {
-                            $pull: {
-                                orderDescription: {
-                                    _id: findId[0].orderDescription[0]._id
+        log("delete cart or remove", data)
+        var userId;
+        commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+            if (result) userId = result
+            else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        })
+        if (!data.productId)
+            callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        else {
+            bagModel.findOne({ userId: userId }, (err, userFound) => {
+                if (err) {
+                    callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                } else if (userFound) {
+                    query = { userId: userId },
 
-                                }
-                            }
-                        }
-                        bagModel.update({ _id: findId[0]._id }, update, { new: true }).exec((err, deleted) => {
+                        bagModel.find({
+                            $and: [
+                                { userId: userId },
+                                { 'orderDescription.productId': data.productId },
+                                { 'orderDescription.size': data.size },
+                                { 'orderDescription.material': data.material },
+                                { 'orderDescription.color': data.color }
+                            ]
+                        }, { 'orderDescription.$': 1 }).exec((err, findId) => {
+                            console.log("=====>>", err, JSON.stringify(findId))
+                                // return
                             if (err) {
                                 callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                            }
-                            else {
-                                callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PRODUCT_DELETE_CART[data.lang] })
+                            } else if (findId.length > 0) {
+                                let update = {
+                                    $pull: {
+                                        orderDescription: {
+                                            _id: findId[0].orderDescription[0]._id
+
+                                        }
+                                    }
+                                }
+                                bagModel.update({ _id: findId[0]._id }, update, { new: true }).exec((err, deleted) => {
+                                    if (err) {
+                                        callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                                    } else {
+                                        callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PRODUCT_DELETE_CART[data.lang] })
+                                    }
+                                })
+                            } else {
+                                callback({ statusCode: util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PRODUCT_NOT_FOUND[data.lang] });
                             }
                         })
-                    }
-                    else {
-                        callback({ statusCode: util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PRODUCT_NOT_FOUND[data.lang] });
-                    }
-                })
-            }
-            else {
-                callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": "user not exists" });
-            }
-        }) 
+                } else {
+                    callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": "user not exists" });
+                }
+            })
+        }
     }
-}
-/* duplicate api for increase quantity  */
+    /* duplicate api for increase quantity  */
 
 increaseStockOnCartList = (data, header, callback) => {
-    log("increaseStockOnCartList",data,header.accesstoken)
+    log("increaseStockOnCartList", data, header.accesstoken)
     var userId
     commonFunction.jwtDecode(header.accesstoken, (err, token) => {
         if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
@@ -893,8 +876,7 @@ increaseStockOnCartList = (data, header, callback) => {
         return callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
     let query = {
-        $and: [
-            {
+        $and: [{
                 userId: userId
             },
             {
@@ -920,18 +902,17 @@ increaseStockOnCartList = (data, header, callback) => {
             bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({
                 path: 'orderDescription.productId',
                 populate: [{
-                    path: 'varianceId',
-                },
-                {
-                    path: 'brandId',
-                }],
-            },
-            ).lean().exec((err, result) => {
+                        path: 'varianceId',
+                    },
+                    {
+                        path: 'brandId',
+                    }
+                ],
+            }, ).lean().exec((err, result) => {
                 if (err || !result) {
                     let res = {}
                     callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.LIST_EMPTY[data.lang], 'result': res })
-                }
-                else {
+                } else {
                     cb(null, result)
                 }
             })
@@ -942,14 +923,13 @@ increaseStockOnCartList = (data, header, callback) => {
         var payment = response.bagDetails.userId.paymentMethod
         var main = []
         var totalPrice = 0
-        async.forEachOf(response.bagDetails.orderDescription, async (value, key, callback) => {
+        async.forEachOf(response.bagDetails.orderDescription, async(value, key, callback) => {
             // await commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
             await varianceModel.findOne({
                 "productId": mongoose.Types.ObjectId(value.productId._id),
                 "variants": {
                     "$elemMatch": {
-                        "$and": [
-                            {
+                        "$and": [{
                                 "color": value.color.toUpperCase(),
                             },
                             {
@@ -961,8 +941,8 @@ increaseStockOnCartList = (data, header, callback) => {
                         ]
                     }
                 }
-            }, { 'variants.$': 1 }).lean().exec(async (err, varianceValue) => {
-              
+            }, { 'variants.$': 1 }).lean().exec(async(err, varianceValue) => {
+
 
                 console.log(parseFloat(varianceValue.variants[0].quantity) > parseFloat(value.productQuantity))
 
@@ -975,9 +955,9 @@ increaseStockOnCartList = (data, header, callback) => {
                     color: value.color ? value.color : "",
                     size: value.size ? value.size : "",
                     material: value.material ? value.material : "",
-                    price: varianceValue.variants[0].price,//!
+                    price: varianceValue.variants[0].price, //!
                     productQuantity: value.productQuantity,
-                    image: varianceValue.variants[0].image,//!
+                    image: varianceValue.variants[0].image, //!
                     description: value.productId.description,
                     specifications: value.productId.specifications,
                     inStock: parseFloat(varianceValue.variants[0].quantity) >= parseFloat(value.productQuantity) ? true : false,
@@ -985,7 +965,7 @@ increaseStockOnCartList = (data, header, callback) => {
                 }
                 totalPrice = totalPrice + (parseInt(varianceValue.variants[0].price) * parseInt(value.productQuantity))
                 await main.push(temp)
-                // console.log("###############",JSON.stringify(query))
+                    // console.log("###############",JSON.stringify(query))
                 callback()
             })
 
@@ -1015,99 +995,95 @@ increaseStockOnCartList = (data, header, callback) => {
 }
 
 /********************************************************************
-**************************addtowishlist*************************
-***********************************************************************/
+ **************************addtowishlist*************************
+ ***********************************************************************/
 addToWishList = (data, headers, callback) => {
-    log("addToWishList", data)
-    var userId;
-    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-        if (result) userId = result
-        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    })
-    if (!data.productId)
-        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    else {
+        log("addToWishList", data)
+        var userId;
+        commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+            if (result) userId = result
+            else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        })
+        if (!data.productId)
+            callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        else {
 
-        let temp = {
-            color: data.color.toUpperCase(),
-            material: data.material.toUpperCase(),
-            size: data.size.toUpperCase()
-        }
-        wishModel.findOne({ userId: userId }, (err, result) => {
-            if (err) throw err
-            else if (result) {
-                query = { userId: userId },
-                    update = {
-                        $push: {
-                            wishListDescription: {
-                                productId: data.productId,
-                                // orderPayment: "PENDING",
-                                orderStatus: "WISHLIST",
-                                productQuantity: data.productQuantity ? data.productQuantity : 1,
-                                size: data.size,
-                                color: data.color,
-                                material: data.material
+            let temp = {
+                color: data.color.toUpperCase(),
+                material: data.material.toUpperCase(),
+                size: data.size.toUpperCase()
+            }
+            wishModel.findOne({ userId: userId }, (err, result) => {
+                if (err) throw err
+                else if (result) {
+                    query = { userId: userId },
+                        update = {
+                            $push: {
+                                wishListDescription: {
+                                    productId: data.productId,
+                                    // orderPayment: "PENDING",
+                                    orderStatus: "WISHLIST",
+                                    productQuantity: data.productQuantity ? data.productQuantity : 1,
+                                    size: data.size,
+                                    color: data.color,
+                                    material: data.material
+                                }
                             }
                         }
+                    wishModel.find({ $and: [{ userId: userId }, { 'wishListDescription.productId': data.productId }, { 'wishListDescription.size': temp.size }, { 'wishListDescription.color': temp.color }, { 'wishListDescription.material': temp.material }] }, { 'wishListDescription.$': 1 }).exec((err, findOrder) => {
+                        if (err) throw err
+                        else if (findOrder.length > 0) {
+                            callback({ statusCode: util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.WISHLIST_PRODUCT_ALREADY_EXIST[data.lang] })
+                            return
+                        } else {
+                            wishModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, result) => {
+                                if (result) {
+                                    temp = {}
+                                        // log("lenght", result.wishListDescription.length)
+                                    temp.length = result.wishListDescription.length
+                                    callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_WISHLIST[data.lang], "result": result })
+                                } else {
+                                    callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
+                                }
+                            })
+                        }
+                    })
+                } else {
+                    log('not exist')
+                    query = {
+                        userId: userId,
+                        wishListDescription: {
+                            productId: data.productId,
+                            // orderPayment: "PENDING",
+                            orderStatus: "WISHLIST",
+                            productQuantity: data.productQuantity ? data.productQuantity : 1,
+                            size: data.size,
+                            color: data.color,
+                            material: data.material
+                        }
                     }
-                wishModel.find({ $and: [{ userId: userId }, { 'wishListDescription.productId': data.productId }, { 'wishListDescription.size': temp.size }, { 'wishListDescription.color': temp.color }, { 'wishListDescription.material': temp.material }] }, { 'wishListDescription.$': 1 }).exec((err, findOrder) => {
-                    if (err) throw err
-                    else if (findOrder.length > 0) {
-                        callback({ statusCode: util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.WISHLIST_PRODUCT_ALREADY_EXIST[data.lang] })
-                        return
-                    }
-                    else {
-                        wishModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, result) => {
-                            if (result) {
-                                temp = {}
-                                // log("lenght", result.wishListDescription.length)
-                                temp.length = result.wishListDescription.length
-                                callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_WISHLIST[data.lang], "result": result })
-                            }
-                            else {
-                                callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
-                            }
-                        })
-                    }
-                })
-            }
-            else {
-                log('not exist')
-                query = {
-                    userId: userId,
-                    wishListDescription: {
-                        productId: data.productId,
-                        // orderPayment: "PENDING",
-                        orderStatus: "WISHLIST",
-                        productQuantity: data.productQuantity ? data.productQuantity : 1,
-                        size: data.size,
-                        color: data.color,
-                        material: data.material
-                    }
+                    wishModel.create(query, (err, result) => {
+                        if (result) {
+                            res = {}
+                            res.result = result
+                            temp = {}
+                            temp.length = 1
+                            callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_WISHLIST[data.lang] })
+                        } else {
+                            callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
+                        }
+                    })
                 }
-                wishModel.create(query, (err, result) => {
-                    if (result) {
-                        res = {}
-                        res.result = result
-                        temp = {}
-                        temp.length = 1
-                        callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_WISHLIST[data.lang] })
-                    }
-                    else {
-                        callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
-                    }
-                })
-            }
-        })
+            })
+        }
     }
-}
-/********************************************************************
-**************************deleteWishItem*************************
-**********************************************************************/
+    /********************************************************************
+     **************************deleteWishItem*************************
+     **********************************************************************/
 
 deleteWishItem = (data, headers, callback) => {
-    log("deleteWishItem",data,headers.accesstoken)
+    log("deleteWishItem", data, headers.accesstoken)
     var userId
     commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
         if (result) userId = result
@@ -1115,7 +1091,7 @@ deleteWishItem = (data, headers, callback) => {
         return
     })
     if (!data._id)
-        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] ,error:"_id key is missing "})
+        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], error: "_id key is missing " })
     else {
         wishModel.findOne({ userId: userId }, (err, result) => {
             if (err) throw err
@@ -1124,7 +1100,7 @@ deleteWishItem = (data, headers, callback) => {
                     update = {
                         $pull: {
                             wishListDescription: {
-                                _id:data._id,
+                                _id: data._id,
                                 // productId: data.productId,
                                 // orderPayment: "PENDING",
                                 // orderStatus: "WISHLIST",
@@ -1139,8 +1115,7 @@ deleteWishItem = (data, headers, callback) => {
                         log("lenght", result.wishListDescription.length)
                         temp.length = result.wishListDescription.length
                         callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PRODUCT_DELETE_WISHLIST[data.lang] })
-                    }
-                    else {
+                    } else {
                         callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
                     }
                 })
@@ -1151,73 +1126,111 @@ deleteWishItem = (data, headers, callback) => {
 
 /* update profile //website  */
 updateProfile = (data, headers, callback) => {
-    console.log("api hitted ")
-    var userId
-    commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
-        // console.log("^^^^", err, decodeId)
-        if (err) throw err
-        else {
-            userId = decodeId
-        }
-    })
-
-    async.parallel({
-        uploadImage: (cb) => {
-            commonFunction.uploadImg(data.image, (err, image) => {
-                console.log(err, image)
-                if (err) cb(null)
-                else if (!image) cb(null)
-                else cb(null, image)
-            })
-        },
-        getUser: (cb) => {
-            userModel.findOne({ _id: userId }).exec((err, userinfo) => {
-                // console.log(err, userinfo)
-                if (err) cb(null)
-                else if (!userinfo) cb(null)
-                else cb(null, userinfo)
-            })
-        }
-    }, (err, response) => {
-        console.log("######", err, response)
-        if (response.uploadImage) {
-            console.log('33')
-        }
-        let query = {
-            _id: userId
-        }
-        let update = {
-            $set: {
-                image: response.uploadImage ? response.uploadImage : response.getUser.image,
-                firstName: data.firstName ? data.firstName : response.getuser.firstName,
-                phone: data.phone ? data.phone : response.getuser.phone
-            }
-        }
-        console.log('@@@@@@@@@@@@@@@2', query, update)
-        userModel.findOneAndUpdate(query, update, { new: true }).exec((err, success) => {
-            console.log(err, success)
-            if (success) {
-                result = {
-                    "_id": success._id,
-                    "firstName": success.firstName,
-                    "lastName": success.lastName,
-                    "email": success.email,
-                    "image": success.image,
-                    "addressAdded": success.isAddressAdded,
-                    "phone": success.phone,
-                    "countryCode": success.countryCode,
-                    "paymentAdded": success.paymentAdded,
-                    "address": success.address,
-                    "paymentMethod": success.paymentMethod,
-                    "countryCode": success.countryCode,
-                    "isBussinessAdded": success.isBussinessAdded
-                }
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PROFILE_UPDATE[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(success._id) })
-            } else {
-                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+        console.log("api hitted ")
+        var userId
+        commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
+            // console.log("^^^^", err, decodeId)
+            if (err) throw err
+            else {
+                userId = decodeId
             }
         })
-    })
+
+        async.parallel({
+            uploadImage: (cb) => {
+                commonFunction.uploadImg(data.image, (err, image) => {
+                    console.log(err, image)
+                    if (err) cb(null)
+                    else if (!image) cb(null)
+                    else cb(null, image)
+                })
+            },
+            getUser: (cb) => {
+                userModel.findOne({ _id: userId }).exec((err, userinfo) => {
+                    // console.log(err, userinfo)
+                    if (err) cb(null)
+                    else if (!userinfo) cb(null)
+                    else cb(null, userinfo)
+                })
+            }
+        }, (err, response) => {
+            console.log("######", err, response)
+            if (response.uploadImage) {
+                console.log('33')
+            }
+            let query = {
+                _id: userId
+            }
+            let update = {
+                $set: {
+                    image: response.uploadImage ? response.uploadImage : response.getUser.image,
+                    firstName: data.firstName ? data.firstName : response.getuser.firstName,
+                    phone: data.phone ? data.phone : response.getuser.phone
+                }
+            }
+            console.log('@@@@@@@@@@@@@@@2', query, update)
+            userModel.findOneAndUpdate(query, update, { new: true }).exec((err, success) => {
+                console.log(err, success)
+                if (success) {
+                    result = {
+                        "_id": success._id,
+                        "firstName": success.firstName,
+                        "lastName": success.lastName,
+                        "email": success.email,
+                        "image": success.image,
+                        "addressAdded": success.isAddressAdded,
+                        "phone": success.phone,
+                        "countryCode": success.countryCode,
+                        "paymentAdded": success.paymentAdded,
+                        "address": success.address,
+                        "paymentMethod": success.paymentMethod,
+                        "countryCode": success.countryCode,
+                        "isBussinessAdded": success.isBussinessAdded
+                    }
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PROFILE_UPDATE[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(success._id) })
+                } else {
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                }
+            })
+        })
+    }
+    // forgot Password of user website 
+forgotPassword = (data, callback) => {
+    console.log("---------->>>", data)
+    obj = data
+    if (!obj) {
+        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        return
+    } else {
+        userModel.find({ email: obj.email }, (err, found) => {
+            // console.log(err, found)
+            if (err) {
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                return
+            } else if (!found.length > 0) {
+                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.EMAIL_NOT_REGISTERED[data.lang] })
+                return
+            } else {
+                query = {
+                    email: data.email
+                }
+                var forgotToken = commonFunction.generateToken();
+                var update = {
+                    "forgotToken": forgotToken
+                }
+                userModel.findOneAndUpdate(query, update, { new: true }, (err, succ) => {
+                    if (err) {
+                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                    }
+                })
+                commonFunction.sendMailforwebsite(data.email, "FORGOT PASSWORD LINK", forgotToken, (err, res) => {
+                    log("WWWWWWWw", err, res)
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.EMAIL_SENT[data.lang] })
+                });
+
+            }
+        })
+    }
 }
 module.exports = {
     dashboardGraph,
@@ -1231,7 +1244,8 @@ module.exports = {
     increaseStockOnCartList,
     addToWishList,
     deleteWishItem,
-    updateProfile
+    updateProfile,
+    forgotPassword
 }
 
 
@@ -1240,18 +1254,17 @@ module.exports = {
 
 async function getVarianceData(data) {
     temp = {
-        color: data.color.toUpperCase(),
-        size: data.size.toUpperCase(),
-        material: data.material.toUpperCase(),
-    }
-    // console.log(temp)
+            color: data.color.toUpperCase(),
+            size: data.size.toUpperCase(),
+            material: data.material.toUpperCase(),
+        }
+        // console.log(temp)
     query1 = {
         "productId": mongoose.Types.ObjectId(data._id),
         "variants": {
             "$elemMatch": {
                 // "closed": false,
-                "$and": [
-                    {
+                "$and": [{
                         "color": temp.color,
                     },
                     {

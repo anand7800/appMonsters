@@ -8,46 +8,155 @@ const paytabs = require('paytabs_api');
 
 //!signup 
 signup = (data, callback) => {
-    obj = data
-    if (!obj) {
-        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
+        obj = data
+        if (!obj) {
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        } else {
+            userModel.find({ email: obj.email }, (err, found) => {
+                console.log(err, found)
+                if (err) {
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                    return
+                } else if (found.length > 0) {
+                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_EXISTS[data.lang] })
+                    return
+                } else {
+                    var user = new userModel({
+                        firstName: data.firstName,
+                        lastName: data.lastName,
+                        password: util.encryptData(data.password),
+                        email: data.email,
+                        phone: data.phone,
+                        countryCode: data.countryCode,
+                        userType: data.userType ? data.userType : "user"
+                    })
+                    user.save((err, succ) => {
+                        log("ksdf")
+
+                        log(err, succ)
+                        if (err) {
+                            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+                            return
+                        } else if (!succ) {
+                            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
+                            return
+                        } else {
+                            var result = {
+                                "_id": succ._id,
+                                "firstName": succ.firstName,
+                                "lastName": succ.lastName,
+                                "email": succ.email,
+                                "image": succ.image,
+                                "addressAdded": succ.isAddressAdded,
+                                "phone": succ.phone,
+                                "countryCode": succ.countryCode,
+                                "paymentAdded": succ.paymentAdded,
+                                "address": succ.address,
+                                "paymentMethod": succ.paymentMethod,
+                            }
+                            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.REGISTRATION_DONE[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
+                            return
+                        }
+                    })
+                }
+            })
+        }
     }
-    else {
-        userModel.find({ email: obj.email }, (err, found) => {
-            console.log(err, found)
+    //!login
+login = (data, callback) => {
+    log("login api is hitted", data)
+    obj = data
+    var update = {
+        lastLogin: Date.now()
+    };
+    var query = { email: obj.email, userType: data.userType }
+
+    if (!data) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], error: data })
+        return
+    } else {
+        userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod isBussinessAdded countryCode status userType parentId').exec((err, succ) => {
+            // console.log(err, succ)
+            // console.log('2222222222222222222', succ)
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                 return
-            }
-            else if (found.length > 0) {
-                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_EXISTS[data.lang] })
+            } else if (succ == null) {
+                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
                 return
+            } else {
+                var hash = util.encryptData(data.password)
+                if (succ.password == hash) {
+                    let address = []
+                    succ.address = succ.address.filter(e => {
+                        if (e.status == "ACTIVE") {
+                            return true
+                        }
+                    })
+                    result = {
+                            "_id": succ._id,
+                            "firstName": succ.firstName,
+                            "lastName": succ.lastName,
+                            "email": succ.email,
+                            "image": succ.image,
+                            "addressAdded": succ.address.length > 0 ? true : false,
+                            "phone": succ.phone,
+                            "countryCode": succ.countryCode ? succ.countryCode : "",
+                            "paymentAdded": succ.paymentAdded,
+                            "address": succ.address,
+                            "paymentMethod": succ.paymentMethod,
+                            // "countryCode": succ.countryCode,
+                            "isBussinessAdded": succ.userType == "staff" ? true : succ.isBussinessAdded,
+                            'status': succ.status,
+                            'userType': succ.userType
+                        }
+                        // console.log(succ.userType == "staff" ? succ.parentId : false)
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ.userType == "staff" ? succ.parentId : succ._id) })
+                        // commonFunction.android_notification("fdUDE4j000M:APA91bEkgqRGHyIqHEYhhpbYA3n2mxYohNh1RIOEUvQRlBFp1SCYUS6cwOTtAdNZ2RbwwgL4CcYyzLDCz0Geh6iVjeOEioKKq0JgRgKJB9GAEilLX5pLAo1NUly8ofZnIVQYMBuIwXcR", "msg", "chatType", "title", "sendorId", "senderName", "type")
+                    if (succ.deviceType == 2) {
+                        commonFunction.IOS_NOTIFICATION(succ.deviceToken, "Login Successfully", "Login", "WAKI", "sendorId", "senderName", "Login")
+                    } else if (succ.deviceType == 1) {
+                        commonFunction.android_notification(succ.deviceToken, "Login Successfully", "Login", "WAKI", "sendorId", "senderName", "Login")
+                    }
+                } else {
+                    callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.INCORRECT_CREDENTIALS[data.lang] })
+                }
             }
-            else {
-                var user = new userModel({
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    password: util.encryptData(data.password),
-                    email: data.email,
-                    phone: data.phone,
-                    countryCode: data.countryCode,
-                    userType: data.userType ? data.userType : "user"
-                })
-                user.save((err, succ) => {
-                    log("ksdf")
+        })
+    }
+}
 
-                    log(err, succ)
-                    if (err) {
-                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-                        return
-                    }
-                    else if (!succ) {
-                        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
-                        return
-                    }
-                    else {
-                        var result = {
+//!social login
+socialLogin = (data, callback) => {
+        // return
+        console.log('request', data)
+        obj = data
+        query = {
+            'social.socialId': data.socialId,
+            "social.socialType": data.socialType,
+            "firstName": data.firstName,
+            "lastName": data.lastName,
+            "email": data.email,
+            "phone": data.phone,
+            "countryCode": data.countryCode
+        }
+        var update = {
+            lastLogin: Date.now()
+        };
+        if (!obj) {
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        } else {
+            userModel.find({ email: data.email }, (err, found) => {
+                console.log(err, found)
+                if (err) {
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                    return
+                } else if (found.length > 0) {
+                    userModel.findOneAndUpdate({ email: data.email }, { $set: { 'social.socialId': data.socialId, 'social.socialType': data.socialType } }, { new: true }).exec((err, succ) => {
+
+                        let temp = {
                             "_id": succ._id,
                             "firstName": succ.firstName,
                             "lastName": succ.lastName,
@@ -58,183 +167,58 @@ signup = (data, callback) => {
                             "countryCode": succ.countryCode,
                             "paymentAdded": succ.paymentAdded,
                             "address": succ.address,
-                            "paymentMethod": succ.paymentMethod,
-                        }
-                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.REGISTRATION_DONE[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
-                        return
-                    }
-                })
-            }
-        })
-    }
-}
-//!login
-login = (data, callback) => {
-    log("login api is hitted", data)
-    obj = data
-    var update = {
-        lastLogin: Date.now()
-    };
-    var query = { email: obj.email, userType: data.userType }
-
-    if (!data ) {
-        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], error: data })
-        return
-    }
-    else {
-        userModel.findOneAndUpdate(query, update).select('firstName paymentAdded isAddressAdded password  lastName email phone address image paymentMethod isBussinessAdded countryCode status userType parentId').exec((err, succ) => {
-            // console.log(err, succ)
-            // console.log('2222222222222222222', succ)
-            if (err) {
-                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                return
-            }
-            else if (succ == null) {
-                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
-                return
-            }
-            else {
-                var hash = util.encryptData(data.password)
-                if (succ.password == hash) {
-                    let address = []
-                    succ.address = succ.address.filter(e => {
-                        if (e.status == "ACTIVE") {
-                            return true
-                        }
-                    })
-                    result = {
-                        "_id": succ._id,
-                        "firstName": succ.firstName,
-                        "lastName": succ.lastName,
-                        "email": succ.email,
-                        "image": succ.image,
-                        "addressAdded": succ.address.length > 0 ? true : false,
-                        "phone": succ.phone,
-                        "countryCode": succ.countryCode ? succ.countryCode : "",
-                        "paymentAdded": succ.paymentAdded,
-                        "address": succ.address,
-                        "paymentMethod": succ.paymentMethod,
-                        // "countryCode": succ.countryCode,
-                        "isBussinessAdded": succ.userType == "staff" ? true : succ.isBussinessAdded,
-                        'status': succ.status,
-                        'userType': succ.userType
-                    }
-                    // console.log(succ.userType == "staff" ? succ.parentId : false)
-                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ.userType == "staff" ? succ.parentId : succ._id) })
-                    // commonFunction.android_notification("fdUDE4j000M:APA91bEkgqRGHyIqHEYhhpbYA3n2mxYohNh1RIOEUvQRlBFp1SCYUS6cwOTtAdNZ2RbwwgL4CcYyzLDCz0Geh6iVjeOEioKKq0JgRgKJB9GAEilLX5pLAo1NUly8ofZnIVQYMBuIwXcR", "msg", "chatType", "title", "sendorId", "senderName", "type")
-                    if (succ.deviceType == 2) {
-                        commonFunction.IOS_NOTIFICATION(succ.deviceToken, "Login Successfully", "Login", "WAKI", "sendorId", "senderName", "Login")
-                    }
-                    else if (succ.deviceType == 1) {
-                        commonFunction.android_notification(succ.deviceToken, "Login Successfully", "Login", "WAKI", "sendorId", "senderName", "Login")
-                    }
-                }
-                else {
-                    callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.INCORRECT_CREDENTIALS[data.lang] })
-                }
-            }
-        })
-    }
-}
-
-//!social login
-socialLogin = (data, callback) => {
-    // return
-    console.log('request', data)
-    obj = data
-    query = {
-        'social.socialId': data.socialId,
-        "social.socialType": data.socialType,
-        "firstName": data.firstName,
-        "lastName": data.lastName,
-        "email": data.email,
-        "phone": data.phone,
-        "countryCode": data.countryCode
-    }
-    var update = {
-        lastLogin: Date.now()
-    };
-    if (!obj) {
-        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    }
-    else {
-        userModel.find({ email: data.email }, (err, found) => {
-            console.log(err, found)
-            if (err) {
-                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                return
-            }
-            else if (found.length > 0) {
-                userModel.findOneAndUpdate({ email: data.email }, { $set: { 'social.socialId': data.socialId, 'social.socialType': data.socialType } }, { new: true }).exec((err, succ) => {
-
-                    let temp = {
-                        "_id": succ._id,
-                        "firstName": succ.firstName,
-                        "lastName": succ.lastName,
-                        "email": succ.email,
-                        "image": succ.image,
-                        "addressAdded": succ.isAddressAdded,
-                        "phone": succ.phone,
-                        "countryCode": succ.countryCode,
-                        "paymentAdded": succ.paymentAdded,
-                        "address": succ.address,
-                        "paymentMethod": succ.paymentMethod
-
-                    }
-                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[obj.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
-                    return
-                })
-            }
-            else {
-                var user = new userModel(query)
-                user.save((err, succ) => {
-                    log(err, succ)
-                    if (err) {
-                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[obj.lang], result: err })
-                        return
-                    }
-                    else if (!succ) {
-                        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_UPDATE[obj.lang] })
-                        return
-                    }
-                    else {
-
-                        succ.address = succ.address.filter(e => {
-                            if (e.status == "ACTIVE") {
-                                return true
-                            }
-                        })
-                        result = {
-                            "_id": succ._id,
-                            "firstName": succ.firstName,
-                            "lastName": succ.lastName,
-                            "email": succ.email,
-                            "image": succ.image,
-                            "addressAdded": succ.address.length > 0 ? true : false,
-                            "phone": succ.phone,
-                            "countryCode": succ.countryCode,
-                            "paymentAdded": succ.paymentAdded,
-                            "address": succ.address,
                             "paymentMethod": succ.paymentMethod
 
                         }
                         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[obj.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
                         return
-                    }
-                })
-            }
-        })
+                    })
+                } else {
+                    var user = new userModel(query)
+                    user.save((err, succ) => {
+                        log(err, succ)
+                        if (err) {
+                            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[obj.lang], result: err })
+                            return
+                        } else if (!succ) {
+                            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_UPDATE[obj.lang] })
+                            return
+                        } else {
+
+                            succ.address = succ.address.filter(e => {
+                                if (e.status == "ACTIVE") {
+                                    return true
+                                }
+                            })
+                            result = {
+                                "_id": succ._id,
+                                "firstName": succ.firstName,
+                                "lastName": succ.lastName,
+                                "email": succ.email,
+                                "image": succ.image,
+                                "addressAdded": succ.address.length > 0 ? true : false,
+                                "phone": succ.phone,
+                                "countryCode": succ.countryCode,
+                                "paymentAdded": succ.paymentAdded,
+                                "address": succ.address,
+                                "paymentMethod": succ.paymentMethod
+
+                            }
+                            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS[obj.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
+                            return
+                        }
+                    })
+                }
+            })
+        }
     }
-}
-//!check social login
+    //!check social login
 checkSocialProfile = (obj, callback) => {
     log(obj)
     if (!obj) {
         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
-    }
-    else {
+    } else {
         let query = {
             "social.socialId": obj.socialId
         }
@@ -243,12 +227,10 @@ checkSocialProfile = (obj, callback) => {
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[obj.lang] })
                 return
-            }
-            else if (!succ) {
+            } else if (!succ) {
                 callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[obj.lang] })
                 return
-            }
-            else {
+            } else {
 
                 succ.address = succ.address.filter(e => {
                     if (e.status == "ACTIVE") {
@@ -289,18 +271,15 @@ updateDeviceToken = (data, headers, callback) => {
     if (!obj) {
         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
-    }
-    else {
+    } else {
         userModel.findOneAndUpdate(query, { $set: { deviceToken: data.deviceToken, deviceType: data.deviceType } }, { new: true }, (err, result) => {
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[obj.lang] })
                 return
-            }
-            else if (!result) {
+            } else if (!result) {
                 callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[obj.lang] })
                 return
-            }
-            else {
+            } else {
 
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.DEVICE_tOKEN_UPDATE[obj.lang] })
                 return
@@ -320,8 +299,7 @@ addAddress = (data, headers, callback) => {
     if (!data) {
         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
-    }
-    else {
+    } else {
         var query = {}
         commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
             log(err, result)
@@ -331,12 +309,10 @@ addAddress = (data, headers, callback) => {
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                 return
-            }
-            else if (!succ) {
+            } else if (!succ) {
                 callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
                 return
-            }
-            else {
+            } else {
 
 
                 succ.address = succ.address.filter(e => {
@@ -366,46 +342,41 @@ addAddress = (data, headers, callback) => {
 
 //! send otp
 getOtp = (data, callback) => {
-    log(data)
-    if (!data) {
-        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
+        log(data)
+        if (!data) {
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        } else {
+            console.log(typeof commonFunction.getOTP())
+            var otp = commonFunction.getOTP()
+            commonFunction.sendSMS(otp, data.phone, async(err, sent) => {
+                    console.log(err, sent)
+                    if (err) {
+                        callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                    } else {
+                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.InvalidPhoneNuber[data.lang], 'result': otp })
+                    }
+                })
+                // callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.OTP[data.lang], 'result': "123456" })
+        }
     }
-    else {
-        console.log(typeof commonFunction.getOTP())
-        var otp = commonFunction.getOTP()
-        commonFunction.sendSMS(otp, data.phone, async (err, sent) => {
-            console.log(err, sent)
-            if (err) {
-                callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-            }
-            else {
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.InvalidPhoneNuber[data.lang], 'result': otp })
-            }
-        })
-        // callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.OTP[data.lang], 'result': "123456" })
-    }
-}
-//! forgot Password of user
+    //! forgot Password of user
 forgotPassword = (data, callback) => {
     console.log("---------->>>", data)
     obj = data
     if (!obj) {
         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
-    }
-    else {
+    } else {
         userModel.find({ email: obj.email }, (err, found) => {
             // console.log(err, found)
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
                 return
-            }
-            else if (!found.length > 0) {
+            } else if (!found.length > 0) {
                 callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.EMAIL_NOT_REGISTERED[data.lang] })
                 return
-            }
-            else {
+            } else {
                 query = {
                     email: data.email
                 }
@@ -441,8 +412,7 @@ verifyForgotLink = (data, callback) => {
         log(result, "pppp")
         if (result) {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "email": data.email })
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
         }
     })
@@ -456,20 +426,19 @@ updateForgotPassword = (data, headers, callback) => {
         forgotToken: data.email
     }
     update = {
-        password: util.encryptData(data.password),
-        forgotToken: null
-    }
-    // commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
-    //     query = {
-    //         _id: token
-    //     }
-    // })
+            password: util.encryptData(data.password),
+            forgotToken: null
+        }
+        // commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
+        //     query = {
+        //         _id: token
+        //     }
+        // })
     console.log(obj, "eeee")
     if (!obj) {
         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
-    }
-    else {
+    } else {
         userModel.findOneAndUpdate(query, update, { new: true }, (err, result) => {
             log(result, "aaaaaa")
             if (err) {
@@ -483,8 +452,7 @@ updateForgotPassword = (data, headers, callback) => {
             else if (result) {
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PASSWORD_UPDATED.en })
                 return
-            }
-            else {
+            } else {
                 callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": "links is expired" })
             }
 
@@ -494,51 +462,48 @@ updateForgotPassword = (data, headers, callback) => {
 
 //!add payment method of user
 addPaymentMethod = (data, headers, callback) => {
-    update = {
-        $push: { paymentMethod: data },
-        paymentAdded: true
-    }
-    if (!data) {
-        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    }
-    else {
-        var query = {}
-        commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-            log(err, result)
-            query = { _id: result }
-        })
-        userModel.findOneAndUpdate(query, update, { new: true }, (err, succ) => {
-            log("asklfklasjfasdfjasdl", err, succ)
-            if (err) {
-                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                return
-            }
-            else if (!succ) {
-                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
-                return
-            }
-            else {
-                result = {
-                    "_id": succ._id,
-                    "firstName": succ.firstName,
-                    "lastName": succ.lastName,
-                    "email": succ.email,
-                    "image": succ.image,
-                    "addressAdded": succ.isAddressAdded,
-                    "phone": succ.phone,
-                    "countryCode": succ.countryCode,
-                    "paymentAdded": succ.paymentAdded,
-                    "address": succ.address,
-                    "paymentMethod": succ.paymentMethod
+        update = {
+            $push: { paymentMethod: data },
+            paymentAdded: true
+        }
+        if (!data) {
+            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        } else {
+            var query = {}
+            commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+                log(err, result)
+                query = { _id: result }
+            })
+            userModel.findOneAndUpdate(query, update, { new: true }, (err, succ) => {
+                log("asklfklasjfasdfjasdl", err, succ)
+                if (err) {
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                    return
+                } else if (!succ) {
+                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
+                    return
+                } else {
+                    result = {
+                        "_id": succ._id,
+                        "firstName": succ.firstName,
+                        "lastName": succ.lastName,
+                        "email": succ.email,
+                        "image": succ.image,
+                        "addressAdded": succ.isAddressAdded,
+                        "phone": succ.phone,
+                        "countryCode": succ.countryCode,
+                        "paymentAdded": succ.paymentAdded,
+                        "address": succ.address,
+                        "paymentMethod": succ.paymentMethod
+                    }
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PAYMENT_ADD[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
+                    return
                 }
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PAYMENT_ADD[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(succ._id) })
-                return
-            }
-        })
+            })
+        }
     }
-}
-//!getAddressList
+    //!getAddressList
 getAddressList = (req, callback) => {
     log("getAddressList")
 
@@ -548,8 +513,7 @@ getAddressList = (req, callback) => {
 
         if (jwtId) {
             userId = jwtId
-        }
-        else {
+        } else {
             throw err
         }
     })
@@ -564,8 +528,7 @@ getAddressList = (req, callback) => {
         });
         if (result) {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.getAddressSuccessfully[req.query.lang], "result": add, "accessToken": commonFunction.jwtEncode(result._id) })
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[req.query.lang], "error": err })
         }
     })
@@ -573,27 +536,25 @@ getAddressList = (req, callback) => {
 
 //!getPaymentMethodList
 getPaymentMethodList = (req, callback) => {
-    log("getPaymentMethodList")
-    var userId
-    commonFunction.jwtDecode(req.headers.accesstoken, (err, jwtId) => {
-        if (jwtId) {
-            userId = jwtId
-        }
-        else {
-            throw err
-        }
-    })
-    userModel.findOne({ _id: userId }, (err, result) => {
-        log(err, result)
-        if (result) {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.GET_PAYMENT_LIST[req.query.lang], "result": result.paymentMethod, "accessToken": commonFunction.jwtEncode(result._id) })
-        }
-        else {
-            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[req.query.lang], "error": err })
-        }
-    })
-}
-//!resetPassword
+        log("getPaymentMethodList")
+        var userId
+        commonFunction.jwtDecode(req.headers.accesstoken, (err, jwtId) => {
+            if (jwtId) {
+                userId = jwtId
+            } else {
+                throw err
+            }
+        })
+        userModel.findOne({ _id: userId }, (err, result) => {
+            log(err, result)
+            if (result) {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.GET_PAYMENT_LIST[req.query.lang], "result": result.paymentMethod, "accessToken": commonFunction.jwtEncode(result._id) })
+            } else {
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[req.query.lang], "error": err })
+            }
+        })
+    }
+    //!resetPassword
 resetPassword = (query, body, callback) => {
     log("reset password", query, body)
     var userId
@@ -606,8 +567,7 @@ resetPassword = (query, body, callback) => {
         log("jwt", err, jwtId)
         if (jwtId) {
             userId = jwtId
-        }
-        else {
+        } else {
             throw err
         }
     })
@@ -616,11 +576,9 @@ resetPassword = (query, body, callback) => {
         console.log("fausjkhdfasdf", err, success)
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[query.lang], "error": err })
-        }
-        else if (!success) {
+        } else if (!success) {
             callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[query.lang] })
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PASSWORD_CHANGED[query.lang], "result": success })
         }
     })
@@ -628,25 +586,23 @@ resetPassword = (query, body, callback) => {
 
 //!email exist 
 checkEmail = (data, callback) => {
-    console.log("api is called", data)
-    userModel.findOne({ email: data.email, status: 'active' }, (err, found) => {
-        if (err) {
-            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-        }
-        else if (!found) {
-            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
-        }
-        else {
-            console.log("----------------------->>", found)
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "userType": found.userType, "token": commonFunction.jwtEncode(found.userType == "stafff" ? found.parentId : found._id) })
-        }
-    })
-}
-//!changepassword
+        console.log("api is called", data)
+        userModel.findOne({ email: data.email, status: 'active' }, (err, found) => {
+            if (err) {
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+            } else if (!found) {
+                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+            } else {
+                console.log("----------------------->>", found)
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "userType": found.userType, "token": commonFunction.jwtEncode(found.userType == "stafff" ? found.parentId : found._id) })
+            }
+        })
+    }
+    //!changepassword
 changePassword = (data, headers, callback) => {
     console.log("change password screen", data, headers)
     async.waterfall([
-        function (cb) {
+        function(cb) {
             if (headers.accesstoken) {
                 commonFunction.jwtDecode(headers.accesstoken, (err, jwtId) => {
                     console.log(err, jwtId)
@@ -656,47 +612,42 @@ changePassword = (data, headers, callback) => {
                         cb(null, err)
                     }
                 })
-            }
-            else {
+            } else {
                 cb(null, data._id)
             }
         },
-        function (jwtId, cb) {
+        function(jwtId, cb) {
             console.log("################", jwtId)
-            // return
+                // return
             jwtId = jwtId
-            /* changing through bug 1 april */
+                /* changing through bug 1 april */
             if (jwtId == undefined) {
                 callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
                 return
-            }
-            else {
+            } else {
                 userModel.findOne({ _id: mongoose.Types.ObjectId(jwtId) }).exec((err, result) => {
                     if (err) {
                         cb(null)
-                    }
-                    else if (result.password) {
+                    } else if (result.password) {
                         cb(null, jwtId, result.password)
-                    }
-                    else {
+                    } else {
                         callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.USER_LOGIN_SOCIAL[data.lang] })
                         return
                     }
                 })
             }
         },
-        function (jwtId, password, cb) {
+        function(jwtId, password, cb) {
             var oldpassword = util.encryptData(data.oldPassword)
             console.log("-=-=-", oldpassword, password)
             if (oldpassword == password) {
                 cb(null, jwtId)
-            }
-            else {
+            } else {
                 callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.INCORRECT_OLD_PASSWORD[data.lang] })
                 return
             }
         },
-        function (jwtId, cb) {
+        function(jwtId, cb) {
             console.log("########", jwtId, data.newPassword)
             var newpassword = util.encryptData(data.newPassword)
             console.log("33333333333333333333")
@@ -709,74 +660,72 @@ changePassword = (data, headers, callback) => {
     ], (err, result) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PASSWORD_CHANGED[data.lang] })
         }
     })
 }
 
-//!edit profile
+//edit profile
 editProfile = (data, headers, callback) => {
-    console.log("edit profile", data, headers)
-    if (!data.image && !data.firstName) {
-        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    }
-    async.waterfall([
-        function (cb) {
-            commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-                console.log(err, result)
-                if (err)
-                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                else cb(null, result)
-            })
+        console.log("edit profile", data, headers)
+        if (!data.image && !data.firstName) {
+            callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
         }
-    ], (err, result) => {
-
-        let query = {
-            _id: result
-        }
-        let update = {
-            $set: {
-                firstName: data.firstName,
-                // lastName: data.lastName,
-                image: data.image
+        async.waterfall([
+            function(cb) {
+                commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+                    console.log(err, result)
+                    if (err)
+                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                    else cb(null, result)
+                })
             }
-        }
-        userModel.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
-            console.log(err, result)
+        ], (err, result) => {
+
+            let query = {
+                _id: result
+            }
+            let update = {
+                $set: {
+                    firstName: data.firstName,
+                    // lastName: data.lastName,
+                    image: data.image
+                }
+            }
+            userModel.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
+                console.log(err, result)
+            })
         })
-    })
-}
-//!reset api new for angular
+    }
+    //!reset api new for angular
 
 reset = (data, callback) => {
-    console.log(data)
+        console.log(data)
 
-    if (!data.email || !data.forgotToken) {
-        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    }
-    query = {
-        email: data.email,
-        forgotToken: data.forgotToken
-    }
-    update = {
-        password: util.encryptData(data.newPassword),
-        forgotToken: null
-    }
-    userModel.findOneAndUpdate(query, update, { new: true }, (err, reset) => {
-        // console.log(err,reset)
-        if (err) {
-            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+        if (!data.email || !data.forgotToken) {
+            callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
         }
-        else {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PASSWORD_CHANGED[data.lang] })
+        query = {
+            email: data.email,
+            forgotToken: data.forgotToken
         }
-    })
-}
-//! api for angular verify token
+        update = {
+            password: util.encryptData(data.newPassword),
+            forgotToken: null
+        }
+        userModel.findOneAndUpdate(query, update, { new: true }, (err, reset) => {
+            // console.log(err,reset)
+            if (err) {
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+            } else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PASSWORD_CHANGED[data.lang] })
+            }
+        })
+    }
+    //! api for angular verify token
 verifyLink = (data, callback) => {
     log("######", data)
     var criteria = {
@@ -790,8 +739,7 @@ verifyLink = (data, callback) => {
 
         if (result.length > 0) {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "email": data.email, "forgotToken": data.forgotToken })
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
         }
     })
@@ -881,7 +829,7 @@ getUserInfo = (data, headers, callback) => {
 
         //     })
         // },
-        function (cb) {
+        function(cb) {
 
             userModel.findOne({ _id: data.userId }, { 'password': 0 }).exec((err, success) => {
                 if (err || !success)
@@ -901,9 +849,9 @@ getUserInfo = (data, headers, callback) => {
 }
 
 /* ***************************************
-******************************************
-*****************editpaymentmethod********
-******************************************/
+ ******************************************
+ *****************editpaymentmethod********
+ ******************************************/
 
 editPaymentMethod = (data, headers, callback) => {
     // console.log('------->', data)
@@ -932,14 +880,14 @@ editPaymentMethod = (data, headers, callback) => {
 
     async.waterfall([
 
-        function (cb) {
+        function(cb) {
             userModel.findOne({ _id: userId, 'paymentMethod._id': data.paymentId }, { 'paymentMethod.$': 1 }).exec((err, result) => {
                 // console.log(err, result)
                 if (err || !result) cb(null)
                 else cb(null, result)
             })
         },
-        function (result, cb) {
+        function(result, cb) {
             console.log('===>>>', result.paymentMethod[0].expireDate)
             let update = {
                 $set: {
@@ -995,14 +943,14 @@ deletePayment = (data, headers, callback) => {
 
     async.waterfall([
 
-        function (cb) {
+        function(cb) {
             userModel.findOne({ _id: userId, 'paymentMethod._id': data.paymentId }, { 'paymentMethod.$': 1 }).exec((err, result) => {
                 // console.log(err, result)
                 if (err || !result) cb(null)
                 else cb(null, result)
             })
         },
-        function (result, cb) {
+        function(result, cb) {
             console.log('===>>>', result.paymentMethod[0].expireDate)
             let update = {
                 $set: {
@@ -1041,7 +989,7 @@ deletePayment = (data, headers, callback) => {
 
 editAddress = (data, headers, callback) => {
     console.log('------->', data, headers)
-    // let userId = '5c657188f7f89745e14fda4a'
+        // let userId = '5c657188f7f89745e14fda4a'
     if (!headers.accesstoken) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], })
         return
@@ -1066,14 +1014,14 @@ editAddress = (data, headers, callback) => {
 
     async.waterfall([
 
-        function (cb) {
+        function(cb) {
             userModel.findOne({ _id: userId, 'address._id': data.addressId }, { 'address.$': 1 }).exec((err, result) => {
                 // console.log(err, result)
                 if (err || !result) cb(null)
                 else cb(null, result)
             })
         },
-        function (result, cb) {
+        function(result, cb) {
             console.log('===>>>', result)
             let update = {
                 $set: {
@@ -1142,14 +1090,14 @@ deleteAddress = (data, headers, callback) => {
     }
     async.waterfall([
 
-        function (cb) {
+        function(cb) {
             userModel.findOne({ _id: userId, 'address._id': data.addressId }, { 'address.$': 1 }).exec((err, result) => {
                 // console.log(err, result)
                 if (err || !result) cb(null)
                 else cb(null, result)
             })
         },
-        function (result, cb) {
+        function(result, cb) {
             // console.log('===>>>', result.paymentMethod[0].expireDate)
             let update = {
                 $set: {
