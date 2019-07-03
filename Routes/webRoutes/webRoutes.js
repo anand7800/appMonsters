@@ -6,11 +6,11 @@ const authHandler = require('../../middleware/verifyToken');
 
 /* view sales of product main page of vendor */
 webRouter.post('/dashboardGraph', (req, res) => {
-    webHandler.dashboardGraph(req.body, req.headers, (data) => {
-        res.send(data)
+        webHandler.dashboardGraph(req.body, req.headers, (data) => {
+            res.send(data)
+        })
     })
-})
-//most viwer in app and web as well
+    //most viwer in app and web as well
 webRouter.get('/viewerGraph', (req, res) => {
     webHandler.viewerGraph(req.query, req.headers, (data) => {
         res.send(data)
@@ -19,11 +19,11 @@ webRouter.get('/viewerGraph', (req, res) => {
 
 /* filter on website while click caegory product */
 webRouter.post('/filterWeb', (req, res) => {
-    webHandler.filterWeb(req.body, (data) => {
-        res.send(data)
+        webHandler.filterWeb(req.body, (data) => {
+            res.send(data)
+        })
     })
-})
-/* checkout for website  */
+    /* checkout for website  */
 webRouter.post('/checkoutOrder', authHandler.verifyToken, (req, res) => {
     webHandler.checkoutOrder(req.body, req.headers, (data) => {
         res.send(data)
@@ -47,11 +47,11 @@ webRouter.post('/showFilter', (req, res) => {
 
 //deleteCart  
 webRouter.post('/deleteCart', authHandler.verifyToken, (req, res) => {
-    webHandler.deleteCart(req.body, req.headers, (data) => {
-        res.send(data)
+        webHandler.deleteCart(req.body, req.headers, (data) => {
+            res.send(data)
+        })
     })
-})
-// api for increase stock in list of add to cart
+    // api for increase stock in list of add to cart
 webRouter.post('/increaseStockOnCartList', authHandler.verifyToken, (req, res) => {
     webHandler.increaseStockOnCartList(req.body, req.headers, (data) => {
         res.send(data)
@@ -60,11 +60,11 @@ webRouter.post('/increaseStockOnCartList', authHandler.verifyToken, (req, res) =
 
 // addTowishList  
 webRouter.post('/addToWishList', authHandler.verifyToken, (req, res) => {
-    webHandler.addToWishList(req.body, req.headers, (data) => {
-        res.send(data)
+        webHandler.addToWishList(req.body, req.headers, (data) => {
+            res.send(data)
+        })
     })
-})
-//deleteWishItem  
+    //deleteWishItem  
 webRouter.post('/deleteWishItem', authHandler.verifyToken, (req, res) => {
     webHandler.deleteWishItem(req.body, req.headers, (data) => {
         res.send(data)
@@ -74,6 +74,14 @@ webRouter.post('/deleteWishItem', authHandler.verifyToken, (req, res) => {
 //updateImage
 webRouter.post('/updateProfile', authHandler.verifyToken, (req, res) => {
     webHandler.updateProfile(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
+
+
+//!forgotPassword
+webRouter.post('/forgotPassword', (req, res) => {
+    webHandler.forgotPassword(req.body, (data) => {
         res.send(data)
     })
 })
