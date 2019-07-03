@@ -1148,6 +1148,77 @@ deleteWishItem = (data, headers, callback) => {
         })
     }
 }
+
+/* update profile //website  */
+updateProfile = (data, headers, callback) => {
+    console.log("api hitted ")
+    var userId
+    commonFunction.jwtDecode(headers.accesstoken, (err, decodeId) => {
+        // console.log("^^^^", err, decodeId)
+        if (err) throw err
+        else {
+            userId = decodeId
+        }
+    })
+
+    async.parallel({
+        uploadImage: (cb) => {
+            commonFunction.uploadImg(data.image, (err, image) => {
+                console.log(err, image)
+                if (err) cb(null)
+                else if (!image) cb(null)
+                else cb(null, image)
+            })
+        },
+        getUser: (cb) => {
+            userModel.findOne({ _id: userId }).exec((err, userinfo) => {
+                // console.log(err, userinfo)
+                if (err) cb(null)
+                else if (!userinfo) cb(null)
+                else cb(null, userinfo)
+            })
+        }
+    }, (err, response) => {
+        console.log("######", err, response)
+        if (response.uploadImage) {
+            console.log('33')
+        }
+        let query = {
+            _id: userId
+        }
+        let update = {
+            $set: {
+                image: response.uploadImage ? response.uploadImage : response.getUser.image,
+                firstName: data.firstName ? data.firstName : response.getuser.firstName,
+                phone: data.phone ? data.phone : response.getuser.phone
+            }
+        }
+        console.log('@@@@@@@@@@@@@@@2', query, update)
+        userModel.findOneAndUpdate(query, update, { new: true }).exec((err, success) => {
+            console.log(err, success)
+            if (success) {
+                result = {
+                    "_id": success._id,
+                    "firstName": success.firstName,
+                    "lastName": success.lastName,
+                    "email": success.email,
+                    "image": success.image,
+                    "addressAdded": success.isAddressAdded,
+                    "phone": success.phone,
+                    "countryCode": success.countryCode,
+                    "paymentAdded": success.paymentAdded,
+                    "address": success.address,
+                    "paymentMethod": success.paymentMethod,
+                    "countryCode": success.countryCode,
+                    "isBussinessAdded": success.isBussinessAdded
+                }
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PROFILE_UPDATE[data.lang], "result": result, "accessToken": commonFunction.jwtEncode(success._id) })
+            } else {
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+            }
+        })
+    })
+}
 module.exports = {
     dashboardGraph,
     viewerGraph,
@@ -1159,7 +1230,8 @@ module.exports = {
     deleteCart,
     increaseStockOnCartList,
     addToWishList,
-    deleteWishItem
+    deleteWishItem,
+    updateProfile
 }
 
 

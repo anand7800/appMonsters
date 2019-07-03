@@ -70,4 +70,11 @@ webRouter.post('/deleteWishItem', authHandler.verifyToken, (req, res) => {
         res.send(data)
     })
 })
+
+//updateImage
+webRouter.post('/updateProfile', authHandler.verifyToken, (req, res) => {
+    webHandler.updateProfile(req.body, req.headers, (data) => {
+        res.send(data)
+    })
+})
 module.exports = webRouter;

@@ -76,8 +76,9 @@ login = (data, callback) => {
         lastLogin: Date.now()
     };
     var query = { email: obj.email, userType: data.userType }
-    if (!data) {
-        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+
+    if (!data ) {
+        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang], error: data })
         return
     }
     else {
@@ -166,7 +167,7 @@ socialLogin = (data, callback) => {
             }
             else if (found.length > 0) {
                 userModel.findOneAndUpdate({ email: data.email }, { $set: { 'social.socialId': data.socialId, 'social.socialType': data.socialType } }, { new: true }).exec((err, succ) => {
-                    
+
                     let temp = {
                         "_id": succ._id,
                         "firstName": succ.firstName,
@@ -249,18 +250,18 @@ checkSocialProfile = (obj, callback) => {
             }
             else {
 
-        succ.address = succ.address.filter(e => {
-            if (e.status == "ACTIVE") {
-                return true
-            }
-        })
+                succ.address = succ.address.filter(e => {
+                    if (e.status == "ACTIVE") {
+                        return true
+                    }
+                })
                 result = {
                     "_id": succ._id,
                     "firstName": succ.firstName,
                     "lastName": succ.lastName,
                     "email": succ.email,
                     "image": succ.image,
-                    "addressAdded": succ.address.length>0?true:false,
+                    "addressAdded": succ.address.length > 0 ? true : false,
                     "phone": succ.phone,
                     "countryCode": succ.countryCode,
                     "paymentAdded": succ.paymentAdded,
@@ -1108,7 +1109,7 @@ editAddress = (data, headers, callback) => {
             "lastName": succ.lastName,
             "email": succ.email,
             "image": succ.image,
-            "addressAdded": succ.address .length> 0 ? true : false,
+            "addressAdded": succ.address.length > 0 ? true : false,
             "phone": succ.phone,
             "paymentAdded": succ.paymentAdded,
             "address": succ.address,
