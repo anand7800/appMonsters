@@ -339,6 +339,9 @@ addProduct = (data, header, callback) => {
             },
 
             function(image, tryimage, cb) {
+                console.log(image, tryimage)
+
+
                 query = {
                     categoryModel: data.categoryId,
                     subCategory: data.subCategoryId,
@@ -402,7 +405,7 @@ addProduct = (data, header, callback) => {
                         })
                         // callback()
                 }, (err, res) => {
-                    console.log('variance', variance)
+                    // console.log('variance', variance)
                     let varianceSave = new varianceModel({
                         productId: response._id,
                         sellerId: sellerId,
