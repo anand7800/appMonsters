@@ -326,7 +326,7 @@ addProduct = (data, header, callback) => {
                 })
             },
             function(image, cb) {
-                if (data.productType) {
+                if (data.productTry) {
                     commonFunction.imageUploadToCloudinary(data.tryImage, (err, tryimage) => {
                         log(err, tryimage)
                         if (err) cb(null)
@@ -359,8 +359,8 @@ addProduct = (data, header, callback) => {
                     image: image,
                     specifications: data.specifications,
                     tag: data.tag,
-                    productTry: data.productType,
-                    tryImage: data.productType == true ? tryimage : null,
+                    productTry: data.productTry,
+                    tryImage: data.productTry == true ? tryimage : null,
                     qrCode: data.qrCode,
                     inventorySKU: data.inventorySKU,
                     weight: data.weight,
