@@ -15,10 +15,12 @@ var algorithm = 'aes-256-ctr',
 var FCM = require('fcm-push');
 let transporter;
 cloudinary.config({
-    cloud_name: "sumit9211",
-    api_key: "868525178894725",
+    cloud_name: "dc3nuj9ka",
+    /* live "sumit9211" */
+    api_key: "137659364596292",
     /* 885582783668825 */
-    api_secret: "MM9hrN2Uvrz0oMfN5SwxaYOdaIc" /* 0dT6FoxdcGb7UjTKtUGQbAVdOJI */
+    /* live 868525178894725 */
+    api_secret: "V1ko7pP4SPwbv9lsvWa1AiyVd3I" /* 0dT6FoxdcGb7UjTKtUGQbAVdOJI */ /* live  MM9hrN2Uvrz0oMfN5SwxaYOdaIc */
 });
 let secret = speakEasy.generateSecret({
     length: 20
@@ -87,9 +89,8 @@ module.exports = {
     },
     imageUploadToCloudinary: (imageB64, callback) => {
         // console.log(imageB64)
-        return cloudinary.uploader.upload(imageB64, (err, result) => {
+        return cloudinary.uploader.upload(imageB64, (result) => {
             //  console.log("fddfdfgfg", result);
-            console.log("W@@@@@@@@", err, result)
             callback(null, result.url);
         })
     },

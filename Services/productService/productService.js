@@ -4,8 +4,8 @@ const productCategoryModelL3 = require('../../Models/ProductModel/productCategor
 const brandModel = require('../../Models/ProductModel/allBrandModel')
 const productModel = require('../../Models/ProductModel/productModel')
 const varianceModel = require('../../Models/ProductModel/productVariance')
-// const orderModel = require('../../Models/userModel/userOrder')
-// const placeOrderModel = require('../../Models/userModel/orderPlaced')
+    // const orderModel = require('../../Models/userModel/userOrder')
+    // const placeOrderModel = require('../../Models/userModel/orderPlaced')
 const userModel = require('../../Models/userModel/userPanelModel')
 const productOffer = require('../../Models/ProductModel/productofferModel')
 const bagModel = require('../../Models/ProductModel/bagModel')
@@ -15,9 +15,9 @@ const physicalStores = require('../../Models/userModel/addPhysicalStore')
 const userBusinessDetails = require('../../Models/userModel/businessDetail')
 
 const reviewAndRatingL5 = require('../../Models/userModel/reviewAndRating')
-//!newModel
+    //!newModel
 const adminService = require('../adminServices/adminServices')
-//chat model
+    //chat model
 var chatHistory = require('../../Models/userModel/chatHistory');
 var Room = require('../../Models/userModel/room.js');
 var User = require('../../Models/userModel/chatUser.js');
@@ -41,16 +41,15 @@ const today = moment().startOf('day')
 var Promise = require('promise');
 paytabs = require('paytabs_api'),
     /* ************************************
-    *************add category***********************
-    ************************************ */
+     *************add category***********************
+     ************************************ */
 
     addCategory = (data, callback) => {
         log("addCategory")
         if (!data) {
             callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
             return
-        }
-        else {
+        } else {
             async.parallel({
                 exist: (cb) => {
                     categoryModelL1.findOne({ categoryName: data.categoryName }, (err, exist) => {
@@ -87,11 +86,9 @@ paytabs = require('paytabs_api'),
             }, (err, response) => {
                 if (err) {
                     callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-                }
-                else if (response.exist) {
+                } else if (response.exist) {
                     callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
-                }
-                else {
+                } else {
                     log(response.findLength)
                     query = {
                         'categoryName': data.categoryName,
@@ -116,24 +113,21 @@ paytabs = require('paytabs_api'),
     }
 
 /* ************************************
-*************add Subcategory***********************
-************************************ */
+ *************add Subcategory***********************
+ ************************************ */
 addSubCategory = (data, callback) => {
     if (!data || !data._id) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
-    }
-    else {
+    } else {
         query1 = { _id: data._id }
         categoryModelL1.findById(query1, (err, exist) => {
             log(err, exist)
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-            }
-            else if (!exist) {
+            } else if (!exist) {
                 callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.USER_NOT_FOUND[data.lang] })
-            }
-            else {
+            } else {
 
                 async.parallel({
                     uploadIcons: (cb) => {
@@ -143,7 +137,8 @@ addSubCategory = (data, callback) => {
                             else if (!icons) cb(null)
                             else cb(null, icons)
                         })
-                    }, uploadImage: (cb) => {
+                    },
+                    uploadImage: (cb) => {
                         commonFunction.uploadImg(data.image, (err, image) => {
                             log(err, image)
                             if (err) cb(null)
@@ -164,11 +159,9 @@ addSubCategory = (data, callback) => {
                     subCategoryModelL2.create(query2, (err, update) => {
                         if (err) {
                             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-                        }
-                        else if (!update) {
+                        } else if (!update) {
                             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
-                        }
-                        else {
+                        } else {
 
                             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.REGISTRATION_DONE[data.lang], "result": update })
 
@@ -181,11 +174,11 @@ addSubCategory = (data, callback) => {
 }
 
 /* ************************************
-*************getCategorylist***********************
-*************************************/
+ *************getCategorylist***********************
+ *************************************/
 getCategoryList = (data, callback) => {
     log(data.lang)
-    // let object=require('mongoose').ObjectId
+        // let object=require('mongoose').ObjectId
 
     let mainArray = [];
     categoryModelL1.aggregate([
@@ -205,19 +198,17 @@ getCategoryList = (data, callback) => {
                 let: {
                     article_id: "$_id"
                 },
-                pipeline: [
-                    {
-                        $match: {
-                            $expr: {
-                                $and: [
-                                    { $eq: ['$categoryModel', "$$article_id"] },
-                                    { $eq: ["$status", "ACTIVE"] },
-                                    //   { $eq: [ "ACTIVE", "$$status" ] }
-                                ]
-                            }
+                pipeline: [{
+                    $match: {
+                        $expr: {
+                            $and: [
+                                { $eq: ['$categoryModel', "$$article_id"] },
+                                { $eq: ["$status", "ACTIVE"] },
+                                //   { $eq: [ "ACTIVE", "$$status" ] }
+                            ]
                         }
                     }
-                ],
+                }],
                 as: "category"
             }
         },
@@ -252,15 +243,14 @@ getCategoryList = (data, callback) => {
 }
 
 /* ************************************
-*************addProductCategory***********************
-************************************ */
+ *************addProductCategory***********************
+ ************************************ */
 addProductCategory = (data, callback) => {
     log("api is hitted of addProduct", data)
     if (!data || !data.subCategoryId) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
-    }
-    else {
+    } else {
         async.parallel({
             uploadImage: (cb) => {
                 commonFunction.uploadImg(data.image, (err, image) => {
@@ -282,11 +272,10 @@ addProductCategory = (data, callback) => {
 
         }, (err, response) => {
             log(err, response)
-            // return
+                // return
             if (err) {
                 callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-            }
-            else {
+            } else {
                 let query = {
                     subCategory: data.subCategoryId,
                     categoryModel: response.getCategory.categoryModel,
@@ -297,11 +286,9 @@ addProductCategory = (data, callback) => {
                 productCategoryModelL3.create(query, (err, result) => {
                     if (err) {
                         callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-                    }
-                    else if (!result) {
+                    } else if (!result) {
                         callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
-                    }
-                    else {
+                    } else {
                         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.categoriesList_found[data.lang], "result": result })
                     }
                 })
@@ -311,25 +298,24 @@ addProductCategory = (data, callback) => {
 }
 
 /* ************************************
-*************addBrandDescription*******
-************************************ */
+ *************addBrandDescription*******
+ ************************************ */
 addProduct = (data, header, callback) => {
-    log("api is hitted addBrandDescription", data, header)
+    // log("api is hitted addBrandDescription", data, header)
 
     var sellerId
     commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
-        if (err) throw err
-        else {
-            sellerId = userId1
-        }
-    })
-    console.log(JSON.stringify(data))
-    // return
+            if (err) throw err
+            else {
+                sellerId = userId1
+            }
+        })
+        // console.log(JSON.stringify(data))
+        // return
     if (!data && !header.accesstoken && !data.subCategoryId && !data.productCategoryId && !data.productName && !data.categoryId && !data.variants) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
         return
-    }
-    else {
+    } else {
         async.waterfall([
             (cb) => {
                 commonFunction.uploadMultipleImages(data.image, (err, image) => {
@@ -338,9 +324,21 @@ addProduct = (data, header, callback) => {
                     else if (!image) cb(null)
                     else cb(null, image)
                 })
-
             },
-            function (image, cb) {
+            function(image, cb) {
+                if (data.productType) {
+                    commonFunction.imageUploadToCloudinary(data.tryImage, (err, tryimage) => {
+                        log(err, tryimage)
+                        if (err) cb(null)
+                        else if (!tryimage) cb(null)
+                        else cb(null, image, tryimage)
+                    })
+                } else {
+                    cb(null, image, null)
+                }
+            },
+
+            function(image, tryimage, cb) {
                 query = {
                     categoryModel: data.categoryId,
                     subCategory: data.subCategoryId,
@@ -359,7 +357,7 @@ addProduct = (data, header, callback) => {
                     specifications: data.specifications,
                     tag: data.tag,
                     productType: data.productType,
-                    tryImage: null,
+                    tryImage: data.productType == true ? tryimage : null,
                     qrCode: data.qrCode,
                     inventorySKU: data.inventorySKU,
                     weight: data.weight,
@@ -367,6 +365,8 @@ addProduct = (data, header, callback) => {
                     costItem: data.costItem,
                     status: data.status
                 }
+
+                console.log(query, "------------")
                 var product = new productModel(query)
                 product.save((err, result) => {
                     if (err || !result) cb(null)
@@ -377,29 +377,30 @@ addProduct = (data, header, callback) => {
             }
 
         ], (err, response) => {
+
             if (response) {
                 var variance = []
-                async.forEachOf(data.variants, async (value, key, callback) => {
+                async.forEachOf(data.variants, async(value, key, callback) => {
                     await commonFunction.uploadMultipleImages(value.varianceImage, (err, img) => {
-                        log(err, img)
-                        if (err) throw err
-                        else {
-                            let temp = {
-                                image: img,
-                                color: value.color ? value.color : "",
-                                size: value.size ? value.size : "",
-                                material: value.material ? value.material : "",
-                                quantity: value.quantity ? value.quantity : "",
-                                inventory: value.quantity ? value.quantity : "",
-                                SKU: value.SKU ? value.SKU : "",
-                                price: value.price ? value.price : "",
-                                status: 'ACTIVE'
+                            log(err, img)
+                            if (err) throw err
+                            else {
+                                let temp = {
+                                    image: img,
+                                    color: value.color ? value.color : "",
+                                    size: value.size ? value.size : "",
+                                    material: value.material ? value.material : "",
+                                    quantity: value.quantity ? value.quantity : "",
+                                    inventory: value.quantity ? value.quantity : "",
+                                    SKU: value.SKU ? value.SKU : "",
+                                    price: value.price ? value.price : "",
+                                    status: 'ACTIVE'
+                                }
+                                variance.push(temp)
+                                callback()
                             }
-                            variance.push(temp)
-                            callback()
-                        }
-                    })
-                    // callback()
+                        })
+                        // callback()
                 }, (err, res) => {
                     console.log('variance', variance)
                     let varianceSave = new varianceModel({
@@ -409,13 +410,11 @@ addProduct = (data, header, callback) => {
                     })
                     varianceSave.save((err, succ) => {
 
-                        productModel.findByIdAndUpdate({ _id: response._id }, { $set: { varianceId: succ._id } }, { new: true }).exec((err, saveVariance) => {
-                        })
+                        productModel.findByIdAndUpdate({ _id: response._id }, { $set: { varianceId: succ._id } }, { new: true }).exec((err, saveVariance) => {})
                         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_PRODUCT[data.lang], "result": response })
                     })
                 })
-            }
-            else {
+            } else {
                 callback('wrong')
             }
         })
@@ -434,19 +433,17 @@ editProduct = (data, callback) => {
     // console.log('data is income', data)
     if (!data.productId) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    }
-    else {
+    } else {
 
         async.parallel({
 
             productDetail: (cb) => {
                 productModel.findById({ _id: data.productId }).
-                    populate('brandId categoryModel subCategory productCategoryId sellerId varianceId').exec((err, result) => {
-                        if (err || !result) {
-                            cb(null)
-                        }
-                        else cb(null, result)
-                    })
+                populate('brandId categoryModel subCategory productCategoryId sellerId varianceId').exec((err, result) => {
+                    if (err || !result) {
+                        cb(null)
+                    } else cb(null, result)
+                })
             },
             uploadCloud: (cb) => {
                 if (data.newImage) {
@@ -459,8 +456,7 @@ editProduct = (data, callback) => {
                             cb(null, image)
                         }
                     })
-                }
-                else {
+                } else {
                     cb(null)
                 }
             }
@@ -495,64 +491,63 @@ editProduct = (data, callback) => {
                 }
             }
             productModel.findOneAndUpdate(query, update, { new: true }).exec((err, result) => {
-                console.log("update record", err, JSON.stringify(result))
-                if (err || !result)
-                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY })
-                else {
-                    varianceModel.findByIdAndUpdate({ _id: result.varianceId }, { variants: data.variants }, { new: true }).exec((err, update) => {
-                        console.log("====================================>>>", err, JSON.stringify(update))
-                    })
-                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED, 'result': result })
-                }
-            })
-            // callback(update)
+                    console.log("update record", err, JSON.stringify(result))
+                    if (err || !result)
+                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY })
+                    else {
+                        varianceModel.findByIdAndUpdate({ _id: result.varianceId }, { variants: data.variants }, { new: true }).exec((err, update) => {
+                            console.log("====================================>>>", err, JSON.stringify(update))
+                        })
+                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED, 'result': result })
+                    }
+                })
+                // callback(update)
         })
     }
 }
 
 /* *******************************************************************
-**************************addbrand************************************
-***********************************************************************/
+ **************************addbrand************************************
+ ***********************************************************************/
 addBrand = (data, callback) => {
-    console.log('add brand', data)
-    let query = {
-        brandName: data.brandName.toLowerCase(),
-        status: data.status
-    }
-    async.waterfall([
-        function (cb) {
-            if (data.brandImage) {
-                commonFunction.uploadImg(data.brandImage, (err, image) => {
-                    log("######33", err, image)
-                    if (err) cb("null")
-                    else if (!image) cb("null")
-                    else cb(null, image)
-                })
-            } else {
-                cb(null, "")
-            }
-        },
-        function (image, cb) {
-            brandModel.find(query).exec((err, find) => {
-                if (err || find.length > 0) {
-                    cb(null, find)
-                }
-                else {
-                    brandModel.create({ brandName: data.brandName, icon: image }, (err, succ) => {
-                        cb(null, succ)
-                    })
-                }
-            })
+        console.log('add brand', data)
+        let query = {
+            brandName: data.brandName.toLowerCase(),
+            status: data.status
         }
-    ], (err, result) => {
+        async.waterfall([
+            function(cb) {
+                if (data.brandImage) {
+                    commonFunction.uploadImg(data.brandImage, (err, image) => {
+                        log("######33", err, image)
+                        if (err) cb("null")
+                        else if (!image) cb("null")
+                        else cb(null, image)
+                    })
+                } else {
+                    cb(null, "")
+                }
+            },
+            function(image, cb) {
+                brandModel.find(query).exec((err, find) => {
+                    if (err || find.length > 0) {
+                        cb(null, find)
+                    } else {
+                        brandModel.create({ brandName: data.brandName, icon: image }, (err, succ) => {
+                            cb(null, succ)
+                        })
+                    }
+                })
+            }
+        ], (err, result) => {
 
-        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": "add data successfully", "result": result })
-    })
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": "add data successfully", "result": result })
+        })
 
-}
-/* *******************************************************************
-**************************`homeScreenApi`*******************************
-***********************************************************************/
+    }
+    /* *******************************************************************
+     **************************`homeScreenApi`*******************************
+     ***********************************************************************/
 homeScreenApi = (query, callback) => {
     async.parallel({
         topPicksInMobile1: (cb) => {
@@ -579,16 +574,15 @@ homeScreenApi = (query, callback) => {
             })
         },
         category: (cb) => {
-            productCategoryModelL3.count({ status: 'ACTIVE' }).exec(function (err, count) {
+            productCategoryModelL3.count({ status: 'ACTIVE' }).exec(function(err, count) {
                 var random = Math.floor(Math.random() * count);
                 // console.log('------------------------------------------>>>>>>', random, count)
                 productCategoryModelL3.find({ status: 'ACTIVE' }).skip(random).limit(10).exec(
-                    function (err, result) {
+                    function(err, result) {
                         // console.log('#######33', err, result)
                         if (err) {
                             cb(null)
-                        }
-                        else {
+                        } else {
                             cb(null, result)
                         }
                     });
@@ -615,9 +609,8 @@ homeScreenApi = (query, callback) => {
                         cb(null, trending)
 
                     });
-                }
-                else cb(null)
-                // cb(null,result)
+                } else cb(null)
+                    // cb(null,result)
             })
         },
         topOffer: (cb) => {
@@ -636,7 +629,7 @@ homeScreenApi = (query, callback) => {
             let results = [];
 
             async.waterfall([
-                function (cb) {
+                function(cb) {
                     orderPlaced.find({}).select({ 'orderPlacedDescription.productId': 1 }).exec((err, result) => {
                         if (err || result < 0)
                             cb(null)
@@ -651,7 +644,7 @@ homeScreenApi = (query, callback) => {
                         }
                     })
                 },
-                function (productId, cb) {
+                function(productId, cb) {
                     // console.log(productId)
 
                     productModel.find({ _id: { $in: productId }, status: "ACTIVE" }).populate({ path: 'productCategoryId' }).populate({ path: 'varianceId' }).exec((err, result) => {
@@ -676,7 +669,7 @@ homeScreenApi = (query, callback) => {
                                 }
                                 results.push(temp)
                             })
-                            results = _.uniqBy(results, function (e) {
+                            results = _.uniqBy(results, function(e) {
                                 return e.id;
                             });
                             cb(null, results)
@@ -717,29 +710,29 @@ homeScreenApi = (query, callback) => {
         topOffer = [];
         topPromotedDeals = [];
         async.forEachOf(response.topPicksInMobile1, (item, key, callback) => {
-            // async.forEachOf(item.brandDesc, (item, key, callback) => {
-            //     console.log("###", item.varianceId.variants[0].price)
-            data = {
-                _id: item._id,
-                type: "topPicks",
-                brand: item.brandId.brandName,
-                productName: item.productName,
-                //!change
-                price: item.varianceId.variants[0].price ? item.varianceId.variants[0].price : 000,
-                //!end
-                color: item.color,
-                description: item.description,
-                image: item.varianceId.variants[item.varianceId.variants.length - 1].image[0],
-                specifications: item.specifications,
-                status: item.status
-            }
-            topPicksInMobile.push(data)
-            // })
-            callback()
-        }, (err, result) => {
-            // log(err, result)
-        })
-        // log("@@@@@", item1)
+                // async.forEachOf(item.brandDesc, (item, key, callback) => {
+                //     console.log("###", item.varianceId.variants[0].price)
+                data = {
+                    _id: item._id,
+                    type: "topPicks",
+                    brand: item.brandId.brandName,
+                    productName: item.productName,
+                    //!change
+                    price: item.varianceId.variants[0].price ? item.varianceId.variants[0].price : 000,
+                    //!end
+                    color: item.color,
+                    description: item.description,
+                    image: item.varianceId.variants[item.varianceId.variants.length - 1].image[0],
+                    specifications: item.specifications,
+                    status: item.status
+                }
+                topPicksInMobile.push(data)
+                    // })
+                callback()
+            }, (err, result) => {
+                // log(err, result)
+            })
+            // log("@@@@@", item1)
         response.brand.forEach(element => {
             data = {
                 _id: element._id,
@@ -757,19 +750,18 @@ homeScreenApi = (query, callback) => {
             // console.log("*******************", item)
             // item.forEach(element => {
             let temp = {
-                _id: item._id,
-                categoryName: item.productcategoryName,
-                image: item.image ? item.image : "",
-                status: item.status,
-                type: 'category'
-            }
-            // item.type = "category",
+                    _id: item._id,
+                    categoryName: item.productcategoryName,
+                    image: item.image ? item.image : "",
+                    status: item.status,
+                    type: 'category'
+                }
+                // item.type = "category",
 
             categories.push(temp)
-            // })
-            // categories.push(item.)
-        }, (err, result) => {
-        })
+                // })
+                // categories.push(item.)
+        }, (err, result) => {})
         async.forEachOf(response.trendingFashion, (element, key, callback) => {
 
             // trendingFashion.push(item.brandDesc)
@@ -789,9 +781,8 @@ homeScreenApi = (query, callback) => {
                 status: element.status
             }
             trendingFashion.push(data)
-            // })
-        }, (err, result) => {
-        })
+                // })
+        }, (err, result) => {})
         async.forEachOf(response.topPromotedDeals, (item1, key, callback) => {
             data = {
                 _id: item1._id,
@@ -804,8 +795,7 @@ homeScreenApi = (query, callback) => {
             topPromotedDeals.push(data)
             callback()
 
-        }, (err, result) => {
-        })
+        }, (err, result) => {})
         async.forEachOf(response.topOffer, (item, key, callback) => {
             data = {
                 type: "deal",
@@ -823,15 +813,15 @@ homeScreenApi = (query, callback) => {
         res1['Top Deals'] = topOffer;
         res1['Top Promoted Deals'] = topPromotedDeals;
 
-        res1['Category'] = categories;//!done
+        res1['Category'] = categories; //!done
 
         res1['Top Picks in Mobile'] = topPicksInMobile; //!done
         res1['Trending On waki'] = response.treadingOnWaki;
         res1['Special Offer'] = response.vendorOffer
-        res1['Brand'] = brand;//!done
+        res1['Brand'] = brand; //!done
 
         orderedKey = ['Top Deals', 'Top Promoted Deals', 'Category', 'Top Picks in Mobile', 'Trending On waki', 'Special Offer', 'Brand', 'Top Picks in Fashion']
-        res1['Top Picks in Fashion'] = trendingFashion;//!done
+        res1['Top Picks in Fashion'] = trendingFashion; //!done
         // log(query)
         callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.HOMESCREEN_API[query.lang], "result": res1, 'orderedKey': orderedKey });
     }), (err) => {
@@ -840,63 +830,62 @@ homeScreenApi = (query, callback) => {
 }
 
 /* *******************************************************************
-**************************OpenSubCategory*******************************
-***********************************************************************/
+ **************************OpenSubCategory*******************************
+ ***********************************************************************/
 OpenSubCategory = (data, callback) => {
-    log('incoming data', data)
-    var res = []
-    subCategoryModelL2.find({ categoryModel: data.categoryId, status: "ACTIVE" }).sort({ $natural: 1 }).exec((err, succ) => {
+        log('incoming data', data)
+        var res = []
+        subCategoryModelL2.find({ categoryModel: data.categoryId, status: "ACTIVE" }).sort({ $natural: 1 }).exec((err, succ) => {
 
-        if (err) throw err
+            if (err) throw err
 
-        async.forEachOf(succ, (value, key, callback) => {
-            console.log('value', value.subCategoryName)
-            productCategoryModelL3.find({ subCategory: value._id, status: "ACTIVE" }).sort({ natural: 1 }).exec((err, findData) => {
-                // console.log("&^%$#@", err, findData)
-                if (findData.length > 0) {
+            async.forEachOf(succ, (value, key, callback) => {
+                console.log('value', value.subCategoryName)
+                productCategoryModelL3.find({ subCategory: value._id, status: "ACTIVE" }).sort({ natural: 1 }).exec((err, findData) => {
+                    // console.log("&^%$#@", err, findData)
+                    if (findData.length > 0) {
 
-                    let product = []
-                    findData.forEach(demo => {
-                        // console.log("eeeeeeeeeeeeeeeeeeeeeeee", e)
-                        t = {
-                            _id: demo._id,
-                            status: demo.status,
-                            productcategoryName: demo.productcategoryName,
-                            image: demo.image ? demo.image : ""
+                        let product = []
+                        findData.forEach(demo => {
+                            // console.log("eeeeeeeeeeeeeeeeeeeeeeee", e)
+                            t = {
+                                _id: demo._id,
+                                status: demo.status,
+                                productcategoryName: demo.productcategoryName,
+                                image: demo.image ? demo.image : ""
+                            }
+                            product.push(t)
+                        })
+                        let temp = {
+                            // key: key,
+                            _id: value._id,
+                            subCategoryName: value.subCategoryName,
+                            productcategory: product
                         }
-                        product.push(t)
-                    })
-                    let temp = {
-                        // key: key,
-                        _id: value._id,
-                        subCategoryName: value.subCategoryName,
-                        productcategory: product
+                        res.push(temp)
+                        callback()
+                    } else {
+                        let temp = {
+                            // key:key,
+                            _id: value._id,
+                            subCategoryName: value.subCategoryName,
+                            productcategory: []
+                        }
+                        res.push(temp)
+                        callback()
                     }
-                    res.push(temp)
-                    callback()
-                }
-                else {
-                    let temp = {
-                        // key:key,
-                        _id: value._id,
-                        subCategoryName: value.subCategoryName,
-                        productcategory: []
-                    }
-                    res.push(temp)
-                    callback()
-                }
-            })
+                })
 
-        }, (err, success) => {
-            categoryModelL1.findOne({ _id: data.categoryId }).exec((err, result) => {
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "categoryImage": result.image, "result": res })
+            }, (err, success) => {
+                categoryModelL1.findOne({ _id: data.categoryId }).exec((err, result) => {
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "categoryImage": result.image, "result": res })
+                })
             })
         })
-    })
-}
-/* *******************************************************************
-**************************categoryProductList*******************************
-***********************************************************************/
+    }
+    /* *******************************************************************
+     **************************categoryProductList*******************************
+     ***********************************************************************/
 categoryProductList = (data, callback) => {
 
     console.log("api is hitted", data)
@@ -907,8 +896,7 @@ categoryProductList = (data, callback) => {
 
             if (err) {
                 throw err
-            }
-            else if (productDetail.length > 0) {
+            } else if (productDetail.length > 0) {
                 productDetail.forEach(element => {
 
                     if (element) {
@@ -927,18 +915,20 @@ categoryProductList = (data, callback) => {
                     }
                 })
                 callback({
-                    'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.SUBCATORY_FOUND[data.lang], 'result': response
+                    'statusCode': util.statusCode.EVERYTHING_IS_OK,
+                    'statusMessage': util.statusMessage.SUBCATORY_FOUND[data.lang],
+                    'result': response
                 })
-            }
-            else {
+            } else {
                 res = []
                 callback({
-                    'statusCode': util.statusCode.NOT_FOUND, 'statusMessage': util.statusMessage.NOT_FOUND[data.lang], 'result': res
+                    'statusCode': util.statusCode.NOT_FOUND,
+                    'statusMessage': util.statusMessage.NOT_FOUND[data.lang],
+                    'result': res
                 })
             }
         })
-    }
-    else if (data.productListType == 'offer') {
+    } else if (data.productListType == 'offer') {
 
         let a = [];
         productOffer.findOne({ _id: mongoose.Types.ObjectId(data.productCategoryId) }).populate('applicableOnProduct').populate('applicableOnProductCategory').exec((err, getOffer) => {
@@ -958,23 +948,23 @@ categoryProductList = (data, callback) => {
                 a.push(temp)
             });
             callback({
-                'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.SUBCATORY_FOUND[data.lang], 'result': a
+                'statusCode': util.statusCode.EVERYTHING_IS_OK,
+                'statusMessage': util.statusMessage.SUBCATORY_FOUND[data.lang],
+                'result': a
             })
 
         })
-    }
-    else if (data.productListType == 'web') {
+    } else if (data.productListType == 'web') {
         productModel.find({ subCategory: data.productCategoryId }).sort({ _id: -1 }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
             console.log("err,product", err, productDetail)
             if (err) {
                 throw err
-            }
-            else if (productDetail.length > 0) {
+            } else if (productDetail.length > 0) {
                 productDetail.forEach(element => {
                     let temp = {
                         description: element.description,
                         // image: element.image,
-                        image: element.varianceId == null ? element.image : element.varianceId.variants[0].image,
+                        image: element.varianceId.variants[0].image,
                         specifications: element.specifications,
                         _id: element._id,
                         brand: element.brandId.brandName,
@@ -985,24 +975,25 @@ categoryProductList = (data, callback) => {
                     response.push(temp)
                 })
                 callback({
-                    'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.SUBCATORY_FOUND[data.lang], 'result': response
+                    'statusCode': util.statusCode.EVERYTHING_IS_OK,
+                    'statusMessage': util.statusMessage.SUBCATORY_FOUND[data.lang],
+                    'result': response
                 })
-            }
-            else {
+            } else {
                 res = []
                 callback({
-                    'statusCode': util.statusCode.NOT_FOUND, 'statusMessage': util.statusMessage.NOT_FOUND[data.lang], 'result': res
+                    'statusCode': util.statusCode.NOT_FOUND,
+                    'statusMessage': util.statusMessage.NOT_FOUND[data.lang],
+                    'result': res
                 })
             }
         })
-    }
-    else {
+    } else {
         productModel.find({ productCategoryId: data.productCategoryId }).sort({ _id: -1 }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: 'varianceId' }).exec((err, productDetail) => {
             console.log("err,product", err, productDetail)
             if (err) {
                 throw err
-            }
-            else if (productDetail.length > 0) {
+            } else if (productDetail.length > 0) {
                 productDetail.forEach(element => {
                     let temp = {
                         description: element.description,
@@ -1018,13 +1009,16 @@ categoryProductList = (data, callback) => {
                     response.push(temp)
                 })
                 callback({
-                    'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.SUBCATORY_FOUND[data.lang], 'result': response
+                    'statusCode': util.statusCode.EVERYTHING_IS_OK,
+                    'statusMessage': util.statusMessage.SUBCATORY_FOUND[data.lang],
+                    'result': response
                 })
-            }
-            else {
+            } else {
                 res = []
                 callback({
-                    'statusCode': util.statusCode.NOT_FOUND, 'statusMessage': util.statusMessage.NOT_FOUND[data.lang], 'result': res
+                    'statusCode': util.statusCode.NOT_FOUND,
+                    'statusMessage': util.statusMessage.NOT_FOUND[data.lang],
+                    'result': res
                 })
             }
         })
@@ -1032,8 +1026,8 @@ categoryProductList = (data, callback) => {
 }
 
 /* *******************************************************************
-**************************searchProduct*******************************
-***********************************************************************/
+ **************************searchProduct*******************************
+ ***********************************************************************/
 searchProduct = (data, callback) => {
     console.log('---------------?>>>', data.searchKeyword.trim())
     var temp = []
@@ -1042,7 +1036,7 @@ searchProduct = (data, callback) => {
     async.waterfall([
 
         //!function 1
-        function (callback) {
+        function(callback) {
             brandModel.findOne({ brandName: value }, { _id: 1 }, (err, brandId) => {
                 console.log("$$$$$$$$$$$$$$", err, brandId)
                 if (err)
@@ -1052,11 +1046,11 @@ searchProduct = (data, callback) => {
                 }
             })
         },
-        function (brandId, callback) {
+        function(brandId, callback) {
             callback(null, brandId)
         },
         //!function 2
-        function (brandId, callback) {
+        function(brandId, callback) {
 
             // console.log(brandId)
             if (brandId == null) {
@@ -1067,20 +1061,21 @@ searchProduct = (data, callback) => {
                         { 'tag': { $in: [value] } },
                         // { 'brandId': mongoose.Types.ObjectId(brandId._id) },
 
-                    ], status: "ACTIVE"
+                    ],
+                    status: "ACTIVE"
                 }).populate({ path: 'subCategory' }).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, result) => {
                     if (err) callback(null)
                     else callback(null, result)
                 })
-            }
-            else {
+            } else {
                 productModel.find({
                     $or: [
                         { 'productName': { $regex: value } },
                         { 'color': { $regex: value } },
                         { 'tag': { $in: [value] } },
                         { 'brandId': mongoose.Types.ObjectId(brandId._id) },
-                    ], status: "ACTIVE"
+                    ],
+                    status: "ACTIVE"
                 }).populate({ path: 'subCategory' }).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, result) => {
                     if (err) callback(null)
                     else callback(null, result)
@@ -1089,7 +1084,7 @@ searchProduct = (data, callback) => {
         }
     ], (err, result) => {
         var productDetail = []
-        // console.log("#################3", JSON.stringify(result))
+            // console.log("#################3", JSON.stringify(result))
         result.forEach(element => {
             console.log('*************', element.varianceId.variants.length == 0)
             let temp = {
@@ -1123,6 +1118,7 @@ searchProduct = (data, callback) => {
         }, (err, success) => {
             res = {}
             let demo = []
+
             function search(nameKey, myArray) {
                 for (var i = 0; i < myArray.length; i++) {
                     if (myArray[i].subCategoryName === nameKey) {
@@ -1146,8 +1142,8 @@ searchProduct = (data, callback) => {
 
 
 /* *******************************************************************
-**************************filters*******************************
-***********************************************************************/
+ **************************filters*******************************
+ ***********************************************************************/
 
 filters = (data, callback) => {
     function search(nameKey, myArray) {
@@ -1217,30 +1213,30 @@ filters = (data, callback) => {
             varianceModel.find({}, { 'variants.color': 1, 'variants._id': 1 }).exec((err, succ) => {
                 // console.log(succ)
                 let dataa = []
-                // console.log(err, JSON.stringify(succ))
+                    // console.log(err, JSON.stringify(succ))
                 succ.forEach(element => {
                     element.variants.forEach(inner => {
-                        // console.log('------->>',inner.color)
-                        // var non_duplidated_data=_.uniq(inner)
-                        // dataa.push(inner.color)
-                        let a = search(inner.color, dataa)
-                        if (a == undefined) {
-                            let co = {
-                                _id: inner._id,
-                                name: inner.color
+                            // console.log('------->>',inner.color)
+                            // var non_duplidated_data=_.uniq(inner)
+                            // dataa.push(inner.color)
+                            let a = search(inner.color, dataa)
+                            if (a == undefined) {
+                                let co = {
+                                    _id: inner._id,
+                                    name: inner.color
+                                }
+                                dataa.push(co)
                             }
-                            dataa.push(co)
-                        }
-                    })
-                    // console.log('+++++++++++++++++', dataa)
+                        })
+                        // console.log('+++++++++++++++++', dataa)
                 })
                 cb(null, dataa)
-                // var data = [{'name': 'Amir', 'surname': 'Rahnama'}, {'name': 'Amir', 'surname': 'Stevens'}];
-                // var non_duplidated_data = _.uniq(data, 'name');
-                //     // console.log(non_duplidated_data)
-                // console.log("==>>",JSON.stringify(dataa))
-                //         var non_duplidated_data=_.uniq(dataa)
-                //         console.log(non_duplidated_data)
+                    // var data = [{'name': 'Amir', 'surname': 'Rahnama'}, {'name': 'Amir', 'surname': 'Stevens'}];
+                    // var non_duplidated_data = _.uniq(data, 'name');
+                    //     // console.log(non_duplidated_data)
+                    // console.log("==>>",JSON.stringify(dataa))
+                    //         var non_duplidated_data=_.uniq(dataa)
+                    //         console.log(non_duplidated_data)
 
             })
         }
@@ -1250,23 +1246,24 @@ filters = (data, callback) => {
             "_id": "1",
             "name": "Price",
             "sub_filter": [{
-                "name": "500-1000",
-                "_id": "1"
-            },
-            {
-                "name": "1500-10000",
-                "_id": "2"
-            },
-            {
-                "name": "15000-25000",
-                "_id": "3"
+                    "name": "500-1000",
+                    "_id": "1"
+                },
+                {
+                    "name": "1500-10000",
+                    "_id": "2"
+                },
+                {
+                    "name": "15000-25000",
+                    "_id": "3"
 
-            },
-            {
-                "name": "25000-500000",
-                "_id": "4"
+                },
+                {
+                    "name": "25000-500000",
+                    "_id": "4"
 
-            }]
+                }
+            ]
         }
 
         var Brands = {
@@ -1282,8 +1279,7 @@ filters = (data, callback) => {
         var Size = {
             "_id": "4",
             "name": "Sizes",
-            "sub_filter": [
-                {
+            "sub_filter": [{
                     "name": "XL",
                     "_id": "1"
                 },
@@ -1306,7 +1302,8 @@ filters = (data, callback) => {
                 {
                     "name": "XXL",
                     "_id": "6"
-                }]
+                }
+            ]
 
         }
         var res = []
@@ -1326,25 +1323,29 @@ filters = (data, callback) => {
             console.log("$$$$$$$$$$$$$$", err, subCategoryName)
 
             if (err) callback({
-                'statusCode': util.statusCode.INTERNAL_SERVER_ERROR, 'statusMessage': util.statusMessage.SERVER_BUSY[data.lang]
+                'statusCode': util.statusCode.INTERNAL_SERVER_ERROR,
+                'statusMessage': util.statusMessage.SERVER_BUSY[data.lang]
             })
             else if (subCategoryName) {
                 // })
                 if (subCategoryName.categoryModel.categoryName == 'Electronic') {
                     callback({
-                        'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.FILTER_LIST[data.lang], 'result': res
+                        'statusCode': util.statusCode.EVERYTHING_IS_OK,
+                        'statusMessage': util.statusMessage.FILTER_LIST[data.lang],
+                        'result': res
                     })
-                }
-
-                else {
+                } else {
                     callback({
-                        'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.FILTER_LIST[data.lang], 'result': res1
+                        'statusCode': util.statusCode.EVERYTHING_IS_OK,
+                        'statusMessage': util.statusMessage.FILTER_LIST[data.lang],
+                        'result': res1
                     })
                 }
-            }
-            else {
+            } else {
                 callback({
-                    'statusCode': util.statusCode.EVERYTHING_IS_OK, 'statusMessage': util.statusMessage.FILTER_LIST[data.lang], 'result': res
+                    'statusCode': util.statusCode.EVERYTHING_IS_OK,
+                    'statusMessage': util.statusMessage.FILTER_LIST[data.lang],
+                    'result': res
                 })
             }
         })
@@ -1352,44 +1353,41 @@ filters = (data, callback) => {
 }
 
 /* *******************************************************************
-**************************getSubCategory*******************************
-***********************************************************************/
+ **************************getSubCategory*******************************
+ ***********************************************************************/
 getSubCategory = (data, callback) => {
     console.log("asdf")
     subCategoryModelL2.find({ categoryModel: data.categoryModel }).select({ 'subCategories': 1, '_id': 0, 'subCategoryName': 1, '_id': 1 }).exec((err, succ) => {
         if (err) {
             throw err
-        }
-        else if (!succ.length > 0) {
+        } else if (!succ.length > 0) {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": succ })
         }
     })
 }
 
 /* *******************************************************************
-**************************getProductCategoryName***********************
-***********************************************************************/
+ **************************getProductCategoryName***********************
+ ***********************************************************************/
 getProductCategoryName = (data, callback) => {
-    console.log('getProductCategoryName')
-    query = {
-        subCategory: data.subCategoryId
+        console.log('getProductCategoryName')
+        query = {
+            subCategory: data.subCategoryId
+        }
+        productCategoryModelL3.find(query).select({ '_id': 1, 'productcategoryName': 1, 'image': 1 }).exec((error, success) => {
+            console.log(error, JSON.stringify(success))
+            if (success.length > 0) {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": success, "subcategoryId": data.subCategoryId })
+            } else {
+                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
+            }
+        })
     }
-    productCategoryModelL3.find(query).select({ '_id': 1, 'productcategoryName': 1, 'image': 1 }).exec((error, success) => {
-        console.log(error, JSON.stringify(success))
-        if (success.length > 0) {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": success, "subcategoryId": data.subCategoryId })
-        }
-        else {
-            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
-        }
-    })
-}
-/* *******************************************************************
-**************************productDetails***********************
-***********************************************************************/
+    /* *******************************************************************
+     **************************productDetails***********************
+     ***********************************************************************/
 
 productDetails = (data, callback) => {
     log('hitted productDetail api ', data)
@@ -1401,8 +1399,7 @@ productDetails = (data, callback) => {
         if (err || !check || check == null) {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PRODUCT_NOT_FOUND[data.lang] })
             return
-        }
-        else {
+        } else {
             // })
             async.parallel({
                 findProduct: (cb) => {
@@ -1411,20 +1408,18 @@ productDetails = (data, callback) => {
                         if (err || !result || result == null) {
 
                             cb(null)
-                        }
-                        else {
+                        } else {
                             cb(null, result)
                         }
                     })
                 },
 
                 reviewAndRating: (cb) => {
-                    commonAPI.reviewAndRating(data._id, async (err, result) => {
+                    commonAPI.reviewAndRating(data._id, async(err, result) => {
                         // console.log('=========', err, result)
                         if (err && !result.length > 0) {
                             cb(null)
-                        }
-                        else {
+                        } else {
                             rating = [];
                             // console.log("start")
                             result.forEach(element => {
@@ -1461,25 +1456,24 @@ productDetails = (data, callback) => {
                             // console.log("errAnd result", err, result3)
                             if (err || !result3) {
                                 cb(null)
-                            }
-                            else {
+                            } else {
                                 var similarProduct = []
                                 result3.forEach(element => {
-                                    if (element._id != data._id) {
-                                        let temp = {
-                                            _id: element._id,
-                                            description: element.description,
-                                            price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
-                                            productName: element.productName,
-                                            // sellerId: element.sellerId,
-                                            brand: element.brandId.brandName,
-                                            // specifications: element.specifications,
-                                            image: element.varianceId == null ? element.image : element.varianceId.variants[0].image,
+                                        if (element._id != data._id) {
+                                            let temp = {
+                                                _id: element._id,
+                                                description: element.description,
+                                                price: element.varianceId == null ? element.sellingPrice : element.varianceId.variants[0].price,
+                                                productName: element.productName,
+                                                // sellerId: element.sellerId,
+                                                brand: element.brandId.brandName,
+                                                // specifications: element.specifications,
+                                                image: element.varianceId == null ? element.image : element.varianceId.variants[0].image,
+                                            }
+                                            similarProduct.push(temp)
                                         }
-                                        similarProduct.push(temp)
-                                    }
-                                })
-                                // console.log(result3)
+                                    })
+                                    // console.log(result3)
                                 cb(null, similarProduct)
                             }
                         })
@@ -1493,7 +1487,7 @@ productDetails = (data, callback) => {
                     // console.log("sadfsadfasfsadfdfasdf", response)
                     let res = {}
                     var ratingAndReview = []
-                    // console.log(response.findProduct.brandDesc[0].varianceId)
+                        // console.log(response.findProduct.brandDesc[0].varianceId)
                     if (response.findProduct.varianceId == null) {
                         // console.log("variant not inserted")
                         data = {
@@ -1516,19 +1510,18 @@ productDetails = (data, callback) => {
                         }
                         res.product = data
 
-                    }
-                    else if (response.findProduct.varianceId != null) {
+                    } else if (response.findProduct.varianceId != null) {
                         var b = []
                         var color = []
                         var material = []
                         var size = []
-                        // var test2;
+                            // var test2;
                         response.findProduct.varianceId.variants.forEach(test => {
                             if (test.color != "") color.push(test.color)
                             if (test.material != "") material.push(test.material)
                             if (test.size != "") size.push(test.size)
-                            // console.log('---------->', _.uniq(size))
-                            // console.log('into the looop', test)
+                                // console.log('---------->', _.uniq(size))
+                                // console.log('into the looop', test)
                             let data = {
                                 _id: response.findProduct._id,
                                 brand: response.findProduct.brandId.brandName,
@@ -1545,12 +1538,12 @@ productDetails = (data, callback) => {
                                 material: _.uniq(material),
                                 size: _.uniq(size),
                                 inStockQuantity: parseInt(response.findProduct.varianceId.variants[0].quantity)
-                                // colors: [...new Set(color)].reverse().map(function (x) { return x.toUpperCase() }),
-                                // material: [...new Set(material)].reverse().map(function (x) { return x.toUpperCase() }),
-                                // size: [...new Set(size)].reverse().map(function (x) { return x.toUpperCase() })
+                                    // colors: [...new Set(color)].reverse().map(function (x) { return x.toUpperCase() }),
+                                    // material: [...new Set(material)].reverse().map(function (x) { return x.toUpperCase() }),
+                                    // size: [...new Set(size)].reverse().map(function (x) { return x.toUpperCase() })
                             }
                             res.product = data
-                            // })
+                                // })
                         })
                     }
                     sellerInfo = {
@@ -1562,13 +1555,12 @@ productDetails = (data, callback) => {
                     res.sellerInfo = sellerInfo
                     res.reviewAndRating = response.reviewAndRating
                     res.similarProduct = response.getSimilarProduct
-                    // console.log(res)
+                        // console.log(res)
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.USER_FOUND[data.lang], "result": res });
                     commonAPI.updateViewer(data, (err, response) => {
                         // console.log(err,response)
                     })
-                }
-                else {
+                } else {
                     console.log("###############errrorr#####################################3")
                     callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PRODUCT_NOT_FOUND })
                 }
@@ -1578,8 +1570,8 @@ productDetails = (data, callback) => {
 }
 
 /* *******************************************************************
-**************************addVariance***********************
-***********************************************************************/
+ **************************addVariance***********************
+ ***********************************************************************/
 addVariance = (data, callback) => {
     console.log('add variance')
     let variance = new varianceModel({
@@ -1601,217 +1593,211 @@ addVariance = (data, callback) => {
 }
 
 /* *******************************************************************
-**************************getVariance***********************
-***********************************************************************/
+ **************************getVariance***********************
+ ***********************************************************************/
 getVariance = (data, callback) => {
-    console.log('get variance', data)
-    // var color = [data.color.toLowerCase()], material = [data.material.toLowerCase()], size = [data.size.toLowerCase()];
-    temp = {
-        color: data.color.toUpperCase(),
-        size: data.size.toUpperCase(),
-        material: data.material.toUpperCase(),
-    }
-    // console.log(temp)
-    query1 = {
-        "productId": mongoose.Types.ObjectId(data._id),
-        "variants": {
-            "$elemMatch": {
-                // "closed": false,
-                "$and": [
-                    {
-                        "color": temp.color,
-                    },
-                    {
-                        "size": temp.size,
-                    },
-                    {
-                        "material": temp.material,
-                    }
-                ]
+        console.log('get variance', data)
+            // var color = [data.color.toLowerCase()], material = [data.material.toLowerCase()], size = [data.size.toLowerCase()];
+        temp = {
+                color: data.color.toUpperCase(),
+                size: data.size.toUpperCase(),
+                material: data.material.toUpperCase(),
+            }
+            // console.log(temp)
+        query1 = {
+            "productId": mongoose.Types.ObjectId(data._id),
+            "variants": {
+                "$elemMatch": {
+                    // "closed": false,
+                    "$and": [{
+                            "color": temp.color,
+                        },
+                        {
+                            "size": temp.size,
+                        },
+                        {
+                            "material": temp.material,
+                        }
+                    ]
+                }
             }
         }
-    }
 
-    async.parallel({
+        async.parallel({
 
-        varianceDetail: (cb) => {
-            varianceModel.findOne(query1, { 'variants.$': 1 }).populate({ path: 'productId' }).populate({ path: 'sellerId' }).lean().exec((err, result) => {
-                // console.log(err, JSON.stringify(result))
-                if (err || !result) {
-                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], })
-                    return
-                }
-                else {
-                    cb(null, result)
-                }
-            })
-        },
-
-        getSimilarProduct: (cb) => {
-            productModel.findOne({ "_id": data._id }).lean().exec((err, result1) => {
-                if (err) throw err
-                productModel.find({
-                    $or: [
-                        // { brandId: result1.brandId },
-                        { productCategoryId: result1.productCategoryId },
-
-                    ]
-                }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: "varianceId" }).lean().exec((err, result3) => {
-                    // console.log("errAnd result", err, result3)
-                    if (err || !result3) {
-
-                        cb(null)
-                    }
-                    else {
-                        var similarProduct = []
-                        result3.forEach(element => {
-                            if (element._id != data._id) {
-                                let temp = {
-                                    _id: element._id,
-                                    description: element.description,
-                                    price: element.varianceId.variants[0].price,
-                                    productName: element.productName,
-                                    // sellerId: element.sellerId,
-                                    brand: element.brandId.brandName,
-                                    // specifications: element.specifications,
-                                    image: element.image,
-                                }
-                                similarProduct.push(temp)
-                            }
-                        })
-                        // console.log(result3)
-                        cb(null, similarProduct)
+            varianceDetail: (cb) => {
+                varianceModel.findOne(query1, { 'variants.$': 1 }).populate({ path: 'productId' }).populate({ path: 'sellerId' }).lean().exec((err, result) => {
+                    // console.log(err, JSON.stringify(result))
+                    if (err || !result) {
+                        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], })
+                        return
+                    } else {
+                        cb(null, result)
                     }
                 })
-            })
-        },
+            },
 
-        reviewAndRating: (cb) => {
-            commonAPI.reviewAndRating(data._id, async (err, result) => {
-                // console.log('=========', err, result)
-                if (err && !result.length > 0) {
-                    cb(null)
-                }
-                else {
-                    rating = [];
-                    // console.log("start")
-                    result.forEach(element => {
-                        console.log("check review and rating", element)
-                        if (element) {
-                            console.log("middle")
-                            temp = {
-                                reviewId: element._id,
-                                firstName: element.userId.firstName,
-                                lastName: element.userId.lastName,
-                                image: element.userId.image,
-                                review: element.review,
-                                rating: element.rating
-                            }
-                            rating.push(temp)
+            getSimilarProduct: (cb) => {
+                productModel.findOne({ "_id": data._id }).lean().exec((err, result1) => {
+                    if (err) throw err
+                    productModel.find({
+                        $or: [
+                            // { brandId: result1.brandId },
+                            { productCategoryId: result1.productCategoryId },
+
+                        ]
+                    }).populate({ path: 'brandId', select: 'brandName' }).populate({ path: "varianceId" }).lean().exec((err, result3) => {
+                        // console.log("errAnd result", err, result3)
+                        if (err || !result3) {
+
+                            cb(null)
+                        } else {
+                            var similarProduct = []
+                            result3.forEach(element => {
+                                    if (element._id != data._id) {
+                                        let temp = {
+                                            _id: element._id,
+                                            description: element.description,
+                                            price: element.varianceId.variants[0].price,
+                                            productName: element.productName,
+                                            // sellerId: element.sellerId,
+                                            brand: element.brandId.brandName,
+                                            // specifications: element.specifications,
+                                            image: element.image,
+                                        }
+                                        similarProduct.push(temp)
+                                    }
+                                })
+                                // console.log(result3)
+                            cb(null, similarProduct)
                         }
                     })
-                    console.log("end")
-                    cb(null, rating)
+                })
+            },
+
+            reviewAndRating: (cb) => {
+                commonAPI.reviewAndRating(data._id, async(err, result) => {
+                    // console.log('=========', err, result)
+                    if (err && !result.length > 0) {
+                        cb(null)
+                    } else {
+                        rating = [];
+                        // console.log("start")
+                        result.forEach(element => {
+                            console.log("check review and rating", element)
+                            if (element) {
+                                console.log("middle")
+                                temp = {
+                                    reviewId: element._id,
+                                    firstName: element.userId.firstName,
+                                    lastName: element.userId.lastName,
+                                    image: element.userId.image,
+                                    review: element.review,
+                                    rating: element.rating
+                                }
+                                rating.push(temp)
+                            }
+                        })
+                        console.log("end")
+                        cb(null, rating)
+                    }
+                })
+            },
+
+
+        }, (err, response) => {
+            res = {}
+            var color = [],
+                material = [],
+                size = []
+            if (data.color != '') color = [data.color]
+            if (data.material != '') material = [data.material]
+            if (data.size != '') size = [data.size]
+
+            varianceModel.findById({ _id: response.varianceDetail._id }).exec((err, combination) => {
+                if (err || !combination) throw err
+                else {
+                    combination.variants.forEach(test => {
+                        // console.log('====>', element)
+                        // color.push(element.color.toUpperCase())
+                        // material.push(element.material.toUpperCase())
+                        // size.push(element.size.toUpperCase())
+                        if (test.color != "") color.push(test.color)
+                        if (test.material != "") material.push(test.material)
+                        if (test.size != "") size.push(test.size)
+
+                    })
+
+                    console.log(_.uniq(color))
+
+                    var temp = {
+                        _id: response.varianceDetail.productId._id,
+                        brand: response.varianceDetail.productId.brandId.brandName,
+                        productName: response.varianceDetail.productId.productName,
+                        description: response.varianceDetail.productId.description,
+                        specifications: response.varianceDetail.productId.specifications[0],
+                        productTry: response.varianceDetail.productId.productTry,
+                        inStock: response.varianceDetail.variants[0].quantity > 0 ? true : false,
+                        price: response.varianceDetail.variants[0].price,
+                        image: response.varianceDetail.variants[0].image ? response.varianceDetail.variants[0].image : [],
+                        colors: _.uniq(color),
+                        size: _.uniq(size),
+                        material: _.uniq(material),
+                        inStockQuantity: parseInt(response.varianceDetail.variants[0].quantity),
+                        varianceId: response.varianceDetail.variants[0]
+                    }
+                    res.product = temp
+                        // console.log("======>", response.varianceDetail)
+                    res.sellerInfo = {
+                        _id: response.varianceDetail.sellerId._id,
+                        sellerName: response.varianceDetail.sellerId.firstName,
+                        selllerImage: response.varianceDetail.sellerId.image ? response.varianceDetail.sellerId.image : "",
+                        selllerRating: "3"
+                    }
+                    res.reviewAndRating = response.reviewAndRating
+                    res.similarProduct = response.getSimilarProduct
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": res })
+
                 }
             })
-        },
 
-
-    }, (err, response) => {
-        res = {}
-        var color = [],
-            material = [], size = []
-        if (data.color != '') color = [data.color]
-        if (data.material != '') material = [data.material]
-        if (data.size != '') size = [data.size]
-
-        varianceModel.findById({ _id: response.varianceDetail._id }).exec((err, combination) => {
-            if (err || !combination) throw err
-            else {
-                combination.variants.forEach(test => {
-                    // console.log('====>', element)
-                    // color.push(element.color.toUpperCase())
-                    // material.push(element.material.toUpperCase())
-                    // size.push(element.size.toUpperCase())
-                    if (test.color != "") color.push(test.color)
-                    if (test.material != "") material.push(test.material)
-                    if (test.size != "") size.push(test.size)
-
-                })
-
-                console.log(_.uniq(color))
-
-                var temp = {
-                    _id: response.varianceDetail.productId._id,
-                    brand: response.varianceDetail.productId.brandId.brandName,
-                    productName: response.varianceDetail.productId.productName,
-                    description: response.varianceDetail.productId.description,
-                    specifications: response.varianceDetail.productId.specifications[0],
-                    productTry: response.varianceDetail.productId.productTry,
-                    inStock: response.varianceDetail.variants[0].quantity > 0 ? true : false,
-                    price: response.varianceDetail.variants[0].price,
-                    image: response.varianceDetail.variants[0].image ? response.varianceDetail.variants[0].image : [],
-                    colors: _.uniq(color),
-                    size: _.uniq(size),
-                    material: _.uniq(material),
-                    inStockQuantity: parseInt(response.varianceDetail.variants[0].quantity),
-                    varianceId: response.varianceDetail.variants[0]
-                }
-                res.product = temp
-                // console.log("======>", response.varianceDetail)
-                res.sellerInfo = {
-                    _id: response.varianceDetail.sellerId._id,
-                    sellerName: response.varianceDetail.sellerId.firstName,
-                    selllerImage: response.varianceDetail.sellerId.image ? response.varianceDetail.sellerId.image : "",
-                    selllerRating: "3"
-                }
-                res.reviewAndRating = response.reviewAndRating
-                res.similarProduct = response.getSimilarProduct
-                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": res })
-
-            }
         })
-
-    })
-}
-/* *******************************************************************
-**************************getBrand***********************
-***********************************************************************/
+    }
+    /* *******************************************************************
+     **************************getBrand***********************
+     ***********************************************************************/
 getBrand = (data, callback) => {
     brandModel.findOne({ _id: data.brandId }, { __v: 0 }).exec((err, result) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
         }
     })
 }
 
 /* *******************************************************************
-**************************deleteBrand***********************
-***********************************************************************/
+ **************************deleteBrand***********************
+ ***********************************************************************/
 //!delete brand
 deleteBrand = (data, callback) => {
     brandModel.findOneAndUpdate({ _id: data.brandId }, { $set: { status: "INACTIVE" } }, { __v: 0, new: true }).exec((err, result) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
         }
     })
 }
 
 /* *******************************************************************
-**************************updateBrand***********************
-***********************************************************************/
+ **************************updateBrand***********************
+ ***********************************************************************/
 updateBrand = (data, callback) => {
     console.log("data", data)
     if (!data.brandId || !data.brandName) {
         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    }
-    else {
+    } else {
         async.parallel({
             uploadImage: (cb) => {
                 commonFunction.uploadImg(data.brandImage, (err, image) => {
@@ -1839,8 +1825,7 @@ updateBrand = (data, callback) => {
             brandModel.findByIdAndUpdate({ _id: data.brandId }, update, { __v: 0, new: true }).exec((err, result) => {
                 if (err) {
                     callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-                }
-                else {
+                } else {
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": result })
                 }
             })
@@ -1851,62 +1836,60 @@ updateBrand = (data, callback) => {
 
 
 /* *******************************************************************
-**************************vendorOrderList***********************
-***********************************************************************/
+ **************************vendorOrderList***********************
+ ***********************************************************************/
 vendorOrderList = (header, callback) => {
     // console.log("vendororderList", header)
     var userId
     commonFunction.jwtDecode(header.accesstoken, (err, result) => {
         userId = result
     })
-    orderPlaced.aggregate([
-        {
-            $unwind: '$orderPlacedDescription'
-        }, {
-            $match: {
-                // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
-                $or: [
-                    { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) }
-                ]
-            },
-            // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
-        }
-    ], (err, result) => {
+    orderPlaced.aggregate([{
+        $unwind: '$orderPlacedDescription'
+    }, {
+        $match: {
+            // 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId)
+            $or: [
+                { 'orderPlacedDescription.sellerId': mongoose.Types.ObjectId(userId) }
+            ]
+        },
+        // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
+    }], (err, result) => {
         // console.log(err, result)
         var demo = []
         async.forEachOf(result, (value, key, cb) => {
-            productModel.findOne({ '_id': mongoose.Types.ObjectId(value.orderPlacedDescription.productId) }).populate({ path: 'brandId' }).exec((err, productDetail) => {
-                // console.log('############', err, productDetail)
-                userModel.findById({ _id: value.userId }, { firstName: 1, address: 1 }).exec((err, userInfo) => {
-                    // console.log("---------->>", err, userInfo.firstName)
-                    let temp = {
-                        customerName: userInfo.firstName,
-                        customerAddress: "delhi",
-                        productDetail: productDetail.productName,
-                        quantity: value.orderPlacedDescription.productQuantity,
-                        productImage: productDetail.image[0],
-                        status: value.orderPlacedDescription.orderStatus,
-                        orderId: value.orderPlacedDescription.orderId,
-                        createdAt: value.orderPlacedDescription.createdAt,
-                        paymentStatus: value.orderPlacedDescription.orderPayment,
-                        totalAmountPaid: value.orderPlacedDescription.totalAmountPaid + value.orderPlacedDescription.deliveryCharges + value.orderPlacedDescription.estimateTax
-                    }
-                    demo.push(temp)
-                    // console.log(demo)
-                    cb()
+                productModel.findOne({ '_id': mongoose.Types.ObjectId(value.orderPlacedDescription.productId) }).populate({ path: 'brandId' }).exec((err, productDetail) => {
+                    // console.log('############', err, productDetail)
+                    userModel.findById({ _id: value.userId }, { firstName: 1, address: 1 }).exec((err, userInfo) => {
+                        // console.log("---------->>", err, userInfo.firstName)
+                        let temp = {
+                            customerName: userInfo.firstName,
+                            customerAddress: "delhi",
+                            productDetail: productDetail.productName,
+                            quantity: value.orderPlacedDescription.productQuantity,
+                            productImage: productDetail.image[0],
+                            status: value.orderPlacedDescription.orderStatus,
+                            orderId: value.orderPlacedDescription.orderId,
+                            createdAt: value.orderPlacedDescription.createdAt,
+                            paymentStatus: value.orderPlacedDescription.orderPayment,
+                            totalAmountPaid: value.orderPlacedDescription.totalAmountPaid + value.orderPlacedDescription.deliveryCharges + value.orderPlacedDescription.estimateTax
+                        }
+                        demo.push(temp)
+                            // console.log(demo)
+                        cb()
+                    })
                 })
+            }, (err, response) => {
+                // console.log('@@@@@@@@@@@2', demo)
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY.en, 'result': demo })
             })
-        }, (err, response) => {
-            // console.log('@@@@@@@@@@@2', demo)
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY.en, 'result': demo })
-        })
-        // callback(result)
+            // callback(result)
     })
 }
 
 /********************************************************************
-**************************getSubCategoryList***********************
-***********************************************************************/
+ **************************getSubCategoryList***********************
+ ***********************************************************************/
 
 getSubCategoryList = (query, callback) => {
     console.log("get subcategory list ", query)
@@ -1934,91 +1917,89 @@ getSubCategoryList = (query, callback) => {
 }
 
 /********************************************************************
-**************************orderDetail***********************
-***********************************************************************/
+ **************************orderDetail***********************
+ ***********************************************************************/
 orderDetail = (data, callback) => {
-    console.log('orderDetails', data)
-    let query = {
-        'orderPlacedDescription.orderId': data.orderId.substring(3)
-    }
-    async.parallel({
-        getOrderDetails: (cb) => {
-            orderPlaced.findOne(query, { 'orderPlacedDescription.$': 1 }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).populate('orderPlacedDescription.sellerId').exec((err, result) => {
-                if (err || !result || !result.orderPlacedDescription.length) {
-                    res = {}
-                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.ORDER_EMPTY[data.lang], 'result': res })
-                }
-                else {
-                    cb(null, result)
-                }
-            })
+        console.log('orderDetails', data)
+        let query = {
+            'orderPlacedDescription.orderId': data.orderId.substring(3)
         }
-    }, (err, response) => {
-        var main = []
-        async.forEachOf(response.getOrderDetails.orderPlacedDescription, (value, key, callback) => {
-            brandModel.findOne(value.productId.brandId, (err, brand) => {
-                varianceModel.findOne({
-                    "productId": mongoose.Types.ObjectId(value.productId._id),
-                    "variants": {
-                        "$elemMatch": {
-                            // "closed": false,
-                            "$and": [
-                                {
-                                    "color": value.color.toUpperCase(),
-                                },
-                                {
-                                    "size": value.size.toUpperCase(),
-                                },
-                                {
-                                    "material": value.material.toUpperCase(),
-                                }
-                            ]
-                        }
+        async.parallel({
+            getOrderDetails: (cb) => {
+                orderPlaced.findOne(query, { 'orderPlacedDescription.$': 1 }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.productId' }).populate('orderPlacedDescription.sellerId').exec((err, result) => {
+                    if (err || !result || !result.orderPlacedDescription.length) {
+                        res = {}
+                        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.ORDER_EMPTY[data.lang], 'result': res })
+                    } else {
+                        cb(null, result)
                     }
-                }, { 'variants.$': 1 }).exec((err, getVariance) => {
-                    response.getOrderDetails.userId.address.forEach(element => {
-                        console.log('------>>>', element)
-                        if (element._id.toString() == value.addressId.toString()) {
-                            temp = {
-                                brand: brand.brandName,
-                                orderId: "ORD" + value.orderId,
-                                transactionId: value.transactionId,
-                                productId: value.productId._id,
-                                sellerId: value.sellerId._id,
-                                sellerName: value.sellerId.firstName,
-                                productName: value.productId.productName,
-                                color: getVariance.variants[0].color,
-                                price: getVariance.variants[0].price,
-                                productQuantity: value.productQuantity,
-                                image: getVariance.variants[0].image,
-                                orderStatus: value.orderStatus,
-                                feedbackAdded: value.feedbackAdded,
-                                description: value.productId.description,
-                                orderDate: value.createdAt,
-                                orderPayment: value.orderPayment,
-                                deliveryAddress: element,
-                                estimateTax: value.estimateTax ? value.estimateTax : '17',
-                                deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "50",
-                                totalAmountPaid: (17 + 50 + parseInt(value.totalAmountPaid)).toString()
-                            }
-                            main.push(temp)
-                        }
-
-                    })
-                    callback()
                 })
-            })
-        }, (err, successfully) => {
-            var res = {}
-            res.productDetail = main
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "result": main[0] })
+            }
+        }, (err, response) => {
+            var main = []
+            async.forEachOf(response.getOrderDetails.orderPlacedDescription, (value, key, callback) => {
+                brandModel.findOne(value.productId.brandId, (err, brand) => {
+                    varianceModel.findOne({
+                        "productId": mongoose.Types.ObjectId(value.productId._id),
+                        "variants": {
+                            "$elemMatch": {
+                                // "closed": false,
+                                "$and": [{
+                                        "color": value.color.toUpperCase(),
+                                    },
+                                    {
+                                        "size": value.size.toUpperCase(),
+                                    },
+                                    {
+                                        "material": value.material.toUpperCase(),
+                                    }
+                                ]
+                            }
+                        }
+                    }, { 'variants.$': 1 }).exec((err, getVariance) => {
+                        response.getOrderDetails.userId.address.forEach(element => {
+                            console.log('------>>>', element)
+                            if (element._id.toString() == value.addressId.toString()) {
+                                temp = {
+                                    brand: brand.brandName,
+                                    orderId: "ORD" + value.orderId,
+                                    transactionId: value.transactionId,
+                                    productId: value.productId._id,
+                                    sellerId: value.sellerId._id,
+                                    sellerName: value.sellerId.firstName,
+                                    productName: value.productId.productName,
+                                    color: getVariance.variants[0].color,
+                                    price: getVariance.variants[0].price,
+                                    productQuantity: value.productQuantity,
+                                    image: getVariance.variants[0].image,
+                                    orderStatus: value.orderStatus,
+                                    feedbackAdded: value.feedbackAdded,
+                                    description: value.productId.description,
+                                    orderDate: value.createdAt,
+                                    orderPayment: value.orderPayment,
+                                    deliveryAddress: element,
+                                    estimateTax: value.estimateTax ? value.estimateTax : '17',
+                                    deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "50",
+                                    totalAmountPaid: (17 + 50 + parseInt(value.totalAmountPaid)).toString()
+                                }
+                                main.push(temp)
+                            }
 
+                        })
+                        callback()
+                    })
+                })
+            }, (err, successfully) => {
+                var res = {}
+                res.productDetail = main
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LIST_ORDER[data.lang], "result": main[0] })
+
+            })
         })
-    })
-}
-/********************************************************************
-**************************getAllVariant***********************
-***********************************************************************/
+    }
+    /********************************************************************
+     **************************getAllVariant***********************
+     ***********************************************************************/
 
 getAllVariant = (data, callback) => {
     console.log('data,headers', data)
@@ -2045,15 +2026,14 @@ getAllVariant = (data, callback) => {
 
 
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
-        }
-        else
+        } else
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
     })
 }
 
 /********************************************************************
-**************************searchVendorOrder******************************
-***********************************************************************/
+ **************************searchVendorOrder******************************
+ ***********************************************************************/
 
 searchVendorOrder = (data, header, callback) => {
     // console.log("vendororderList", data, header)
@@ -2063,9 +2043,9 @@ searchVendorOrder = (data, header, callback) => {
     var key = new RegExp(data.searchKeyword.trim(), 'i')
     var userId
     commonFunction.jwtDecode(header.accesstoken, (err, result) => {
-        userId = result
-    })
-    // console.log("##################################", value)
+            userId = result
+        })
+        // console.log("##################################", value)
     orderPlaced.aggregate([{
         $unwind: '$orderPlacedDescription'
     }, {
@@ -2080,10 +2060,10 @@ searchVendorOrder = (data, header, callback) => {
                         // { 'brandDesc.tag': { $in: [value] } },
                         // { 'brandDesc.brandId': mongoose.Types.ObjectId(brandId._id) },
                     ]
-                }]
+                }
+            ]
         }
-    }
-    ], (err, result) => {
+    }], (err, result) => {
         // console.log(err)
         // callback({ 'result': result, 'err': err })
         if (result.length == 0) {
@@ -2092,54 +2072,54 @@ searchVendorOrder = (data, header, callback) => {
         }
         var successfully = []
         async.auto({
-            search: async (cb) => {
+            search: async(cb) => {
                 async.forEachOf(result, (element, key, go) => {
                     // result.forEach(element => {
                     async.waterfall([
-                        function (callback) {
-                            userModel.findOne({ _id: element.userId }, { firstName: 1 }).exec(async (err, userInfo) => {
-                                if (err)
-                                    callback(null)
-                                else {
-                                    callback(null, userInfo)
-                                }
-                            })
-                        },
-                        function (userInfo, callback) {
-                            // console.log("varianceid", element.orderPlacedDescription.varianceId)
-                            varianceModel.findOne({ 'variants._id': element.orderPlacedDescription.varianceId }, { 'variants.$': 1 }).exec((err, variance) => {
-                                // console.log('=====>>', err, variance)
-                                callback(null, userInfo, variance)
-                            })
-                        },
-                        function (userInfo, variance, callback) {
-                            // console.log("&&&&&&&&&&&&&&&&&&&&7", userInfo, variance)
+                            function(callback) {
+                                userModel.findOne({ _id: element.userId }, { firstName: 1 }).exec(async(err, userInfo) => {
+                                    if (err)
+                                        callback(null)
+                                    else {
+                                        callback(null, userInfo)
+                                    }
+                                })
+                            },
+                            function(userInfo, callback) {
+                                // console.log("varianceid", element.orderPlacedDescription.varianceId)
+                                varianceModel.findOne({ 'variants._id': element.orderPlacedDescription.varianceId }, { 'variants.$': 1 }).exec((err, variance) => {
+                                    // console.log('=====>>', err, variance)
+                                    callback(null, userInfo, variance)
+                                })
+                            },
+                            function(userInfo, variance, callback) {
+                                // console.log("&&&&&&&&&&&&&&&&&&&&7", userInfo, variance)
 
-                            productModel.findOne({ '_id': element.orderPlacedDescription.productId }).exec(async (err, productDetail) => {
-                                // console.log("ee333",err, 'productDetail',productDetail,'userinfo',userInfo, 'variance',variance)
-                                let temp = {
-                                    customerName: userInfo.firstName,
-                                    customerAddress: "delhi",
-                                    productDetail: productDetail.productName,
-                                    quantity: element.orderPlacedDescription.productQuantity,
-                                    productImage: productDetail.image[0],
-                                    status: element.orderPlacedDescription.orderStatus,
-                                    orderId: element.orderPlacedDescription.orderId,
-                                    paymentStatus: element.orderPlacedDescription.orderPayment,
-                                    totalAmountPaid: element.orderPlacedDescription.totalAmountPaid + element.orderPlacedDescription.deliveryCharges + element.orderPlacedDescription.estimateTax,
-                                    createdAt: element.orderPlacedDescription.createdAt,
-                                }
-                                // var a=[].push(temp)
-                                callback(null, temp)
-                                go()
-                            })
-                        }
+                                productModel.findOne({ '_id': element.orderPlacedDescription.productId }).exec(async(err, productDetail) => {
+                                    // console.log("ee333",err, 'productDetail',productDetail,'userinfo',userInfo, 'variance',variance)
+                                    let temp = {
+                                            customerName: userInfo.firstName,
+                                            customerAddress: "delhi",
+                                            productDetail: productDetail.productName,
+                                            quantity: element.orderPlacedDescription.productQuantity,
+                                            productImage: productDetail.image[0],
+                                            status: element.orderPlacedDescription.orderStatus,
+                                            orderId: element.orderPlacedDescription.orderId,
+                                            paymentStatus: element.orderPlacedDescription.orderPayment,
+                                            totalAmountPaid: element.orderPlacedDescription.totalAmountPaid + element.orderPlacedDescription.deliveryCharges + element.orderPlacedDescription.estimateTax,
+                                            createdAt: element.orderPlacedDescription.createdAt,
+                                        }
+                                        // var a=[].push(temp)
+                                    callback(null, temp)
+                                    go()
+                                })
+                            }
 
-                    ], async (err, response) => {
-                        // console.log("waterfall", err, response)
-                        successfully.push(response)
-                    })
-                    // })
+                        ], async(err, response) => {
+                            // console.log("waterfall", err, response)
+                            successfully.push(response)
+                        })
+                        // })
 
                 }, (err, responseEach) => {
                     console.log("((((((((((((((((((((((((((((9", err, responseEach)
@@ -2160,190 +2140,184 @@ searchVendorOrder = (data, header, callback) => {
 }
 
 /********************************************************************
-**************************inActiveProductList*************************
-***********************************************************************/
+ **************************inActiveProductList*************************
+ ***********************************************************************/
 inActiveProductList = (data, callback) => {
-    console.log("get product listddsss", data)
+        console.log("get product listddsss", data)
 
-    if (!data.status == "all" || data.status == "active" || data.status == "inactive" || data.status == 'rejected') {
-        // console.log("status in", data.status)
-        productModel.find({
-            $and: [{ status: data.status.toUpperCase() }]
-        }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
-            // console.log(err, JSON.stringify(response))
-            if (response.length > 0) {
-                var res = []
-                async.forEachOf(response, (value, key, callback) => {
-                    let temp = {
-                        productId: value._id,
-                        productName: value.productName,
-                        productStatus: value.status,
-                        productPrice: value.price,
-                        sellerName: value.sellerId.firstName,
-                        image: value.image,
-                        price: value.sellingPrice,
-                        quantity: value.quantity,
-                        variant: value.varianceId.variants ? value.varianceId.variants : null
-                    }
-                    res.push(temp)
+        if (!data.status == "all" || data.status == "active" || data.status == "inactive" || data.status == 'rejected') {
+            // console.log("status in", data.status)
+            productModel.find({
+                $and: [{ status: data.status.toUpperCase() }]
+            }).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
+                // console.log(err, JSON.stringify(response))
+                if (response.length > 0) {
+                    var res = []
+                    async.forEachOf(response, (value, key, callback) => {
+                        let temp = {
+                            productId: value._id,
+                            productName: value.productName,
+                            productStatus: value.status,
+                            productPrice: value.price,
+                            sellerName: value.sellerId.firstName,
+                            image: value.image,
+                            price: value.sellingPrice,
+                            quantity: value.quantity,
+                            variant: value.varianceId.variants ? value.varianceId.variants : null
+                        }
+                        res.push(temp)
 
-                    callback()
+                        callback()
 
-                }, (err, finallyy) => {
-                    // console.log(err, finallyy)
+                    }, (err, finallyy) => {
+                        // console.log(err, finallyy)
 
-                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
-                })
-            }
-            else {
-                let res = []
-                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], 'result': res })
-            }
-
-        })
-    }
-    else {
-        console.log("status out", data.status)
-        productModel.find({}).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
-            // console.log(err, JSON.stringify(response))
-            if (response.length > 0) {
-                var res = []
-                async.forEachOf(response, (value, key, callback) => {
-                    let temp = {
-                        productId: value._id,
-                        productName: value.productName,
-                        productStatus: value.status,
-                        productPrice: value.price,
-                        sellerName: value.sellerId.firstName,
-                        image: value.image,
-                        price: value.sellingPrice,
-                        quantity: value.quantity,
-                        variant: value.varianceId.variants ? value.varianceId.variants : null
-                    }
-                    res.push(temp)
-
-                    callback()
-
-                }, (err, finallyy) => {
-                    // console.log(err, finallyy)
-
-                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
-                })
-            }
-            else {
-                let res = []
-                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], 'result': res })
-            }
-        })
-    }
-}
-/********************************************************************
-**************************addVendoroffer*************************
-***********************************************************************/
-addVendoroffer = (data, header, callback) => {
-    // console.log('add vendor offer', data)
-    var userId
-    commonFunction.jwtDecode(header.accesstoken, (err, token) => {
-        if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        else userId = token
-    })
-    if (!data.offerName || !data.offerImage || !data.description || !data.offerType || !data.value || !data.applicableOn) {
-        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    }
-    else {
-        async.parallel({
-            exist: (cb) => {
-
-                productOffer.findOne({ offerName: data.offerName })
-                    .exec((err, exist) => {
-                        if (err) cb(null)
-                        else if (!exist) cb(null)
-                        else cb(null, exist)
+                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
                     })
-            },
-            uploadImage: (cb) => {
-                commonFunction.uploadMultipleImages(data.offerImage, (err, image) => {
-                    log(err, image)
-                    if (err) cb(null)
-                    else if (!image) cb(null)
-                    else cb(null, image)
-                })
-            }
-
-        }, (err, response) => {
-            if (err) {
-                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-            }
-            else if (response.exist) {
-                callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
-            }
-            else {
-                query = {
-                    userId: mongoose.Types.ObjectId(userId),
-                    staffId: data.staffId ? data.staffId : null,
-                    offerName: data.offerName,
-                    description: data.description,
-                    offerType: data.offerType,
-                    image: response.uploadImage,
-                    value: data.value,
-                    applicableType: data.applicableType, /*product and category */
-                    applicableOnProduct: data.applicableOn,
-                    startDate: data.startDate,
-                    endDate: data.endDate
+                } else {
+                    let res = []
+                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], 'result': res })
                 }
-                let offer = new productOffer(query)
-                offer.save((err, result) => {
-                    // log(err, result)
-                    if (err)
-                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-                    else if (!result)
-                        callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
-                    else {
-                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.OFFERS_ADDED[data.lang], "result": result })
-                    }
-                })
-            }
-        })
+
+            })
+        } else {
+            console.log("status out", data.status)
+            productModel.find({}).populate({ path: 'varianceId' }).populate({ path: 'sellerId' }).exec((err, response) => {
+                // console.log(err, JSON.stringify(response))
+                if (response.length > 0) {
+                    var res = []
+                    async.forEachOf(response, (value, key, callback) => {
+                        let temp = {
+                            productId: value._id,
+                            productName: value.productName,
+                            productStatus: value.status,
+                            productPrice: value.price,
+                            sellerName: value.sellerId.firstName,
+                            image: value.image,
+                            price: value.sellingPrice,
+                            quantity: value.quantity,
+                            variant: value.varianceId.variants ? value.varianceId.variants : null
+                        }
+                        res.push(temp)
+
+                        callback()
+
+                    }, (err, finallyy) => {
+                        // console.log(err, finallyy)
+
+                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res })
+                    })
+                } else {
+                    let res = []
+                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], 'result': res })
+                }
+            })
+        }
     }
-}
-/********************************************************************
-**************************addToCart*************************
-***********************************************************************/
+    /********************************************************************
+     **************************addVendoroffer*************************
+     ***********************************************************************/
+addVendoroffer = (data, header, callback) => {
+        // console.log('add vendor offer', data)
+        var userId
+        commonFunction.jwtDecode(header.accesstoken, (err, token) => {
+            if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            else userId = token
+        })
+        if (!data.offerName || !data.offerImage || !data.description || !data.offerType || !data.value || !data.applicableOn) {
+            callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        } else {
+            async.parallel({
+                exist: (cb) => {
+
+                    productOffer.findOne({ offerName: data.offerName })
+                        .exec((err, exist) => {
+                            if (err) cb(null)
+                            else if (!exist) cb(null)
+                            else cb(null, exist)
+                        })
+                },
+                uploadImage: (cb) => {
+                    commonFunction.uploadMultipleImages(data.offerImage, (err, image) => {
+                        log(err, image)
+                        if (err) cb(null)
+                        else if (!image) cb(null)
+                        else cb(null, image)
+                    })
+                }
+
+            }, (err, response) => {
+                if (err) {
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+                } else if (response.exist) {
+                    callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
+                } else {
+                    query = {
+                        userId: mongoose.Types.ObjectId(userId),
+                        staffId: data.staffId ? data.staffId : null,
+                        offerName: data.offerName,
+                        description: data.description,
+                        offerType: data.offerType,
+                        image: response.uploadImage,
+                        value: data.value,
+                        applicableType: data.applicableType,
+                        /*product and category */
+                        applicableOnProduct: data.applicableOn,
+                        startDate: data.startDate,
+                        endDate: data.endDate
+                    }
+                    let offer = new productOffer(query)
+                    offer.save((err, result) => {
+                        // log(err, result)
+                        if (err)
+                            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+                        else if (!result)
+                            callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
+                        else {
+                            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.OFFERS_ADDED[data.lang], "result": result })
+                        }
+                    })
+                }
+            })
+        }
+    }
+    /********************************************************************
+     **************************addToCart*************************
+     ***********************************************************************/
 addToCart = (data, headers, callback) => {
-    log("addToCart", data)
-    var userId;
-    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-        if (result) userId = result
-        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    })
-    if (!data.productId || !userId)
-        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    else {
-        bagModel.findOne({ userId: userId }, (err, result) => {
-            if (err) throw err
-            else if (result) {
-                query = { userId: userId },
-                    update = {
-                        $push: {
-                            orderDescription: {
-                                productId: data.productId,
-                                // varianceId: data.varianceId,
-                                sellerId: data.sellerId,
-                                orderPayment: "PENDING",
-                                orderStatus: "ADDTOCART",
-                                productQuantity: data.productQuantity ? data.productQuantity : 1,
-                                color: data.color,
-                                size: data.size,
-                                material: data.material,
-                                sellerId: data.sellerId,
-                                //totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "234"
+        log("addToCart", data)
+        var userId;
+        commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+            if (result) userId = result
+            else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        })
+        if (!data.productId || !userId)
+            callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        else {
+            bagModel.findOne({ userId: userId }, (err, result) => {
+                if (err) throw err
+                else if (result) {
+                    query = { userId: userId },
+                        update = {
+                            $push: {
+                                orderDescription: {
+                                    productId: data.productId,
+                                    // varianceId: data.varianceId,
+                                    sellerId: data.sellerId,
+                                    orderPayment: "PENDING",
+                                    orderStatus: "ADDTOCART",
+                                    productQuantity: data.productQuantity ? data.productQuantity : 1,
+                                    color: data.color,
+                                    size: data.size,
+                                    material: data.material,
+                                    sellerId: data.sellerId,
+                                    //totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "234"
+                                }
                             }
                         }
-                    }
-                let query1 = {
-                    $and:
-                        [
+                    let query1 = {
+                        $and: [
                             { userId: userId },
                             { 'orderDescription.varianceId': data.varianceId },
                             { 'orderDescription.productId': data.productId },
@@ -2351,202 +2325,193 @@ addToCart = (data, headers, callback) => {
                             { "orderDescription.color": data.color },
                             { "orderDescription.size": data.size }
                         ]
-                }
-                bagModel.find(query1, { 'orderDescription.$': 1 }).exec((err, findOrder) => {
-                    if (err) throw err
-                    else if (findOrder.length > 0) {
-                        callback({ statusCode: util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.BAG_PRODUCT_ALREADY_EXIST[data.lang] })
-                        return
                     }
-                    else {
-                        bagModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, result) => {
-                            if (result) {
-                                temp = {}
-                                temp.length = result.orderDescription.length
+                    bagModel.find(query1, { 'orderDescription.$': 1 }).exec((err, findOrder) => {
+                        if (err) throw err
+                        else if (findOrder.length > 0) {
+                            callback({ statusCode: util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.BAG_PRODUCT_ALREADY_EXIST[data.lang] })
+                            return
+                        } else {
+                            bagModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, result) => {
+                                if (result) {
+                                    temp = {}
+                                    temp.length = result.orderDescription.length
 
-                                //!delete from wishist
-                                commonAPI.deleteWist(userId, data.productId)
-                                //!end
-                                callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_CART[data.lang], "result": temp })
-                            }
-                            else {
-                                callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
-                            }
-                        })
-                    }
-                })
-            }
-            else {
-                log('not exist')
-                query = {
-                    userId: userId,
-                    orderDescription: {
-                        productId: data.productId,
-                        // varianceId: data.varianceId,
-                        orderPayment: "PENDING",
-                        orderStatus: "ADDTOCART",
-                        productQuantity: data.productQuantity ? data.productQuantity : 1,
-                        totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "234",
-                        sellerId: data.sellerId,
-                        color: data.color,
-                        size: data.size,
-                        material: data.material,
+                                    //!delete from wishist
+                                    commonAPI.deleteWist(userId, data.productId)
+                                        //!end
+                                    callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_CART[data.lang], "result": temp })
+                                } else {
+                                    callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
+                                }
+                            })
+                        }
+                    })
+                } else {
+                    log('not exist')
+                    query = {
+                        userId: userId,
+                        orderDescription: {
+                            productId: data.productId,
+                            // varianceId: data.varianceId,
+                            orderPayment: "PENDING",
+                            orderStatus: "ADDTOCART",
+                            productQuantity: data.productQuantity ? data.productQuantity : 1,
+                            totalAmountPaid: data.totalAmountPaid ? data.totalAmountPaid : "234",
+                            sellerId: data.sellerId,
+                            color: data.color,
+                            size: data.size,
+                            material: data.material,
 
-                    }
-                }
-                console.log("==>>", query)
-                bagModel.create(query, (err, result) => {
-                    log(err, result)
-                    if (result) {
-                        res = {}
-                        res.result = result
-                        temp = {}
-                        temp.length = 1
-                        callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_CART[data.lang], "result": temp })
-                    }
-                    else {
-                        callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
-                    }
-                })
-            }
-        })
-    }
-}
-/********************************************************************
-**************************addToCart*************************
-***********************************************************************/
-addToWishList = (data, headers, callback) => {
-    log("addToWishList", data)
-    var userId;
-    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-        if (result) userId = result
-        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    })
-    if (!data.productId)
-        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    else {
-
-        let temp = {
-            color: data.color.toUpperCase(),
-            material: data.material.toUpperCase(),
-            size: data.size.toUpperCase()
-        }
-        wishModel.findOne({ userId: userId }, (err, result) => {
-            if (err) throw err
-            else if (result) {
-                query = { userId: userId },
-                    update = {
-                        $push: {
-                            wishListDescription: {
-                                productId: data.productId,
-                                // orderPayment: "PENDING",
-                                orderStatus: "WISHLIST",
-                                productQuantity: data.productQuantity ? data.productQuantity : 1,
-                                size: data.size,
-                                color: data.color,
-                                material: data.material
-                            }
                         }
                     }
-                wishModel.find({ $and: [{ userId: userId }, { 'wishListDescription.productId': data.productId }, { 'wishListDescription.size': temp.size }, { 'wishListDescription.color': temp.color }, { 'wishListDescription.material': temp.material }] }, { 'wishListDescription.$': 1 }).exec((err, findOrder) => {
-                    if (err) throw err
-                    else if (findOrder.length > 0) {
-                        callback({ statusCode: util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.WISHLIST_PRODUCT_ALREADY_EXIST[data.lang] })
-                        return
-                    }
-                    else {
-                        wishModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, result) => {
-                            if (result) {
-                                temp = {}
-                                // log("lenght", result.wishListDescription.length)
-                                temp.length = result.wishListDescription.length
-                                callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_WISHLIST[data.lang], "result": result })
-                            }
-                            else {
-                                callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
-                            }
-                        })
-                    }
-                })
-            }
-            else {
-                log('not exist')
-                query = {
-                    userId: userId,
-                    wishListDescription: {
-                        productId: data.productId,
-                        // orderPayment: "PENDING",
-                        orderStatus: "WISHLIST",
-                        productQuantity: data.productQuantity ? data.productQuantity : 1,
-                        size: data.size,
-                        color: data.color,
-                        material: data.material
-                    }
+                    console.log("==>>", query)
+                    bagModel.create(query, (err, result) => {
+                        log(err, result)
+                        if (result) {
+                            res = {}
+                            res.result = result
+                            temp = {}
+                            temp.length = 1
+                            callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_CART[data.lang], "result": temp })
+                        } else {
+                            callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
+                        }
+                    })
                 }
-                wishModel.create(query, (err, result) => {
-                    if (result) {
-                        res = {}
-                        res.result = result
-                        temp = {}
-                        temp.length = 1
-                        callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_WISHLIST[data.lang] })
-                    }
-                    else {
-                        callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
-                    }
-                })
-            }
-        })
-    }
-}
-/********************************************************************
-**************************addReviewAndRating*************************
-***********************************************************************/
-addReviewAndRating = (header, data, callback) => {
-    log('addReviewAndRating', data)
-    var userId
-    if (!data.productId || !data.orderId) {
-        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    }
-    else {
-        commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
-            if (err) throw err
-            else {
-                userId = userId1
-                console.log("useid", userId)
-            }
-        })
-        let query = {
-            userId: userId,
-            // reviewAndRating: {
-            productId: data.productId,
-            rating: data.rating,
-            review: data.review,
-            userId: userId
-            // }
-        }
-        reviewRatingModel.findOne({ userId: userId, productId: data.productId }).exec((err, check) => {
-
-            console.log("---->>", err, check)
-            if (err || check) {
-                callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
-                return
-            }
-            // })
-            reviewRatingModel.create(query, (err, succ) => {
-                commonAPI.changeFeedBackStatus(data.orderId, data.productId, succ._id)
-
-                callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.Review_saved_successfully[data.lang], 'result': succ })
             })
-            // }
-        })
+        }
     }
-}
-/********************************************************************
-**************************addReviewAndRating*************************
-***********************************************************************/
+    /********************************************************************
+     **************************addToCart*************************
+     ***********************************************************************/
+addToWishList = (data, headers, callback) => {
+        log("addToWishList", data)
+        var userId;
+        commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+            if (result) userId = result
+            else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        })
+        if (!data.productId)
+            callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        else {
+
+            let temp = {
+                color: data.color.toUpperCase(),
+                material: data.material.toUpperCase(),
+                size: data.size.toUpperCase()
+            }
+            wishModel.findOne({ userId: userId }, (err, result) => {
+                if (err) throw err
+                else if (result) {
+                    query = { userId: userId },
+                        update = {
+                            $push: {
+                                wishListDescription: {
+                                    productId: data.productId,
+                                    // orderPayment: "PENDING",
+                                    orderStatus: "WISHLIST",
+                                    productQuantity: data.productQuantity ? data.productQuantity : 1,
+                                    size: data.size,
+                                    color: data.color,
+                                    material: data.material
+                                }
+                            }
+                        }
+                    wishModel.find({ $and: [{ userId: userId }, { 'wishListDescription.productId': data.productId }, { 'wishListDescription.size': temp.size }, { 'wishListDescription.color': temp.color }, { 'wishListDescription.material': temp.material }] }, { 'wishListDescription.$': 1 }).exec((err, findOrder) => {
+                        if (err) throw err
+                        else if (findOrder.length > 0) {
+                            callback({ statusCode: util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.WISHLIST_PRODUCT_ALREADY_EXIST[data.lang] })
+                            return
+                        } else {
+                            wishModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, result) => {
+                                if (result) {
+                                    temp = {}
+                                        // log("lenght", result.wishListDescription.length)
+                                    temp.length = result.wishListDescription.length
+                                    callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_WISHLIST[data.lang], "result": result })
+                                } else {
+                                    callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
+                                }
+                            })
+                        }
+                    })
+                } else {
+                    log('not exist')
+                    query = {
+                        userId: userId,
+                        wishListDescription: {
+                            productId: data.productId,
+                            // orderPayment: "PENDING",
+                            orderStatus: "WISHLIST",
+                            productQuantity: data.productQuantity ? data.productQuantity : 1,
+                            size: data.size,
+                            color: data.color,
+                            material: data.material
+                        }
+                    }
+                    wishModel.create(query, (err, result) => {
+                        if (result) {
+                            res = {}
+                            res.result = result
+                            temp = {}
+                            temp.length = 1
+                            callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_TO_WISHLIST[data.lang] })
+                        } else {
+                            callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
+                        }
+                    })
+                }
+            })
+        }
+    }
+    /********************************************************************
+     **************************addReviewAndRating*************************
+     ***********************************************************************/
+addReviewAndRating = (header, data, callback) => {
+        log('addReviewAndRating', data)
+        var userId
+        if (!data.productId || !data.orderId) {
+            callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        } else {
+            commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
+                if (err) throw err
+                else {
+                    userId = userId1
+                    console.log("useid", userId)
+                }
+            })
+            let query = {
+                userId: userId,
+                // reviewAndRating: {
+                productId: data.productId,
+                rating: data.rating,
+                review: data.review,
+                userId: userId
+                    // }
+            }
+            reviewRatingModel.findOne({ userId: userId, productId: data.productId }).exec((err, check) => {
+
+                console.log("---->>", err, check)
+                if (err || check) {
+                    callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
+                    return
+                }
+                // })
+                reviewRatingModel.create(query, (err, succ) => {
+                        commonAPI.changeFeedBackStatus(data.orderId, data.productId, succ._id)
+
+                        callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.Review_saved_successfully[data.lang], 'result': succ })
+                    })
+                    // }
+            })
+        }
+    }
+    /********************************************************************
+     **************************addReviewAndRating*************************
+     ***********************************************************************/
 deleteCart = (data, headers, callback) => {
     log("delete cart or remove", data)
     var userId;
@@ -2561,8 +2526,7 @@ deleteCart = (data, headers, callback) => {
         bagModel.findOne({ userId: userId }, (err, userFound) => {
             if (err) {
                 callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-            }
-            else if (userFound) {
+            } else if (userFound) {
                 query = { userId: userId },
                     update = {
                         $pull: {
@@ -2574,23 +2538,19 @@ deleteCart = (data, headers, callback) => {
                 bagModel.find({ $and: [query, { 'orderDescription.productId': data.productId }] }, { 'orderDescription.$': 1 }).exec((err, findId) => {
                     if (err) {
                         callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                    }
-                    else if (findId.length > 0) {
+                    } else if (findId.length > 0) {
                         bagModel.update({ _id: findId[0]._id }, update, { new: true }).exec((err, deleted) => {
                             if (err) {
                                 callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                            }
-                            else {
+                            } else {
                                 callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PRODUCT_DELETE_CART[data.lang] })
                             }
                         })
-                    }
-                    else {
+                    } else {
                         callback({ statusCode: util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.PRODUCT_NOT_FOUND[data.lang] });
                     }
                 })
-            }
-            else {
+            } else {
                 callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": "user not exists" });
             }
         })
@@ -2598,209 +2558,204 @@ deleteCart = (data, headers, callback) => {
 }
 
 /********************************************************************
-**************************placeOrder*************************
-***********************************************************************/
+ **************************placeOrder*************************
+ ***********************************************************************/
 placeOrder = (data, headers, callback) => {
-    log("placeOrder", data, headers.accesstoken);
-    var userId;
-    var orderId = commonFunction.generateOrderId(6)
-    var orderPayment = data.orderPayment.toUpperCase()
-    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-        if (result) userId = result
-        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        log("placeOrder", data, headers.accesstoken);
+        var userId;
+        var orderId = commonFunction.generateOrderId(6)
+        var orderPayment = data.orderPayment.toUpperCase()
+        commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+            if (result) userId = result
+            else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
 
-    })
-    if (!data.productId || !userId)
-        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    else {
-        async.parallel({
-            getProdctdetail: (cb) => {
-                let query = {
-                    "productId": mongoose.Types.ObjectId(data.productId),
-                    "variants": {
-                        "$elemMatch": {
-                            "$and": [
-                                {
-                                    "color": data.color.toUpperCase(),
-                                },
-                                {
-                                    "size": data.size.toUpperCase(),
-                                },
-                                {
-                                    "material": data.material.toUpperCase(),
-                                }
-                            ]
-                        }
-                    }
-                }
-                varianceModel.findOne(query, { 'variants.$': 1 }).exec((err, result) => {
-                    if (err) cb(null)
-                    else cb(null, result)
-                })
-            }
-        }, (err, response) => {
-            orderPlaced.findOne({ userId: userId }, (err, userFind) => {
-                if (err) {
-                    callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                }
-                else if (userFind) {
-                    query = { userId: userId },
-                        update = {
-                            $push: {
-                                orderPlacedDescription: {
-                                    sellerId: data.sellerId,
-                                    productId: data.productId,
-                                    // varianceId: data.varianceId ? data.varianceId : null,
-                                    orderPayment: orderPayment ? orderPayment : "PENDING",
-                                    orderStatus: "PLACED",
-                                    productQuantity: data.productQuantity ? data.productQuantity : 1,
-                                    orderId: orderId,
-                                    transactionId: null,
-                                    addressId: data.addressId ? data.addressId : "null",
-                                    deliveryCharges: data.deliveryCharges ? data.deliveryCharges : "00",
-                                    estimateTax: data.estimateTax ? data.estimateTax : "00",
-                                    color: data.color,
-                                    size: data.size,
-                                    material: data.material,
-                                    totalAmountPaid: response.getProdctdetail.variants[0].price
-                                }
-                            }
-                        }
-                    // console.log("req", query)
-                    orderPlaced.findOneAndUpdate(query, update, { new: true, lean: true }, (err, orderPlaced) => {
-                        log("---------->>>>>", err, orderPlaced)
-                        if (err) {
-                            callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                        }
-                        else if (orderPlaced) {
-                            let notifyData = {
-                                msg: util.statusMessage.ORDER_PLACED[data.lang],
-                                productId: data.productId,
-                                orderId: "ORD" + orderId,
-                                title: util.statusMessage.TITLE.PLACED[data.lang],
-                                type: util.statusMessage.type.PLACED[data.lang],
-                                // orderId: orderId
-                            }
-                            if (orderPayment == 'COD') {
-                                commonAPI.notify(notifyData, userId, (err, result) => {
-                                    // console.log("1659.....notifyAPI", err, result)
-                                })
-                            }
-                            callback({
-                                statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
-                                "orderId": notifyData.orderId,
-                                "orderPayment": orderPayment
-                            })
-                        }
-                        else {
-                            callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
-                        }
-                    })
-                }
-                else {
-                    log('not exist')
-                    let query = {
-                        userId: userId,
-                        orderPlacedDescription: {
-                            productId: data.productId,
-                            sellerId: data.sellerId,
-                            // varianceId: data.varianceId ? data.varianceId : null,
-                            orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                            orderStatus: "PENDING",
-                            productQuantity: data.productQuantity ? data.productQuantity : 1,
-                            orderId: orderId,
-                            addressId: data.addressId ? data.addressId : "null",
-                            // totalAmountPaid: data.price ? data.price : "00",
-                            color: data.color,
-                            size: data.size,
-                            material: data.material,
-                            totalAmountPaid: response.getProdctdetail.variants[0].price
-                        }
-                    }
-                    orderPlaced.create(query, (err, result) => {
-                        console.log('++++++++++++++>>>>>>', err, result)
-                        if (err) {
-                            callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                        }
-                        else if (result) {
-                            res = {}
-                            res.result = result
-                            temp = {}
-                            temp.length = 1
-                            //! delete in addtocart
-                            commonAPI.deleteCart(userId, data.productId)
-                            //!
-                            let notifyData = {
-                                msg: util.statusMessage.ORDER_PLACED[data.lang],
-                                productId: data.productId,
-                                orderId: "ORD" + orderId,
-                                title: util.statusMessage.TITLE.PLACED[data.lang],
-                                type: util.statusMessage.type.PLACED[data.lang],
-                            }
-                            if (orderPayment == 'COD') {
-                                commonAPI.notify(notifyData, userId, (err, result) => {
-                                    // console.log("1666...notifyAPI", err, result)
-                                })
-                            }
-                            callback({
-                                statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
-                                "orderId": notifyData.orderId,
-                                "orderPayment": orderPayment
-                            })
-                        }
-                        else {
-                            callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
-                        }
-                    })
-                }
-                //!!! delete in addtocart
-                commonAPI.deleteCart(userId, data.productId)
-                let temp = {
-                    varianceId: response.getProdctdetail.variants[0]._id,
-                    stock: (parseInt(response.getProdctdetail.variants[0].quantity) - parseInt(data.productQuantity)).toString(),
-                    lang: "en"
-                }
-                /* decreament quantity on main model */
-                if (orderPayment == 'COD') {
-                    adminService.updateVarianceStock(temp, (err, response) => {
-                        console.log(err, response)
-                    })
-                }
-            })
         })
+        if (!data.productId || !userId)
+            callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        else {
+            async.parallel({
+                getProdctdetail: (cb) => {
+                    let query = {
+                        "productId": mongoose.Types.ObjectId(data.productId),
+                        "variants": {
+                            "$elemMatch": {
+                                "$and": [{
+                                        "color": data.color.toUpperCase(),
+                                    },
+                                    {
+                                        "size": data.size.toUpperCase(),
+                                    },
+                                    {
+                                        "material": data.material.toUpperCase(),
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                    varianceModel.findOne(query, { 'variants.$': 1 }).exec((err, result) => {
+                        if (err) cb(null)
+                        else cb(null, result)
+                    })
+                }
+            }, (err, response) => {
+                orderPlaced.findOne({ userId: userId }, (err, userFind) => {
+                    if (err) {
+                        callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                    } else if (userFind) {
+                        query = { userId: userId },
+                            update = {
+                                $push: {
+                                    orderPlacedDescription: {
+                                        sellerId: data.sellerId,
+                                        productId: data.productId,
+                                        // varianceId: data.varianceId ? data.varianceId : null,
+                                        orderPayment: orderPayment ? orderPayment : "PENDING",
+                                        orderStatus: "PLACED",
+                                        productQuantity: data.productQuantity ? data.productQuantity : 1,
+                                        orderId: orderId,
+                                        transactionId: null,
+                                        addressId: data.addressId ? data.addressId : "null",
+                                        deliveryCharges: data.deliveryCharges ? data.deliveryCharges : "00",
+                                        estimateTax: data.estimateTax ? data.estimateTax : "00",
+                                        color: data.color,
+                                        size: data.size,
+                                        material: data.material,
+                                        totalAmountPaid: response.getProdctdetail.variants[0].price
+                                    }
+                                }
+                            }
+                            // console.log("req", query)
+                        orderPlaced.findOneAndUpdate(query, update, { new: true, lean: true }, (err, orderPlaced) => {
+                            log("---------->>>>>", err, orderPlaced)
+                            if (err) {
+                                callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                            } else if (orderPlaced) {
+                                let notifyData = {
+                                    msg: util.statusMessage.ORDER_PLACED[data.lang],
+                                    productId: data.productId,
+                                    orderId: "ORD" + orderId,
+                                    title: util.statusMessage.TITLE.PLACED[data.lang],
+                                    type: util.statusMessage.type.PLACED[data.lang],
+                                    // orderId: orderId
+                                }
+                                if (orderPayment == 'COD') {
+                                    commonAPI.notify(notifyData, userId, (err, result) => {
+                                        // console.log("1659.....notifyAPI", err, result)
+                                    })
+                                }
+                                callback({
+                                    statusCode: util.statusCode.EVERYTHING_IS_OK,
+                                    "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                    "orderId": notifyData.orderId,
+                                    "orderPayment": orderPayment
+                                })
+                            } else {
+                                callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
+                            }
+                        })
+                    } else {
+                        log('not exist')
+                        let query = {
+                            userId: userId,
+                            orderPlacedDescription: {
+                                productId: data.productId,
+                                sellerId: data.sellerId,
+                                // varianceId: data.varianceId ? data.varianceId : null,
+                                orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                orderStatus: "PENDING",
+                                productQuantity: data.productQuantity ? data.productQuantity : 1,
+                                orderId: orderId,
+                                addressId: data.addressId ? data.addressId : "null",
+                                // totalAmountPaid: data.price ? data.price : "00",
+                                color: data.color,
+                                size: data.size,
+                                material: data.material,
+                                totalAmountPaid: response.getProdctdetail.variants[0].price
+                            }
+                        }
+                        orderPlaced.create(query, (err, result) => {
+                            console.log('++++++++++++++>>>>>>', err, result)
+                            if (err) {
+                                callback({ statusCode: util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                            } else if (result) {
+                                res = {}
+                                res.result = result
+                                temp = {}
+                                temp.length = 1
+                                    //! delete in addtocart
+                                commonAPI.deleteCart(userId, data.productId)
+                                    //!
+                                let notifyData = {
+                                    msg: util.statusMessage.ORDER_PLACED[data.lang],
+                                    productId: data.productId,
+                                    orderId: "ORD" + orderId,
+                                    title: util.statusMessage.TITLE.PLACED[data.lang],
+                                    type: util.statusMessage.type.PLACED[data.lang],
+                                }
+                                if (orderPayment == 'COD') {
+                                    commonAPI.notify(notifyData, userId, (err, result) => {
+                                        // console.log("1666...notifyAPI", err, result)
+                                    })
+                                }
+                                callback({
+                                    statusCode: util.statusCode.EVERYTHING_IS_OK,
+                                    "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                                    "orderId": notifyData.orderId,
+                                    "orderPayment": orderPayment
+                                })
+                            } else {
+                                callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang] })
+                            }
+                        })
+                    }
+                    //!!! delete in addtocart
+                    commonAPI.deleteCart(userId, data.productId)
+                    let temp = {
+                            varianceId: response.getProdctdetail.variants[0]._id,
+                            stock: (parseInt(response.getProdctdetail.variants[0].quantity) - parseInt(data.productQuantity)).toString(),
+                            lang: "en"
+                        }
+                        /* decreament quantity on main model */
+                    if (orderPayment == 'COD') {
+                        adminService.updateVarianceStock(temp, (err, response) => {
+                            console.log(err, response)
+                        })
+                    }
+                })
+            })
+        }
     }
-}
-/********************************************************************
-**************************addReviewAndRating*************************
-***********************************************************************/
-// addReviewAndRating = (header, data, callback) => {
-//     log('addReviewAndRating', data)
-//     var userId;
-//     if (!data.productId) {
-//         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-//         return
-//     }
-//     else {
-//         commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
-//             if (err) throw err
-//             else {
-//                 userId = userId1
-//             }
-//         })
-//         update = {
-//             $push: {
-//                 reviewAndRating: {
-//                     productId: data.productId,
-//                     rating: data.rating,
-//                     review: data.review,
-//                     userId: userId
-//                 }
-//             }
-//         }
-//         reviewAndRatingL5.find({ userId: userId }).exec((err, result) => {
-//             // console.log("adjdadjaskld", err, result)
-//             if (err) throw err
-//             else if (result.length > 0) {
+    /********************************************************************
+     **************************addReviewAndRating*************************
+     ***********************************************************************/
+    // addReviewAndRating = (header, data, callback) => {
+    //     log('addReviewAndRating', data)
+    //     var userId;
+    //     if (!data.productId) {
+    //         callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+    //         return
+    //     }
+    //     else {
+    //         commonFunction.jwtDecode(header.accesstoken, (err, userId1) => {
+    //             if (err) throw err
+    //             else {
+    //                 userId = userId1
+    //             }
+    //         })
+    //         update = {
+    //             $push: {
+    //                 reviewAndRating: {
+    //                     productId: data.productId,
+    //                     rating: data.rating,
+    //                     review: data.review,
+    //                     userId: userId
+    //                 }
+    //             }
+    //         }
+    //         reviewAndRatingL5.find({ userId: userId }).exec((err, result) => {
+    //             // console.log("adjdadjaskld", err, result)
+    //             if (err) throw err
+    //             else if (result.length > 0) {
 
 //                 reviewAndRatingL5.findOneAndUpdate({ userId: userId }, update, { new: true }, (err, result) => {
 //                     // log(err, result)
@@ -2831,708 +2786,683 @@ placeOrder = (data, headers, callback) => {
 //     }
 // }
 /********************************************************************
-**************************applyFilter*************************
-***********************************************************************/
+ **************************applyFilter*************************
+ ***********************************************************************/
 applyFilter = (data, callback) => {
-    console.log('call filter api -==>', data)
-    // console.log('call filter api -==>', typeof data.Price)
-    var dataManage = {}
-    // console.log(JSON.parse(data.Colors))
-    if (data.Colors && data.Sizes && data.Brands && data.Price) {
-        dataManage = {
-            Sizes: JSON.parse(data.Sizes),
-            Colors: JSON.parse(data.Colors),
-            Brands: JSON.parse(data.Brands),
-            Price: JSON.parse(data.Price)
-        }
-    }
-    else if (data.Brands && data.Colors) {
-        dataManage = {
-            // Colors: JSON.parse(data.Colors),
-            Colors: JSON.parse(data.Colors),
-            Brands: JSON.parse(data.Brands)
-        }
-    }
-    else if (data.Brands && data.Sizes) {
-        dataManage = {
-            Sizes: JSON.parse(data.Sizes),
-            // Colors: JSON.parse(data.Colors),
-            Brands: JSON.parse(data.Brands)
-        }
-    }
-    else if (data.Colors && data.Sizes) {
-        dataManage = {
-            Sizes: JSON.parse(data.Sizes),
-            Colors: JSON.parse(data.Colors),
-            // Brands: JSON.parse(data.Brands)
-        }
-    }
-    else if (data.Price && data.Sizes) {
-        dataManage = {
-            Sizes: JSON.parse(data.Sizes),
-            Price: JSON.parse(data.Price),
-            // Brands: JSON.parse(data.Brands)
-        }
-    }
-    else if (data.Price && data.Colors) {
-        dataManage = {
-            Colors: JSON.parse(data.Colors),
-            Price: JSON.parse(data.Price),
-            // Brands: JSON.parse(data.Brands)
-        }
-    }
-    else if (data.Colors && data.Sizes && data.Brands) {
-        dataManage = {
-            Sizes: JSON.parse(data.Sizes),
-            Colors: JSON.parse(data.Colors),
-            Brands: JSON.parse(data.Brands)
-        }
-    }
-    else if (data.Price && data.Sizes && data.Brands) {
-        dataManage = {
-            Sizes: JSON.parse(data.Sizes),
-            Price: JSON.parse(data.Price),
-            Brands: JSON.parse(data.Brands)
-        }
-    }
-    else if (data.Colors && data.Price && data.Brands) {
-        dataManage = {
-            Colors: JSON.parse(data.Colors),
-            Price: JSON.parse(data.Price),
-            Brands: JSON.parse(data.Brands)
-        }
-    }
-    else if (data.Colors) {
-        dataManage = {
-            Colors: JSON.parse(data.Colors),
-            // Price: JSON.parse(data.Price),
-            // Brands: JSON.parse(data.Brands)
-        }
-    }
-    else if (data.Price) {
-        dataManage = {
-            // Colors: JSON.parse(data.Colors),
-            Price: JSON.parse(data.Price),
-            // Brands: JSON.parse(data.Brands)
-        }
-    }
-    else if (data.Colors) {
-        dataManage = {
-            Colors: JSON.parse(data.Colors),
-            // Price: JSON.parse(data.Price),
-            // Brands: JSON.parse(data.Brands)
-        }
-    }
-    else if (data.Brands) {
-        dataManage = {
-            // Brands: JSON.parse(data.Colors),
-            // Price: JSON.parse(data.Price),
-            Brands: JSON.parse(data.Brands)
-        }
-    }
-    console.log('data parse ', dataManage)
-/*     var query = {
-        "variants": {
-            "$elemMatch": {
-                // "closed": false,
-                "$or": [
-                    {
-                        "color": { $in: dataManage.Colors },
-                    }
-                ]
+        console.log('call filter api -==>', data)
+            // console.log('call filter api -==>', typeof data.Price)
+        var dataManage = {}
+            // console.log(JSON.parse(data.Colors))
+        if (data.Colors && data.Sizes && data.Brands && data.Price) {
+            dataManage = {
+                Sizes: JSON.parse(data.Sizes),
+                Colors: JSON.parse(data.Colors),
+                Brands: JSON.parse(data.Brands),
+                Price: JSON.parse(data.Price)
+            }
+        } else if (data.Brands && data.Colors) {
+            dataManage = {
+                // Colors: JSON.parse(data.Colors),
+                Colors: JSON.parse(data.Colors),
+                Brands: JSON.parse(data.Brands)
+            }
+        } else if (data.Brands && data.Sizes) {
+            dataManage = {
+                Sizes: JSON.parse(data.Sizes),
+                // Colors: JSON.parse(data.Colors),
+                Brands: JSON.parse(data.Brands)
+            }
+        } else if (data.Colors && data.Sizes) {
+            dataManage = {
+                Sizes: JSON.parse(data.Sizes),
+                Colors: JSON.parse(data.Colors),
+                // Brands: JSON.parse(data.Brands)
+            }
+        } else if (data.Price && data.Sizes) {
+            dataManage = {
+                Sizes: JSON.parse(data.Sizes),
+                Price: JSON.parse(data.Price),
+                // Brands: JSON.parse(data.Brands)
+            }
+        } else if (data.Price && data.Colors) {
+            dataManage = {
+                Colors: JSON.parse(data.Colors),
+                Price: JSON.parse(data.Price),
+                // Brands: JSON.parse(data.Brands)
+            }
+        } else if (data.Colors && data.Sizes && data.Brands) {
+            dataManage = {
+                Sizes: JSON.parse(data.Sizes),
+                Colors: JSON.parse(data.Colors),
+                Brands: JSON.parse(data.Brands)
+            }
+        } else if (data.Price && data.Sizes && data.Brands) {
+            dataManage = {
+                Sizes: JSON.parse(data.Sizes),
+                Price: JSON.parse(data.Price),
+                Brands: JSON.parse(data.Brands)
+            }
+        } else if (data.Colors && data.Price && data.Brands) {
+            dataManage = {
+                Colors: JSON.parse(data.Colors),
+                Price: JSON.parse(data.Price),
+                Brands: JSON.parse(data.Brands)
+            }
+        } else if (data.Colors) {
+            dataManage = {
+                Colors: JSON.parse(data.Colors),
+                // Price: JSON.parse(data.Price),
+                // Brands: JSON.parse(data.Brands)
+            }
+        } else if (data.Price) {
+            dataManage = {
+                // Colors: JSON.parse(data.Colors),
+                Price: JSON.parse(data.Price),
+                // Brands: JSON.parse(data.Brands)
+            }
+        } else if (data.Colors) {
+            dataManage = {
+                Colors: JSON.parse(data.Colors),
+                // Price: JSON.parse(data.Price),
+                // Brands: JSON.parse(data.Brands)
+            }
+        } else if (data.Brands) {
+            dataManage = {
+                // Brands: JSON.parse(data.Colors),
+                // Price: JSON.parse(data.Price),
+                Brands: JSON.parse(data.Brands)
             }
         }
-    }
-
- */    query1 = {
-        $and: [
-            {
-                $or: [
-                    { 'variants.color': { $in: dataManage.Colors ? dataManage.Colors : [] } },
-                    { 'variants.size': { $in: dataManage.Sizes ? dataManage.Sizes : [] } }
-                ]
-            },
-            { 'variants.price': { $lt: data.Price } }
-        ]
-    }
-    console.log("######", query1)
-    /*  query3 = [{
-         $unwind: '$brandDescd'
-     }, {
-         $match: { 'brandDesc.brandId': { $in: data.brand } }
-     }
-     ] */
-    async.series({
-        getColor: (cb) => {
-            let a = []
-            let B = []
-            varianceModel.find(query1).exec((err, succ) => {
-                console.log("3456789", err, succ)
-                succ.forEach(emp => {
-
-                    a.push(emp.productId.toString())
-                    B.push(emp.productId)
-                })
-                // console.log('==============>>',B)
-                // console.log('777777777777777', B[0])
-                console.log(typeof a[0], _.uniq(a))
-                cb(null, _.uniq(a))
-            })
-        },
-        getBrand: (cb) => {
-            let a = []
-            brandModel.find({ brandName: { $in: dataManage.Brands } }).exec((err, succ) => {
-                console.log("branddetaidl", err, JSON.stringify(succ))
-                succ.forEach(element => {
-                    a.push(element._id)
-                })
-                // console.log('6666666666y',a)
-                let query3 = [/* {
-                    $unwind: '$brandDesc'
-                }, */ {
-                        $match: { 'brandId': { $in: a } }
-                    }
-                ]
-                b = []
-                productModel.aggregate(query3).exec((err, result) => {
-                    console.log("$$$$$$$$$4", err, JSON.stringify(result))
-                    result.forEach(element => {
-                        b.push(element._id.toString())
-                    })
-                    cb(null, b)
-                })
-            })
-        }
-
-    }, (err, response) => {
-
-        let productArray = _.union(response.getColor, response.getBrand)
-        let objectIdArray = productArray.map(s => mongoose.Types.ObjectId(s));
-        console.log(objectIdArray)
-
-
-        query4 = {
-
-            $and: [
-                {
-                    '_id': {
-                        $in: objectIdArray
-                    }
-                },
-                { 'subCategory': mongoose.Types.ObjectId(data.subCategoryId) }
-            ]
-
-        }
-        productModel.find(query4).populate({ path: 'varianceId' }).populate({ path: 'brandId' }).exec((err, success) => {
-            var successfully = []
-            if (err) {
-                throw err
-            }
-            success.forEach(element => {
-                let temp = {
-                    _id: element._id,
-                    productName: element.productName,
-                    categoryModel: element.categoryModel,
-                    subCategory: element.subCategory._id,
-                    productCategoryId: element.productCategoryId,
-                    brandId: element.brandId._id,
-                    brandName: element.brandId.brandName ? element.brandId.brandName : "NIKE",
-                    description: element.description,
-                    price: element.varianceId.variants[0].price,
-                    image: element.varianceId.variants[0].image,
-                    specifications: element.specifications
-                }
-                successfully.push(temp)
-            })
-
-            // console.log(err, success)
-            res = {}
-            res.productData = successfully
-            res.subCategory = []
-            console.log(success.length)
-            if (!success.length > 0) {
-                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOW_PRODUCT_AVAILABLE[data.lang] })
-            }
-            else { callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res }) }
-        })
-    })
-}
-/********************************************************************
-**************************compareProduct*************************
-***********************************************************************/
-compareProduct = (data, callback) => {
-    console.log("data is compare product", data)
-
-    async.parallel({
-        findProduct1: (cb) => {
-            productModel.findOne({ "_id": data.productId1 }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).exec((err, result) => {
-                cb(null, result)
-            })
-        },
-        findProduct2: (cb) => {
-            productModel.findOne({ "_id": data.productId2 }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).exec((err, result) => {
-                cb(null, result)
-            })
-        },
-        reviewAndRating1: (cb) => {
-            commonAPI.reviewAndRating(data.productId1, (err, result) => {
-                // console.log("%5555555555555555", err, result.length)
-
-                if (err || result == 0) {
-                    cb(null)
-                }
-                else {
-                    console.log("@@@@")
-                    let rating = []
-                    result.forEach(openArray => {
-                        // if(openArray.reviewAndRating)
-                        rating.push(parseInt(openArray.rating))
-                        // openArray.forEach(innerArray => {                            
-                        // })
-                    })
-
-                    console.log("pareser 1", rating)
-                    cb(null, (rating.reduce(commonFunction.getSum, 0) / rating.length).toString())
-                }
-            })
-        },
-        reviewAndRating2: (cb) => {
-            commonAPI.reviewAndRating(data.productId2, (err, result) => {
-                // console.log("%5555555555555555", err, result)
-                if (err || result == 0) {
-                    cb(null)
-                }
-                else {
-                    console.log("@@@222222222222222@")
-                    let rating = []
-                    result.forEach(openArray => {
-                        // if(openArray.reviewAndRating)
-                        rating.push(parseInt(openArray.rating))
-                        // openArray.forEach(innerArray => {                            
-                        // })
-                    })
-                    console.log(rating);
-
-                    console.log("check", (rating.reduce(commonFunction.getSum, 0) / rating.length).toString())
-                    cb(null, (rating.reduce(commonFunction.getSum, 0) / rating.length).toString())
-                }
-            })
-        },
-        productSubcategory1: (cb) => {
-            productModel.findOne({ "_id": data.productId1 }).select({ 'subCategory': 1 }).exec((err, result) => {
-                subCategoryModelL2.findOne({ '_id': result.subCategory }).select({ 'subCategoryName': 1 }).exec((err, result) => {
-                    // console.log(err, result)
-                    cb(null, result)
-                })
-            })
-        },
-    }, (err, result) => {
-
-        console.log("final", err, result.reviewAndRating2, result.reviewAndRating1)
-        // return
-        res = []
-
-        product1 = {
-            _id: result.findProduct1._id,
-            description: result.findProduct1.description,
-            price: result.findProduct1.varianceId.variants[0].price,
-            productName: result.findProduct1.productName,
-            brand: result.findProduct1.brandId.brandName,
-            image: result.findProduct1.varianceId.variants[0].image[0],
-            reviewAndRating: result.reviewAndRating1 ? result.reviewAndRating1 : 0,
-            subCategoryName: result.productSubcategory1.subCategoryName
-        }
-        product2 = {
-            _id: result.findProduct2._id,
-            description: result.findProduct2.description,
-            price: result.findProduct2.varianceId.variants[0].price,
-            productName: result.findProduct2.productName,
-            brand: result.findProduct2.brandId.brandName,
-            image: result.findProduct2.varianceId.variants[0].image[0],
-            reviewAndRating: result.reviewAndRating2 ? result.reviewAndRating2 : 0,
-            subCategoryName: result.productSubcategory1.subCategoryName
-
-        }
-        res.push(product1)
-        res.push(product2)
-        // callback(result.findProduct1)
-        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.COMPARE_SCREEN[data.lang], 'result': res })
-    })
-}
-/********************************************************************
-**************************compareProduct*************************
-***********************************************************************/
-checkoutOrder = (data, headers, callback) => {
-    console.log('api is hitted', data)
-    var userId
-
-    var orderId = commonFunction.generateOrderId(6)
-    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-        userId = result
-    })
-
-    listOfAddCart(data, headers, (bagList) => {
-        orderData = []
-        if (bagList.result.inStockBag == false) {
-            callback({ "statusCode": util.statusCode.OUT_OF_STOCK, "statusMessage": util.statusMessage.OUT_OF_STOCK[data.lang], result: result.result })
-            return
-        }
-        else {
-            async.parallel({
-                checkoutOrder: (cb) => {
-                    bagModel.findOne({ userId: userId }, (err, result) => {
-                        async.forEachOf(result.orderDescription, async (value, key, callback) => {
-                            orderPlaced.findOne({ userId: userId }, async (err, userFind) => {
-
-                                var userFind = await checkOrderTableEmpty({ userId: userId })
-
-                                if (err) {
-                                    callback(null)
-                                }
-                                else if (userFind) {
-                                    let obj = {
-                                        "_id": value.productId,
-                                        "color": value.color,
-                                        "material": value.material,
-                                        "size": value.size
-                                    }
-
-                                    var function_result = await getVarianceData(obj)
-
-
-                                    let temp = {
-                                        varianceId: function_result.variants[0]._id,
-                                        stock: (parseInt(function_result.variants[0].quantity) - parseInt(value.productQuantity)).toString(),
-                                        lang: "en"
-                                    }
-
-                                    if (data.orderPayment == 'COD') {
-                                        var updatevariance = await updateStock(temp)
-
-                                        // adminService.updateVarianceStock(temp, async (err, response) => {
-                                        // console.log('=========================>>>update data', err, response)
-                                        orderPlaced.findOneAndUpdate({ userId: userId }, {
-                                            $push: {
-                                                orderPlacedDescription: {
-                                                    sellerId: value.sellerId,
-                                                    productId: value.productId,
-                                                    orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                                                    orderStatus: "PLACED",
-                                                    productQuantity: value.productQuantity ? value.productQuantity : 1,
-                                                    orderId: orderId,
-                                                    transactionId: null,
-                                                    addressId: data.addressId ? data.addressId : "null",
-                                                    deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
-                                                    estimateTax: value.estimateTax ? value.estimateTax : "00",
-                                                    color: value.color,
-                                                    size: value.size,
-                                                    material: value.material,
-                                                    totalAmountPaid: value.totalAmountPaid
-
-                                                }
-                                            }
-                                        }, { new: true, lean: true }, (err, orderPlaced) => {
-                                            if (err) {
-                                                callback(null)
-                                            }
-                                            else if (orderPlaced) {
-                                                callback(null, orderPlaced)
-                                            }
-                                            else {
-                                                callback(null)
-                                            }
-                                        })
-                                    }
-                                }
-                                else {
-
-                                    /*not found */
-                                    let obj = {
-                                        "_id": value.productId,
-                                        "color": value.color,
-                                        "material": value.material,
-                                        "size": value.size
-                                    }
-                                    var function_result = await getVarianceData(obj)
-                                    let temp = {
-                                        varianceId: function_result.variants[0]._id,
-                                        stock: (parseInt(function_result.variants[0].quantity) - parseInt(value.productQuantity)).toString(),
-                                        lang: "en"
-                                    }
-                                    if (data.orderPayment == 'COD') {
-                                        var updatevariance = await updateStock(temp)
-                                        var ele = {
-                                            sellerId: value.sellerId,
-                                            productId: value.productId,
-                                            orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                                            orderStatus: "PLACED",
-                                            productQuantity: value.productQuantity ? value.productQuantity : 1,
-                                            orderId: orderId,
-                                            transactionId: null,
-                                            addressId: data.addressId ? data.addressId : "null",
-                                            deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
-                                            estimateTax: value.estimateTax ? value.estimateTax : "00",
-                                            color: value.color,
-                                            size: value.size,
-                                            material: value.material,
-                                            totalAmountPaid: value.totalAmountPaid
-                                        }
-                                        orderData.push(ele)
-
-                                        callback(null)
-                                        // adminService.updateVarianceStock(temp, (err, response) => {
-                                        // console.log("------update data ------->>>", err, response)
-
-                                        // let query = {
-                                        //     userId: userId,
-                                        //     orderPlacedDescription: {
-                                        //         sellerId: value.sellerId,
-                                        //         productId: value.productId,
-                                        //         orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
-                                        //         orderStatus: "PLACED",
-                                        //         productQuantity: value.productQuantity ? value.productQuantity : 1,
-                                        //         orderId: orderId,
-                                        //         transactionId: null,
-                                        //         addressId: data.addressId ? data.addressId : "null",
-                                        //         deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
-                                        //         estimateTax: value.estimateTax ? value.estimateTax : "00",
-                                        //         color: value.color,
-                                        //         size: value.size,
-                                        //         material: value.material,
-                                        //         totalAmountPaid: value.totalAmountPaid
-                                        //     }
-                                        // }
-
-
-                                        // var place = new orderPlaced(query)
-                                        // place.save(query, (err, result) => {
-                                        //     if (err) {
-                                        //         callback(null)
-                                        //     }
-                                        //     else if (result) {
-                                        //         callback(null, result)
-                                        //     }
-                                        //     else {
-                                        //         callback(null)
-                                        //     }
-                                        // })
-                                        // })
-                                    }
-                                    // })
-                                }
-                            })
-                        }, (err, result) => {
-                            if (err) cb(null)
-                            else {
-                                cb(null, result)
-                            }
-                        })
-                    })
-                }
-            }, (err, response) => {
-
-                if (orderData.length > 0) {
-                    let res = {
-                        userId: userId,
-                        orderPlacedDescription: orderData
-                    }
-                    console.log('=====outtttttttttttttt======>>', res)
-                    var place = new orderPlaced(res)
-                    place.save(res, (err, result) => {
-                        console.log("new account", err, result)
-                    })
-                }
-
-                console.log("------------->>", err, response)
-                callback({
-                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
-                    "orderId": 'ORD' + orderId,
-                    "orderPayment": data.orderPayment
-                })
-                if (data.orderPayment == "COD") {
-                    bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
-                        if (err) {
-                            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-                        }
-                        else {
-                            console.log("---------delete bag------->>>", result)
-                        }
-                    })
-                }
-            })
-        }
-    })
-}
-/********************************************************************
-**************************wishList*************************
-***********************************************************************/
-wishList = (data, headers, callback) => {
-    log("wishList")
-    var userId
-    commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
-        if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        else userId = token
-    })
-    async.parallel({
-        getWishProduct: (cb) => {
-            wishModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'wishListDescription.productId' }).lean().exec((err, result) => {
-                if (err || !result) {
-                    let res = []
-                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.WISHLIST_EMPTY[data.lang], 'result': res })
-                }
-                else {
-                    cb(null, result)
-                }
-            })
-        }
-    }, (err, response) => {
-        var main = []
-        async.forEachOf(response.getWishProduct.wishListDescription, (value, key, callback) => {
-            commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
-                varianceModel.findOne({
-                    "productId": mongoose.Types.ObjectId(value.productId._id),
+        console.log('data parse ', dataManage)
+            /*     var query = {
                     "variants": {
                         "$elemMatch": {
                             // "closed": false,
-                            "$and": [
+                            "$or": [
                                 {
-                                    "color": value.color.toUpperCase(),
-                                },
-                                {
-                                    "size": value.size.toUpperCase(),
-                                },
-                                {
-                                    "material": value.material.toUpperCase(),
+                                    "color": { $in: dataManage.Colors },
                                 }
                             ]
                         }
                     }
-                }).exec((err, varianceValue) => {
-                    console.log("result", err, varianceValue)
-                    temp = {
-                        _id:value._id,
-                        productId: value.productId._id,
-                        brand: brandName.brandName,
-                        productName: value.productId.productName,
-                        color: value.color,
-                        price: varianceValue.variants[0].price,
-                        productQuantity: varianceValue.variants[0].quantity,
-                        image: varianceValue.variants[0].image,
-                        description: value.productId.description,
-                        specifications: value.productId.specifications
-                    }
-                    main.push(temp)
-                    callback()
-                })
-            })
-        }, (err, response => {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.list_of_wishList[data.lang], "result": main })
-        }))
-    })
-}
-/********************************************************************
-**************************deleteWishItem*************************
-**********************************************************************/
+                }
 
-deleteWishItem = (data, headers, callback) => {
-    log("deleteWishItem",data,headers.accesstoken)
-    var userId
-    commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
-        if (result) userId = result
-        else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    })
-    if (!data.productId)
-        callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-    else {
-        wishModel.findOne({ userId: userId }, (err, result) => {
-            if (err) throw err
-            else if (result) {
-                query = { userId: userId },
-                    update = {
-                        $pull: {
-                            wishListDescription: {
-                                productId: data.productId,
-                                // orderPayment: "PENDING",
-                                orderStatus: "WISHLIST",
-                                productQuantity: data.productQuantity ? data.productQuantity : 1
-                            }
+             */
+        query1 = {
+            $and: [{
+                    $or: [
+                        { 'variants.color': { $in: dataManage.Colors ? dataManage.Colors : [] } },
+                        { 'variants.size': { $in: dataManage.Sizes ? dataManage.Sizes : [] } }
+                    ]
+                },
+                { 'variants.price': { $lt: data.Price } }
+            ]
+        }
+        console.log("######", query1)
+            /*  query3 = [{
+                 $unwind: '$brandDescd'
+             }, {
+                 $match: { 'brandDesc.brandId': { $in: data.brand } }
+             }
+             ] */
+        async.series({
+            getColor: (cb) => {
+                let a = []
+                let B = []
+                varianceModel.find(query1).exec((err, succ) => {
+                    console.log("3456789", err, succ)
+                    succ.forEach(emp => {
+
+                            a.push(emp.productId.toString())
+                            B.push(emp.productId)
+                        })
+                        // console.log('==============>>',B)
+                        // console.log('777777777777777', B[0])
+                    console.log(typeof a[0], _.uniq(a))
+                    cb(null, _.uniq(a))
+                })
+            },
+            getBrand: (cb) => {
+                let a = []
+                brandModel.find({ brandName: { $in: dataManage.Brands } }).exec((err, succ) => {
+                    console.log("branddetaidl", err, JSON.stringify(succ))
+                    succ.forEach(element => {
+                            a.push(element._id)
+                        })
+                        // console.log('6666666666y',a)
+                    let query3 = [
+                        /* {
+                                            $unwind: '$brandDesc'
+                                        }, */
+                        {
+                            $match: { 'brandId': { $in: a } }
                         }
-                    }
-                wishModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, result) => {
-                    log("orderModel==============>", err, result)
-                    if (result) {
-                        temp = {}
-                        log("lenght", result.wishListDescription.length)
-                        temp.length = result.wishListDescription.length
-                        callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PRODUCT_DELETE_WISHLIST[data.lang] })
-                    }
-                    else {
-                        callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
-                    }
+                    ]
+                    b = []
+                    productModel.aggregate(query3).exec((err, result) => {
+                        console.log("$$$$$$$$$4", err, JSON.stringify(result))
+                        result.forEach(element => {
+                            b.push(element._id.toString())
+                        })
+                        cb(null, b)
+                    })
                 })
             }
+
+        }, (err, response) => {
+
+            let productArray = _.union(response.getColor, response.getBrand)
+            let objectIdArray = productArray.map(s => mongoose.Types.ObjectId(s));
+            console.log(objectIdArray)
+
+
+            query4 = {
+
+                $and: [{
+                        '_id': {
+                            $in: objectIdArray
+                        }
+                    },
+                    { 'subCategory': mongoose.Types.ObjectId(data.subCategoryId) }
+                ]
+
+            }
+            productModel.find(query4).populate({ path: 'varianceId' }).populate({ path: 'brandId' }).exec((err, success) => {
+                var successfully = []
+                if (err) {
+                    throw err
+                }
+                success.forEach(element => {
+                    let temp = {
+                        _id: element._id,
+                        productName: element.productName,
+                        categoryModel: element.categoryModel,
+                        subCategory: element.subCategory._id,
+                        productCategoryId: element.productCategoryId,
+                        brandId: element.brandId._id,
+                        brandName: element.brandId.brandName ? element.brandId.brandName : "NIKE",
+                        description: element.description,
+                        price: element.varianceId.variants[0].price,
+                        image: element.varianceId.variants[0].image,
+                        specifications: element.specifications
+                    }
+                    successfully.push(temp)
+                })
+
+                // console.log(err, success)
+                res = {}
+                res.productData = successfully
+                res.subCategory = []
+                console.log(success.length)
+                if (!success.length > 0) {
+                    callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOW_PRODUCT_AVAILABLE[data.lang] })
+                } else { callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res }) }
+            })
         })
     }
-}
-/********************************************************************
-**************************physicalStore*************************
-***********************************************************************/
-physicalStore = (data, headers, callback) => {
-    var userId
-    log("addCategory", data)
-    commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
-        if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        else userId = token
-    })
-    if (!data) {
-        callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-        return
-    }
-    else {
+    /********************************************************************
+     **************************compareProduct*************************
+     ***********************************************************************/
+compareProduct = (data, callback) => {
+        console.log("data is compare product", data)
+
         async.parallel({
-            exist: (cb) => {
-                physicalStores.findOne({ 'businessName': data.businessName }, (err, exist) => {
-                    if (err) cb(null)
-                    else if (!exist) cb(null)
-                    else {
-                        cb(null, exist)
+            findProduct1: (cb) => {
+                productModel.findOne({ "_id": data.productId1 }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).exec((err, result) => {
+                    cb(null, result)
+                })
+            },
+            findProduct2: (cb) => {
+                productModel.findOne({ "_id": data.productId2 }).populate({ 'path': 'brandId', 'select': 'brandName' }).populate({ path: 'varianceId' }).exec((err, result) => {
+                    cb(null, result)
+                })
+            },
+            reviewAndRating1: (cb) => {
+                commonAPI.reviewAndRating(data.productId1, (err, result) => {
+                    // console.log("%5555555555555555", err, result.length)
+
+                    if (err || result == 0) {
+                        cb(null)
+                    } else {
+                        console.log("@@@@")
+                        let rating = []
+                        result.forEach(openArray => {
+                            // if(openArray.reviewAndRating)
+                            rating.push(parseInt(openArray.rating))
+                                // openArray.forEach(innerArray => {                            
+                                // })
+                        })
+
+                        console.log("pareser 1", rating)
+                        cb(null, (rating.reduce(commonFunction.getSum, 0) / rating.length).toString())
                     }
                 })
             },
-        }, (err, response) => {
-            if (err) {
-                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+            reviewAndRating2: (cb) => {
+                commonAPI.reviewAndRating(data.productId2, (err, result) => {
+                    // console.log("%5555555555555555", err, result)
+                    if (err || result == 0) {
+                        cb(null)
+                    } else {
+                        console.log("@@@222222222222222@")
+                        let rating = []
+                        result.forEach(openArray => {
+                            // if(openArray.reviewAndRating)
+                            rating.push(parseInt(openArray.rating))
+                                // openArray.forEach(innerArray => {                            
+                                // })
+                        })
+                        console.log(rating);
+
+                        console.log("check", (rating.reduce(commonFunction.getSum, 0) / rating.length).toString())
+                        cb(null, (rating.reduce(commonFunction.getSum, 0) / rating.length).toString())
+                    }
+                })
+            },
+            productSubcategory1: (cb) => {
+                productModel.findOne({ "_id": data.productId1 }).select({ 'subCategory': 1 }).exec((err, result) => {
+                    subCategoryModelL2.findOne({ '_id': result.subCategory }).select({ 'subCategoryName': 1 }).exec((err, result) => {
+                        // console.log(err, result)
+                        cb(null, result)
+                    })
+                })
+            },
+        }, (err, result) => {
+
+            console.log("final", err, result.reviewAndRating2, result.reviewAndRating1)
+                // return
+            res = []
+
+            product1 = {
+                _id: result.findProduct1._id,
+                description: result.findProduct1.description,
+                price: result.findProduct1.varianceId.variants[0].price,
+                productName: result.findProduct1.productName,
+                brand: result.findProduct1.brandId.brandName,
+                image: result.findProduct1.varianceId.variants[0].image[0],
+                reviewAndRating: result.reviewAndRating1 ? result.reviewAndRating1 : 0,
+                subCategoryName: result.productSubcategory1.subCategoryName
             }
-            else if (response.exist) {
-                callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
+            product2 = {
+                _id: result.findProduct2._id,
+                description: result.findProduct2.description,
+                price: result.findProduct2.varianceId.variants[0].price,
+                productName: result.findProduct2.productName,
+                brand: result.findProduct2.brandId.brandName,
+                image: result.findProduct2.varianceId.variants[0].image[0],
+                reviewAndRating: result.reviewAndRating2 ? result.reviewAndRating2 : 0,
+                subCategoryName: result.productSubcategory1.subCategoryName
+
             }
-            else {
-                let query = {
-                    'userId': userId,
-                    'businessName': data.businessName,
-                    'address': data.address,
-                    'building_shopNo': data.building_shopNo,
-                    "location": { type: "Point", coordinates: [data.lat, data.lng] }
-                }
-                const physical = new physicalStores(query)
-                physical.save(query, (err, result) => {
-                    if (err)
-                        callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
-                    else if (!result)
-                        callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
-                    else {
-                        subCategoryModelL2.create({ categoryModel: result._id })
-                        callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_PHYSICALSTORE[data.lang] })
+            res.push(product1)
+            res.push(product2)
+                // callback(result.findProduct1)
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.COMPARE_SCREEN[data.lang], 'result': res })
+        })
+    }
+    /********************************************************************
+     **************************compareProduct*************************
+     ***********************************************************************/
+checkoutOrder = (data, headers, callback) => {
+        console.log('api is hitted', data)
+        var userId
+
+        var orderId = commonFunction.generateOrderId(6)
+        commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+            userId = result
+        })
+
+        listOfAddCart(data, headers, (bagList) => {
+            orderData = []
+            if (bagList.result.inStockBag == false) {
+                callback({ "statusCode": util.statusCode.OUT_OF_STOCK, "statusMessage": util.statusMessage.OUT_OF_STOCK[data.lang], result: result.result })
+                return
+            } else {
+                async.parallel({
+                    checkoutOrder: (cb) => {
+                        bagModel.findOne({ userId: userId }, (err, result) => {
+                            async.forEachOf(result.orderDescription, async(value, key, callback) => {
+                                orderPlaced.findOne({ userId: userId }, async(err, userFind) => {
+
+                                    var userFind = await checkOrderTableEmpty({ userId: userId })
+
+                                    if (err) {
+                                        callback(null)
+                                    } else if (userFind) {
+                                        let obj = {
+                                            "_id": value.productId,
+                                            "color": value.color,
+                                            "material": value.material,
+                                            "size": value.size
+                                        }
+
+                                        var function_result = await getVarianceData(obj)
+
+
+                                        let temp = {
+                                            varianceId: function_result.variants[0]._id,
+                                            stock: (parseInt(function_result.variants[0].quantity) - parseInt(value.productQuantity)).toString(),
+                                            lang: "en"
+                                        }
+
+                                        if (data.orderPayment == 'COD') {
+                                            var updatevariance = await updateStock(temp)
+
+                                            // adminService.updateVarianceStock(temp, async (err, response) => {
+                                            // console.log('=========================>>>update data', err, response)
+                                            orderPlaced.findOneAndUpdate({ userId: userId }, {
+                                                $push: {
+                                                    orderPlacedDescription: {
+                                                        sellerId: value.sellerId,
+                                                        productId: value.productId,
+                                                        orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                                        orderStatus: "PLACED",
+                                                        productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                                        orderId: orderId,
+                                                        transactionId: null,
+                                                        addressId: data.addressId ? data.addressId : "null",
+                                                        deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                                        estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                                        color: value.color,
+                                                        size: value.size,
+                                                        material: value.material,
+                                                        totalAmountPaid: value.totalAmountPaid
+
+                                                    }
+                                                }
+                                            }, { new: true, lean: true }, (err, orderPlaced) => {
+                                                if (err) {
+                                                    callback(null)
+                                                } else if (orderPlaced) {
+                                                    callback(null, orderPlaced)
+                                                } else {
+                                                    callback(null)
+                                                }
+                                            })
+                                        }
+                                    } else {
+
+                                        /*not found */
+                                        let obj = {
+                                            "_id": value.productId,
+                                            "color": value.color,
+                                            "material": value.material,
+                                            "size": value.size
+                                        }
+                                        var function_result = await getVarianceData(obj)
+                                        let temp = {
+                                            varianceId: function_result.variants[0]._id,
+                                            stock: (parseInt(function_result.variants[0].quantity) - parseInt(value.productQuantity)).toString(),
+                                            lang: "en"
+                                        }
+                                        if (data.orderPayment == 'COD') {
+                                            var updatevariance = await updateStock(temp)
+                                            var ele = {
+                                                sellerId: value.sellerId,
+                                                productId: value.productId,
+                                                orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                                orderStatus: "PLACED",
+                                                productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                                orderId: orderId,
+                                                transactionId: null,
+                                                addressId: data.addressId ? data.addressId : "null",
+                                                deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                                estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                                color: value.color,
+                                                size: value.size,
+                                                material: value.material,
+                                                totalAmountPaid: value.totalAmountPaid
+                                            }
+                                            orderData.push(ele)
+
+                                            callback(null)
+                                                // adminService.updateVarianceStock(temp, (err, response) => {
+                                                // console.log("------update data ------->>>", err, response)
+
+                                            // let query = {
+                                            //     userId: userId,
+                                            //     orderPlacedDescription: {
+                                            //         sellerId: value.sellerId,
+                                            //         productId: value.productId,
+                                            //         orderPayment: data.orderPayment ? data.orderPayment : "PENDING",
+                                            //         orderStatus: "PLACED",
+                                            //         productQuantity: value.productQuantity ? value.productQuantity : 1,
+                                            //         orderId: orderId,
+                                            //         transactionId: null,
+                                            //         addressId: data.addressId ? data.addressId : "null",
+                                            //         deliveryCharges: value.deliveryCharges ? value.deliveryCharges : "00",
+                                            //         estimateTax: value.estimateTax ? value.estimateTax : "00",
+                                            //         color: value.color,
+                                            //         size: value.size,
+                                            //         material: value.material,
+                                            //         totalAmountPaid: value.totalAmountPaid
+                                            //     }
+                                            // }
+
+
+                                            // var place = new orderPlaced(query)
+                                            // place.save(query, (err, result) => {
+                                            //     if (err) {
+                                            //         callback(null)
+                                            //     }
+                                            //     else if (result) {
+                                            //         callback(null, result)
+                                            //     }
+                                            //     else {
+                                            //         callback(null)
+                                            //     }
+                                            // })
+                                            // })
+                                        }
+                                        // })
+                                    }
+                                })
+                            }, (err, result) => {
+                                if (err) cb(null)
+                                else {
+                                    cb(null, result)
+                                }
+                            })
+                        })
+                    }
+                }, (err, response) => {
+
+                    if (orderData.length > 0) {
+                        let res = {
+                            userId: userId,
+                            orderPlacedDescription: orderData
+                        }
+                        console.log('=====outtttttttttttttt======>>', res)
+                        var place = new orderPlaced(res)
+                        place.save(res, (err, result) => {
+                            console.log("new account", err, result)
+                        })
+                    }
+
+                    console.log("------------->>", err, response)
+                    callback({
+                        "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                        "statusMessage": util.statusMessage.ORDER_PLACED[data.lang],
+                        "orderId": 'ORD' + orderId,
+                        "orderPayment": data.orderPayment
+                    })
+                    if (data.orderPayment == "COD") {
+                        bagModel.findOneAndRemove({ userId: userId }, (err, result) => {
+                            if (err) {
+                                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+                            } else {
+                                console.log("---------delete bag------->>>", result)
+                            }
+                        })
                     }
                 })
             }
         })
     }
-}
-/********************************************************************
-**************************listOfAddCart*************************
-***********************************************************************/
+    /********************************************************************
+     **************************wishList*************************
+     ***********************************************************************/
+wishList = (data, headers, callback) => {
+        log("wishList")
+        var userId
+        commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
+            if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            else userId = token
+        })
+        async.parallel({
+            getWishProduct: (cb) => {
+                wishModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'wishListDescription.productId' }).lean().exec((err, result) => {
+                    if (err || !result) {
+                        let res = []
+                        callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.WISHLIST_EMPTY[data.lang], 'result': res })
+                    } else {
+                        cb(null, result)
+                    }
+                })
+            }
+        }, (err, response) => {
+            var main = []
+            async.forEachOf(response.getWishProduct.wishListDescription, (value, key, callback) => {
+                commonAPI.findBrand(value.productId.brandId, async(err, brandName) => {
+                    varianceModel.findOne({
+                        "productId": mongoose.Types.ObjectId(value.productId._id),
+                        "variants": {
+                            "$elemMatch": {
+                                // "closed": false,
+                                "$and": [{
+                                        "color": value.color.toUpperCase(),
+                                    },
+                                    {
+                                        "size": value.size.toUpperCase(),
+                                    },
+                                    {
+                                        "material": value.material.toUpperCase(),
+                                    }
+                                ]
+                            }
+                        }
+                    }).exec((err, varianceValue) => {
+                        console.log("result", err, varianceValue)
+                        temp = {
+                            _id: value._id,
+                            productId: value.productId._id,
+                            brand: brandName.brandName,
+                            productName: value.productId.productName,
+                            color: value.color,
+                            price: varianceValue.variants[0].price,
+                            productQuantity: varianceValue.variants[0].quantity,
+                            image: varianceValue.variants[0].image,
+                            description: value.productId.description,
+                            specifications: value.productId.specifications
+                        }
+                        main.push(temp)
+                        callback()
+                    })
+                })
+            }, (err, response => {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.list_of_wishList[data.lang], "result": main })
+            }))
+        })
+    }
+    /********************************************************************
+     **************************deleteWishItem*************************
+     **********************************************************************/
+
+deleteWishItem = (data, headers, callback) => {
+        log("deleteWishItem", data, headers.accesstoken)
+        var userId
+        commonFunction.jwtDecode(headers.accesstoken, (err, result) => {
+            if (result) userId = result
+            else callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        })
+        if (!data.productId)
+            callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+        else {
+            wishModel.findOne({ userId: userId }, (err, result) => {
+                if (err) throw err
+                else if (result) {
+                    query = { userId: userId },
+                        update = {
+                            $pull: {
+                                wishListDescription: {
+                                    productId: data.productId,
+                                    // orderPayment: "PENDING",
+                                    orderStatus: "WISHLIST",
+                                    productQuantity: data.productQuantity ? data.productQuantity : 1
+                                }
+                            }
+                        }
+                    wishModel.findOneAndUpdate(query, update, { new: true, lean: true }, (err, result) => {
+                        log("orderModel==============>", err, result)
+                        if (result) {
+                            temp = {}
+                            log("lenght", result.wishListDescription.length)
+                            temp.length = result.wishListDescription.length
+                            callback({ statusCode: util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PRODUCT_DELETE_WISHLIST[data.lang] })
+                        } else {
+                            callback({ statusCode: util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang], "result": result })
+                        }
+                    })
+                }
+            })
+        }
+    }
+    /********************************************************************
+     **************************physicalStore*************************
+     ***********************************************************************/
+physicalStore = (data, headers, callback) => {
+        var userId
+        log("addCategory", data)
+        commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
+            if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            else userId = token
+        })
+        if (!data) {
+            callback({ "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+            return
+        } else {
+            async.parallel({
+                exist: (cb) => {
+                    physicalStores.findOne({ 'businessName': data.businessName }, (err, exist) => {
+                        if (err) cb(null)
+                        else if (!exist) cb(null)
+                        else {
+                            cb(null, exist)
+                        }
+                    })
+                },
+            }, (err, response) => {
+                if (err) {
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+                } else if (response.exist) {
+                    callback({ "statusCode": util.statusCode.ALREADY_EXIST, "statusMessage": util.statusMessage.ALREADY_EXIST[data.lang] })
+                } else {
+                    let query = {
+                        'userId': userId,
+                        'businessName': data.businessName,
+                        'address': data.address,
+                        'building_shopNo': data.building_shopNo,
+                        "location": { type: "Point", coordinates: [data.lat, data.lng] }
+                    }
+                    const physical = new physicalStores(query)
+                    physical.save(query, (err, result) => {
+                        if (err)
+                            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+                        else if (!result)
+                            callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
+                        else {
+                            subCategoryModelL2.create({ categoryModel: result._id })
+                            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.ADD_PHYSICALSTORE[data.lang] })
+                        }
+                    })
+                }
+            })
+        }
+    }
+    /********************************************************************
+     **************************listOfAddCart*************************
+     ***********************************************************************/
 listOfAddCart = (data, headers, callback) => {
     log("list of cart", data, headers)
     let inStockBag = true
@@ -3547,18 +3477,17 @@ listOfAddCart = (data, headers, callback) => {
                 .populate({ path: 'userId' }).populate({
                     path: 'orderDescription.productId',
                     populate: [{
-                        path: 'varianceId',
-                    },
-                    {
-                        path: 'brandId',
-                    }],
-                },
-                ).lean().exec((err, result) => {
+                            path: 'varianceId',
+                        },
+                        {
+                            path: 'brandId',
+                        }
+                    ],
+                }, ).lean().exec((err, result) => {
                     if (err || !result) {
                         let res = {}
                         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.LIST_EMPTY[data.lang], 'result': res })
-                    }
-                    else {
+                    } else {
                         cb(null, result)
                     }
                 })
@@ -3574,14 +3503,13 @@ listOfAddCart = (data, headers, callback) => {
         var payment = response.bagDetails.userId.paymentMethod
         var main = []
         var totalPrice = 0
-        async.forEachOf(response.bagDetails.orderDescription, async (value, key, callback) => {
+        async.forEachOf(response.bagDetails.orderDescription, async(value, key, callback) => {
             // await commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
             await varianceModel.findOne({
                 "productId": mongoose.Types.ObjectId(value.productId._id),
                 "variants": {
                     "$elemMatch": {
-                        "$and": [
-                            {
+                        "$and": [{
                                 "color": value.color.toUpperCase(),
                             },
                             {
@@ -3593,7 +3521,7 @@ listOfAddCart = (data, headers, callback) => {
                         ]
                     }
                 }
-            }, { 'variants.$': 1 }).lean().exec(async (err, varianceValue) => {
+            }, { 'variants.$': 1 }).lean().exec(async(err, varianceValue) => {
                 console.log("result", err, varianceValue.variants[0].quantity)
                 console.log("quality", value.productQuantity);
 
@@ -3608,9 +3536,9 @@ listOfAddCart = (data, headers, callback) => {
                     color: value.color ? value.color : "",
                     size: value.size ? value.size : "",
                     material: value.material ? value.material : "",
-                    price: varianceValue.variants[0].price,//!
+                    price: varianceValue.variants[0].price, //!
                     productQuantity: value.productQuantity,
-                    image: varianceValue.variants[0].image,//!
+                    image: varianceValue.variants[0].image, //!
                     description: value.productId.description,
                     specifications: value.productId.specifications,
                     inStock: parseFloat(varianceValue.variants[0].quantity) >= parseFloat(value.productQuantity) ? true : false,
@@ -3657,7 +3585,7 @@ listOfAddCart = (data, headers, callback) => {
 }
 
 /**************************orderList*************************
-***********************************************************************/
+ ***********************************************************************/
 // !orderList
 orderList = (data, headers, callback) => {
 
@@ -3665,8 +3593,7 @@ orderList = (data, headers, callback) => {
     var userId
     if (data.userId) {
         userId = data.userId
-    }
-    else {
+    } else {
         commonFunction.jwtDecode(headers.accesstoken, (err, token) => {
             console.log(token)
             if (err) callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
@@ -3679,18 +3606,18 @@ orderList = (data, headers, callback) => {
                 .populate({
                     path: 'orderPlacedDescription.productId',
                     populate: [{
-                        path: 'varianceId',
-                    },
-                    {
-                        path: 'brandId',
-                    }],
+                            path: 'varianceId',
+                        },
+                        {
+                            path: 'brandId',
+                        }
+                    ],
                 }).sort({ 'orderPlacedDescription.createdAt': 'desc' }).exec((err, result) => {
                     console.log(result)
                     if (err || !result || !result.orderPlacedDescription.length) {
                         res = {}
                         callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.ORDER_EMPTY[data.lang], 'result': res })
-                    }
-                    else {
+                    } else {
                         cb(null, result)
                     }
                 })
@@ -3742,7 +3669,7 @@ orderList = (data, headers, callback) => {
 }
 
 /**************************getNotification*************************
-***********************************************************************/
+ ***********************************************************************/
 
 getNotification = (data, header, callback) => {
     console.log("5c46c292070fa144119a1cd4")
@@ -3763,8 +3690,7 @@ getNotification = (data, header, callback) => {
                     console.log("#%$@%$%#$%#$")
                     let res = []
                     callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang], 'result': res })
-                }
-                else {
+                } else {
                     cb(null, result)
                 }
             })
@@ -3794,9 +3720,9 @@ getNotification = (data, header, callback) => {
 }
 
 
-combination = async (data, callback) => {
+combination = async(data, callback) => {
     console.log("fuck api", data)
-    // var e = [{ "varianceKey": "color", "varianceValue": [{ "display": "red", "value": "red" }] }, { "varianceKey": "size", "varianceValue": [{ "display": "xl", "value": "xl" }] }, { "varianceKey": "material", "varianceValue": [{ "display": "silk", "value": "silk" }] }]
+        // var e = [{ "varianceKey": "color", "varianceValue": [{ "display": "red", "value": "red" }] }, { "varianceKey": "size", "varianceValue": [{ "display": "xl", "value": "xl" }] }, { "varianceKey": "material", "varianceValue": [{ "display": "silk", "value": "silk" }] }]
     var e = data.push
     let final = []
     var result = []
@@ -3852,11 +3778,14 @@ combination = async (data, callback) => {
         }
         final.push(temp)
     }
+
     function cartesian(array) {
         function c(part, index) {
             var k = Object.keys(array[index])[0];
-            array[index][k].forEach(function (a) {
-                var p = Object.assign({}, part, { [k]: a });
+            array[index][k].forEach(function(a) {
+                var p = Object.assign({}, part, {
+                    [k]: a
+                });
                 if (index + 1 === array.length) {
                     r.push(p);
                     return;
@@ -3877,11 +3806,11 @@ combination = async (data, callback) => {
 getProductInfo = (data, callback) => {
     console.log('incoming data', data)
     productModel.findOne({ _id: data.productId }).
-        populate({ path: 'categoryModel' }).
-        populate({ path: 'subCategory' }).
-        populate({ path: 'productCategoryId' }).
-        populate({ path: 'brandId' }).
-        populate({ path: 'varianceId' })
+    populate({ path: 'categoryModel' }).
+    populate({ path: 'subCategory' }).
+    populate({ path: 'productCategoryId' }).
+    populate({ path: 'brandId' }).
+    populate({ path: 'varianceId' })
         .exec((err, result) => {
             if (result)
                 callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result })
@@ -3936,8 +3865,7 @@ dashBoardForVendor = (data, header, callback) => {
                     ]
                 },
                 // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
-            }
-            ], (err, result) => {
+            }], (err, result) => {
                 if (err || !result.length < 0)
                     cb(null)
                 else
@@ -3960,14 +3888,12 @@ dashBoardForVendor = (data, header, callback) => {
                     ]
                 },
                 // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
-            }
-            ], (err, result) => {
+            }], (err, result) => {
                 console.log(err, result.length)
                 if (err || !result.length > 0) {
                     console.log("e")
                     cb(null, 0)
-                }
-                else {
+                } else {
                     console.log("e333333")
 
                     cb(null, result.length)
@@ -3988,14 +3914,12 @@ dashBoardForVendor = (data, header, callback) => {
                     ]
                 },
                 // { $sort: { 'orderPlacedDescription.createdAt': -1 } }
-            }
-            ], (err, result) => {
+            }], (err, result) => {
                 // console.log(err, result.length)
                 if (err || !result.length > 0) {
                     // console.log("e")
                     cb(null, 0)
-                }
-                else {
+                } else {
                     // console.log("e333333")
 
                     cb(null, result.length)
@@ -4014,12 +3938,10 @@ dashBoardForVendor = (data, header, callback) => {
                         { 'orderPlacedDescription.orderStatus': "ORDERSHIPPED" },
                     ]
                 },
-            }
-            ], (err, result) => {
+            }], (err, result) => {
                 if (err || !result.length > 0) {
                     cb(null, 0)
-                }
-                else {
+                } else {
                     cb(null, result.length)
                 }
             })
@@ -4035,12 +3957,10 @@ dashBoardForVendor = (data, header, callback) => {
                         { 'orderPlacedDescription.orderStatus': "DISPATCH" },
                     ]
                 },
-            }
-            ], (err, result) => {
+            }], (err, result) => {
                 if (err || !result.length > 0) {
                     cb(null, 0)
-                }
-                else {
+                } else {
                     cb(null, result.length)
                 }
             })
@@ -4051,8 +3971,7 @@ dashBoardForVendor = (data, header, callback) => {
         if (err) {
             callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
 
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response })
         }
     })
@@ -4064,7 +3983,7 @@ dashBoardForVendor = (data, header, callback) => {
 reviewFeedBack = (data, header, callback) => {
     console.log("data", data)
     let userId
-    // let userId = "5c46c2d1070fa144119a1cd5"
+        // let userId = "5c46c2d1070fa144119a1cd5"
     var mainArray = [];
     commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
         if (err) throw err
@@ -4075,24 +3994,23 @@ reviewFeedBack = (data, header, callback) => {
     console.log('----->>', userId)
     async.waterfall([
 
-        function (cb) {
+        function(cb) {
             orderPlaced.find({ 'orderPlacedDescription.sellerId': userId }).populate({ path: 'orderPlacedDescription.productId', select: 'productName image' }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.reviewRatingId' }).sort('orderPlacedDescription.createdAt').exec((err, result) => {
                 if (err || result < 0 || result.length < 0) {
                     cb(null)
-                }
-                else {
+                } else {
                     cb(null, result)
                 }
             })
         }
-    ], async (err, result) => {
+    ], async(err, result) => {
 
 
 
         if (result.length > 0) {
-            async.forEachOf(result, async (value, key, callback) => {
+            async.forEachOf(result, async(value, key, callback) => {
 
-                value.orderPlacedDescription.forEach(async (element) => {
+                value.orderPlacedDescription.forEach(async(element) => {
                     if (element.reviewRatingId) {
 
                         var temp = {
@@ -4111,7 +4029,7 @@ reviewFeedBack = (data, header, callback) => {
                 })
                 callback()
 
-            }, async (err, result) => {
+            }, async(err, result) => {
                 var newArray = [];
                 async.forEachOf(mainArray, (value, key, back) => {
 
@@ -4138,8 +4056,7 @@ reviewFeedBack = (data, header, callback) => {
                     callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': newArray })
                 })
             })
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
         }
     })
@@ -4150,7 +4067,7 @@ treadingOnWaki = (data, callback) => {
     var productId = [];
     var results = [];
     async.waterfall([
-        function (cb) {
+        function(cb) {
             orderPlaced.find({}).select({ 'orderPlacedDescription.productId': 1 }).exec((err, result) => {
                 if (err || result < 0)
                     cb(null)
@@ -4166,7 +4083,7 @@ treadingOnWaki = (data, callback) => {
             })
 
         },
-        function (productId, cb) {
+        function(productId, cb) {
             // console.log(productId)
 
             productModel.find({ _id: { $in: productId }, status: "ACTIVE" }).populate({ path: 'brandId' }).populate({ path: 'varianceId' }).exec((err, result) => {
@@ -4198,8 +4115,7 @@ treadingOnWaki = (data, callback) => {
         console.log(err, response)
         if (err || !response || response < 0) {
             callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang] })
-        }
-        else {
+        } else {
             callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response })
         }
     })
@@ -4207,196 +4123,194 @@ treadingOnWaki = (data, callback) => {
 
 //live view
 liveView = (data, header, callback) => {
-    let userId;
-    // let userId = '5c46c2d1070fa144119a1cd5';
-    let addressId = [];
-    let address = [];
-    commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-        if (err) throw err
-        else {
-            userId = decodeId
-        }
-    })
-    async.waterfall([
-        function (cb) {
-            // console.log(today)
-            // {'local.rooms': {$elemMatch:  {name: req.body.username}}}
-            // { 'orderPlacedDescription.sellerId': userId }
-            orderPlaced.find({
-                'orderPlacedDescription': { $elemMatch: { sellerId: userId } }
-            }, { 'orderPlacedDescription.$': 1 }).exec((err, result) => {
+        let userId;
+        // let userId = '5c46c2d1070fa144119a1cd5';
+        let addressId = [];
+        let address = [];
+        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+            if (err) throw err
+            else {
+                userId = decodeId
+            }
+        })
+        async.waterfall([
+            function(cb) {
+                // console.log(today)
+                // {'local.rooms': {$elemMatch:  {name: req.body.username}}}
+                // { 'orderPlacedDescription.sellerId': userId }
+                orderPlaced.find({
+                    'orderPlacedDescription': { $elemMatch: { sellerId: userId } }
+                }, { 'orderPlacedDescription.$': 1 }).exec((err, result) => {
 
-                if (err) cb(null)
-                else {
-                    result.forEach(e1 => {
-                        e1.orderPlacedDescription.forEach(e2 => {
-                            // console.log(e2.addressId)
-                            addressId.push(e2.addressId)
+                    if (err) cb(null)
+                    else {
+                        result.forEach(e1 => {
+                            e1.orderPlacedDescription.forEach(e2 => {
+                                // console.log(e2.addressId)
+                                addressId.push(e2.addressId)
+                            })
                         })
-                    })
-                    addressId = commonFunction.remove_duplicate_value(addressId);
+                        addressId = commonFunction.remove_duplicate_value(addressId);
 
-                    cb(null, addressId)
-                }
-            })
-        },
-        function (addressId, cb) {
-
-            // return
-            // console.log("2222222222222222", addressId)
-
-            userModel.find({ 'address._id': { $in: addressId } }, { 'address.$': 1 }).exec((err, result) => {
-                // console.log(err, result)
-                result.forEach(e1 => {
-                    address.push(e1.address[0])
-                });
-                cb(null, address)
-            })
-        }
-    ], (err, response) => {
-        let res = {}
-        if (err) throw err
-
-        else {
-            let start = today.toDate(), end = moment(today).endOf('day').toDate();
-            // console.log('==>>>>', new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString())
-            // console.log("===>>>>>", start, end)
-
-            // return
-            async.parallel({
-
-                TodayTotalVisitor: (cb) => {
-
-                    orderPlaced.aggregate([
-                        {
-                            "$match": {
-                                "orderPlacedDescription.sellerId": mongoose.Types.ObjectId(userId),
-                                "orderPlacedDescription.createdAt": { "$gt": start, "$lt": end }
-                            }
-                        },
-                        {
-                            "$project": {
-                                // "name": 1,
-                                "orderPlacedDescription": {
-                                    "$filter": {
-                                        "input": "$orderPlacedDescription",
-                                        "as": "value",
-                                        "cond": {
-                                            "$and": [
-                                                { "$gt": ["$$value.createdAt", start] },
-                                                { "$lt": ["$$value.createdAt", end] }
-                                            ],
-
-
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    ], (err, result) => {
-                        if (err) {
-                            cb(err)
-
-                        }
-                        else if (result) {
-                            // console.log("=------>>", result)
-                            let TodayTotalVisitor = 0
-                            result.forEach(e1 => {
-                                console.log(e1.orderPlacedDescription.length)
-                                TodayTotalVisitor = TodayTotalVisitor + e1.orderPlacedDescription.length
-                            })
-                            cb(null, TodayTotalVisitor)
-                        }
-
-                    })
-                },
-
-                VisitorRightNow: (cb) => {
-
-                    orderPlaced.aggregate([
-                        {
-                            "$match": {
-                                "orderPlacedDescription.sellerId": mongoose.Types.ObjectId(userId),
-                                "orderPlacedDescription.createdAt": { "$gt": new Date(Date.now() - 5 * 60 * 60 * 1000) }
-                            }
-                        },
-                        {
-                            "$project": {
-                                // "name": 1,
-                                "orderPlacedDescription": {
-                                    "$filter": {
-                                        "input": "$orderPlacedDescription",
-                                        "as": "value",
-                                        "cond": {
-                                            // "$and": [
-                                            "$gt": ["$$value.createdAt", new Date(Date.now() - 5 * 60 * 60 * 1000)],
-                                            // { "$lt": ["$$value.createdAt", end] }
-                                            // ],
-
-
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    ], (err, result) => {
-                        if (err) {
-                            cb(err)
-
-                        }
-                        else if (result) {
-                            // console.log("=------>>", result)
-                            let VisitorRightNow = 0;
-                            result.forEach(e1 => {
-                                console.log(e1.orderPlacedDescription.length)
-                                VisitorRightNow = VisitorRightNow + e1.orderPlacedDescription.length
-                            })
-                            cb(null, VisitorRightNow)
-                        }
-                    })
-                }
-
-
-            }, (err, getSuccess) => {
-                console.log(err, getSuccess)
-                // })
-
-                res['orderDetail'] = {
-                    totalOrder: response.length,
-                    TodayTotalVisitor: getSuccess.TodayTotalVisitor,
-                    VisitorRightNow: getSuccess.VisitorRightNow
-                    // getSuccess: getSuccess
-                };
-                res['userAddress'] = response;
-                callback({
-                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res
+                        cb(null, addressId)
+                    }
                 })
-            })
-        }
-    })
-}
-//orderchat
+            },
+            function(addressId, cb) {
+
+                // return
+                // console.log("2222222222222222", addressId)
+
+                userModel.find({ 'address._id': { $in: addressId } }, { 'address.$': 1 }).exec((err, result) => {
+                    // console.log(err, result)
+                    result.forEach(e1 => {
+                        address.push(e1.address[0])
+                    });
+                    cb(null, address)
+                })
+            }
+        ], (err, response) => {
+            let res = {}
+            if (err) throw err
+
+            else {
+                let start = today.toDate(),
+                    end = moment(today).endOf('day').toDate();
+                // console.log('==>>>>', new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString())
+                // console.log("===>>>>>", start, end)
+
+                // return
+                async.parallel({
+
+                    TodayTotalVisitor: (cb) => {
+
+                        orderPlaced.aggregate([{
+                                "$match": {
+                                    "orderPlacedDescription.sellerId": mongoose.Types.ObjectId(userId),
+                                    "orderPlacedDescription.createdAt": { "$gt": start, "$lt": end }
+                                }
+                            },
+                            {
+                                "$project": {
+                                    // "name": 1,
+                                    "orderPlacedDescription": {
+                                        "$filter": {
+                                            "input": "$orderPlacedDescription",
+                                            "as": "value",
+                                            "cond": {
+                                                "$and": [
+                                                    { "$gt": ["$$value.createdAt", start] },
+                                                    { "$lt": ["$$value.createdAt", end] }
+                                                ],
+
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ], (err, result) => {
+                            if (err) {
+                                cb(err)
+
+                            } else if (result) {
+                                // console.log("=------>>", result)
+                                let TodayTotalVisitor = 0
+                                result.forEach(e1 => {
+                                    console.log(e1.orderPlacedDescription.length)
+                                    TodayTotalVisitor = TodayTotalVisitor + e1.orderPlacedDescription.length
+                                })
+                                cb(null, TodayTotalVisitor)
+                            }
+
+                        })
+                    },
+
+                    VisitorRightNow: (cb) => {
+
+                        orderPlaced.aggregate([{
+                                "$match": {
+                                    "orderPlacedDescription.sellerId": mongoose.Types.ObjectId(userId),
+                                    "orderPlacedDescription.createdAt": { "$gt": new Date(Date.now() - 5 * 60 * 60 * 1000) }
+                                }
+                            },
+                            {
+                                "$project": {
+                                    // "name": 1,
+                                    "orderPlacedDescription": {
+                                        "$filter": {
+                                            "input": "$orderPlacedDescription",
+                                            "as": "value",
+                                            "cond": {
+                                                // "$and": [
+                                                "$gt": ["$$value.createdAt", new Date(Date.now() - 5 * 60 * 60 * 1000)],
+                                                // { "$lt": ["$$value.createdAt", end] }
+                                                // ],
+
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ], (err, result) => {
+                            if (err) {
+                                cb(err)
+
+                            } else if (result) {
+                                // console.log("=------>>", result)
+                                let VisitorRightNow = 0;
+                                result.forEach(e1 => {
+                                    console.log(e1.orderPlacedDescription.length)
+                                    VisitorRightNow = VisitorRightNow + e1.orderPlacedDescription.length
+                                })
+                                cb(null, VisitorRightNow)
+                            }
+                        })
+                    }
+
+
+                }, (err, getSuccess) => {
+                    console.log(err, getSuccess)
+                        // })
+
+                    res['orderDetail'] = {
+                        totalOrder: response.length,
+                        TodayTotalVisitor: getSuccess.TodayTotalVisitor,
+                        VisitorRightNow: getSuccess.VisitorRightNow
+                            // getSuccess: getSuccess
+                    };
+                    res['userAddress'] = response;
+                    callback({
+                        "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                        "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],
+                        'result': res
+                    })
+                })
+            }
+        })
+    }
+    //orderchat
 
 
 //!pending
 orderChat = (data, header) => {
     console.log("data", data)
-    // let userId
+        // let userId
     let userId = "5c46c2d1070fa144119a1cd5"
-    // var mainArray = [];
-    // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-    //     if (err) throw err
-    //     else {
-    //         userId = decodeId
-    //     }
-    // })
+        // var mainArray = [];
+        // commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+        //     if (err) throw err
+        //     else {
+        //         userId = decodeId
+        //     }
+        // })
     async.parallel({
         getOrderDetails: (cb) => {
             orderPlaced.find({ 'orderPlacedDescription.sellerId': userId }).populate({ path: 'orderPlacedDescription.productId', select: 'productName image' }).populate({ path: 'userId' }).populate({ path: 'orderPlacedDescription.reviewRatingId' }).sort('orderPlacedDescription.createdAt').exec((err, result) => {
                 if (err || result < 0 || result.length < 0) {
                     cb(null)
-                }
-                else {
+                } else {
                     cb(null, result)
                 }
             })
@@ -4411,9 +4325,10 @@ orderChat = (data, header) => {
 
 myAccount = (data, header, callback) => {
     console.log("myaccount ---->>>>>>>>", data)
-    // let userId = "5c46c2d1070fa144119a1cd5"
+        // let userId = "5c46c2d1070fa144119a1cd5"
     let userId;
-    let vendor = {}, staff = [];
+    let vendor = {},
+        staff = [];
     if (header.accesstoken) {
 
         commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
@@ -4422,15 +4337,15 @@ myAccount = (data, header, callback) => {
                 userId = decodeId
             }
         })
-    }
-    else {
+    } else {
         callback({
-            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING,
+            "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
         return
     }
     async.waterfall([
-        function (cb) {
+        function(cb) {
             let query = {
                 $or: [
                     { _id: userId },
@@ -4444,7 +4359,7 @@ myAccount = (data, header, callback) => {
                     cb(null, res)
             })
         },
-        function (userDetail, cb) {
+        function(userDetail, cb) {
 
             userDetail.forEach(element => {
                 if (element.userType == 'vendor')
@@ -4454,7 +4369,7 @@ myAccount = (data, header, callback) => {
             })
             cb(null, userDetail)
         },
-        function (data, cb) {
+        function(data, cb) {
 
             userBusinessDetails.findOne({ userId: mongoose.Types.ObjectId(userId) }).exec((err, businessDetails) => {
                 if (err || !businessDetails)
@@ -4468,68 +4383,73 @@ myAccount = (data, header, callback) => {
         let result = { 'vendor': vendor, 'staff': staff, businessDetails: response ? response : null }
 
         callback({
-            "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': result
+            "statusCode": util.statusCode.EVERYTHING_IS_OK,
+            "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],
+            'result': result
         })
     })
 }
 
 // getvendorOffer
 getVendorOffer = (data, header, callback) => {
-    let userId, res = [];
-    if (header.accesstoken) {
+        let userId, res = [];
+        if (header.accesstoken) {
 
-        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-            if (err) throw err
-            else {
-                userId = decodeId
+            commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+                if (err) throw err
+                else {
+                    userId = decodeId
+                }
+            })
+        } else {
+            callback({
+                "statusCode": util.statusCode.PARAMETER_IS_MISSING,
+                "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+            })
+            return
+        }
+
+        productOffer.find({ userId: userId }).populate('applicableOnProduct').exec((err, result) => {
+            if (err) {
+                callback({
+                    "statusCode": util.statusCode.SOMETHING_WENT_WRONG,
+                    "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang]
+                })
+            } else if (result) {
+                async.forEachOf(result, (value, key, callback) => {
+                    let temp = {
+                        offerName: value.offerName,
+                        startDate: value.startDate,
+                        endDate: value.endDate,
+                        offerType: value.offerType,
+                        users: 0
+
+                    }
+                    res.push(temp)
+                    callback()
+                }, (err, response) => {
+                    callback({
+                        "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                        "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],
+                        'result': res
+                    })
+                })
             }
         })
     }
-    else {
-        callback({
-            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
-        })
-        return
-    }
-
-    productOffer.find({ userId: userId }).populate('applicableOnProduct').exec((err, result) => {
-        if (err) {
-            callback({
-                "statusCode": util.statusCode.SOMETHING_WENT_WRONG, "statusMessage": util.statusMessage.SOMETHING_WENT_WRONG[data.lang]
-            })
-        }
-        else if (result) {
-            async.forEachOf(result, (value, key, callback) => {
-                let temp = {
-                    offerName: value.offerName,
-                    startDate: value.startDate,
-                    endDate: value.endDate,
-                    offerType: value.offerType,
-                    users: 0
-
-                }
-                res.push(temp)
-                callback()
-            }, (err, response) => {
-                callback({
-                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': res
-                })
-            })
-        }
-    })
-}
-// deleteStaff
+    // deleteStaff
 deleteStaff = (data, header, callback) => {
-    userModel.findByIdAndUpdate({ _id: data.staffId }, { $set: { status: "inactive" } }, { new: true }).exec((err, result) => {
-        if (err)
-            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
-        else
-            callback({
-                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang]
-            })
-    })
-}
-// VendorSearchProduct
+        userModel.findByIdAndUpdate({ _id: data.staffId }, { $set: { status: "inactive" } }, { new: true }).exec((err, result) => {
+            if (err)
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang] })
+            else
+                callback({
+                    "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                    "statusMessage": util.statusMessage.STATUS_UPDATED[data.lang]
+                })
+        })
+    }
+    // VendorSearchProduct
 VendorSearchProduct = (data, header, callback) => {
     var value = new RegExp(data.searchKeyword.trim(), 'i');
     let userId, mainResult = []
@@ -4540,10 +4460,10 @@ VendorSearchProduct = (data, header, callback) => {
                 userId = decodeId
             }
         })
-    }
-    else {
+    } else {
         callback({
-            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING,
+            "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
         return
     }
@@ -4557,10 +4477,10 @@ VendorSearchProduct = (data, header, callback) => {
         console.log(err, result)
         if (err || result.length < 0) {
             callback({
-                "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang]
+                "statusCode": util.statusCode.NOT_FOUND,
+                "statusMessage": util.statusMessage.NOT_FOUND[data.lang]
             })
-        }
-        else {
+        } else {
             result.forEach(value => {
                 let temp = {
                     _id: value._id,
@@ -4579,7 +4499,9 @@ VendorSearchProduct = (data, header, callback) => {
                 mainResult.push(temp)
             })
             callback({
-                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': mainResult
+                "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],
+                'result': mainResult
             })
         }
     })
@@ -4603,63 +4525,66 @@ analyticsProduct = (data, header, callback) => {
 
 AllProductReviewFeedback = (data, header, callback) => {
 
-    let userId, mainArray = [];
-    if (header.accesstoken) {
-        commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-            if (err) throw err
-            else {
-                userId = decodeId
-            }
-        })
-    }
-    if (!data.productId) {
-        callback({
-            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
-        })
-        return
-    }
-
-
-    async.parallel({
-
-        getProductDetail: (cb) => {
-            reviewRatingModel.find({ productId: data.productId }).populate('productId userId').lean(true).exec((error, response) => {
-                if (error || !response)
-                    cb(null)
+        let userId, mainArray = [];
+        if (header.accesstoken) {
+            commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+                if (err) throw err
                 else {
-                    response.forEach(e1 => {
-                        let temp = {
-                            userId: e1.userId._id,
-                            userName: e1.userId.firstName,
-                            rating: e1.rating,
-                            review: e1.review,
-                            productName: e1.productId.productName,
-                            orderId: "qwertyu"
-                        }
-                        mainArray.push(temp)
-                    })
-                    console.log(mainArray)
-                    cb(null, mainArray)
+                    userId = decodeId
                 }
             })
         }
-
-    }, (err, response) => {
-        console.log(err, response)
-        if (response || response.getProductDetail) {
+        if (!data.productId) {
             callback({
-                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response.getProductDetail
+                "statusCode": util.statusCode.PARAMETER_IS_MISSING,
+                "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
             })
             return
         }
-        else {
-            callback({
-                "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.NOT_FOUND[data.lang]
-            })
-        }
-    })
-}
-//search offer
+
+
+        async.parallel({
+
+            getProductDetail: (cb) => {
+                reviewRatingModel.find({ productId: data.productId }).populate('productId userId').lean(true).exec((error, response) => {
+                    if (error || !response)
+                        cb(null)
+                    else {
+                        response.forEach(e1 => {
+                            let temp = {
+                                userId: e1.userId._id,
+                                userName: e1.userId.firstName,
+                                rating: e1.rating,
+                                review: e1.review,
+                                productName: e1.productId.productName,
+                                orderId: "qwertyu"
+                            }
+                            mainArray.push(temp)
+                        })
+                        console.log(mainArray)
+                        cb(null, mainArray)
+                    }
+                })
+            }
+
+        }, (err, response) => {
+            console.log(err, response)
+            if (response || response.getProductDetail) {
+                callback({
+                    "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                    "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],
+                    'result': response.getProductDetail
+                })
+                return
+            } else {
+                callback({
+                    "statusCode": util.statusCode.NOT_FOUND,
+                    "statusMessage": util.statusMessage.NOT_FOUND[data.lang]
+                })
+            }
+        })
+    }
+    //search offer
 vendorSearchOffer = (data, header, callback) => {
     var value = new RegExp(data.searchKeyword.trim(), 'i');
     let userId, mainArray = [];
@@ -4670,10 +4595,10 @@ vendorSearchOffer = (data, header, callback) => {
                 userId = decodeId
             }
         })
-    }
-    else {
+    } else {
         callback({
-            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING,
+            "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
         return
     }
@@ -4696,13 +4621,15 @@ vendorSearchOffer = (data, header, callback) => {
     }, (err, response) => {
         if (err || !response) {
             callback({
-                "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+                "statusCode": util.statusCode.PARAMETER_IS_MISSING,
+                "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
             })
             return
-        }
-        else {
+        } else {
             callback({
-                "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], 'result': response.searchOffer
+                "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang],
+                'result': response.searchOffer
             })
             return
         }
@@ -4712,32 +4639,32 @@ vendorSearchOffer = (data, header, callback) => {
 
 /* this is for image upload image to cloud  */
 uploadImage1 = (data, callback) => {
-    // console.log(data);u
+        // console.log(data);u
 
-    commonFunction.uploadImg(data.image, (err, icons) => {
-        if (err) callback(null)
-        else {
-            callback(icons)
-        }
-    })
-}
-// orderpAyment this api for after payment success 
-orderPayment = (data, header, callback) => {
-    console.log(data, header)
-    if (!data.orderId || !data.status) {
-        callback({
-            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+        commonFunction.uploadImg(data.image, (err, icons) => {
+            if (err) callback(null)
+            else {
+                callback(icons)
+            }
         })
-        return
     }
-    else {
-        data.orderId = data.orderId.slice(3)
-        async.parallel({
-            changeStatus: (cb) => {
-                console.log("grdghfcmhsdcg")
-                orderPlaced.findOneAndUpdate({
-                    'orderPlacedDescription.orderId': data.orderId
-                }, {
+    // orderpAyment this api for after payment success 
+orderPayment = (data, header, callback) => {
+        console.log(data, header)
+        if (!data.orderId || !data.status) {
+            callback({
+                "statusCode": util.statusCode.PARAMETER_IS_MISSING,
+                "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+            })
+            return
+        } else {
+            data.orderId = data.orderId.slice(3)
+            async.parallel({
+                changeStatus: (cb) => {
+                    console.log("grdghfcmhsdcg")
+                    orderPlaced.findOneAndUpdate({
+                        'orderPlacedDescription.orderId': data.orderId
+                    }, {
                         $set: {
                             'orderPlacedDescription.$.transactionId': data.transactionId,
                             'orderPlacedDescription.$.orderPayment': data.status
@@ -4750,31 +4677,32 @@ orderPayment = (data, header, callback) => {
                             cb(null, result)
                         }
                     })
-            }
-        }, (err, response) => {
-            if (header.accesstoken) {
-                commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
-                    if (err) throw err
-                    else {
-                        bagModel.findOneAndRemove({ userId: decodeId }, (err, result) => {
-                            console.log("---------delete bag------->>>", result);
-                        })
+                }
+            }, (err, response) => {
+                if (header.accesstoken) {
+                    commonFunction.jwtDecode(header.accesstoken, (err, decodeId) => {
+                        if (err) throw err
+                        else {
+                            bagModel.findOneAndRemove({ userId: decodeId }, (err, result) => {
+                                console.log("---------delete bag------->>>", result);
+                            })
 
-                    }
-                })
-            }
+                        }
+                    })
+                }
 
-            if (true) {
-                callback({
-                    "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.PAYMENT_DONE[data.lang]
-                })
-            }
-        })
+                if (true) {
+                    callback({
+                        "statusCode": util.statusCode.EVERYTHING_IS_OK,
+                        "statusMessage": util.statusMessage.PAYMENT_DONE[data.lang]
+                    })
+                }
+            })
+        }
     }
-}
-//userConversationList
-// userConversationList = (req, header, callback) => {
-//     var userId = req.body.userId;
+    //userConversationList
+    // userConversationList = (req, header, callback) => {
+    //     var userId = req.body.userId;
 
 //     console.log("eeeeee", req.body.userId)
 //     User.findOne({
@@ -4986,8 +4914,7 @@ increaseStockOnCartList = (data, header, callback) => {
         return callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
     }
     let query = {
-        $and: [
-            {
+        $and: [{
                 userId: userId
             },
             {
@@ -5008,18 +4935,17 @@ increaseStockOnCartList = (data, header, callback) => {
             bagModel.findOne({ userId: mongoose.Types.ObjectId(userId) }).populate({ path: 'userId' }).populate({
                 path: 'orderDescription.productId',
                 populate: [{
-                    path: 'varianceId',
-                },
-                {
-                    path: 'brandId',
-                }],
-            },
-            ).lean().exec((err, result) => {
+                        path: 'varianceId',
+                    },
+                    {
+                        path: 'brandId',
+                    }
+                ],
+            }, ).lean().exec((err, result) => {
                 if (err || !result) {
                     let res = {}
                     callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.LIST_EMPTY[data.lang], 'result': res })
-                }
-                else {
+                } else {
                     cb(null, result)
                 }
             })
@@ -5030,14 +4956,13 @@ increaseStockOnCartList = (data, header, callback) => {
         var payment = response.bagDetails.userId.paymentMethod
         var main = []
         var totalPrice = 0
-        async.forEachOf(response.bagDetails.orderDescription, async (value, key, callback) => {
+        async.forEachOf(response.bagDetails.orderDescription, async(value, key, callback) => {
             // await commonAPI.findBrand(value.productId.brandId, async (err, brandName) => {
             await varianceModel.findOne({
                 "productId": mongoose.Types.ObjectId(value.productId._id),
                 "variants": {
                     "$elemMatch": {
-                        "$and": [
-                            {
+                        "$and": [{
                                 "color": value.color.toUpperCase(),
                             },
                             {
@@ -5049,7 +4974,7 @@ increaseStockOnCartList = (data, header, callback) => {
                         ]
                     }
                 }
-            }, { 'variants.$': 1 }).lean().exec(async (err, varianceValue) => {
+            }, { 'variants.$': 1 }).lean().exec(async(err, varianceValue) => {
                 console.log("result", err, varianceValue.variants[0].quantity)
                 console.log("quality", value.productQuantity);
 
@@ -5064,9 +4989,9 @@ increaseStockOnCartList = (data, header, callback) => {
                     color: value.color ? value.color : "",
                     size: value.size ? value.size : "",
                     material: value.material ? value.material : "",
-                    price: varianceValue.variants[0].price,//!
+                    price: varianceValue.variants[0].price, //!
                     productQuantity: value.productQuantity,
-                    image: varianceValue.variants[0].image,//!
+                    image: varianceValue.variants[0].image, //!
                     description: value.productId.description,
                     specifications: value.productId.specifications,
                     inStock: parseFloat(varianceValue.variants[0].quantity) >= parseFloat(value.productQuantity) ? true : false,
@@ -5074,7 +4999,7 @@ increaseStockOnCartList = (data, header, callback) => {
                 }
                 totalPrice = totalPrice + (parseInt(varianceValue.variants[0].price) * parseInt(value.productQuantity))
                 await main.push(temp)
-                // console.log("###############",JSON.stringify(query))
+                    // console.log("###############",JSON.stringify(query))
                 callback()
             })
 
@@ -5105,67 +5030,64 @@ increaseStockOnCartList = (data, header, callback) => {
 
 topProductSalesByVendor = (data, header, callback) => {
 
-    console.log("sdfasdf", data, header.accesstoken)
-    let userId
-    commonFunction.jwtDecode(header.accesstoken, (err, token) => {
-        if (err) {
-            callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
-            return
-        }
-        else userId = token
-    })
+        console.log("sdfasdf", data, header.accesstoken)
+        let userId
+        commonFunction.jwtDecode(header.accesstoken, (err, token) => {
+            if (err) {
+                callback({ statusCode: util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang] })
+                return
+            } else userId = token
+        })
 
-    async.waterfall([
-        function (cb) {
-            orderPlaced.find({ orderPlacedDescription: { $elemMatch: { sellerId: mongoose.Types.ObjectId(userId) } } }, { 'orderPlacedDescription.sellerId': 1 }).populate({
-                path: 'orderPlacedDescription.productId',
-                'select': 'productName image'
-            }).exec((err, product) => {
-                // console.log("result", err, JSON.stringify(product))
-                if (err || product.length == 0) {
+        async.waterfall([
+            function(cb) {
+                orderPlaced.find({ orderPlacedDescription: { $elemMatch: { sellerId: mongoose.Types.ObjectId(userId) } } }, { 'orderPlacedDescription.sellerId': 1 }).populate({
+                    path: 'orderPlacedDescription.productId',
+                    'select': 'productName image'
+                }).exec((err, product) => {
+                    // console.log("result", err, JSON.stringify(product))
+                    if (err || product.length == 0) {
 
-                    cb(null, [])
-                }
-                else {
-                    cb(null, product)
-                }
-            })
-        },
-    ], (err, response) => {
-        // callback(response)
-        let mainArray = [];
-
-        if (response.length > 0) {
-            response.forEach(element => {
-                element.orderPlacedDescription.filter(el => {
-                    let temp = {
-                        productId: el.productId._id,
-                        productName: el.productId.productName,
-                        productImage: el.productId.image[0],
-                        // productCount: 0
+                        cb(null, [])
+                    } else {
+                        cb(null, product)
                     }
-                    mainArray.push(temp)
                 })
-            })
+            },
+        ], (err, response) => {
+            // callback(response)
+            let mainArray = [];
 
-            let myArr = []
-            mainArray.forEach(x => {
-                myArr.push(x.productId)
-            })
-            mainArray.forEach(x => {
-                x.count = _.filter(myArr, y => x.productId == y).length
-            })
-            mainArray = _.uniqBy(mainArray, 'productId');
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": mainArray })
-        }
-        else {
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": mainArray })
-        }
-    })
+            if (response.length > 0) {
+                response.forEach(element => {
+                    element.orderPlacedDescription.filter(el => {
+                        let temp = {
+                            productId: el.productId._id,
+                            productName: el.productId.productName,
+                            productImage: el.productId.image[0],
+                            // productCount: 0
+                        }
+                        mainArray.push(temp)
+                    })
+                })
 
-    // callback()
-}
-/* this is for image upload image to cloud  */
+                let myArr = []
+                mainArray.forEach(x => {
+                    myArr.push(x.productId)
+                })
+                mainArray.forEach(x => {
+                    x.count = _.filter(myArr, y => x.productId == y).length
+                })
+                mainArray = _.uniqBy(mainArray, 'productId');
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": mainArray })
+            } else {
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY[data.lang], "result": mainArray })
+            }
+        })
+
+        // callback()
+    }
+    /* this is for image upload image to cloud  */
 deleteOffer = (data, callback) => {
     let userId
     if (header.accesstoken) {
@@ -5176,10 +5098,10 @@ deleteOffer = (data, callback) => {
                 userId = decodeId
             }
         })
-    }
-    else {
+    } else {
         callback({
-            "statusCode": util.statusCode.PARAMETER_IS_MISSING, "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
+            "statusCode": util.statusCode.PARAMETER_IS_MISSING,
+            "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
         })
         return
     }
@@ -5253,18 +5175,17 @@ module.exports = {
 
 async function getVarianceData(data) {
     temp = {
-        color: data.color.toUpperCase(),
-        size: data.size.toUpperCase(),
-        material: data.material.toUpperCase(),
-    }
-    // console.log(temp)
+            color: data.color.toUpperCase(),
+            size: data.size.toUpperCase(),
+            material: data.material.toUpperCase(),
+        }
+        // console.log(temp)
     query1 = {
         "productId": mongoose.Types.ObjectId(data._id),
         "variants": {
             "$elemMatch": {
                 // "closed": false,
-                "$and": [
-                    {
+                "$and": [{
                         "color": temp.color,
                     },
                     {

@@ -1,67 +1,92 @@
 <!doctype html>
-<html lang="en">  
-
-<head>   
-  <base href="/vendor/">   
+<html lang="en">
+<head>
   <meta charset="utf-8">
-  <title>Waki</title>
-  <link rel="icon" type="image/png" href="assets/images/favicon.png"/>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-  <link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link href="assets/css/jasny-bootstrap.css" rel="stylesheet" type="text/css">
-  <link href="assets/css/style.css" rel="stylesheet" type="text/css">
-  <link href="assets/css/media.css" rel="stylesheet" type="text/css">
-  <script src="assets/js/jquery-2.1.1.js"></script>
-  <script src="assets/js/bootstrap.js"></script>
-  <script src="assets/js/jasny-bootstrap.js"></script>
-  <script src="../node_modules/chart.js/src/chart.js"></script>
-  <script src="assets/js/script.js"></script>
-  <script src="//cdn.ckeditor.com/4.7.1/full/ckeditor.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:700,900" rel="stylesheet">
+  <title>WorldCoinData | Cryptocurrency Charts Live, Live Coin Watch, Marketcap</title> 
+	<base href="/">
+	<meta name="robots" content="index, follow">
+	<!-- <meta name="robots" content="nofollow, noindex"> -->
+	
+	<meta name="keywords" content="cryptocurrency market chart, cryptocurrency charts live, cryptocurrency price charts, top cryptocurrency list, cryptocurrency charts, live coin watch, coin watch crypto, marketcap, best ico to invest, best upcoming ico, top ico list, ico rating">
+	<meta name="title" content="WorldCoinData | Cryptocurrency Charts Live, Live Coin Watch, Marketcap">
+	<meta name="description" content="WorldCoinData is one of the leading cryptocurrency live coin watch & ICO listing sites. Browse cryptocurrency charts live, top crypto list, top ico list, marketcap.">
+	<meta name="google-site-verification" content="hQd0iWGxZbHMu6sEVKj61AnRV3YyyWXRSz2u2W13zZ0" />
+	
+	<meta property="og:url" content="https://www.worldcoindata.com"/>
+
+	
+	<meta name="language" content="english"/>
+	<meta http-equiv="content-language" content="en-us">
+	<meta name="rating" content="general"/>
+	<meta name="expires" content="Never"/>
+	<meta name="distribution" content="global">
+	<meta property="og:locale" content="en_US"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:site_name" content="WorldCoinData"/>
+	<meta itemprop="name" content=" WorldCoinData "/>
+	
+	<meta name="geo.region" content="NO-15" />
+	<meta name="geo.position" content="62.427897;6.40173" />
+	<meta name="ICBM" content="62.427897, 6.40173" /> 
+
+	
+	<meta property="og:title" content="WorldCoinData | Cryptocurrency Charts Live, Live Coin Watch, Marketcap"/>
+	<meta property="og:description" content="WorldCoinData is one of the leading cryptocurrency live coin watch & ICO listing sites. Browse cryptocurrency charts live, top crypto list, top ico list, marketcap."/>
+	<meta itemprop="description" content="WorldCoinData is one of the leading cryptocurrency live coin watch & ICO listing sites. Browse cryptocurrency charts live, top crypto list, top ico list, marketcap."/>
+	<meta property="og:image" content="../assets/images/logo.png" />
+	<meta property="og:url" content=" ../assets/images/logo.png"/>
+	
+	<meta itemprop="streetAddress" content="øllsvikvegen 61A">
+	<meta itemprop="addressLocality" content="Ålesund">
+	<meta itemprop="addressRegion" content="Ålesund">
+	<meta itemprop="addressCountry" content="Norway">
   
-<!-- this bootstrap api -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>  -->
-<!-- <script src='http://maps.googleapis.com/maps/api/js?v=3&sensor=false&amp;libraries=places&key=AIzaSyDxFPSj1Oh9PYbbsm35CLorLQk4vtrTvvk'></script> -->
- <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOdyg3NTbo6f63D2qLnHkSyEStYWqxORY&callback=initMap"></script>
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap&key=AIzaSyDxFPSj1Oh9PYbbsm35CLorLQk4vtrTvvk" async defer></script> 
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://www.worldcoindata.com" rel="canonical">
 
-<script src="assets/js/map.js"></script> -->
+  <!-- custom css file -->
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css">	
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/style.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/media.css" rel="stylesheet" type="text/css">	
+  <!-- end custom css file -->
+  
+  <!-- custom javascipt files -->
+	<script  src="https://code.jquery.com/jquery-2.2.2.min.js"  integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="  crossorigin="anonymous"></script>
+	<script  src="assets/js/bootstrap.min.js"></script>
+	<!-- <script async src=//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js></script> -->
+  <!-- end custom javascript file -->
+  <!-- amchart files -->
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+	<script src="https://www.amcharts.com/lib/3/amstock.js"></script>
+	<script src="assets/js/light.js"></script>
+  <!-- end amchart files -->
 
-<link rel="stylesheet" href="styles.e1ea408121606456c44c.css"></head>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127456329-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function ga(){dataLayer.push(arguments);}
+	  ga('js', new Date());
+	  ga('config', 'UA-127456329-1');
+	</script>
+	
+<link rel="stylesheet" href="styles.46ab50da3103c5e116a1.css"></head>
 
 <body>
-  <style>
-  select.language{
-    position: absolute;
-    top: 9px;
-    right: 99px;
-    /* z-index: -1; */
-    color: black;
-    border:0;
-    background: transparent;
-    cursor: pointer;
-  }
-  select.language:focus{
-    outline: none;  
-  }
-  .sidemenubtn{
-    cursor: pointer;
-  }
-  .wakilogo:focus{
-    outline: none;
-  }
-  html.showspinner{
-  overflow: hidden;
-}
-.black-overlay{
-  position:fixed !important;
-}
-  
-  </style>
-  <app-root></app-root>
-<script type="text/javascript" src="runtime.a66f828dca56eeb90e02.js"></script><script type="text/javascript" src="polyfills.70b858cb0608c7435d91.js"></script><script type="text/javascript" src="main.2a90fb096e0a1fc2e9ec.js"></script></body>
+
+  <app-root><div class="loaderCntr" ><div  style="position:absolute" class="lds-hourglass"></div></div></app-root>
+<script type="text/javascript" src="runtime.js"></script><script type="text/javascript" src="polyfills.js"></script><script type="text/javascript" src="styles.js"></script><script type="text/javascript" src="vendor.js"></script><script type="text/javascript" src="main.js"></script><script type="text/javascript" src="runtime.ec2944dd8b20ec099bf3.js"></script><script type="text/javascript" src="polyfills.f6ae3e8b63939c618130.js"></script><script type="text/javascript" src="main.abe7b1e8f170262a2404.js"></script></body>
+
+<script>
+$(document).on('click', '.hidedesktop', function(){
+  $('.slideContentCoins').slideToggle();
+  $(this).toggleClass('active');
+ });
+</script>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
 </html>

@@ -32,7 +32,7 @@ let app = require('express')(),
 //     cert: fs.readFileSync(path.join(__dirname, '/home/ec2-user') + '/waki.csr').toString()
 // };
 
-var options = { 
+var options = {
     key: fs.readFileSync('/home/ec2-user/waki.key').toString(),
     cert: fs.readFileSync('/home/ec2-user/ssl/2b903ce65660144e.crt').toString(),
 };
@@ -63,118 +63,26 @@ app.use('/vendor', productRoutes)
 app.use('/website', website)
 
 
-
-app.use("/admin", express.static(path.join(__dirname, 'admin')));
-app.get('/admin*', (req, res) => {
-    res.sendFile(`${__dirname}/admin/index.html`);
-})
-app.use("/vendor", express.static(path.join(__dirname, 'dist')));
-app.get('/vendor*', (req, res) => {
+app.use("/", express.static(path.join(__dirname, 'dist')));
+app.get('/*', (req, res) => {
     res.sendFile(`${__dirname}/dist/index.html`);
 })
 
-app.use("/blixr", express.static(path.join(__dirname, 'blixr')));
-app.get('/blixr*', (req, res) => {
-    res.sendFile(`${__dirname}/blixr/index.html`);
-})
-
-// app.use("/", express.static(path.join(__dirname, 'website')));
-// app.get('/*', (req, res) => {
-//     res.sendFile(`${__dirname}/website/index.html`);
-// })
-
-/* payment  testing start*/
-
-console.log(configJson.payTabs.secret_key)
-paytabs.validateSecretKey({
-    'merchant_email': configJson.payTabs.email,
-    'secret_key': configJson.payTabs.secret_key,
-}, validateSecretKey);
-
-function validateSecretKey(result) {
-    if (result.response_code == 4012) {
-        //Redirect your merchant to the payment link
-        console.log("2", result.payment_url);
-    } else {
-        //Handle the error
-        console.log("22222222222222222222", result);
-    }
-}
-app.get('/payment', (req, res) => {
-    paytabs.createPayPage({
-        'merchant_email': configJson.payTabs.email,
-        'secret_key': configJson.payTabs.secret_key,
-        'currency': 'SAR',//change this to the required currency
-        'amount': '10',//change this to the required amount
-        'site_url': 'www.techugo.com',//change this to reflect your site
-        'title': 'Order for Shoes',//Change this to reflect your order title
-        'quantity': 1,//Quantity of the product
-        'unit_price': 10, //Quantity * price must be equal to amount
-        'products_per_title': 'Shoes', //Change this to your products
-        'return_url': 'www.techugo.com',//This should be your callback url
-        'cc_first_name': 'Samy',//Customer First Name
-        'cc_last_name': 'Saad',//Customer Last Name
-        'cc_phone_number': '00973', //Country code
-        'phone_number': '12332323', //Customer Phone
-        'billing_address': 'Address', //Billing Address
-        'city': 'Manama',//Billing City
-        'state': 'Manama',//Billing State
-        'postal_code': '1234',//Postal Code
-        'country': 'BHR',//Iso 3 country code
-        'email': 'sumit@yopmail.com',//Customer Email
-        'ip_customer': '192.101.101.101',//Pass customer IP here
-        'ip_merchant': '192.101.101.101',//Change this to your server IP
-        'address_shipping': 'Shipping',//Shipping Address
-        'city_shipping': 'Manama',//Shipping City
-        'state_shipping': 'Manama',//Shipping State
-        'postal_code_shipping': '973',
-        'country_shipping': 'BHR',
-        'other_charges': 0,//Other chargs can be here
-        'reference_no': 1234,//Pass the order id on your system for your reference
-        'msg_lang': 'en',//The language for the response
-        'cms_with_version': 'Nodejs Lib v1',//Feel free to change this
-    }, createPayPage);
-
-    function createPayPage(result) {
-        if (result.response_code == 4012) {
-            //Redirect your merchant to the payment link
-            console.log(result);
-            res.json(result)
-        } else {
-            //Handle the error
-            res.json(result)
-        }
-    }
-})
-app.get('/verifyPayment/:data', (req, res) => {
-    paytabs.verifyPayment({
-        'merchant_email': configJson.payTabs.email,
-        'secret_key': configJson.payTabs.secret_key,
-        'payment_reference': req.params.data
-    }, verifyPayment);
-
-    function verifyPayment(result) {
-        res.json(result)
-    }
-})
-
-
-/* payment  testing end */
 
 /****************************socket start***********************
-***************************socket start*************************
-***************************socket start************************/
+ ***************************socket start*************************
+ ***************************socket start************************/
 
 var io = require('socket.io')(server);
 var sockets = {};
 global.onlineUsers = {};
-io.sockets.on('connection', function (socket) {
+io.sockets.on('connection', function(socket) {
     console.log("\x1b[31m", "Congratulation connection has been established");
 
-    socket.on('initChat', function (data) {
+    socket.on('initChat', function(data) {
         console.log(data)
         var decodeId;
-        commonfunction.jwtDecode(data.userId, async (err, userId) => {
+        commonfunction.jwtDecode(data.userId, async(err, userId) => {
             if (err) throw err
             else {
                 decodeId = userId
@@ -182,13 +90,13 @@ io.sockets.on('connection', function (socket) {
         })
         console.log('decodeuser id======>>>', decodeId)
         User.findOne({
-            userId: decodeId   //!data.userId
-        }).populate({ path: 'userId' }).exec(function (err, result) {
+            userId: decodeId //!data.userId
+        }).populate({ path: 'userId' }).exec(function(err, result) {
             console.log("result data of init chat--->" + result);
             if (result == null || result == "" || result == undefined) {
                 console.log("######")
                 var user = new User({ userId: decodeId });
-                user.save(function (err) {
+                user.save(function(err) {
                     if (err) return err;
                 })
             } else {
@@ -196,18 +104,18 @@ io.sockets.on('connection', function (socket) {
                 User.update({
                     userId: decodeId
                 }, {
-                        $set: {
-                            deviceToken: result.userId.deviceToken ? result.userId.deviceToken : "",
-                            profilePic: result.userId.image ? result.userId.image : "",
-                            // profilePicFull: result.profilePicFull,
-                            deviceType: result.userId.deviceType ? result.userId.deviceType : "",
-                            userName: result.userId.firstName ? result.userId.firstName : ""
-                        }
-                    }, function (err, results) {
-                        if (err) return err;
-                        //console.log("initChat>>>>", results);
+                    $set: {
+                        deviceToken: result.userId.deviceToken ? result.userId.deviceToken : "",
+                        profilePic: result.userId.image ? result.userId.image : "",
+                        // profilePicFull: result.profilePicFull,
+                        deviceType: result.userId.deviceType ? result.userId.deviceType : "",
+                        userName: result.userId.firstName ? result.userId.firstName : ""
+                    }
+                }, function(err, results) {
+                    if (err) return err;
+                    //console.log("initChat>>>>", results);
 
-                    });
+                });
 
                 if (!(decodeId in onlineUsers)) {
                     onlineUsers[decodeId] = {
@@ -245,36 +153,36 @@ io.sockets.on('connection', function (socket) {
         console.log("onlineUsers", onlineUsers);
         //onlineUsers[data.userId]= {socketId:[socket.id],userId:data.userId, userName: data.userName, status:"online"};
         socket.broadcast.emit('userIsOnline', { userId: decodeId })
-        // socket.emit('initChat',{userId:decodeId})
+            // socket.emit('initChat',{userId:decodeId})
     })
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    socket.on('logout', function (data) {
+    socket.on('logout', function(data) {
         console.log("initChat created....." + JSON.stringify(data));
         User.findOne({
             userId: data.userId
-        }, function (err, result) {
+        }, function(err, result) {
             // console.log("result data of init chat--->"+result);
             if (result == null || result == "" || result == undefined) {
                 var user = new User(data);
-                user.save(function (err) {
+                user.save(function(err) {
                     if (err) return err;
                 })
             } else {
                 User.update({
                     userId: data.userId
                 }, {
-                        $set: {
-                            deviceToken: null,
-                        }
-                    }, function (err, results) {
-                        if (err) return err;
-                        // console.log("logout>>>>", results);
+                    $set: {
+                        deviceToken: null,
+                    }
+                }, function(err, results) {
+                    if (err) return err;
+                    // console.log("logout>>>>", results);
 
-                    });
+                });
             }
         })
 
@@ -289,7 +197,7 @@ io.sockets.on('connection', function (socket) {
 
 
     //!----------------------------------------User Status---------------------------------------------------------------//
-    socket.on('userStatus', function (data) { //userId and status
+    socket.on('userStatus', function(data) { //userId and status
         console.log("userStatus  data---- ", JSON.stringify(data));
         if (onlineUsers[data.userId] == undefined) {
             console.log("user is offline");
@@ -306,7 +214,7 @@ io.sockets.on('connection', function (socket) {
 
 
     //!---------------------------------------------Online User ----------------------------------------------------------//
-    socket.on('isOnline', function (data) { //userId and receiverId
+    socket.on('isOnline', function(data) { //userId and receiverId
         //console.log("isOnline data-------" + JSON.stringify(data));
         var userStatus;
         if (onlineUsers[data.receiverId] == undefined) {
@@ -329,10 +237,10 @@ io.sockets.on('connection', function (socket) {
 
     //!---------------------------- Send Message -------------------------------------------------//  
 
-    socket.on('sendmessage', function (data) {
+    socket.on('sendmessage', function(data) {
         console.log("data entry is ==============x================>", data);
         let senderId;
-        commonfunction.jwtDecode(data.senderId, async (err, decodeSenderID) => {
+        commonfunction.jwtDecode(data.senderId, async(err, decodeSenderID) => {
             // console.log(err, decodeSenderID)
             if (err) throw err
             else {
@@ -343,7 +251,7 @@ io.sockets.on('connection', function (socket) {
         var receiveImage = "";
         var timeStamp = new Date().getTime();
         var utcDate = new Date().getTime();
-        var participants = [data.receiverId, senderId/* data.senderId */]
+        var participants = [data.receiverId, senderId /* data.senderId */ ]
 
         var query = {
             activeUsers: {
@@ -351,7 +259,7 @@ io.sockets.on('connection', function (socket) {
             }
         }
         waterfall([
-            function (callback) {
+            function(callback) {
                 // User.findOne({
                 //     userId: data.receiverId
                 // }, (err, user) => {
@@ -375,8 +283,8 @@ io.sockets.on('connection', function (socket) {
                 // })
                 callback()
             },
-            function (callback) {
-                Room.findOne(query, function (err, result) {
+            function(callback) {
+                Room.findOne(query, function(err, result) {
                     // console.log("active user====>>" + JSON.stringify(result))
                     if (result == null || result == "" || result == undefined) {
                         // console.log('this isss==================>>>')
@@ -392,7 +300,7 @@ io.sockets.on('connection', function (socket) {
                             participants: addParticipents,
                             chatType: "single"
                         });
-                        room.save(function (err, roomResult) {
+                        room.save(function(err, roomResult) {
                             //console.log("Room saved",roomResult);
                             if (err) {
                                 //console.log("Something went wrong in room creation", err)
@@ -407,31 +315,31 @@ io.sockets.on('connection', function (socket) {
                     }
                 })
             },
-            function (roomId1, callback) {
+            function(roomId1, callback) {
                 // console.log('roomroomroomroomroom', roomId1)
                 // console.log("callback=========>", data["media"], typeof data);
                 User.find({
                     userId: {
-                        $in: [data.receiverId, senderId/* data.senderId */]
+                        $in: [data.receiverId, senderId /* data.senderId */ ]
                     }
-                }, function (err, result) {
+                }, function(err, result) {
                     // console.log("results===>", result);
 
                     //console.log("data", result[0].blockedUsers.indexOf(data.senderId), result[1].blockedUsers.indexOf(data.receiverId),result[0].userId,data.receiverId)
                     if (result[0].userId == data.receiverId) {
-                        if (result[0].blockedUsers.indexOf(senderId) >= 0 || result[1].blockedUsers.indexOf(data.receiverId) >= 0) { } else {
+                        if (result[0].blockedUsers.indexOf(senderId) >= 0 || result[1].blockedUsers.indexOf(data.receiverId) >= 0) {} else {
 
                             var roomId = roomId1
-                            //console.log("======>>>Room id is",roomId);
-                            //console.log("data for chat history1111111111111>>>", data)
+                                //console.log("======>>>Room id is",roomId);
+                                //console.log("data for chat history1111111111111>>>", data)
                             if (onlineUsers[senderId] && onlineUsers[data.receiverId]) {
                                 if (onlineUsers[senderId].receiverId == data.receiverId && onlineUsers[data.receiverId].receiverId == senderId)
                                     data.status = "READ";
                             }
                             console.log("dataaaaa", data)
-                            // uploadImage1(data.media, (err, result) => {
-                            //   data.media = result;
-                            // receiveImage = result;
+                                // uploadImage1(data.media, (err, result) => {
+                                //   data.media = result;
+                                // receiveImage = result;
 
                             var saveChat = new chatHistory(data);
                             saveChat.roomId = roomId,
@@ -442,11 +350,9 @@ io.sockets.on('connection', function (socket) {
                             // User.findOneAndUpdate({$in:})
                             //pull functionality
                             User.findOneAndUpdate({ userId: senderId }, { $pull: { deletedUsers: data.receiverId } }, { new: true }, (error, res) => {
-                                if (error) {//console.log("Something went wromg.")
-                                }
-
-                                else {
-                                    saveChat.save(function (err, result) {
+                                if (error) { //console.log("Something went wromg.")
+                                } else {
+                                    saveChat.save(function(err, result) {
                                         if (err) {
                                             //console.log("Something went wrong in chat history saving", err)
                                         } else {
@@ -471,8 +377,8 @@ io.sockets.on('connection', function (socket) {
                         // if (result[1].blockedUsers.indexOf(data.senderId) >= 0 || result[0].blockedUsers.indexOf(data.receiverId) >= 0) { } else {
 
                         var roomId = roomId1
-                        //console.log("======>>>Room id is",roomId);
-                        //console.log("data for chat history22222222222222222>>>", data)
+                            //console.log("======>>>Room id is",roomId);
+                            //console.log("data for chat history22222222222222222>>>", data)
                         if (onlineUsers[senderId] && onlineUsers[data.receiverId]) {
                             if (onlineUsers[senderId].receiverId == data.receiverId && onlineUsers[data.receiverId].receiverId == data.senderId)
                                 data.status = "READ";
@@ -488,72 +394,71 @@ io.sockets.on('connection', function (socket) {
 
                         // console.log("SAVE CHAT IS============>", saveChat);
                         User.findOneAndUpdate({ userId: senderId }, { $pull: { deletedUsers: data.receiverId } }, { new: true }, (error, res) => {
-                            if (error) {  //console.log("Something went wromg.")
-                            }
-                            else {
-                                saveChat.save(function (err, result) {
-                                    if (err) {
-                                        console.log("Something went wrong in chat history saving", err)
-                                    } else {
-                                        console.log("chat history saved successfully");
-                                    }
-                                })
-                            }
-                        })
-                        // })
-                        // saveChat.save(function (err, result) {
-                        //           if (err) {
-                        //             console.log("Something went wrong in chat history saving", err)
-                        //           } else {
-                        //             console.log("chat history saved successfully",result);
-                        //           }
-                        //         })
+                                if (error) { //console.log("Something went wromg.")
+                                } else {
+                                    saveChat.save(function(err, result) {
+                                        if (err) {
+                                            console.log("Something went wrong in chat history saving", err)
+                                        } else {
+                                            console.log("chat history saved successfully");
+                                        }
+                                    })
+                                }
+                            })
+                            // })
+                            // saveChat.save(function (err, result) {
+                            //           if (err) {
+                            //             console.log("Something went wrong in chat history saving", err)
+                            //           } else {
+                            //             console.log("chat history saved successfully",result);
+                            //           }
+                            //         })
                         callback(null, roomId)
-                        // }
+                            // }
                     }
                 })
             },
-            function (roomId, callback) {
+            function(roomId, callback) {
                 async.parallel([
-                    function (callback1) {
-                        chatHistory.find({
-                            receiverId: data.receiverId,
-                            status: "SENT"
-                        }).count().exec()
-                            .then((result) => {
-                                callback1(null, result)
-                            })
-                            .catch((failed) => {
-                                callback1(failed)
-                            })
-                    }
-                    // function (callback1) {
-                    //     var username = "eventadmindriven";
-                    //     var password = "@1!2@3#QWER#";
-                    //     var auth = "Basic " + new Buffer(username + ":" + password).toString("base64");
+                        function(callback1) {
+                            chatHistory.find({
+                                    receiverId: data.receiverId,
+                                    status: "SENT"
+                                }).count().exec()
+                                .then((result) => {
+                                    callback1(null, result)
+                                })
+                                .catch((failed) => {
+                                    callback1(failed)
+                                })
+                        }
+                        // function (callback1) {
+                        //     var username = "eventadmindriven";
+                        //     var password = "@1!2@3#QWER#";
+                        //     var auth = "Basic " + new Buffer(username + ":" + password).toString("base64");
 
-                    //     //var url = 'http://ec2-52-74-93-103.ap-southeast-1.compute.amazonaws.com//PROJECTS/EventDriven/trunk/api_v3_3/version_v3_3/getUnreadNotificationCount';
+                        //     //var url = 'http://ec2-52-74-93-103.ap-southeast-1.compute.amazonaws.com//PROJECTS/EventDriven/trunk/api_v3_3/version_v3_3/getUnreadNotificationCount';
 
-                    //     var url = 'http://wishalerts.com/api_v3_3/version_v3_3/getUnreadNotificationCount';
-                    //     request.post({
-                    //         url: url,
-                    //         headers: {
-                    //             "Authorization": auth
-                    //         },
-                    //         json: {
+                        //     var url = 'http://wishalerts.com/api_v3_3/version_v3_3/getUnreadNotificationCount';
+                        //     request.post({
+                        //         url: url,
+                        //         headers: {
+                        //             "Authorization": auth
+                        //         },
+                        //         json: {
 
-                    //             "userID": data.receiverId
+                        //             "userID": data.receiverId
 
-                    //         }
+                        //         }
 
-                    //     }, function (error, response, body) {  //console.log("request",body," ",error,"++++++","Response",response);
-                    //         //console.log("body is "+JSON.stringify(body));
-                    //         callback1(null, body.unreadCount)
-                    //     });
-                    // }              
-                ],
+                        //     }, function (error, response, body) {  //console.log("request",body," ",error,"++++++","Response",response);
+                        //         //console.log("body is "+JSON.stringify(body));
+                        //         callback1(null, body.unreadCount)
+                        //     });
+                        // }              
+                    ],
                     // optional callback
-                    function (err, results) {
+                    function(err, results) {
                         var type = data.messageType;
                         // if(type=="IMAGE"){
                         // uploadImage1(data.media, (err, success) => {
@@ -572,32 +477,32 @@ io.sockets.on('connection', function (socket) {
                         var badgeCount = parseInt(results[0]) + parseInt(results[1]);
                         // console.log("Her Data Is==================>", data);
                         var requireData = {
-                            messageType: data.messageType,
-                            message: data.message,
-                            senderId: senderId,
-                            senderImage: data.senderImage,
-                            receiverImage: data.receiverImage,
-                            media: data.media,
-                            senderName: data.senderName,
-                            receiverName: data.receiverName,
-                            isEncrypted: true,
-                            timeStamp: utcDate,
-                            // currentTime: data.currentTime,
-                            badgeCount: badgeCount,
-                            // pic_url: data.media ? data.media : ""
-                            //pic_url:"http://ec2-52-74-93-103.ap-southeast-1.compute.amazonaws.com/PROJECTS/EventDriven/trunk/sites/default/files/chat-1525093255.jpg"
-                        }
-                        // socket.emit("sendmessage")
+                                messageType: data.messageType,
+                                message: data.message,
+                                senderId: senderId,
+                                senderImage: data.senderImage,
+                                receiverImage: data.receiverImage,
+                                media: data.media,
+                                senderName: data.senderName,
+                                receiverName: data.receiverName,
+                                isEncrypted: true,
+                                timeStamp: utcDate,
+                                // currentTime: data.currentTime,
+                                badgeCount: badgeCount,
+                                // pic_url: data.media ? data.media : ""
+                                //pic_url:"http://ec2-52-74-93-103.ap-southeast-1.compute.amazonaws.com/PROJECTS/EventDriven/trunk/sites/default/files/chat-1525093255.jpg"
+                            }
+                            // socket.emit("sendmessage")
 
                         // console.log("HERE in DATA =====>", onlineUsers[data.receiverId], sockets[onlineUsers[data.receiverId]]);
                         console.log("************************************", onlineUsers)
-                        // console.log('@@@@@@@@@@@@@@@@@@@@@@@',onlineUsers[data.receiverId])
-                        // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', sockets)
-                        // console.log(onlineUsers)
-                        // socket.emit('sendmessage', requireData)
-                        // sockets[onlineUsers[senderId].socketId].socket.emit("sendmessage", {
-                        //     requireData
-                        // });
+                            // console.log('@@@@@@@@@@@@@@@@@@@@@@@',onlineUsers[data.receiverId])
+                            // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%', sockets)
+                            // console.log(onlineUsers)
+                            // socket.emit('sendmessage', requireData)
+                            // sockets[onlineUsers[senderId].socketId].socket.emit("sendmessage", {
+                            //     requireData
+                            // });
                         let temp = {
                             message: data.message,
                             senderId: senderId,
@@ -621,7 +526,8 @@ io.sockets.on('connection', function (socket) {
 
                             console.log("ONLINE user ", temp)
                             sockets[onlineUsers[data.receiverId].socketId].socket.emit("sendmessage", {
-                                'code': '200', 'result': temp
+                                'code': '200',
+                                'result': temp
                             });
                             // sockets[onlineUsers[data.receiverId].socketId].socket.emit("receivemessage", {
                             //     requireData
@@ -672,7 +578,7 @@ io.sockets.on('connection', function (socket) {
 
 
     //------------------------------------------ on Disconnect -------------------------------------------------------------//                              
-    socket.on('disconnect', function (data) {
+    socket.on('disconnect', function(data) {
         console.log("$%^&^%@#$%^&#$%^&*&%^&$%^&^$%^&^%^&$%&%^&$%")
         var socketId = socket.id;
         //console.log("socket id in disconnected--" , sockets);
@@ -700,7 +606,7 @@ io.sockets.on('connection', function (socket) {
          
      })*/
     //------------------------------------------ Read Message -------------------------------------------------------------//  
-    socket.on('readMessage', function (data) { //need chatRoomId, lastmsgId, senderId, receiverId
+    socket.on('readMessage', function(data) { //need chatRoomId, lastmsgId, senderId, receiverId
         // console.log("readMessage DATa????", data);
         var query = {
             $or: [{
@@ -717,7 +623,7 @@ io.sockets.on('connection', function (socket) {
                 }]
             }]
         }
-        Room.findOne(query, function (err, result) {
+        Room.findOne(query, function(err, result) {
             if (result == null || result == "" || result == undefined) {
                 //console.log("users doesnot exist")
             } else {
@@ -728,15 +634,15 @@ io.sockets.on('connection', function (socket) {
                     },
                     receiverId: data.receiverId
                 }, {
-                        $set: {
-                            status: 'READ'
-                        }
-                    }, {
-                        multi: true
-                    }, function (err, result) {
+                    $set: {
+                        status: 'READ'
+                    }
+                }, {
+                    multi: true
+                }, function(err, result) {
 
-                        // console.log("Messages above last Message ID  " + data.lastmsgId + " has been read by the Receiver " + data.receiverId);
-                    })
+                    // console.log("Messages above last Message ID  " + data.lastmsgId + " has been read by the Receiver " + data.receiverId);
+                })
 
                 if (onlineUsers[data.senderId] == undefined) {
                     // console.log("sender is offline");
@@ -778,74 +684,70 @@ io.sockets.on('connection', function (socket) {
     //---------------------------------------------Rev --chatting with current user-- Rev-------------------------------//
 
     socket.on('currentlyChattingReverse', (data) => {
-        //console.log("currently chatting reverse", data);
-        if (onlineUsers[data.senderId])
-            delete onlineUsers[data.senderId].receiverId;
+            //console.log("currently chatting reverse", data);
+            if (onlineUsers[data.senderId])
+                delete onlineUsers[data.senderId].receiverId;
 
-    })
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        })
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-    socket.on('blockUser', function (data) {
+    socket.on('blockUser', function(data) {
         //console.log("block user is called")
         if (data.status == 'block') {
             User.findOneAndUpdate({
                 userId: data.userId
             }, {
-                    $push: {
-                        blockedUsers: data.blockedUserId
-                    }
-                }, {
-                    new: true
-                }, (error, success) => {
-                    //console.log("Error and success========>", error, "=======================", success)
-                    if (error) {
-                        //console.log("Error in blockuser=======>", error)
-                    }
-                    else {
-                        //console.log("Blocked user============>", success);
-                    }
-                })
+                $push: {
+                    blockedUsers: data.blockedUserId
+                }
+            }, {
+                new: true
+            }, (error, success) => {
+                //console.log("Error and success========>", error, "=======================", success)
+                if (error) {
+                    //console.log("Error in blockuser=======>", error)
+                } else {
+                    //console.log("Blocked user============>", success);
+                }
+            })
         } else if (data.status == 'unblock') {
             User.findOneAndUpdate({
                 userId: data.userId
             }, {
-                    $pull: {
-                        blockedUsers: data.blockedUserId
-                    }
-                }, {
-                    new: true
-                }, (error, success) => {
-                    // console.log("error and success===>", error, "==================", success)
-                    if (error) {
-                        //console.log("Error in unblockuser==>", error)
-                    }
-                    else {
-                        // console.log("Unblocked user==============>", success);
-                    }
-                })
+                $pull: {
+                    blockedUsers: data.blockedUserId
+                }
+            }, {
+                new: true
+            }, (error, success) => {
+                // console.log("error and success===>", error, "==================", success)
+                if (error) {
+                    //console.log("Error in unblockuser==>", error)
+                } else {
+                    // console.log("Unblocked user==============>", success);
+                }
+            })
         }
     })
 
 })
 
 /* ***************************socket end *************************
-***************************socket end *************************
-***************************socket end ************************* */
+ ***************************socket end *************************
+ ***************************socket end ************************* */
 
 /* ***************************Helper Functions *************************
-***************************Helper Functions *************************
-***************************Helper Functions ************************* */
+ ***************************Helper Functions *************************
+ ***************************Helper Functions ************************* */
 
 
-app.post('/uploadMedia', function (req, res) {
+app.post('/uploadMedia', function(req, res) {
     console.log("#$#$#$#$")
     let form = new multiparty.Form({ maxFilesSize: 100 * 1024 * 1024 }); //setting max size of image to 10MB
     form.parse(req, (err, fields, files) => {
-        if (err) { console.log("err", err); }
-
-        else {
+        if (err) { console.log("err", err); } else {
             console.log("fields==>", fields);
             console.log("forms==>", files);
             let curso = new urlMedia();
@@ -867,121 +769,121 @@ app.post('/uploadMedia', function (req, res) {
 
 
 //!chat history 
-app.post('/ChatHistory', function (req, res) {
+app.post('/ChatHistory', function(req, res) {
 
-    //need receiverId, senderId, pageNumber
+        //need receiverId, senderId, pageNumber
 
-    let senderId
-    commonfunction.jwtDecode(req.body.senderId, async (err, decodeSenderId) => {
-        if (err) throw err
-        else {
-            senderId = decodeSenderId
-        }
-    })
-    console.log("@@@@@@@@@@@@@", senderId)
-    var query = {
-        $or: [{
-            $and: [{
-                senderId: senderId
+        let senderId
+        commonfunction.jwtDecode(req.body.senderId, async(err, decodeSenderId) => {
+            if (err) throw err
+            else {
+                senderId = decodeSenderId
+            }
+        })
+        console.log("@@@@@@@@@@@@@", senderId)
+        var query = {
+            $or: [{
+                $and: [{
+                    senderId: senderId
+                }, {
+                    receiverId: req.body.receiverId
+                }]
             }, {
-                receiverId: req.body.receiverId
+                $and: [{
+                    senderId: req.body.receiverId
+                }, {
+                    receiverId: senderId
+                }]
             }]
+        }
+        chatHistory.update(query, {
+            $set: {
+                status: 'READ'
+            }
         }, {
-            $and: [{
-                senderId: req.body.receiverId
-            }, {
-                receiverId: senderId
-            }]
-        }]
-    }
-    chatHistory.update(query, {
-        $set: {
-            status: 'READ'
-        }
-    }, {
             multi: true
-        }, function (err, result) {
+        }, function(err, result) {
             if (err) return res.send({
                 responseCode: 500,
                 responseMessage: "Something went wrong."
             })
             else {
                 var query = {
-                    $or: [{
-                        $and: [{
-                            senderId: senderId
+                        $or: [{
+                            $and: [{
+                                senderId: senderId
+                            }, {
+                                receiverId: req.body.receiverId
+                            }, {
+                                hidden: {
+                                    $ne: senderId
+                                }
+                            }]
                         }, {
-                            receiverId: req.body.receiverId
-                        }, {
-                            hidden: {
-                                $ne: senderId
-                            }
+                            $and: [{
+                                receiverId: senderId
+                            }, {
+                                senderId: req.body.receiverId
+                            }, {
+                                hidden: {
+                                    $ne: senderId
+                                }
+                            }]
                         }]
-                    }, {
-                        $and: [{
-                            receiverId: senderId
-                        }, {
-                            senderId: req.body.receiverId
-                        }, {
-                            hidden: {
-                                $ne: senderId
-                            }
-                        }]
-                    }]
-                }
-                //console.log(JSON.stringify(query))
+                    }
+                    //console.log(JSON.stringify(query))
                 chatHistory.paginate(query, {
                     sort: {
                         time: -1
                     },
                     page: req.body.pageNumber || 1,
                     limit: 1000
-                }).then(function (result) {
+                }).then(function(result) {
                     console.log("chat history result=======>" + JSON.stringify(result))
                     let temp = []
                     async.forEachOf(result.docs, (value, key, callback) => {
-                        console.log(value)
-                        let r = {
-                            senderId: value.senderId,
-                            receiverId: value.receiverId,
-                            message: value.message,
-                            status: value.status,
-                            timeStamp: value.timeStamp
-                        }
-                        temp.push(r)
-                        callback()
-                    }, (err, createResposne) => {
-                        res.send({
-                            statusCode: 200,
-                            statusMessage: "Data Found successfully.",
-                            chatResult: temp,
-                            total: result.total,
-                            limit: result.limit,
-                            page: result.page,
-                            pages: result.pages
-                        });
-                    })
-                    // res.send({
-                    //     responseCode: 200,
-                    //     responseMessage: "Data Found successfully.",
-                    //     chatResult: r,
-                    //     total:result.total,
-                    //     limit:result.limit,
-                    //     page:result.page,
-                    //     pages:result.pages
-                    // });
+                            console.log(value)
+                            let r = {
+                                senderId: value.senderId,
+                                receiverId: value.receiverId,
+                                message: value.message,
+                                status: value.status,
+                                timeStamp: value.timeStamp
+                            }
+                            temp.push(r)
+                            callback()
+                        }, (err, createResposne) => {
+                            res.send({
+                                statusCode: 200,
+                                statusMessage: "Data Found successfully.",
+                                chatResult: temp,
+                                total: result.total,
+                                limit: result.limit,
+                                page: result.page,
+                                pages: result.pages
+                            });
+                        })
+                        // res.send({
+                        //     responseCode: 200,
+                        //     responseMessage: "Data Found successfully.",
+                        //     chatResult: r,
+                        //     total:result.total,
+                        //     limit:result.limit,
+                        //     page:result.page,
+                        //     pages:result.pages
+                        // });
                 })
             }
         })
-})
-//!delete message
-app.post('/deleteMessage', function (req, res) {
+    })
+    //!delete message
+app.post('/deleteMessage', function(req, res) {
     //console.log("req.body: ", req.body)
     chatHistory.findByIdAndUpdate(req.body.messageId, {
-        $push: {
-            hidden: req.body.userId
-        }
-    }, {
+            $push: {
+                hidden: req.body.userId
+            }
+        }, {
             new: true
         })
         .then((success) => {
@@ -1001,82 +903,82 @@ app.post('/deleteMessage', function (req, res) {
 })
 
 //!delete all message
-app.post('/deleteAllMessages', function (req, res) {
+app.post('/deleteAllMessages', function(req, res) {
     //console.log("multipple chat delete request",req.body)
     chatHistory.update({
         roomId: req.body.roomId
     }, {
-            $push: {
-                hidden: req.body.userId
-            }
-        }, {
-            multi: true
-        }, (error, success) => {
-            if (error) {
-                //console.log("muerrorr===>", error)
-                res.send({
-                    responseCode: 500,
-                    responseMessage: "Something went wrong."
-                })
-            } else {
-                //console.log("success====>", success)
-                res.send({
-                    responseCode: 200,
-                    responseMessage: "Successfully deleted."
-                })
-            }
-        })
+        $push: {
+            hidden: req.body.userId
+        }
+    }, {
+        multi: true
+    }, (error, success) => {
+        if (error) {
+            //console.log("muerrorr===>", error)
+            res.send({
+                responseCode: 500,
+                responseMessage: "Something went wrong."
+            })
+        } else {
+            //console.log("success====>", success)
+            res.send({
+                responseCode: 200,
+                responseMessage: "Successfully deleted."
+            })
+        }
+    })
 })
 
-app.post('/blockUser', function (req, res) {
+app.post('/blockUser', function(req, res) {
     //console.log(req.body)
     User.findOneAndUpdate({
         userId: req.body.userId
     }, {
-            $push: {
-                blockedUsers: req.body.blockedUserId
-            }
-        }, {
-            new: true
-        }, (error, success) => {
-            //console.log("error and success=========>", error, "================", success)
-            if (error)
-                res.send({
-                    responseCode: 500,
-                    responseMessage: "Something went wrong."
-                })
-            else
-                res.send({
-                    responseCode: 200,
-                    responseMessage: "User is successfully blocked."
-                })
-        })
+        $push: {
+            blockedUsers: req.body.blockedUserId
+        }
+    }, {
+        new: true
+    }, (error, success) => {
+        //console.log("error and success=========>", error, "================", success)
+        if (error)
+            res.send({
+                responseCode: 500,
+                responseMessage: "Something went wrong."
+            })
+        else
+            res.send({
+                responseCode: 200,
+                responseMessage: "User is successfully blocked."
+            })
+    })
 })
 
 
 
-app.post('/unblockUser', function (req, res) {
+app.post('/unblockUser', function(req, res) {
     //console.log(req.body)
     User.findOneAndUpdate({
         userId: req.body.userId
     }, {
-            $pull: {
-                blockedUsers: req.body.blockedUserId
-            }
-        }, {
-            new: true
-        }, (error, success) => {
-            if (error)
-                res.send({
-                    responseCode: 500,
-                    responseMessage: "Something went wrong."
-                })
-            else
-                res.send({
-                    responseCode: 200,
-                    responseMessage: "User is successfully unblocked."
-                })
-        })
+        $pull: {
+            blockedUsers: req.body.blockedUserId
+        }
+    }, {
+        new: true
+    }, (error, success) => {
+        if (error)
+            res.send({
+                responseCode: 500,
+                responseMessage: "Something went wrong."
+            })
+        else
+            res.send({
+                responseCode: 200,
+                responseMessage: "User is successfully unblocked."
+            })
+    })
 })
 
 
@@ -1087,22 +989,22 @@ app.post('/deleteUser', (req, res) => {
             User.findOneAndUpdate({
                 userId: req.body.userId
             }, {
-                    $push: {
-                        deletedUsers: req.body.deleteUserId
-                    }
-                }, {
-                    new: true
-                }, (error, result) => {
-                    if (error)
-                        callback(error);
-                    else
-                        callback(null, result)
-                });
+                $push: {
+                    deletedUsers: req.body.deleteUserId
+                }
+            }, {
+                new: true
+            }, (error, result) => {
+                if (error)
+                    callback(error);
+                else
+                    callback(null, result)
+            });
         },
         (res, callback) => {
             chatHistory.update({
-                roomId: req.body.roomId
-            }, {
+                    roomId: req.body.roomId
+                }, {
                     $push: {
                         hidden: req.body.userId
                     }
@@ -1135,7 +1037,7 @@ app.post('/deleteUser', (req, res) => {
 })
 
 
-app.post('/userConversationList', function (req, res) {
+app.post('/userConversationList', function(req, res) {
     var userId = req.body.userId;
     console.log("eeeeee", req.body.userId)
     User.findOne({
@@ -1164,8 +1066,8 @@ app.post('/userConversationList', function (req, res) {
                                 return x.activeUsers[0]
                         })
                         console.log("final result", usersIds)
-                        // return
-                        User.find({ $or: [{ userName: { $regex: req.body.pattern, $options: 'i' } }, { userId: { $in: usersIds } }] }).sort({ userId: -1 }).exec(async (err, result) => {
+                            // return
+                        User.find({ $or: [{ userName: { $regex: req.body.pattern, $options: 'i' } }, { userId: { $in: usersIds } }] }).sort({ userId: -1 }).exec(async(err, result) => {
                             // console.log("result====>>>", err, result)
                             // return
 
@@ -1173,42 +1075,39 @@ app.post('/userConversationList', function (req, res) {
                                 return res.send(err);
                             else if (result.length == 0) {
                                 res.send({ responseCode: 200, responseMessage: "No user found.", result: result })
-                            }
-                            else {
+                            } else {
 
                                 if (err) {
                                     return res.send(err);
-                                }
-                                else if (result.length == 0) {
+                                } else if (result.length == 0) {
                                     return res.send({ responseCode: 400, responseMessage: "No users found" })
-                                }
-                                else {
+                                } else {
                                     // console.log("result==>", result, "++++++++++++")
                                     var userList = [],
                                         counter = 0,
                                         len = result.length;
                                     //console.log("result====>",result)
-                                    _.each(result, async function (sq) {
+                                    _.each(result, async function(sq) {
                                         var query = {
                                             $and: [{
-                                                $or: [{
-                                                    senderId: userId
+                                                    $or: [{
+                                                        senderId: userId
+                                                    }, {
+                                                        receiverId: userId
+                                                    }]
                                                 }, {
-                                                    receiverId: userId
-                                                }]
-                                            }, {
-                                                $or: [{
-                                                    senderId: sq.userId
-                                                }, {
-                                                    receiverId: sq.userId
-                                                }]
-                                            },
-                                            { hidden: { $nin: [sq.userId] } }
+                                                    $or: [{
+                                                        senderId: sq.userId
+                                                    }, {
+                                                        receiverId: sq.userId
+                                                    }]
+                                                },
+                                                { hidden: { $nin: [sq.userId] } }
                                             ]
                                         };
                                         chatHistory.findOne(query).sort({
                                             timeStamp: -1
-                                        }).exec(async function (err, chatResult) {
+                                        }).exec(async function(err, chatResult) {
                                             // console.log("chat result", chatResult)
                                             if (err) {
                                                 res.send({
@@ -1229,7 +1128,7 @@ app.post('/userConversationList', function (req, res) {
                                                         receiverId: userId
                                                     }],
                                                     status: "READ"
-                                                }).count().exec().then(async (result) => {
+                                                }).count().exec().then(async(result) => {
                                                     // console.log("result===============================>", result);
                                                     unreadMessages = result;
                                                     if (chatResult && userId != sq.userId) {
@@ -1237,8 +1136,7 @@ app.post('/userConversationList', function (req, res) {
                                                         let isOnline = false;
                                                         //console.log(findSuccess, "find success")
                                                         // console.log(findSuccess.blockedUsers,"-----------",findSuccess.blockedUsers.indexOf(sq.userId),"----------",sq.userId)
-                                                        if (findSuccess.blockedUsers && findSuccess.blockedUsers.indexOf(sq.userId) < 0) { isBlock = false }
-                                                        else { isBlock = true }
+                                                        if (findSuccess.blockedUsers && findSuccess.blockedUsers.indexOf(sq.userId) < 0) { isBlock = false } else { isBlock = true }
                                                         //  console.log(chatResult);
                                                         // console.log("blocked===>",sq.blockedUsers.indexOf(userId))
                                                         //console.log("online check===>",onlineUsers[sq.userId],"-------",onlineUsers) findSuccess.deletedUsers.indexOf(sq.userId) < 0 &&
@@ -1277,15 +1175,15 @@ app.post('/userConversationList', function (req, res) {
                                                         let start = (pageNumber * maxResult) - maxResult;
                                                         let end = pageNumber * maxResult;
                                                         let totalPage = Math.ceil(userList.length / maxResult)
-                                                        // console.log("start======>>>" + start + "  end=======>>>>" + end + "  page number is" + pageNumber)
-                                                        // console.log("SDFGSFGSDFG", userList)
+                                                            // console.log("start======>>>" + start + "  end=======>>>>" + end + "  page number is" + pageNumber)
+                                                            // console.log("SDFGSFGSDFG", userList)
                                                         res.send({
                                                             statusCode: 200,
                                                             statusMessage: 'list found',
                                                             result: userList
                                                         });
                                                         // res.send(userList)  
-                                                        userList.sort(function (a, b) {
+                                                        userList.sort(function(a, b) {
                                                             // console.log(typeof(a.time))
                                                             // console.log("########", a, b)
                                                             return new Date((a.time).toString()).getTime() - new Date((b.time).toString()).getTime();
@@ -1300,7 +1198,7 @@ app.post('/userConversationList', function (req, res) {
 
 
                                                         if (req.body.pattern) {
-                                                            dataList.sort(function (a, b) {
+                                                            dataList.sort(function(a, b) {
                                                                 var textA = a.userName.toUpperCase();
                                                                 var textB = b.userName.toUpperCase();
                                                                 return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
@@ -1310,16 +1208,16 @@ app.post('/userConversationList', function (req, res) {
 
                                                         //console.log("datalist lenght"+dataList.length)
                                                         var data = {
-                                                            data: dataList,
-                                                            pageNumber: pageNumber,
-                                                            totalPage: totalPage
-                                                        }
-                                                        // console.log("chatlist", dataList)
-                                                        // res.send({
-                                                        //     responseCode: 200,
-                                                        //     responseMessage: 'list found',
-                                                        //     result: data
-                                                        // });
+                                                                data: dataList,
+                                                                pageNumber: pageNumber,
+                                                                totalPage: totalPage
+                                                            }
+                                                            // console.log("chatlist", dataList)
+                                                            // res.send({
+                                                            //     responseCode: 200,
+                                                            //     responseMessage: 'list found',
+                                                            //     result: data
+                                                            // });
                                                     }
                                                 }).catch((failed) => {
                                                     console.log("failed", failed)
@@ -1344,12 +1242,12 @@ app.post('/userConversationList', function (req, res) {
 });
 
 app.post('/userStatus', (req, res) => {
-    if (onlineUsers[req.body.userId])
-        res.send({ responseCode: 200, responseMessage: 'User is online' })
-    else
-        res.send({ responseCode: 201, responseMessage: 'User is offline' })
-})
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (onlineUsers[req.body.userId])
+            res.send({ responseCode: 200, responseMessage: 'User is online' })
+        else
+            res.send({ responseCode: 201, responseMessage: 'User is offline' })
+    })
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -1357,9 +1255,9 @@ app.post('/totalUnreadMessageCount', (req, res) => {
     var userId = req.body.userId;
     var unreadMessages = 0;
     chatHistory.find({
-        receiverId: userId,
-        status: "SENT"
-    }).count().exec()
+            receiverId: userId,
+            status: "SENT"
+        }).count().exec()
         .then((result) => {
             res.send({
                 responseCode: 200,
@@ -1376,9 +1274,9 @@ app.post('/totalUnreadMessageCount', (req, res) => {
 })
 
 /* ***************************Helper Functions *************************
-***************************Helper Functions *************************
-***************************Helper Functions ************************* */
+ ***************************Helper Functions *************************
+ ***************************Helper Functions ************************* */
 
-server.listen(config.NODE_SERVER_PORT.port, function () {
+server.listen(config.NODE_SERVER_PORT.port, function() {
     console.log('app listening on port:' + config.NODE_SERVER_PORT.port + (new Date));
 });
