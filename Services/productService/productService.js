@@ -356,7 +356,7 @@ addProduct = (data, header, callback) => {
                     image: image,
                     specifications: data.specifications,
                     tag: data.tag,
-                    productType: data.productType,
+                    productTry: data.productType,
                     tryImage: data.productType == true ? tryimage : null,
                     qrCode: data.qrCode,
                     inventorySKU: data.inventorySKU,

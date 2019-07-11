@@ -136,7 +136,7 @@ module.exports = {
             // let token = speakEasy.totp({
             //     secret: secret.base32,
             //     encoding: 'base32'
-            // })
+            // })   
         let token = 123456;
         callback(token, secret);
     },
