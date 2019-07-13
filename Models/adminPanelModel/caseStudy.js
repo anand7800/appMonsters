@@ -13,5 +13,5 @@ var caseStudy = mongoose.Schema({
         default: "ACTIVE",
         uppercase: true
     }
-})
+}, { timestamps: true })
 module.exports = mongoose.model('caseStudy', caseStudy, 'caseStudy')

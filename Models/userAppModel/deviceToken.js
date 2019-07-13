@@ -15,5 +15,5 @@ var tokenModel = mongoose.Schema({
         default: "ACTIVE",
         uppercase: true
     }
-})
+}, { timestamps: true })
 module.exports = mongoose.model('tokenModel', tokenModel, 'tokenModel')

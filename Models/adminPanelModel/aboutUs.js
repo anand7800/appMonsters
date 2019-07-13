@@ -10,5 +10,5 @@ var aboutUs = mongoose.Schema({
         default: "ACTIVE",
         uppercase: true
     }
-})
+}, { timestamps: true })
 module.exports = mongoose.model('aboutUs', aboutUs, 'aboutUs')

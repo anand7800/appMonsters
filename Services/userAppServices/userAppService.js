@@ -9,7 +9,7 @@ const paytabs = require('paytabs_api');
 /* update device token  start */
 updateDeviceToken = (data, callback) => {
         console.log(data)
-        if (!data.deviceToken) {
+        if (!data.deviceToken || !data.deviceType) {
             callback({
                 "statusCode": util.statusCode.PARAMETER_IS_MISSING,
                 "statusMessage": util.statusMessage.PARAMS_MISSING[data.lang]
