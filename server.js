@@ -36,6 +36,6 @@ app.use('/admin', adminPanelRouter)
 //     res.sendFile(`${__dirname}/dist/index.html`);
 // })
 
-server.listen(6262, function() {
+server.listen(5152, function() {
     console.log('app listening on port:' + config.NODE_SERVER_PORT.port + (new Date));
 });
