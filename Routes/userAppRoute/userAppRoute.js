@@ -44,4 +44,10 @@ appRouter.get('/getNotification', (req, res) => {
         res.send(data)
     })
 })
+
+appRouter.get('/getVideo', (req, res) => {
+    adminHandler.getVideo(req.body, (data) => {
+        res.send(data)
+    })
+})
 module.exports = appRouter

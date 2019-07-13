@@ -120,7 +120,28 @@ adminRouter.post('/createNotification', (req, res) => {
 
 /* anand api */
 adminRouter.post('/adminLogin', (req, res) => {
-        adminHandler.adminLogin(req.body, (data) => {
+    adminHandler.adminLogin(req.body, (data) => {
+        res.send(data)
+    })
+})
+
+adminRouter.post('/addPortfolio', (req, res) => {
+    adminHandler.addPortfolio(req, (data) => {
+        res.send(data)
+    })
+})
+adminRouter.post('/updatePortfolio', (req, res) => {
+    adminHandler.updatePortfolio(req, (data) => {
+        res.send(data)
+    })
+})
+adminRouter.post('/deletePortfolio', (req, res) => {
+    adminHandler.deletePortfolio(req.body, (data) => {
+        res.send(data)
+    })
+})
+adminRouter.get('/getPortfolio', (req, res) => {
+        adminHandler.getPortfolio(req.body, (data) => {
             res.send(data)
         })
     })

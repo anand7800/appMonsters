@@ -10,6 +10,7 @@ const teamModel = require('../../Models/adminPanelModel/team'); /* device token 
 const treadingModel = require('../../Models/adminPanelModel/treading'); /* device token  model */
 const upcomingModel = require('../../Models/adminPanelModel/treading'); /* device token  model */
 const notificationModel = require('../../Models/userAppModel/notification'); /* device token  model */
+const portfolioModel = require('../../Models/userAppModel/Portfolio'); /* device token  model */
 
 
 const commonAPI = require('../../commonFile/commonApi')
@@ -620,34 +621,118 @@ createNotification = (data, callback) => {
 
 
 /* anand start */
-
+//login services
 
 adminLogin = (data, callback) => {
-    let { email, password } = data;
-    if (!data.email || !data.password) {
-        callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.PARAMS_MISSING['en'] })
-        return;
+        let { email, password } = data;
+        if (!data.email || !data.password) {
+            callback({ "statusCode": util.statusCode.BAD_REQUEST, "statusMessage": util.statusMessage.PARAMS_MISSING['en'] })
+            return;
+        }
+        let token = commonFunction.jwtEncode(email)
+        password = util.encryptData(data.password)
+        console.log(email, token, password)
+        adminModel.findOneAndUpdate({ email, password }, { token }).exec((err, result) => {
+            if (err)
+                callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY['en'], "error": err })
+            else if (!result)
+                callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.INCORRECT_CREDENTIALS['en'] })
+            else {
+                result.token = token;
+                callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS['en'], "result": result })
+            }
+        })
     }
-    let token = commonFunction.jwtEncode(email)
-    password = util.encryptData(data.password)
-    console.log(email, token, password)
-    adminModel.findOneAndUpdate({ email, password }, { token }).exec((err, result) => {
-        if (err)
-            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY['en'], "error": err })
-        else if (!result)
-            callback({ "statusCode": util.statusCode.NOT_FOUND, "statusMessage": util.statusMessage.INCORRECT_CREDENTIALS['en'] })
-        else
-            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.LOGIN_SUCCESS['en'] })
-    })
+    //adminpannelservices
+addPortfolio = (data, callback) => {
+    var form = new multiparty.Form({ autoFiles: true, maxFilesSize: 10832325 })
+    form.parse(data, function(err, fields, files) {
+        // console.log(fields,"------",files)
+        // return;
+
+        // console.log(files.pdf[0].originalFilename.slice(files.pdf[0].originalFilename.length - 3))
+        commonFunction.upload_image(files.thumbnail, (err, result) => {
+            //console.log("---------",result,"--------------")
+            let query = {
+                appName: fields.appName[0],
+                thumbnail: result,
+                discription: fields.discription[0],
+                applink: fields.applink[0]
+            }
+            console.log(query)
+
+            let portfolio = new portfolioModel(query)
+            portfolio.save((err, result) => {
+                console.log("aaaaaaaa", result, "aaaaaaaaaaa")
+                if (err)
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+                else if (!result)
+                    callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
+                else {
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.UPDATED[data.lang], "result": result })
+                }
+            })
+        })
+    });
 }
 
 
+updatePortfolio = (data, callback) => {
+    var form = new multiparty.Form({ autoFiles: true, maxFilesSize: 10832325 })
+    form.parse(data, function(err, fields, files) {
+        // console.log(fields,"------",files)
+        // return;
 
+        // console.log(files.pdf[0].originalFilename.slice(files.pdf[0].originalFilename.length - 3))
+        commonFunction.upload_image(files.thumbnail, (err, result) => {
+            //console.log("---------",result,"--------------")
+            let query = {
+                appName: fields.appName[0],
+                thumbnail: result,
+                discription: fields.discription[0],
+                applink: fields.applink[0]
+            }
+            console.log(query)
 
+            portfolioModel.findOneAndUpdate({ _id: fields._id[0] }, query, (err, result) => {
+                console.log("aaaaaaaa", result, "aaaaaaaaaaa")
+                if (err)
+                    callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+                else if (!result)
+                    callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
+                else {
+                    callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.UPDATED[data.lang], "result": result })
+                }
+            })
+        })
+    });
+}
 
+deletePortfolio = (data, callback) => {
+    portfolioModel.findOneAndDelete({ _id: data._id }, (err, result) => {
+        console.log("aaaaaaaa", result, "aaaaaaaaaaa")
+        if (err)
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+        else if (!result)
+            callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
+        else {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.UPDATED[data.lang], "result": result })
+        }
+    })
+}
 
-
-
+getPortfolio = (data, callback) => {
+    portfolioModel.find({}, (err, result) => {
+        console.log("aaaaaaaa", result, "aaaaaaaaaaa")
+        if (err)
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY[data.lang], "error": err })
+        else if (!result)
+            callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE[data.lang] })
+        else {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.UPDATED[data.lang], "result": result })
+        }
+    })
+}
 
 
 module.exports = {
@@ -671,5 +756,9 @@ module.exports = {
     addUpcoming,
     editUpcoming,
     deleteUpcoming,
-    createNotification
+    createNotification,
+    addPortfolio,
+    updatePortfolio,
+    deletePortfolio,
+    getPortfolio
 }

@@ -11,6 +11,7 @@ const caseStudyModel = require('../../Models/adminPanelModel/caseStudy'); /* dev
 const portfolioModel = require('../../Models/userAppModel/Portfolio'); /* device token  model */
 
 const NotificationModel = require('../../Models/userAppModel/notification'); /* device token  model */
+const videoModel = require('../../Models/userAppModel/video'); /* device token  model */
 
 /* update device token  start */
 updateDeviceToken = (data, callback) => {
@@ -183,6 +184,19 @@ getNotification = (data, callback) => {
     })
 }
 
+getVideo = (data, callback) => {
+    videoModel.find({ status: "ACTIVE" }).exec((err, result) => {
+        if (err)
+            callback({ "statusCode": util.statusCode.INTERNAL_SERVER_ERROR, "statusMessage": util.statusMessage.SERVER_BUSY['en'], "error": err })
+        else if (!result)
+            callback({ "statusCode": util.statusCode.NOT_MODIFIED, "statusMessage": util.statusMessage.NOT_UPDATE['en'] })
+        else {
+            callback({ "statusCode": util.statusCode.EVERYTHING_IS_OK, "statusMessage": util.statusMessage.FETCHED_SUCCESSFULLY['en'], "result": result })
+        }
+    })
+}
+
+
 module.exports = {
     updateDeviceToken,
     getCulture,
@@ -190,5 +204,6 @@ module.exports = {
     getCaseStudy,
     portfolio,
     getPortfolio,
-    getNotification
+    getNotification,
+    getVideo
 }

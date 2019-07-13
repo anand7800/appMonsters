@@ -16,7 +16,7 @@ let serverURLs = {
     "staging": {
         "NODE_SERVER": "http://13.126.131.184",
         "NODE_SERVER_PORT": "5050",
-        "MONGO_DB": "mongodb://13.126.131.184:27017/APP_MONSTER?authSource=admin",
+        "MONGO_DB": "mongodb://18.218.243.162:27017/APP_MONSTER?authSource=admin",
         "EMAIL_USER": 'toothfairysanjeet@gmail.com',
         "EMAIL_PASS": 'Sanj1234A',
         "EMAIL_HOST": 'smtp.gmail.com',
