@@ -462,16 +462,19 @@ module.exports = {
 
     upload_image: async(req, res) => {
         // res_promises will be an array of promises
-        let res_promises = req.files.map(file => new Promise((resolve, reject) => {
+        let res_promises = req.map(file => new Promise((resolve, reject) => {
                 cloudinary.v2.uploader.upload(file.path, { use_filename: true, unique_filename: false }, function(error, result) {
                     if (error) reject(error)
-                    else resolve(result.public_id)
+                    else resolve(result.secure_url)
                 })
             }))
             // Promise.all will fire when all promises are resolved 
         Promise.all(res_promises)
-            .then(result => res.json({ 'response': upload }))
-            .catch((error) => { /*  handle error */ })
+            .then(result => {
+                res(null, result[0])
+                    // res.json({ 'response': upload }
+            })
+            .catch((error) => { res(null) })
     },
 
     genOrderId: () => {
@@ -481,9 +484,9 @@ module.exports = {
 
 
     //!android notification
-    "android_notification": function(deviceToken, msg, title, orderId, type) {
+    "android_notification": function(deviceToken, msg, title, type) {
         console.log("module calledANDROID")
-        var serverKey = "AAAAoBcORhQ:APA91bGfm_qj7PaZQfjiqKNJ76A4vFlx4W-rSy6jciyskt80ykuJxZqePZ5s6S1rcMUFHLeGFkqtJqXusZXDtfGv7lO8kHMpNjlWkypJBPqNr0Uozm6Ay5rQTia8pnm37DtUs2LWt4hP"
+        var serverKey = "AAAABDIb3WY:APA91bHrOpQUcNFTQqXJoVxpth0zSNd1TxuzmlR3Y9J4-gCLj_Hcn9w4uoa8mHFRoAJOCtU2HKxEMR76SJk7yEhsbQ_cGZU2ASdsIeU37ctjmgAcqNM2scjhDKWy1C8bq7Ekg4oGFvH5"
         console.log("title====>", title)
         var fcm = new FCM(serverKey);
         var message = {
@@ -492,7 +495,6 @@ module.exports = {
                 "title": title,
                 "type": type,
                 "msg": msg,
-                "orderId": 'ORD' + orderId
             },
 
         };
@@ -510,14 +512,14 @@ module.exports = {
 
     },
     // !IOS_NOTIFICATION
-    "IOS_NOTIFICATION": function(deviceToken, msg, title, orderId, type, badge) {
+    "IOS_NOTIFICATION": function(deviceToken, msg, title, badge, type) {
         console.log("module calledIOS")
-        var serverKey = "AAAAoBcORhQ:APA91bGfm_qj7PaZQfjiqKNJ76A4vFlx4W-rSy6jciyskt80ykuJxZqePZ5s6S1rcMUFHLeGFkqtJqXusZXDtfGv7lO8kHMpNjlWkypJBPqNr0Uozm6Ay5rQTia8pnm37DtUs2LWt4hP"
+        var serverKey = "AAAABDIb3WY:APA91bHrOpQUcNFTQqXJoVxpth0zSNd1TxuzmlR3Y9J4-gCLj_Hcn9w4uoa8mHFRoAJOCtU2HKxEMR76SJk7yEhsbQ_cGZU2ASdsIeU37ctjmgAcqNM2scjhDKWy1C8bq7Ekg4oGFvH5"
         console.log("title====>", title)
         var fcm = new FCM(serverKey);
         var message = {
             "to": deviceToken,
-            "notification": { "title": title, "body": msg, badge: badge, "type": type, "orderId": "ORD" + orderId },
+            "notification": { "title": title, "body": msg, badge: badge, "type": type },
             "priority": "high"
         };
 

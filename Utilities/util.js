@@ -11,7 +11,7 @@ var querystring = require('querystring');
 
 
 
-let htmlEnDeCode = (function () {
+let htmlEnDeCode = (function() {
     var charToEntityRegex,
         entityToCharRegex,
         charToEntity,
@@ -46,7 +46,7 @@ let htmlEnDeCode = (function () {
     }
 
     function htmlEncode(value) {
-        var htmlEncodeReplaceFn = function (match, capture) {
+        var htmlEncodeReplaceFn = function(match, capture) {
             return charToEntity[capture];
         };
 
@@ -54,7 +54,7 @@ let htmlEnDeCode = (function () {
     }
 
     function htmlDecode(value) {
-        var htmlDecodeReplaceFn = function (match, capture) {
+        var htmlDecodeReplaceFn = function(match, capture) {
             return (capture in entityToChar) ? entityToChar[capture] : String.fromCharCode(parseInt(capture.substr(2), 10));
         };
 
@@ -232,6 +232,10 @@ let statusMessage = {
     },
     NOT_UPDATE: {
         en: "Data not Upload",
+        ar: "البيانات غير تحميل"
+    },
+    UPDATED: {
+        en: "Data Upload",
         ar: "البيانات غير تحميل"
     },
     categoriesList_found: {
@@ -482,6 +486,10 @@ let statusMessage = {
         INACTIVE: {
             en: 'Your Order INACTIVE',
             ar: ''
+        },
+        SEND_NOTIFICATION_DONE: {
+            en: 'SEND_NOTIFICATION_DONE',
+            ar: ''
         }
     }
 };
@@ -539,15 +547,15 @@ let sendForgotPasswordMail = (data) => {
 let getSOAPDataFromServer = (template, data, cb) => {
     //console.log(mustache.render(template, data));
     request.post({
-        url: config.SOAP_SERVER_CONFIG.url,
-        body: mustache.render(template, data),
-        method: 'POST',
-        dataType: 'text',
-        headers: {
-            'Content-Type': 'text/xml;charset=UTF-8',
-            'SOAPAction': config.SOAP_SERVER_CONFIG.soapAction
-        }
-    },
+            url: config.SOAP_SERVER_CONFIG.url,
+            body: mustache.render(template, data),
+            method: 'POST',
+            dataType: 'text',
+            headers: {
+                'Content-Type': 'text/xml;charset=UTF-8',
+                'SOAPAction': config.SOAP_SERVER_CONFIG.soapAction
+            }
+        },
         (error, response, body) => {
             typeof body == "string" ? body = body.replace(/brm:/g, 'brm')
                 .replace(/soapenv:Envelope/g, 'soapenvEnvelope')
@@ -600,7 +608,7 @@ let getRESTDataFromServer = (data, cb) => {
         finalUrl += "&disposition_id=" + data.disposition_id + "&remarks=" + data.remarks + "&lco_acc_num=" + data.lcoAccNum + "&device_id=" + data.deviceId + "&rmn=" + data.mobileNumber + "&cmts=NA&ref_id=" + config.REF_CONSTANT.userId;
     }
     console.log(finalUrl);
-    request.post(finalUrl, args, function (data, resp) {
+    request.post(finalUrl, args, function(data, resp) {
         if (!resp) {
             return false;
         }
@@ -736,7 +744,7 @@ let getUserCreationFromServer = (data, cb) => {
         uri: finalUrl,
         body: encodedData,
         method: 'POST'
-    }, function (err, res, body) {
+    }, function(err, res, body) {
         console.log(body);
         cb(body);
     });
@@ -761,7 +769,7 @@ let uploadFileToS3Bucket = (file, folder, newFileName, callback) => {
         var path = file.path; //will be put into a temp directory
         var mimeType = file.mimetype;
 
-        fs.readFile(path, function (error, file_buffer) {
+        fs.readFile(path, function(error, file_buffer) {
 
             if (error) {
                 console.log("No file");
@@ -792,7 +800,7 @@ let uploadFileToS3Bucket = (file, folder, newFileName, callback) => {
                     ContentType: mimeType
                 };
 
-                s3bucket.putObject(params, function (err, data) {
+                s3bucket.putObject(params, function(err, data) {
                     if (err) {
                         console.log("No file");
                         console.log(err)
@@ -809,15 +817,15 @@ let uploadFileToS3Bucket = (file, folder, newFileName, callback) => {
 let managePushFromServer = (template, data, cb) => {
 
     request.post({
-        url: config.SOAP_PUSH_SERVER_CONFIG.url,
-        body: mustache.render(template, data),
-        method: 'POST',
-        dataType: 'text',
-        headers: {
-            'Content-Type': 'text/xml;charset=UTF-8',
-            'SOAPAction': config.SOAP_PUSH_SERVER_CONFIG.soapAction
-        }
-    },
+            url: config.SOAP_PUSH_SERVER_CONFIG.url,
+            body: mustache.render(template, data),
+            method: 'POST',
+            dataType: 'text',
+            headers: {
+                'Content-Type': 'text/xml;charset=UTF-8',
+                'SOAPAction': config.SOAP_PUSH_SERVER_CONFIG.soapAction
+            }
+        },
         (error, response, body) => {
             console.log(body);
             typeof body == "string" ? body = body.replace(/brm:/g, 'brm')
