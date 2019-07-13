@@ -28,8 +28,6 @@ app.use(morgan("dev"));
 //!userRoutes
 let userAppService = require('./Routes/userAppRoute/userAppRoute') /* userApplication router */
 let adminPanelRouter = require('./Routes/adminPanelRoute/adminPanelRoute') /* adminPanelRouter  */
-
-
 app.use('/app', userAppService)
 app.use('/admin', adminPanelRouter)
 
@@ -38,6 +36,6 @@ app.use('/admin', adminPanelRouter)
 //     res.sendFile(`${__dirname}/dist/index.html`);
 // })
 
-server.listen(config.NODE_SERVER_PORT.port, function() {
+server.listen(6262, function() {
     console.log('app listening on port:' + config.NODE_SERVER_PORT.port + (new Date));
 });
