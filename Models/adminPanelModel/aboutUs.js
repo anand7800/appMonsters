@@ -4,6 +4,7 @@ var aboutUs = mongoose.Schema({
     aboutUs: {
         type: String,
     },
+
     status: {
         type: String,
         enum: ["ACTIVE", "INACTIVE"],

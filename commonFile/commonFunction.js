@@ -87,16 +87,16 @@ module.exports = {
         var token = jwt.sign({ id: auth }, config.secret, {})
         return token;
     },
-    imageUploadToCloudinary: (imageB64, callback) => {
-        // console.log(imageB64)
-        return cloudinary.uploader.upload(imageB64, (result) => {
-            //  console.log("fddfdfgfg", result);
+    imageUploadToCloudinary: (file, callback) => {
+        console.log(file[0].path)
+        cloudinary.v2.uploader.upload(file[0].path, { resource_type: "auto", use_filename: true, unique_filename: false }, (result) => {
+            console.log("fddfdfgfg", result);
             callback(null, result.url);
         })
     },
     //function to upload image
     uploadImg: (base64, callback) => {
-        cloudinary.uploader.upload(base64, (result1) => {
+        cloudinary.v2.uploader.upload(base64, (result1) => {
             // console.log("err,result",err,result1)
             if (result1.url) {
                 callback(null, result1.url)
@@ -107,27 +107,34 @@ module.exports = {
     },
     uploadMultipleImages: (imagesB64, callback) => {
         let a = [];
-        // console.log("uploadMultipleImages",imagesB64);
         async.eachSeries(imagesB64, (item, callbackNextIteratn) => {
                 module.exports.uploadImg(item, (err, url) => {
                     if (err) callback(null)
                     else {
                         a.push(url);
-                        //console.log("#############",a);
-                        // console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&", url)
                         callbackNextIteratn();
-                        // console.log("%%%%%%%%%%%",a);
                     }
                 })
             }, (err) => {
                 // console.log("aaaaaassasdsssssssssss",a)
                 console.log("Done with async loop")
                 callback(null, a);
-
             })
             // console.log("----------result of multi image uploader--------->>>", a);
     },
-
+    upload_image: async(req, res) => {
+        let res_promises = req.map(file => new Promise((resolve, reject) => {
+            cloudinary.v2.uploader.upload(file.path, { use_filename: true, unique_filename: false }, function(error, result) {
+                if (error) reject(error)
+                else resolve(result.secure_url)
+            })
+        }))
+        Promise.all(res_promises)
+            .then(result => {
+                res(null, result[0])
+            })
+            .catch((error) => { res(null) })
+    },
     generateOTP: (callback) => {
         let secret = speakEasy.generateSecret({
             length: 20
@@ -460,22 +467,7 @@ module.exports = {
         return random.toUpperCase()
     },
 
-    upload_image: async(req, res) => {
-        // res_promises will be an array of promises
-        let res_promises = req.map(file => new Promise((resolve, reject) => {
-                cloudinary.v2.uploader.upload(file.path, { use_filename: true, unique_filename: false }, function(error, result) {
-                    if (error) reject(error)
-                    else resolve(result.secure_url)
-                })
-            }))
-            // Promise.all will fire when all promises are resolved 
-        Promise.all(res_promises)
-            .then(result => {
-                res(null, result[0])
-                    // res.json({ 'response': upload }
-            })
-            .catch((error) => { res(null) })
-    },
+
 
     genOrderId: () => {
         console.log("generate order id", orderid.generate())

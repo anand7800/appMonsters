@@ -28,7 +28,7 @@ let serverURLs = {
     "local": {
         "NODE_SERVER": "http://localhost",
         "NODE_SERVER_PORT": "5050",
-        "MONGO_DB": "mongodb://localhost:27017/WAKINEW",
+        "MONGO_DB": "mongodb://localhost:27017/APP_MONSTER",
         "EMAIL_USER": 'toothfairysanjeet@gmail.com',
         "EMAIL_PASS": 'Sanj1234A',
         "EMAIL_HOST": 'smtp.gmail.com',
@@ -40,7 +40,7 @@ let serverURLs = {
     "live": {
         "NODE_SERVER": "http://localhost",
         "NODE_SERVER_PORT": "6262",
-        "MONGO_DB": "mongodb://35.165.140.114:27017/WAKINEW",
+        "MONGO_DB": "mongodb://18.218.243.162:27017/APP_MONSTER",
         "EMAIL_USER": 'toothfairysanjeet@gmail.com',
         "EMAIL_PASS": 'Sanj1234A',
         "EMAIL_HOST": 'smtp.gmail.com',

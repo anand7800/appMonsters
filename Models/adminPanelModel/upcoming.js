@@ -1,10 +1,11 @@
 var mongoose = require("mongoose")
-var culture = mongoose.Schema({
-
-
-    file: String,
-    description: String,
-    fileType: String,
+var upcoming = mongoose.Schema({
+    description: {
+        type: String,
+    },
+    file: {
+        type: String,
+    },
     status: {
         type: String,
         enum: ["ACTIVE", "INACTIVE"],
@@ -13,4 +14,4 @@ var culture = mongoose.Schema({
     }
 
 }, { timestamps: true })
-module.exports = mongoose.model('culture', culture, 'culture')
+module.exports = mongoose.model('upcoming', upcoming, 'upcoming')
