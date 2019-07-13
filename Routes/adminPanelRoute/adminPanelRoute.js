@@ -14,5 +14,11 @@ adminRouter.get('/getAboutUs', (req, res) => {
         res.send(data)
     })
 })
+//admin login adminPanelRoutes
+adminRouter.post('/adminLogin', (req, res) => {
+    adminHandler.adminLogin(req.body, (data) => {
+        res.send(data)
+    })
+})
 
 module.exports = adminRouter
