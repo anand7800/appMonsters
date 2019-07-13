@@ -31,10 +31,10 @@ let adminPanelRouter = require('./Routes/adminPanelRoute/adminPanelRoute') /* ad
 app.use('/app', userAppService)
 app.use('/admin', adminPanelRouter)
 
-// app.use("/", express.static(path.join(__dirname, 'dist')));
-// app.get('/*', (req, res) => {
-//     res.sendFile(`${__dirname}/dist/index.html`);
-// })
+app.use("/", express.static(path.join(__dirname, 'dist')));
+app.get('/*', (req, res) => {
+    res.sendFile(`${__dirname}/dist/index.html`);
+})
 
 server.listen(5152, function() {
     console.log('app listening on port:' + config.NODE_SERVER_PORT.port + (new Date));
