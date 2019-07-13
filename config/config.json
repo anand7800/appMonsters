@@ -1,0 +1,28 @@
+{
+    "nodemailer": {
+        "pass": "LUCKY@05",
+        "user": "test.techugo@gmail.com"
+    },
+    "db": {
+        "host": "localhost:27017",
+        "name": "waki"
+    },
+    "twilio_Mobile": {
+        "sid": "ACf786a64203b2524f8ee2878ee632bbe7",
+        "auth_token": "0f53e378507e1543cd5e2ddfcf5389a1",
+        "number": "+18555728559"
+    },
+    "twilio": {
+        "sid": "AC8ec7036571e33a176749cfae2f1cb69b",
+        "auth_token": "b3b1ab827043c4512550840bf21c7a67",
+        "number": "+17039971989"
+    },
+    "credientialAdmin": {
+        "email": "test@gmail.com",
+        "password": "Techugo@123"
+    },
+    "payTabs": {
+        "email": "sumit@techugo.com",
+        "secret_key": "jHNnwY2CJxvhXvDmIJXuksDQ3P6DxTIQBwe7uhKdOfvML98tS6YdzB4CqbgY4ZOFv3MZkxd8MIVxS41KbZYKB2m2dD0hCPX7SK7c"
+    }
+}

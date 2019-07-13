@@ -1,0 +1,38 @@
+{
+    "status": true,
+    "code": 0,
+    "data": [
+      {
+        "title": "US Dollar",
+        "code": "USD",
+        "symbol": "SAR",
+        "sign": "SAR",
+        "value": "1",
+        "default": 1,
+        "status": true,
+        "deleted_at": 0,
+        "createdAt": "2017-07-28T10:35:02.489Z",
+        "updatedAt": "2018-07-18T06:42:12.170Z",
+        "position": "left",
+        "currency_id": "59a3f1d6dee07ba464d3edee",
+        "delemeter": "1",
+        "id": "59a3f1d6dee07ba464d3edee"
+      },
+      {
+        "title": "SAR",
+        "code": "SAR",
+        "symbol": "SAR",
+        "sign": "SAR",
+        "value": "0",
+        "default": 0,
+        "status": true,
+        "deleted_at": 0,
+        "createdAt": "2017-07-28T10:35:02.489Z",
+        "updatedAt": "2018-07-18T06:42:12.170Z",
+        "position": "left",
+        "currency_id": "59a3f1d6dee07ba464d3edee",
+        "delemeter": "1",
+        "id": "59a3f1d6dee07ba464d3edff"
+      }
+    ]
+  }
