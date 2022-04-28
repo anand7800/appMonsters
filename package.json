@@ -9,7 +9,7 @@
     "start": "nodemon server.js"
   },
   "dependencies": {
-    "async": "^1.5.2",
+    "async": "^2.6.4",
     "async-waterfall": "^0.1.5",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.15.2",
